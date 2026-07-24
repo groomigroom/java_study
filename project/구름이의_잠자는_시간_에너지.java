@@ -8,7 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner Dogname = new Scanner(System.in);
-        //scanner로 강아지 이름 받기??
+        
+        System.out.println("강아지 이름을 입력해 주세요");
+
         String puppy_name = "김구름";
         //scanner로 강아지 수면 시간 받기??
         int a = sleepEnergy(3);
