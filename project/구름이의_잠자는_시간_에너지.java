@@ -15,7 +15,7 @@ public class Main {
 
         System.out.println(puppy_name + "의 수면시간을 입력해 주세요");
 
-        int a = sleepEnergy(3);
+        int puppy_sleep_time = Dogname.nextInt();
         System.out.println(puppy_name + a);
 
         int b = a / 100;
