@@ -7,6 +7,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Scanner Dogname = new Scanner(System.in);
       //scanner로 강아지 이름 받기??
       String puppy_name = "김구름";
       //scanner로 강아지 수면 시간 받기??
