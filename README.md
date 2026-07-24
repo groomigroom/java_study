@@ -11,3 +11,7 @@ https://github.com/lleellee0/java-for-backend/blob/main/03/3-3-11.java
 아래꺼 실습해보기....
 
 https://www.youtube.com/watch?v=IfCBfHobVmE&list=PLVsNizTWUw7FBMFX9pezh5Gxg5AtNmoMv&index=12
+
+아래꺼 스프링 세팅법..
+
+https://study-ce.tistory.com/87
