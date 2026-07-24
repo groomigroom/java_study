@@ -11,12 +11,19 @@ public class Main {
         
         System.out.println("강아지 이름을 입력해 주세요");
 
+        //강아지 이름 받기
         String puppy_name = Dogname.next();
+
+        System.out.println("입력하신 강아지의 이름은 " + puppy_name + "입니다.");
+        System.out.println("맞으시면 y를 입력해 주세요.");
+
+        //여기서 y 판단하기 #####
 
         System.out.println(puppy_name + "의 수면시간을 입력해 주세요");
 
+        //강아지 수면 시간 받기
         int puppy_sleep_time = Dogname.nextInt();
-        System.out.println(puppy_name + a);
+        
 
         int b = a / 100;
 
