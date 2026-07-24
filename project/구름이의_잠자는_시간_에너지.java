@@ -11,5 +11,13 @@ public class Main {
       //scanner로 강아지 수면 시간 받기??
       int a = sleepEnergy(3);
       System.out.println(puppy_name + a);
+
+      int b = a / 100;
+
+      for (int i = 0; i < b; i++) {
+        a += 100;
+      }
+
+      System.out.println("비축할 에너지는 " + a + "입니다.");
     }
 }
