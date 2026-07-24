@@ -7,7 +7,10 @@ public class Main {
         System.out.println("if 블록이다.");
       }
       else if (num == 2) {
-        System.out.println("if 블록이다.");
+        System.out.println("else if 블록이다.");
+      }
+      else {
+        System.out.println("else 블록이다.");
       }
     }
 }
