@@ -12,5 +12,9 @@ public class Main {
       for (int i = 0; i < list.size(); i++) {
         System.out.println(list.get(i));
       }
+
+      list.remove(1);
+      int iindex = list.indexOf("groomgroom");
+      System.out.println("groomgroom의 index = " + iindex);
     }
 }
