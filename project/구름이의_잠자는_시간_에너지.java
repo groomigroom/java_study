@@ -19,5 +19,33 @@ public class Main {
       }
 
       System.out.println("비축할 에너지는 " + a + "입니다.");
-    }
+
+      String SforRice = "";
+
+      if (a > 500) {
+        SforRice = "맛있는사료";
+      }
+      else if (a > 300) {
+        SforRice = "밍밍한사료";
+      }
+      else {
+        SforRice = "일반사료";
+      }
+
+      System.out.println(SforRice);
+
+      int iRicePrice;
+
+      if (SforRice == "맛있는사료") {
+        iRicePrice = 39000;
+      }
+      else if (SforRice == "밍밍한사료") {
+        iRicePrice = 27000;
+      }
+      else {
+        iRicePrice = 10000;
+      }
+
+      System.out.println(iRicePrice);
+    }    
 }
