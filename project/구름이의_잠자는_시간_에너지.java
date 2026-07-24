@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Main {
+    //잠자는데 사용되는 에너지 측정 함수
     static int sleepEnergy(int isleepTime) {
       return isleepTime * 100;
     }
