@@ -47,5 +47,7 @@ public class Main {
       }
 
       System.out.println(iRicePrice);
+
+      //일시불 등등도 해보기
     }    
 }
