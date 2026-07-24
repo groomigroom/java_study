@@ -6,7 +6,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+      String puppy_name = "김구름";
       int a = sleepEnergy(3);
-      System.out.println(a);
+      System.out.println(puppy_name + a);
     }
 }
