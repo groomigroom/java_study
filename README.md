@@ -11,10 +11,6 @@ https://github.com/lleellee0/java-for-backend/blob/main/03/3-3-11.java
 
 
 
-아래꺼 실습해보기....
-
-https://www.youtube.com/watch?v=IfCBfHobVmE&list=PLVsNizTWUw7FBMFX9pezh5Gxg5AtNmoMv&index=12
-
 
 백엔드 맥북하기 ------
 
