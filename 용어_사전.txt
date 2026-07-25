@@ -6,7 +6,9 @@
 예시
 
 @RequestMapping("/")
+--> localhost:8080 일 때,
 @RequestMapping("/bye")
+--> localhost:8080/bye 일 때,
 
 ---------------------
 
