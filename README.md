@@ -11,13 +11,6 @@ https://github.com/lleellee0/java-for-backend/blob/main/03/3-3-11.java
 
 
 
-
-
-아래꺼도 해보기 -----
-
-https://www.youtube.com/watch?v=z5fRj7B7alk&list=PLVsNizTWUw7FBMFX9pezh5Gxg5AtNmoMv&index=18
-
-
 아래꺼 실습용 코드가 https://github.com/lleellee0/java-for-backend/blob/main/07/7-3-1.html
 
 https://www.youtube.com/watch?v=ibcvFFPV0MQ&list=WL&index=3
