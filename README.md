@@ -26,3 +26,7 @@ https://github.com/lleellee0/java-for-backend/tree/main/06
 https://github.com/lleellee0/java-for-backend/tree/main/08
 
 프리미티브 타입이랑 래퍼 클래스
+
+아래꺼 파악하기 일단 윈도우로
+
+https://youtu.be/IAk-3Jgjseg?si=5CvSrcA9VWCEHqb0
