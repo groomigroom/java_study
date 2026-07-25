@@ -15,3 +15,8 @@ https://www.youtube.com/watch?v=IfCBfHobVmE&list=PLVsNizTWUw7FBMFX9pezh5Gxg5AtNm
 아래꺼 스프링 세팅법..
 
 https://study-ce.tistory.com/87
+
+
+백엔드 맥북하기 ------
+
+https://www.youtube.com/watch?v=7jhVJIYi8fc&list=PLVsNizTWUw7FBMFX9pezh5Gxg5AtNmoMv&index=17
