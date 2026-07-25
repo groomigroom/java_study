@@ -86,7 +86,10 @@ open -a Eclipse --args -clean
 
 
 
-main에 5-2-1. class 파일로 만들기??
+main에 5-2-2. class 파일로 만들기??
+https://github.com/lleellee0/java-for-backend/blob/main/05/5-2-2.java
+
+
 
 html 추가해서 정적으로 보여주기
 
