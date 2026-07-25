@@ -1,7 +1,11 @@
 결론부터 말씀드리면, 설치 도중 실패했거나 중단되었다면 캐시나 임시 파일 형태의 잔여 파일이 남아있을 수 있습니다.
-이클립스 마켓플레이스(Eclipse Marketplace)를 통해 플러그인(Spring Tools)을 설치할 때, 다운로드 단계나 설치 도중 오류가 나면 완전히 적용되지는 않지만 다운로드된 .jar 파일이나 메타데이터가 이클립스 내부 폴더에 남게 됩니다. [1, 2] 
-질문자님께서 말씀하신 'Spring Boot 3', 'Spring Boot 5'는 사실 스프링 부트 버전이라기보다 이클립스 플러그인인 Spring Tools 3(구형 STS3)와 Spring Tools 4(STS4)를 의미할 가능성이 높습니다. (현재 스프링 부트 최신 버전은 3.x 대이며, STS4 플러그인을 설치해야 스프링 부트 3 기반의 프로젝트 생성을 지원합니다.)
+이클립스 마켓플레이스(Eclipse Marketplace)를 통해 플러그인(Spring Tools)을 설치할 때,
+다운로드 단계나 설치 도중 오류가 나면 완전히 적용되지는 않지만 다운로드된 .jar 파일이나 메타데이터가 이클립스 내부 폴더에 남게 됩니다.
+
+질문자님께서 말씀하신 'Spring Boot 3', 'Spring Boot 5'는 사실 스프링 부트 버전이라기보다 이클립스 플러그인인 Spring Tools 3(구형 STS3)와 Spring Tools 4(STS4)를 의미할 가능성이 높습니다. 
+(현재 스프링 부트 최신 버전은 3.x 대이며, STS4 플러그인을 설치해야 스프링 부트 3 기반의 프로젝트 생성을 지원합니다.)
 찝찝함을 해결하고 이클립스를 깔끔하게 정리할 수 있는 방법을 순서대로 안내해 드릴게요.
+
 ------------------------------
 ## 1. 이클립스 내에서 공식적인 잔여물 삭제 (가장 안전)
 이클립스 자체 기능을 이용해 찌꺼기를 지우는 방법입니다. [1] 
@@ -37,20 +41,7 @@ rm -rf *
 
 open -a Eclipse --args -clean
 
-이 과정을 거치면 예전 설치 실패로 꼬여있던 메타데이터 캐시가 완전히 정리됩니다. [1] 
-------------------------------
-## 💡 추가 팁: Mac 환경에서 가장 깔끔한 방법
-만약 위 과정을 거쳐도 왠지 모르게 이클립스가 무겁거나 찝찝하시다면, 마켓플레이스 플러그인 설치 방식 대신 스프링 공식 홈페이지에서 제공하는 STS4 다운로드 제품(Spring Tools 4 for Eclipse)을 직접 다운로드하여 맥의 응용 프로그램(Applications) 폴더에 넣고 쓰시는 것을 강력히 추천합니다. 이 방식이 별독 애플리케이션으로 동작하여 Mac 환경에서 가장 에러가 적고 깔끔합니다. [7, 8] 
-현재 이클립스에서 새 스프링 부트 프로젝트 생성이나 스프링 부트 대시보드가 정상적으로 잘 작동하나요? 추가적인 오류 메시지가 뜨거나 도움이 필요하시다면 언제든 말씀해 주세요!
-
-[1] [https://github.com](https://github.com/eclipse-platform/eclipse.platform/blob/master/docs/FAQ/FAQ_How_do_I_remove_a_plug-in.md)
-[2] [https://wiki.eclipse.org](https://wiki.eclipse.org/FAQ_How_do_I_remove_a_plug-in%3F)
-[3] [https://stackoverflow.com](https://stackoverflow.com/questions/6174725/correct-way-to-remove-plugin-from-eclipse)
-[4] [https://little-daily-life.tistory.com](https://little-daily-life.tistory.com/10)
-[5] [https://www.microfocus.com](https://www.microfocus.com/documentation/enterprise-analyzer/ea80/EA/GUID-9723C507-2EBF-4B3F-85A0-49AE210E3C16.html)
-[6] [https://stackoverflow.com](https://stackoverflow.com/questions/221476/how-to-remove-old-versions-of-eclipse-plugins)
-[7] [https://www.eclipse.org](https://www.eclipse.org/community/eclipse_newsletter/2018/february/springboot.php)
-[8] [https://m.blog.naver.com](https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=eunoia3jy&logNo=221994498377&proxyReferer=)
+이 과정을 거치면 예전 설치 실패로 꼬여있던 메타데이터 캐시가 완전히 정리됩니다.
 
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -92,16 +83,6 @@ open -a Eclipse --args -clean
    2. 처음 만들 때는 오른쪽 아래에 Downloading... 게이지가 올라가며 필요한 파일들을 인터넷에서 가져옵니다. (이 작업이 완전히 끝날 때까지 1~2분 정도 기다려 주세요.)
    3. src/main/java 폴더 안에 있는 [프로젝트이름]Application.java 파일을 찾아서 엽니다.
    4. 파일 안에서 마우스 우클릭을 한 뒤 [Run As] ➔ [Spring Boot App]을 누르면 하단 콘솔 창에 스프링 로고가 뜨면서 서버가 켜집니다.
-
-진행하시다가 입력창 설정이 헷갈리시거나, 게이지가 다 찼는데도 빨간색 에러 표시(X)가 뜬다면 어떤 에러가 나는지 알려주세요. 바로 해결 방법을 찾아서 도와드리겠습니다!
-
-[1] [https://medium.com](https://medium.com/@yihimin01/java-5%EC%A3%BC%EC%B0%A8-e61545fccb81)
-[2] [https://www.playnexacro.com](https://www.playnexacro.com/learns/5317/%EB%94%B0%EB%9D%BC-%ED%95%98%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B3%B5%ED%86%B5-%EA%B0%9C%EB%B0%9C%ED%95%98%EA%B8%B0-1%ED%8E%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%9D%EC%84%B1-%EB%B0%8F-%EC%84%B8%ED%8C%85%ED%95%98%EA%B8%B0)
-[3] [https://poetic-code.tistory.com](https://poetic-code.tistory.com/100)
-[4] [https://medium.com](https://medium.com/@dlaudtjr07/spring-boot-unit-1-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-b510e16b1e95)
-[5] [https://m.blog.naver.com](https://m.blog.naver.com/leety72/221672999111)
-[6] [https://riverandeye.tistory.com](https://riverandeye.tistory.com/entry/3-Intellij-%EC%97%90%EC%84%9C-%EA%B8%B0%EB%B3%B8-maven-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0)
-[7] [https://m.blog.naver.com](https://m.blog.naver.com/agapeuni/223495899805)
 
 
 
