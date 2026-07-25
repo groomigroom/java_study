@@ -20,3 +20,7 @@ https://www.youtube.com/watch?v=ibcvFFPV0MQ&list=WL&index=3
 아래꺼 맥북 실습하기 #####
 
 https://github.com/lleellee0/java-for-backend/tree/main/06
+
+아래꺼들 맥북 실습하기 #####
+
+https://github.com/lleellee0/java-for-backend/tree/main/08
