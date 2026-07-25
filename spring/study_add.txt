@@ -108,3 +108,5 @@ open -a Eclipse --args -clean
 main에 5-2-1. class 파일로 만들기??
 
 html 추가해서 정적으로 보여주기
+
+스프링 부트 프로젝트에서 정적 HTML 파일을 추가하려면 src/main/resources/static 폴더에 파일을 넣고 주소창에 파일명을 입력하면 됩니다.폴더 위치 확인: src/main/resources/static 경로로 이동합니다.HTML 파일 생성: static 폴더 우클릭 후 New -> File (또는 HTML 파일)을 선택해 이름을 짓습니다 (예: test.html).웹 브라우저 접속: 프로젝트 실행 후 http://localhost:8080/test.html로 접속합니다. (index.html로 저장 시 http://localhost:8080/만 쳐도 첫 화면으로 자동 출력됩니다).
