@@ -24,3 +24,5 @@ https://github.com/lleellee0/java-for-backend/tree/main/06
 아래꺼들 맥북 실습하기 #####
 
 https://github.com/lleellee0/java-for-backend/tree/main/08
+
+프리미티브 타입이랑 래퍼 클래스
