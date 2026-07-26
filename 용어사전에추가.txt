@@ -1,0 +1,13 @@
+spring web 라이브러리
+
+자바 스프링(Spring)의 Spring Web 라이브러리는 웹 애플리케이션과 RESTful API를 쉽게 만들 수 있게 돕는 핵심 도구이며, 
+주로 Spring MVC, 내장 톰캣, JSON 변환 기능을 포함합니다. 보통 Spring Initializr에서 spring-boot-starter-web 형태로 추가해 사용합니다. 
+
+주요 포함 기능
+Spring MVC: 웹 요청을 받고 처리하는 DispatcherServlet 및 @Controller, @RestController 기능 제공
+내장 톰캣(Tomcat): 별도의 외장 서버 설치 없이 실행 가능한 웹 서버 포함
+JSON 변환(Jackson): 객체를 JSON 데이터로 바꾸거나 그 반대로 바꾸는 기능 기본 탑재 
+주요 역할과 특징
+HTTP 요청 처리: GET, POST 등 클라이언트의 요청을 받아 알맞은 로직으로 연결
+간편한 설정: 복잡한 XML 설정 없이 어노테이션만으로 웹 서비스 구축 가능
+스타터 패키지: spring-boot-starter-web을 쓰면 웹 개발에 필요한 필수 라이브러리들이 자동으로 함께 모여 편리함 
