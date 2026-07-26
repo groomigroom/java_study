@@ -220,31 +220,35 @@ import org.springframework.stereotype.Controller;import org.springframework.ui.M
 로그인 성공 후 브라우저의 URL 주소 자체를 새로운 HTML 페이지로 바꾸고, 데이터를 URL 파라미터(Query String)로 넘기는 방법입니다.
 컨트롤러 수정
 
+package com.example.demo;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-mport java.net.URLEncoder;import java.nio.charset.StandardCharsets;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controllerpublic class NewBack {
-    
+@Controller
+public class SimpleRestController {
+
     @RequestMapping("/login_anne")
     public String create_login (
             @RequestParam("title") String title,
-            @RequestParam("content") String content, 
+            @RequestParam("content") String content,
             @RequestParam("password") String password,
-            @RequestParam("id") String id) {
-        
+            @RequestParam("id") String id,
+            RedirectAttributes redirectAttributes) { // RedirectAttributes 추가
+
         if ("kimgroom".equals(id) && "groomgroom".equals(password)) {
-            // 한글 깨짐 방지를 위한 인코딩
-            String encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8);
-            String encodedContent = URLEncoder.encode(content, StandardCharsets.UTF_8);
+            //addAttribute를 쓰면 스프링이 알아서 URL 파라미터 인코딩을 해줍니다.
+            redirectAttributes.addAttribute("title", title);
+            redirectAttributes.addAttribute("content", content);
             
-            // 다른 HTML(결과 페이지) 주소로 데이터를 붙여서 이동시킴
-            return "redirect:/result.html?title=" + encodedTitle + "&content=" + encodedContent;
+            return "redirect:/result.html";
         }
         return "redirect:/login_fail.html";
     }
 }
+
 
 이 방식은 이동할 result.html에서 자바스크립트(URLSearchParams)를 사용해 URL에 담긴 title과 content를 꺼내서 화면에 뿌려주어야 합니다.
 ------------------------------
