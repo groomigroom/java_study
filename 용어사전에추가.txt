@@ -1,14 +1,3 @@
 
-
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-String.format( title=%s / content=%s , title, content);
-String.format() 메서드는 지정한 형식(Format)에 맞춰 문자열을 생성하는 기능이며,
-%s 자리에 변수 title과 content의 값을 순서대로 넣어 title=값 / content=값 형태의 문자열로 만들어 줍니다.
-주요 구성 요소
-"title=%s / content=%s": 첫 번째 인수로 전달된 틀(템플릿)이며,
-%s는 문자열이 들어갈 자리(플레이스홀더)를 뜻합니다.
-title: 첫 번째 %s 자리에 들어갈 변수 값입니다.
-content: 두 번째 %s 자리에 들어갈 변수 값입니다.
-
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
