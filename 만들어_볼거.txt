@@ -215,12 +215,15 @@ import org.springframework.stereotype.Controller;import org.springframework.ui.M
 </body>
 </html>
 
-------------------------------
+------------------------------이거 해보기.......................................끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝
 ## 방법 2: 리다이렉트(Redirect)와 쿼리 스트링 사용
 로그인 성공 후 브라우저의 URL 주소 자체를 새로운 HTML 페이지로 바꾸고, 데이터를 URL 파라미터(Query String)로 넘기는 방법입니다.
 컨트롤러 수정
 
-import org.springframework.stereotype.Controller;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RequestParam;import java.net.URLEncoder;import java.nio.charset.StandardCharsets;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+mport java.net.URLEncoder;import java.nio.charset.StandardCharsets;
 
 @Controllerpublic class NewBack {
     
