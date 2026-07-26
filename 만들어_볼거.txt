@@ -1,0 +1,115 @@
+package kr.co.hanbit;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
+
+@RestController
+public class RedirectRestController {
+    @RequestMapping("/redirectToTarget")
+    public ResponseEntity redirectToTarget() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/targetOfRedirect"));
+        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
+    @RequestMapping("/targetOfRedirect")
+    public String targetOfRedirect() {
+        return "This is Redirect!";
+    }
+}
+
+
+제공해주신 코드는 사용자가 특정 주소로 접속했을 때, 다른 주소로 강제 이동(리다이렉트)시키는 스프링 부트 컨트롤러 예제입니다.
+코드의 각 줄이 어떤 역할을 하는지 핵심만 쉽게 설명해 드릴게요.
+------------------------------
+## 코드 한 줄씩 해석하기
+
+package kr.co.hanbit;
+
+
+* 이 소스 코드가 kr.co.hanbit이라는 폴더(패키지) 구조 안에 저장되어 있음을 선언합니다.
+
+import org.springframework.http.HttpHeaders;import org.springframework.http.HttpStatus;import org.springframework.http.ResponseEntity;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;import java.net.URI;
+
+
+* 외부 폴더에 있는 자바 및 스프링의 핵심 도구(클래스)들을 가져와 이 코드 안에서 사용하겠다고 등록하는 부분입니다.
+
+@RestController
+
+
+* 이 클래스가 데이터나 결과물을 브라우저에 바로 전달하는 컨트롤러(서버 통신 창구) 역할을 하겠다고 스프링에게 알려주는 표식(어노테이션)입니다.
+
+public class RedirectRestController {
+
+
+* RedirectRestController라는 이름의 공개(public) 클래스를 정의합니다. 모든 웹 요청 처리 로직이 이 안에 작성됩니다.
+
+    @RequestMapping("/redirectToTarget")
+
+
+* 사용자가 브라우저 주소창에 http://서버주소/redirectToTarget을 입력하고 들어오면, 바로 아래에 있는 redirectToTarget() 메서드를 실행하라는 매핑 선언입니다.
+
+    public ResponseEntity redirectToTarget() {
+
+
+* 데이터와 함께 HTTP 응답 상태 코드, 헤더 정보를 세밀하게 조작해서 브라우저에게 돌려주는 redirectToTarget 메서드를 시작합니다.
+
+        HttpHeaders headers = new HttpHeaders();
+
+
+* 브라우저에게 보낼 메인 데이터 외에, '부가적인 정보(안내문)'를 담을 헤더(headers)라는 빈 바구니를 생성합니다.
+
+        headers.setLocation(URI.create("/targetOfRedirect"));
+
+
+* 방금 만든 바구니에 "너는 바로 /targetOfRedirect 주소로 이동해야 해"라는 이정표(Location) 정보를 주소(URI) 형태로 만들어 집어넣습니다.
+
+        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+
+
+* 브라우저에게 "이 주소는 영구적으로 이동했어(Status 301 - MOVED_PERMANENTLY)"라는 상태 코드와 함께, 방금 만든 이동 주소 바구니(headers)를 최종 반환(Return)합니다. 이를 받은 브라우저는 자동으로 새 주소로 날아갑니다.
+
+    }
+
+
+* redirectToTarget 메서드의 끝을 알리는 중괄호입니다.
+
+    @RequestMapping("/targetOfRedirect")
+
+
+* 사용자가 주소창에 직접 접속하거나, 위에서 리다이렉트되어 http://서버주소/targetOfRedirect로 들어왔을 때 아래 메서드를 실행시킵니다.
+
+    public String targetOfRedirect() {
+
+
+* 화면에 글자를 보여주기 위해 문자열(String)을 반환하는 targetOfRedirect 메서드를 시작합니다.
+
+        return "This is Redirect!";
+
+
+* 브라우저 화면에 This is Redirect!라는 텍스트 문구를 그대로 출력(반환)합니다.
+
+    }
+}
+
+
+* 각각 메서드와 클래스가 모두 끝났음을 닫는 중괄호들입니다.
+
+------------------------------
+## 💡 전체 동작 흐름 요약
+
+   1. 사용자가 /redirectToTarget 주소로 접속 요청을 보냅니다.
+   2. 서버가 응답으로 "여긴 이제 없는 주소니 /targetOfRedirect로 다시 가세요(301 응답)"라고 알려줍니다.
+   3. 브라우저가 주소창을 자동으로 바꾸며 /targetOfRedirect로 재접속합니다.
+   4. 화면에 "This is Redirect!"라는 문구가 최종적으로 보입니다.
+
+혹시 리다이렉트와 관련해서 영구 이동(301/MOVED_PERMANENTLY) 대신 임시 이동(302/FOUND) 상태 코드를 쓰는 이유나, 단순 페이지 이동을 위한 다른 편리한 스프링 문법(return "redirect:/주소")이 궁금하신가요? 구체적인 상황을 알려주시면 상세히 설명해 드릴게요.
+
+
+
+---------------끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝
+
