@@ -43,6 +43,11 @@
 이 클래스가 웹 요청을 받는 컨트롤러임을 뜻합니다.
 데이터를 화면(HTML)이 아닌 JSON 같은 순수 데이터로 바로 보낼 때 씁니다.
 
+@RestController (RESTful API 컨트롤러)
+주요 목적: JSON, XML 등의 객체 데이터(Data) 직접 반환
+동작 방식:@Controller + @ResponseBody의 조합메서드의 반환값이 View를 거치지 않고,
+HttpMessageConverter를 통해 HTTP 응답 본문(Body)에 직접 쓰임 (문자열이나 객체가 JSON 등으로 변환되어 전송됨)
+
 ---------------------
 
 
