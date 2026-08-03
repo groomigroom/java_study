@@ -33,6 +33,32 @@ public class TestController {
         return "Hello, Spring!";
     }
 }
+
+네, /text 링크로 접속하면 브라우저 화면에 "Hello, Spring!"이 그대로 뜹니다.
+다만, 제공해주신 코드에 오타(컴파일 에러)가 있어 실제 작동하려면 아래와 같이 수정되어야 합니다.
+## 올바른 코드 형태
+
+@Controllerpublic class TestController {
+
+    @GetMapping("/text")
+    @ResponseBody
+    public String printText() { // 'String-print text()'에서 '-' 제거 및 메서드명 수정
+        return "Hello, Spring!";
+    }
+}
+
+## 동작 원리
+
+* @ResponseBody가 없을 때: 스프링은 "Hello, Spring!"이라는 이름의 HTML 뷰 파일(예: Hello, Spring!.html)을 찾으려고 시도합니다. 파일을 찾지 못하므로 에러 페이지가 뜹니다.
+* @ResponseBody가 있을 때: 뷰 리졸버를 거치지 않고, return 뒤에 있는 문자열 데이터를 HTTP 응답 본문(Body)에 직접 넣어서 브라우저로 바로 전송합니다.
+
+추가로 스프링 프로젝트가 구현된 환경에 대해 더 알고 싶습니다. 알려주시면 맞춤형 코드를 작성해 드릴게요.
+
+* 현재 스프링 부트(Spring Boot) 환경인가요?
+* 에러 없이 실행하기 위한 의존성 설정(Gradle/Maven)이 필요하신가요?
+
+
+
 코드를 사용할 때는 주의가 필요합니다.객체 반환 예제 (JSON 변환)자바 객체를 리턴하면 스프링이 기본 라이브러리(Jackson)를 이용해 JSON 형식으로 바꿔서 클라이언트에 전달합니다.java@Controller
 public class ApiController {
 
