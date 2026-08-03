@@ -11,6 +11,16 @@ https://youtu.be/QyRKXYd4xC8?si=LqnvbhWAmBhNFttT
 17분 52초쯤
 
 
+롬복 설치 및 연동 방법다운로드: 공식 홈페이지에서 lombok.jar 파일을 받습니다.
+
+https://projectlombok.org/download
+
+lombok.jar는 별도의 자바 폴더를 직접 찾을 필요 없이, 터미널에서 java -jar lombok.jar 명령어로 설치 프로그램을 실행하면 됩니다.
+설치 방법
+다운로드 폴더 이동: 터미널을 열고 cd ~/Downloads 입력
+실행 명령어: java -jar lombok.jar 입력 후 실행IDE 선택: 화면에 창이 뜨면 연동할 개발 툴(Eclipse, STS 등)을 선택하거나 [Specify location]을 눌러 직접 지정
+
+
 맥 이클립스 스프링 부트 개발시에 lombok 설치해야 되나?
 네, 맥에서 이클립스(또는 STS)로 스프링 부트 프로젝트를 개발할 때 롬복(Lombok)을 반드시 설치해야 합니다.
 프로젝트의 pom.xml이나 build.gradle에 의존성(Dependency)을 추가하는 것만으로는 부족하며,
