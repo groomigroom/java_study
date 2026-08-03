@@ -8,7 +8,7 @@ https://youtu.be/QyRKXYd4xC8?si=LqnvbhWAmBhNFttT
 
 ㅡㅡㅡㅡㅡㅡㅡ
 
-17분 52초쯤
+17분 52초쯤 부터 스프링 프로젝트 생성 바로전까지
 
 
 롬복 설치 및 연동 방법다운로드: 공식 홈페이지에서 lombok.jar 파일을 받습니다.
