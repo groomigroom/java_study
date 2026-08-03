@@ -21,6 +21,35 @@ lombok.jar는 별도의 자바 폴더를 직접 찾을 필요 없이, 터미널�
 실행 명령어: java -jar lombok.jar 입력 후 실행IDE 선택: 화면에 창이 뜨면 연동할 개발 툴(Eclipse, STS 등)을 선택하거나 [Specify location]을 눌러 직접 지정
 
 
+맥(macOS) 환경에서 eclipse.ini 파일에 -javaagent 설정이 올바르게 추가되었는지 확인하면 롬복(Lombok) 설치 여부를 검증할 수 있습니다. [1, 2] 
+## 1. eclipse.ini 파일 위치 찾기
+
+   1. Finder(파인더)를 열고 응용 프로그램(Applications) 폴더로 이동합니다.
+   2. Eclipse.app 아이콘을 마우스 우클릭(또는 두 손가락 클릭)한 뒤 [패키지 내용 보기]를 선택합니다.
+   3. Contents > Eclipse 경로로 진입하면 eclipse.ini 파일을 찾을 수 있습니다.
+   (참고: STS를 사용 중이라면 파일명이 SpringToolSuite4.ini 일 수 있습니다.) [2, 3, 4] 
+
+## 2. 롬복 설정 확인하기
+eclipse.ini 파일을 텍스트 편집기나 터미널로 열어 맨 아랫줄을 확인합니다. 아래와 같은 코드가 누락 없이 들어가 있어야 설치가 완료된 것입니다. [1, 2] 
+
+-javaagent:/Applications/Eclipse.app/Contents/Eclipse/lombok.jar
+
+
+* 
+* 주의 사항: 지정된 경로에 실제 lombok.jar 파일이 물리적으로 존재하는지 반드시 함께 확인해야 합니다. 경로가 다르다면 수동으로 알맞게 수정해주어야 합니다. [4, 5] 
+* 
+
+------------------------------
+## 💡 가장 확실한 교차 검증법 (이클립스 내부 확인)
+eclipse.ini를 열지 않고도 이클립스 프로그램 자체에서 바로 확인할 수 있습니다.
+
+   1. 상단 메뉴 바에서 Eclipse -> About Eclipse를 클릭합니다.
+   2. 팝업창 하단 문구에 Lombok v1.xx.xx is installed.라는 메시지가 출력되는지 확인합니다. 이 문구가 보인다면 정상적으로 연동된 상태입니다.
+
+설치 확인 중 특정 오류가 발생하거나 문구가 보이지 않는다면 말씀해 주세요. 다음 해결 단계를 안내해 드리겠습니다. [6] 
+
+
+
 맥 이클립스 스프링 부트 개발시에 lombok 설치해야 되나?
 네, 맥에서 이클립스(또는 STS)로 스프링 부트 프로젝트를 개발할 때 롬복(Lombok)을 반드시 설치해야 합니다.
 프로젝트의 pom.xml이나 build.gradle에 의존성(Dependency)을 추가하는 것만으로는 부족하며,
