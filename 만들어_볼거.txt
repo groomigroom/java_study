@@ -4,14 +4,14 @@ public class TestController {
 
     @GetMapping("/text")
     @ResponseBody
-    public StringPrint text() {
+    public String Printtext() {
         return "Hello, Spring!";
     }
 
     @GetMapping("/groomi")
     @ResponseBody
-    public String-print groomi() {
-        return "Hello, Spring!";
+    public String Printgroomi() {
+        return "Hello, groomi!";
     }
 }
 
