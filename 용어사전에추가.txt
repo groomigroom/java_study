@@ -1,5 +1,23 @@
 maven gradle
 
+ㅡㅡㅡㅡㅡㅡㅡ
+
+
+
+starter dependencies
+
+spring boot DevTools
+Lombok
+Spring Configuration Process
+Spring Web
+Spring Boot Actuator
+TestContainers
+Spring Data JPA
+Flyway Migration
+H2 Database
+PostgreSQL Driver
+Validation
+
 
 ㅡㅡㅡㅡㅡㅡㅡ
 
