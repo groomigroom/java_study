@@ -28,6 +28,12 @@ spring.application.name=doruri222
 다른 서비스와 이름이 겹치지 않는지 확인해야 합니다.
 단순 로컬 프로젝트: 혼자 개발하거나 외부 연동이 없다면 이름을 바꿔도 프로그램 작동에 문제가 없습니다.
 
+
+서버 포트 설정: server.port=8081
+데이터베이스 연결:spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=1234
+
 ---------------------------------------------
 
 
