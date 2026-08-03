@@ -16,6 +16,9 @@ https://youtu.be/QyRKXYd4xC8?si=LqnvbhWAmBhNFttT
 프로젝트의 pom.xml이나 build.gradle에 의존성(Dependency)을 추가하는 것만으로는 부족하며,
 이클립스 실행 파일(Eclipse.app 또는 STS.app) 자체가 롬복의 어노테이션(@Getter, @Setter 등)을 인식할 수 있도록 IDE에도 롬복을 직접 연동해 주어야 합니다.
 롬복 설치 및 연동 방법다운로드: 공식 홈페이지에서 lombok.jar 파일을 받습니다.
+
+https://projectlombok.org/download
+
 터미널 실행: 파일이 있는 위치에서 java -jar lombok.jar 명령어를 입력합니다.
 IDE 지정: 설치 창이 뜨면 이클립스(Eclipse.app 또는 STS) 경로를 선택한 뒤 Install / Update를 누릅니다.
 재시작: 설치 완료 후 이클립스를 다시 끕니다.
