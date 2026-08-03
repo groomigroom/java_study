@@ -20,6 +20,49 @@
         주로 사용하는 이유REST API: 웹 페이지 전체가 아닌 데이터(JSON)만 가볍게 주고받을 때 필수
         간편함: HttpServletResponse를 직접 만지지 않고 편리하게 데이터 전송 가능
         대체재: 클래스에 @RestController를 쓰면 모든 메서드에 자동 적용됨
+
+
+자바 스프링 @Responsebody 활용 예제    +4                    스프링의 @ResponseBody는 메서드가 반환하는 자바 객체를 HTTP 응답 본문(Body)에 직접 전달하여 JSON이나 텍스트로 변환해 주는 어노테이션입니다. 주로 뷰(HTML) 대신 데이터 자체를 반환하는 REST API를 만들 때 사용합니다.기본 문자열 반환 예제뷰 이름을 찾는 대신 문자열 "Hello"가 웹 브라우저에 그대로 출력됩니다.java@Controller
+public class TestController {
+
+    @GetMapping("/text")
+    @ResponseBody
+    public String-print text() {
+        return "Hello, Spring!";
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.객체 반환 예제 (JSON 변환)자바 객체를 리턴하면 스프링이 기본 라이브러리(Jackson)를 이용해 JSON 형식으로 바꿔서 클라이언트에 전달합니다.java@Controller
+public class ApiController {
+
+    @GetMapping("/user")
+    @ResponseBody
+    public User getUser() {
+        User user = new User("홍길동", 25);
+        return user; // {"name":"홍길동", "age":25} 형태의 JSON으로 변환됨
+    }
+}
+
+class User {
+    private String name;
+    private int age;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() { return name; }
+    public int getAge() { return age; }
+}
+코드를 사용할 때는 주의가 필요합니다.@RestController 사용하기클래스에 @RestController를 붙이면 모든 메서드에 @ResponseBody를 따로 붙이지 않아도 똑같이 동작합니다.java@RestController
+public class MyRestController {
+
+    @GetMapping("/data")
+    public String getData() {
+        return "자동으로 ResponseBody 적용";
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.For tips on how to use the  annotation in your applications:7:44Spring boot tutorial - @ResponseBody annotation with example조회수: 1.5만 · 5년 전YouTube · Engineer Talks With BushanIf you want, tell me:Are you returning JSON data or plain text?Are you using Spring Boot?I can give you more code for your project.티스토리@RequestBody @ResponseBody 어노테이션 이해하고 사용하기2022. 5. 13. — 예를 들어서 클라이언트에서 서버에 JSON 형식의 requestBody로 요청 데이터를 전송했을 때, Java에서는 해당 JSON 형식의 데이터를 받기 위해서 J...YouTube·Engineer Talks With Bushan7:44Spring boot tutorial - @ResponseBody annotation with example티스토리[Spring] RequestBody와 ResponseBody의 사용 방법? 그리고 ...2026. 1. 12. — 아주 쉽게 말하면, @RequestBody는 "클라이언트가 보낸 데이터 읽기", @ResponseBody는 "서버가 데이터를 그대로 돌려주기"입니다. REST A...티스토리@ResponseBody 의미 및 활용법 (Spring Boot에서의 완벽한 이해)2025. 3. 13. — Spring Boot에서 @ResponseBody는 컨트롤러의 메서드가 반환하는 데이터를 HTTP 응답 본문(body)으로 직접 변환하여 클라이언트에게 전달하도록...티스토리Spring @ResponseBody를 이용하여 데이터 반환 (API 개발) - memostack2021. 5. 17. — 만약, View 페이지가 아닌 반환값 그대로 클라이언트한테 return 하고 싶은 경우 @ResponseBody 를 사용하면 된다. 1. @ResponseBody...티스토리Spring RESTful 사용자 관리 프로젝트 (@RequestBody, @ResponseBody ...2021. 11. 29. — -> HTTP Request Body를 Java 객체로 전달 받을 수 있다. @ResponseBody. -> Java 객체를 HTTP Response Body로 ...티스토리[Spring] @RequestBody, @ResponseBody로 JSON 전송하기2022. 9. 9. — Spring에서 JSON 데이터를 보내려면 @RequestBody, @ResponseBody 어노테이션을 사용할 수 있습니다. @RequestBody는 컨트롤러 ...    AI 답변에 오류가 있을 수 있습니다. 자세히 알아보기
     </p>
 </body>
 
