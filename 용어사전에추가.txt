@@ -6,7 +6,14 @@
 
 @ResponseBody
 
-@ResponseBody는 자바 객체를 HTTP 응답 본문(Body)으로 변환해 전달하는 Spring MVC 어노테이션입니다. 즉, 뷰(HTML 등)를 거치지 않고 데이터(JSON, 문자열 등)를 클라이언트에 직접 보냅니다.핵심 동작 방식직접 반환: 메서드가 리턴하는 값을 뷰 이름으로 보지 않고 응답 내용으로 직접 사용자동 변환: 자바 객체나 리스트를 HttpMessageConverter를 거쳐 JSON이나 XML 형식으로 바꿈주로 사용하는 이유REST API: 웹 페이지 전체가 아닌 데이터(JSON)만 가볍게 주고받을 때 필수간편함: HttpServletResponse를 직접 만지지 않고 편리하게 데이터 전송 가능대체재: 클래스에 @RestController를 쓰면 모든 메서드에 자동 적용됨
+@ResponseBody는 자바 객체를 HTTP 응답 본문(Body)으로 변환해 전달하는 Spring MVC 어노테이션입니다. 
+즉, 뷰(HTML 등)를 거치지 않고 데이터(JSON, 문자열 등)를 클라이언트에 직접 보냅니다.
+핵심 동작 방식
+직접 반환: 메서드가 리턴하는 값을 뷰 이름으로 보지 않고 응답 내용으로 직접 사용
+자동 변환: 자바 객체나 리스트를 HttpMessageConverter를 거쳐 JSON이나 XML 형식으로 바꿈
+주로 사용하는 이유REST API: 웹 페이지 전체가 아닌 데이터(JSON)만 가볍게 주고받을 때 필수
+간편함: HttpServletResponse를 직접 만지지 않고 편리하게 데이터 전송 가능
+대체재: 클래스에 @RestController를 쓰면 모든 메서드에 자동 적용됨
 
 
 ---------------------------------------------
