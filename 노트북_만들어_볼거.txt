@@ -21,6 +21,22 @@ public class TestController {
 --------------------------------
 
 
+package 패키지이름; 코드를 import 문과 클래스 선언보다 가장 위에 작성합니다.
+작성 방법
+키워드 사용: package 뒤에 폴더(디렉토리) 경로를 점(.)으로 구분하여 적습니다.
+위치: 자바 파일의 맨 첫 줄에 적습니다. (주석 제외)예시 코드:java
+
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+public class HomeController {
+    // 코드 내용
+}
+주의할 점
+물리적 경로 일치: 실제 폴더 구조(src/main/java/com/example/demo/controller)와 패키지 선언(com.example.demo.controller)이 반드시 일치해야 합니다.
+IDE 자동 생성: 인텔리제이(IntelliJ)나 이클립스(Eclipse) 같은 개발 도구에서는 폴더에서 마우스 우클릭 후 New -> Package로 생성하면 파일 상단에 패키지 경로가 자동으로 입력됩니다.
+
+
 
 
 ------------------------------이거 해보기.......................................끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝끝
