@@ -1,1 +1,27 @@
-jwt.html
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jwt</title>
+</head>
+
+<body>
+    <h1>JWT</h1>
+    <p>
+        JWT(JSON Web Token)<br>
+        서버와 클라이언트 간에 안전하게 정보를 주고받기 위해 사용하는 웹 표준(RFC 7519) 토큰이며,<br>
+        주로 사용자 인증(Authentication)과 권한 부여(Authorization)를 처리하는 핵심 수단입니다.<br>
+        세션 저장소 없이도 토큰 자체에 사용자 정보와 서명이 포함되어 있어 서버 확장성이 높습니다.<br>
+        JWT의 구조Header: 토큰의 타입(JWT)과 해시 암호화 알고리즘(HS256 등) 정보<br>
+        Payload: 사용자 이름, 권한, 만료 시간 등 실제 데이터(Claim)<br>
+        Signature: 서버가 가진 비밀키(Secret Key)로 위변조 여부를 검증하는 서명스프링에서 JWT를 사용하는 이유<br>
+        Stateless(무상태성): 서버에 로그인 상태를 세션으로 유지하지 않고, 클라이언트가 토큰을 가지고 요청하므로 서버 부하가 적음<br>
+        확장성: 여러 대의 서버가 동작하는 분산/클라우드 환경에서 세션 공유 문제 없이 인증을 처리할 수 있음<br>
+        독립성: 토큰 하나만으로 사용자의 권한과 인증 유효성을 즉시 판별 가능
+
+    </p>
+</body>
+
+</html>
