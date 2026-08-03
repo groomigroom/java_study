@@ -7,10 +7,7 @@ always trust all authorities 체크
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-https://youtu.be/QyRKXYd4xC8?si=LqnvbhWAmBhNFttT
 
-
-13분 34초
 
 노트북하기
 
@@ -22,6 +19,20 @@ general -> content type
 여기서 text 파일들에다가
 
 default encoding을 UTF-8로 설정하기
+
+
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+DTD 및 XSD의 다운로드 설정 체크
+
+
+16분 1초
+
+https://youtu.be/QyRKXYd4xC8?si=LqnvbhWAmBhNFttT
+
 
 
 
