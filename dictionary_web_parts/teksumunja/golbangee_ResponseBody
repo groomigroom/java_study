@@ -22,7 +22,9 @@
         대체재: 클래스에 @RestController를 쓰면 모든 메서드에 자동 적용됨
 
 
-자바 스프링 @Responsebody 활용 예제    +4                    스프링의 @ResponseBody는 메서드가 반환하는 자바 객체를 HTTP 응답 본문(Body)에 직접 전달하여 JSON이나 텍스트로 변환해 주는 어노테이션입니다. 주로 뷰(HTML) 대신 데이터 자체를 반환하는 REST API를 만들 때 사용합니다.기본 문자열 반환 예제뷰 이름을 찾는 대신 문자열 "Hello"가 웹 브라우저에 그대로 출력됩니다.java@Controller
+자바 스프링 @Responsebody 활용 예제    +4                    스프링의 @ResponseBody는 메서드가 반환하는 자바 객체를 HTTP 응답 본문(Body)에 직접 전달하여 JSON이나 텍스트로 변환해 주는 어노테이션입니다. 주로 뷰(HTML) 대신 데이터 자체를 반환하는 REST API를 만들 때 사용합니다.기본 문자열 반환 예제뷰 이름을 찾는 대신 문자열 "Hello"가 웹 브라우저에 그대로 출력됩니다.java
+
+@Controller
 public class TestController {
 
     @GetMapping("/text")
