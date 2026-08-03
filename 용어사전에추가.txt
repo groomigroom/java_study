@@ -35,7 +35,6 @@ https://margin1103.tistory.com/1
 
 ---------------------------------------------
 
-노트북 하기
 
 application.properties
 
