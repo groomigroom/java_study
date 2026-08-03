@@ -167,6 +167,70 @@ public class MyRestController {
 * 
 
 
+JSP(JavaServer Pages)는 HTML 코드 안에 자바(Java) 코드를 넣어서 동적인 웹 페이지를 만들 수 있는 기술입니다. [1, 2] 
+스프링 레거시(이클립스 환경)에서 화면을 만들 때 가장 기본적으로 사용하는 파일 형식이며, 확장자는 .html 대신 .jsp를 사용합니다.
+------------------------------
+## 1. HTML과 JSP의 차이점
+
+* HTML 파일 (.html): 단순한 정적 문서입니다. 서버에서 데이터를 받아와서 화면을 동적으로 바꾸는 것이 기본적으로 불가능합니다.
+* JSP 파일 (.jsp): 동적 문서입니다. HTML 코드 사이에 자바 코드를 끼워 넣을 수 있어서, 로그인한 사용자의 이름을 화면에 띄우거나 데이터베이스(DB)에서 가져온 회원 목록을 표로 출력할 수 있습니다. [3, 4, 5] 
+
+------------------------------
+## 2. JSP 파일은 어떻게 생겼나요?
+HTML과 똑같이 생겼지만, 맨 위에 특수한 설정 문장이 들어가고 자바 코드를 쓸 수 있는 영역(<% %>)이 존재합니다. [6, 7] 
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>나의 첫 JSP</title>
+</head>
+<body>
+    <h1>안녕하세요!</h1>
+    
+    <%
+        // JSP 안에서는 이렇게 자바 코드를 작성할 수 있습니다.
+        String userName = "홍길동";
+        int age = 25;
+    %>
+    
+    <!-- 자바 변수를 HTML 화면에 바로 출력합니다 -->
+    <p>이름: <%= userName %></p>
+    <p>나이: <%= age %>세</p>
+</body>
+</html>
+
+------------------------------
+## 3. 스프링 컨트롤러와 JSP의 관계
+방금 물어보신 컨트롤러 코드와 JSP는 다음과 같이 데이터를 주고받으며 화면을 완성합니다.
+
+   1. 컨트롤러: 데이터를 준비하고 출력할 JSP의 이름을 지정합니다.
+
+@Controllerpublic class TestController {
+
+    @GetMapping("/text")
+    public String printText(Model model) {
+        // 화면(JSP)에 넘겨줄 데이터를 바구니(model)에 담습니다.
+        model.addAttribute("msg", "Hello, Spring!"); 
+        
+        return "hello"; // hello.jsp 파일을 찾으라는 뜻
+    }
+}
+
+
+   1. JSP (hello.jsp): 컨트롤러가 보낸 데이터를 받아서 HTML 화면에 끼워 넣습니다. [8] 
+
+<h1>서버에서 보낸 메시지: ${msg}</h1> 
+<!-- 브라우저에는 <h1>서버에서 보낸 메시지: Hello, Spring!</h1> 로 출력됨 -->
+
+------------------------------
+혹시 이클립스 프로젝트에 테스트용 JSP 파일을 직접 하나 만들어보고 싶으신가요?
+
+* JSP 파일을 새로 만드는 방법이 필요하신가요?
+* 아니면 컨트롤러에서 JSP로 데이터를 전달하는 전체 예제 코드를 확인하고 싶으신가요?
+
+
+
 
  </p>
 </body>
