@@ -195,6 +195,22 @@ public class responsebody {
 }
 
 
+##### 노트북 하기
+
+이클립스에서 @Controller 입력 시 자동으로 import 문이 추가되게 하려면 단축키를 사용하거나 저장 시 자동 정리 기능(Save Actions)을 설정하면 됩니다. 
+맥(Mac) 환경에서는 control + shift + O (또는 command + shift + O) 단축키를 이용하거나 저장 설정을 변경하세요.
+수동 및 단축키로 추가하기
+단축키 사용: @Controller를 입력한 상태에서 맥 키보드로 Control + Shift + O (또는 키보드 환경에 따라 Command + Shift + O)를 누릅니다.
+퀵픽스(Quick Fix): 빨간색 오류 밑줄이 그어진 @Controller 위에 커서를 올리고 Command + 1을 누른 뒤, 나타나는 제안 메뉴에서 Import 'Controller' (org.springframework.stereotype)를 선택합니다.
+저장할 때마다 자동으로 import 되도록 설정하기
+매번 단축키를 누르지 않고 파일을 저장할 때(Command + S) 자동으로 필요한 패키지가 추가되도록 설정할 수 있습니다.
+이클립스 상단 메뉴에서 [Eclipse / Window] > Preferences로 이동합니다.좌측 메뉴에서 Java > Editor > Save Actions 순으로 선택합니다.
+우측 상단의 Perform the selected actions on save 항목을 체크합니다.
+하단 목록에서 Organize imports를 체크하고 Apply and Close 버튼을 누릅니다.
+만약 단축키나 자동 저장을 설정해도 @Controller를 찾지 못한다면, 프로젝트에 Spring MVC / Spring Boot 라이브러리(spring-web 등)가 정상적으로 추가되어 있는지 
+Maven(pom.xml) 또는 Gradle(build.gradle) 설정을 확인해 보세요. 
+
+
 위에꺼에서 골뱅이 자동으로 인식되게 하는법????
 
 ㅇㅇㅇ
