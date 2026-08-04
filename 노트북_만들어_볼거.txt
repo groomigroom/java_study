@@ -1,3 +1,46 @@
+자바 스프링 부트에서 MySQL 드라이버를 사용하려면 Spring Data JPA, MySQL Driver, Spring Web 의존성을 추가해야 합니다.1. 의존성 설정 (build.gradle)build.gradle 파일에 아래 내용을 추가합니다.groovydependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+}
+코드를 사용할 때는 주의가 필요합니다.2. 데이터베이스 연결 설정 (src/main/resources/application.properties)MySQL 서버 주소, 계정, 비밀번호를 적습니다.propertiesspring.datasource.url=jdbc:mysql://localhost:3306/mydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+코드를 사용할 때는 주의가 필요합니다.3. 엔티티(Entity) 클래스 작성테이블과 매핑될 기본 모델을 만듭니다.javapackage com.example.demo;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    // Getter and Setter
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+}
+코드를 사용할 때는 주의가 필요합니다.4. 리포지토리(Repository) 인터페이스 작성데이터베이스 작업을 처리할 인터페이스를 만듭니다.javapackage com.example.demo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #####
 
 
