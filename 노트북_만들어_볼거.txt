@@ -1,4 +1,6 @@
-자바 스프링 부트에서 MySQL 드라이버를 사용하려면 Spring Data JPA, MySQL Driver, Spring Web 의존성을 추가해야 합니다.1. 의존성 설정 (build.gradle)build.gradle 파일에 아래 내용을 추가합니다.groovydependencies {
+자바 스프링 부트에서 MySQL 드라이버를 사용하려면 Spring Data JPA, MySQL Driver, Spring Web 의존성을 추가해야 합니다.
+1. 의존성 설정 (build.gradle)build.gradle 파일에 아래 내용을 추가합니다.groovy
+dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'com.mysql:mysql-connector-j'
