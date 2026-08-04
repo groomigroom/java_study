@@ -146,7 +146,7 @@ https://www.eclipse.org/downloads/packages/release/2026-06/r/eclipse-ide-java-de
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-
+이건 함
 
 맥에서 java 버전 확인하는 법?
 맥에서 자바 버전을 확인하려면 터미널 앱을 열고 java -version 또는 /usr/libexec/java_home -V 명령어를 입력하면 됩니다.
