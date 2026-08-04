@@ -505,7 +505,12 @@ IDE 자동 생성: 인텔리제이(IntelliJ)나 이클립스(Eclipse) 같은 개
 java.util.Date는 자바에서 날짜와 시간을 다룰 때 쓰는 클래스입니다. 현재 날짜 출력, 밀리초 값 얻기, SimpleDateFormat을 이용한 형식 변환 예제 코드를 아래에서 확인할 수 있습니다.기본 예제 코드javaimport java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class DateExample {
+package groom_date;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class main {
     public static void main(String[] args) {
         // 1. 현재 날짜와 시간 생성
         Date now = new Date();
@@ -521,6 +526,12 @@ public class DateExample {
         System.out.println("포맷 지정 출력: " + formattedDate);
     }
 }
+
+/*
+ 기본 출력: Tue Aug 04 20:22:01 KST 2026
+밀리초 시간: 1785842521009
+포맷 지정 출력: 2026-08-04 20:22:01
+ */
 
 
 
