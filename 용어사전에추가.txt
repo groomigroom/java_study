@@ -1,3 +1,29 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Main {
+    public static void main(String[] args) {
+        // 현재 날짜와 시간 가져오기
+        LocalDateTime now = LocalDateTime.now();
+
+        // 포맷터 정의 (상수 또는 ofPattern 사용)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // 1. LocalDateTime -> String (포맷팅)
+        String formattedString = now.format(formatter);
+        System.out.println("포맷팅 결과: " + formattedString);
+
+        // 2. String -> LocalDateTime (파싱)
+        LocalDateTime parsedDateTime = LocalDateTime.parse(formattedString, formatter);
+        System.out.println("파싱 결과: " + parsedDateTime);
+    }
+}
+
+
+
+--------------------------------------
+
+
 
 자바에서 SimpleDateFormat 클래스는 날짜(Date) 객체를 원하는 포맷의 문자열로 변환하거나, 반대로 문자열을 Date 객체로 파싱할 때 사용합니다. [1] 
 ## 1. 기본 사용 순서
