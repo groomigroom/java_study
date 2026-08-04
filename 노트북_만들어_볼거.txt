@@ -148,6 +148,19 @@ IDE 지정: 설치 창이 뜨면 이클립스(Eclipse.app 또는 STS) 경로를 
 설치된 모든 자바 버전과 경로 목록 확인: /usr/libexec/java_home -V 입력
 
 
+ ~ % java -version
+java version "25.0.1" 2025-10-21 LTS
+Java(TM) SE Runtime Environment (build 25.0.1+8-LTS-27)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0.1+8-LTS-27, mixed mode, sharing)
+
+
+
+
+
+
+
+
+
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 
