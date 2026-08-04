@@ -124,14 +124,14 @@ IDE 지정: 설치 창이 뜨면 이클립스(Eclipse.app 또는 STS) 경로를 
 
    1. 이클립스 공식 Available Software Sites에서 업데이트하려는 버전의 URL 주소를 확인합니다 (예: https://eclipse.org). [9, 10] \
 
-##### 2025-12읹데 찾아보기...
+##### 노트북 하기
 
 
 https://www.eclipse.org/downloads/packages/release/2025-12/m1
 
 
 
-
+https://www.eclipse.org/downloads/packages/release/2026-06/r/eclipse-ide-java-developers
 
    2. 이클립스 메뉴바에서 Eclipse ➔ Settings... (또는 Preferences...)로 이동합니다. [4, 11] 
    3. 왼쪽 메뉴에서 Install/Update ➔ Available Software Sites를 클릭합니다. [4, 11] 
