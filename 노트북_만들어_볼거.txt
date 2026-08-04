@@ -164,6 +164,33 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.0.1+8-LTS-27, mixed mode, sharing)
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 
+package com.example.demo;
+
+public class responsebody {
+	@Controller
+	public class TestController {
+
+	    @GetMapping("/text")
+	    @ResponseBody
+	    public String Printtext() {
+	        return "Hello, Spring!";
+	    }
+
+	    @GetMapping("/groomi")
+	    @ResponseBody
+	    public String Printgroomi() {
+	        return "Hello, groomi!";
+	    }
+	}
+
+}
+
+
+위에꺼에서 골뱅이 자동으로 인식되게 하는법????
+
+ㅇㅇㅇ
+
+
 @ResponseBody 예제로 정리하기
 
 
