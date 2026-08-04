@@ -1,3 +1,54 @@
+#####
+
+
+롬복(Lombok)의 @Getter, @Setter, @ToString은 반복되는 메서드 작성 코드를 줄여주는 자바 라이브러리 어노테이션입니다. DTO나 모델 클래스 상단에 선언하여 사용합니다.1. 롬복 설정 (build.gradle)groovydependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+코드를 사용할 때는 주의가 필요합니다.2. 예제 코드 (UserDto.java)javapackage com.example.demo.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class UserDto {
+    private String name;
+    private int age;
+}
+코드를 사용할 때는 주의가 필요합니다.3. 사용 예시 (TestController.java)javapackage com.example.demo.controller;
+
+import com.example.demo.dto.UserDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class TestController {
+
+    @GetMapping("/user")
+    public String userTest() {
+        UserDto user = new UserDto();
+        
+        // @Setter 작동 확인
+        user.setName("홍길동");
+        user.setAge(25);
+        
+        // @Getter 및 @ToString 작동 확인
+        System.out.println(user.toString()); 
+        
+        return user.getName() + "의 나이는 " + user.getAge() + "세 입니다.";
+    }
+}
+
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+
+
 골뱅이 임포트 할 수 있는 요소들 자동 완성 뜨게 하는 법?
 
 
