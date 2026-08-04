@@ -9,7 +9,7 @@ always trust all authorities 체크
 
 
 
-노트북하기
+이건 함
 
 이클립스 인코딩 설정
 
