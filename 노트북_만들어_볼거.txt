@@ -127,6 +127,12 @@ IDE 지정: 설치 창이 뜨면 이클립스(Eclipse.app 또는 STS) 경로를 
 ##### 2025-12읹데 찾아보기...
 
 
+https://www.eclipse.org/downloads/packages/release/2025-12/m1
+
+
+
+
+
    2. 이클립스 메뉴바에서 Eclipse ➔ Settings... (또는 Preferences...)로 이동합니다. [4, 11] 
    3. 왼쪽 메뉴에서 Install/Update ➔ Available Software Sites를 클릭합니다. [4, 11] 
    4. 우측의 Add... 버튼을 누른 뒤 아래 정보를 입력하고 Add를 클릭합니다.
