@@ -1,4 +1,9 @@
-Spring Data JPA만으로는 실제 데이터베이스인 MySQL과 통신할 수 없으며, MySQL JDBC 드라이버가 물리적인 연결과 SQL 전송을 담당하기 때문에 두 라이브러리를 함께 사용해야 합니다.역할 분담과 필요성Spring Data JPA: 자바 객체와 데이터베이스 테이블을 연결해 주는 규칙(ORM)과 쿼리 자동 생성 기능을 제공합니다.MySQL Driver: 자바 프로그램이 MySQL 서버에 실제로 접속하여 데이터를 읽고 쓸 수 있게 해주는 저수준 통신 라이브러리(JDBC 구현체)입니다.상호 작용: JPA가 번역한 SQL 명령어를 실제 MySQL 서버가 이해할 수 있는 네트워크 패킷으로 바꾸어 전달하는 주체가 바로 MySQL 드라이버입니다.
+Spring Data JPA만으로는 실제 데이터베이스인 MySQL과 통신할 수 없으며,
+MySQL JDBC 드라이버가 물리적인 연결과 SQL 전송을 담당하기 때문에 두 라이브러리를 함께 사용해야 합니다.
+역할 분담과 필요성
+Spring Data JPA: 자바 객체와 데이터베이스 테이블을 연결해 주는 규칙(ORM)과 쿼리 자동 생성 기능을 제공합니다.
+MySQL Driver: 자바 프로그램이 MySQL 서버에 실제로 접속하여 데이터를 읽고 쓸 수 있게 해주는 저수준 통신 라이브러리(JDBC 구현체)입니다.
+상호 작용: JPA가 번역한 SQL 명령어를 실제 MySQL 서버가 이해할 수 있는 네트워크 패킷으로 바꾸어 전달하는 주체가 바로 MySQL 드라이버입니다.
 
 
 자바 스프링 부트에서 MySQL 드라이버를 사용하려면 Spring Data JPA, MySQL Driver, Spring Web 의존성을 추가해야 합니다.
@@ -35,7 +40,9 @@ public class User {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 }
-코드를 사용할 때는 주의가 필요합니다.4. 리포지토리(Repository) 인터페이스 작성데이터베이스 작업을 처리할 인터페이스를 만듭니다.javapackage com.example.demo;
+코드를 사용할 때는 주의가 필요합니다.4. 리포지토리(Repository) 인터페이스 작성데이터베이스 작업을 처리할 인터페이스를 만듭니다.java
+
+package com.example.demo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
