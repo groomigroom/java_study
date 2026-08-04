@@ -160,9 +160,12 @@ Java(TM) SE Runtime Environment (build 25.0.1+8-LTS-27)
 Java HotSpot(TM) 64-Bit Server VM (build 25.0.1+8-LTS-27, mixed mode, sharing)
 
 
+--------
 
 
+##### 이건 확인하기
 
+맥에서 자바(JDK) 버전을 최신으로 업데이트하려면 공식 홈페이지 다운로드 또는 Homebrew 패키지 관리자를 이용해 최신 인스톨러를 설치하면 됩니다. 가장 보편적인 두 가지 방법은 웹사이트 직접 설치와 터미널 명령어를 통한 설치입니다.For tips on how to manage and switch between different versions after updating:2:04How to Switch Java Versions on macOS조회수: 2.6천 · 8개월 전YouTube · George Adams공식 웹사이트에서 다운로드하기오라클(Oracle)이나 오픈JDK(OpenJDK) 공식 웹사이트에 접속합니다.본인의 맥 프로세서(Apple Silicon 또는 Intel)에 맞는 macOS 설치 파일(DMG)을 다운로드합니다.다운로드한 파일을 열고 안내에 따라 설치를 진행합니다.
 
 
 
