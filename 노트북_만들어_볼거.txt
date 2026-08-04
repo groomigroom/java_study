@@ -1,3 +1,5 @@
+#####
+
 Spring Data JPA만으로는 실제 데이터베이스인 MySQL과 통신할 수 없으며,
 MySQL JDBC 드라이버가 물리적인 연결과 SQL 전송을 담당하기 때문에 두 라이브러리를 함께 사용해야 합니다.
 역할 분담과 필요성
@@ -49,6 +51,35 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<User, Long> {
 }
 
+
+제공해주신 User 엔티티와 UserRepository 인터페이스를 작성하고 애플리케이션을 실행하면, Spring Data JPA와 MySQL 드라이버가 협력하여 복잡한 SQL 작성 없이 데이터베이스 제어가 가능해지는 강력한 효과들이 나타납니다.
+구체적인 효과를 핵심 기능별로 나누어 설명해 드리겠습니다.
+## 1. 테이블 자동 생성 (DDL Auto)
+
+* 효과: MySQL 데이터베이스에 직접 가서 CREATE TABLE 명령어를 칠 필요가 없습니다.
+* 원리: 애플리케이션이 실행될 때 User 클래스의 구조를 분석하여, MySQL 드라이버를 통해 user 테이블을 자동으로 만들어 줍니다. (id는 BIGINT AUTO_INCREMENT로, name은 VARCHAR로 자동 매핑됩니다.)
+
+## 2. SQL문 없는 CRUD 구현 (생산성 폭발)
+
+* 효과: 반복적이고 지루한 SQL(Insert, Update, Select, Delete) 작성이 완전히 사라집니다.
+* 예시: UserRepository를 주입받아 아래 메서드들을 바로 호출할 수 있습니다.
+* userRepository.save(user) → 내부적으로 INSERT INTO user ... 쿼리 자동 실행
+   * userRepository.findById(1L) → 내부적으로 SELECT * FROM user WHERE id = 1 쿼리 자동 실행
+   * userRepository.deleteById(1L) → 내부적으로 DELETE FROM user WHERE id = 1 쿼리 자동 실행
+
+## 3. 자바 객체 중심의 개발 (인프라 격리)
+
+* 효과: 개발자는 '데이터베이스 테이블'을 신경 쓰지 않고, '자바 객체(User)'를 다루는 데에만 집중할 수 있습니다.
+* 원리: 데이터를 조회하면 MySQL의 로우(Row) 데이터가 자바의 User 객체 인스턴스로 자동 변환(매핑)되어 반환됩니다.
+
+## 4. 데이터베이스 교체의 유연성
+
+* 효과: 나중에 데이터베이스를 MySQL에서 PostgreSQL이나 Oracle로 바꾸더라도, 자바 코드를 단 한 줄도 수정할 필요가 없습니다.
+* 원리: Spring Data JPA가 추상화 계층 역할을 하고 있으므로, 설정 파일(application.properties)에서 드라이버와 방언(Dialect) 설정만 변경해 주면 됩니다.
+
+------------------------------
+요약하자면, 이 조합을 통해 "데이터베이스 관련 코드량이 80% 이상 줄어들고, 오타로 인한 SQL 런타임 에러가 방지되며, 비즈니스 로직 개발에만 집중할 수 있는 환경"이 구축됩니다.
+이 효과들을 실제로 확인해보고 싶으시다면, 다음 단계로 컨트롤러(Controller)나 서비스(Service)를 만들어 데이터를 직접 저장하고 조회하는 비즈니스 로직 코드를 구현해 볼 수 있습니다. 관련 코드가 필요하시거나, 연결할 application.properties 설정 방법이 궁금하신가요?
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
