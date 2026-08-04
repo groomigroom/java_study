@@ -122,7 +122,11 @@ IDE 지정: 설치 창이 뜨면 이클립스(Eclipse.app 또는 STS) 경로를 
 ## 3. 메이저 업데이트 (새 버전으로 판올림)
 기존 설정을 유지하면서 새로운 연도/월 버전(예: 2024 → 2025)으로 완전히 업그레이드하려면 업데이트 저장소를 등록해야 합니다. [5, 6, 7, 8] 
 
-   1. 이클립스 공식 Available Software Sites에서 업데이트하려는 버전의 URL 주소를 확인합니다 (예: https://eclipse.org). [9, 10] 
+   1. 이클립스 공식 Available Software Sites에서 업데이트하려는 버전의 URL 주소를 확인합니다 (예: https://eclipse.org). [9, 10] \
+
+##### 2025-12읹데 찾아보기...
+
+
    2. 이클립스 메뉴바에서 Eclipse ➔ Settings... (또는 Preferences...)로 이동합니다. [4, 11] 
    3. 왼쪽 메뉴에서 Install/Update ➔ Available Software Sites를 클릭합니다. [4, 11] 
    4. 우측의 Add... 버튼을 누른 뒤 아래 정보를 입력하고 Add를 클릭합니다.
