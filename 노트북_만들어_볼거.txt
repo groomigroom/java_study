@@ -1,29 +1,4 @@
-#####
-돌려보기
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-public class Main {
-    public static void main(String[] args) {
-        // 현재 날짜와 시간 가져오기
-        LocalDateTime now = LocalDateTime.now();
-
-        // 포맷터 정의 (상수 또는 ofPattern 사용)
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        // 1. LocalDateTime -> String (포맷팅)
-        String formattedString = now.format(formatter);
-        System.out.println("포맷팅 결과: " + formattedString);
-
-        // 2. String -> LocalDateTime (파싱)
-        LocalDateTime parsedDateTime = LocalDateTime.parse(formattedString, formatter);
-        System.out.println("파싱 결과: " + parsedDateTime);
-    }
-}
-
-
------------------------------
 
 postman 설치 M4
 
