@@ -73,6 +73,9 @@ public class User {
 
 /*
 @Entity의
+
+@Entity 어노테이션을 사용하기 위해 필요한 스타터 의존성은 spring-boot-starter-data-jpa입니다. 
+
 자바 스프링(JPA)에서 @Entity는 자바 클래스를 데이터베이스의 테이블과 연결(매핑)하는 선언입니다.
 이 어노테이션이 붙은 클래스는 데이터베이스의 행(row) 하나와 대응되며,
 JPA(Java Persistence API)가 데이터를 영구적으로 관리하는 기준 객체가 됩니다.
