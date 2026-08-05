@@ -6,6 +6,9 @@ postman 설치 M4
 
 Postman을 설치하는 방법은 Postman 다운로드 페이지 접속, Mac 칩 종류에 맞는 파일 선택, 응용 프로그램(Applications) 폴더로 이동의 3가지 핵심 단계를 거치면 됩니다.설치 방법 상세다운로드 페이지 접속: Postman 다운로드 페이지에 접속합니다.Mac 칩 종류 확인 및 선택:화면 왼쪽 위 Apple 아이콘 을 눌러 '이 Mac에 관함'에서 칩 종류를 확인합니다.M1, M2, M3 등 애플 실리콘인 경우 Mac Apple Chip을 선택합니다.인텔 CPU인 경우 Mac Intel Chip을 선택합니다.파일 압축 해제 및 이동:다운로드된 .zip 파일을 풀어 생성된 Postman 앱을 응용 프로그램(Applications) 폴더로 드래그하여 이동합니다.
 
+
+Postman 웹 버전(온라인)은 클라우드 서버에서 실행되므로 내 컴퓨터의 localhost에 직접 접근할 수 없습니다. 주소 입력창이 따로 있는 것이 아니라, 로컬 통신을 위해 Postman Desktop Agent를 설치하거나 데스크톱 앱을 사용해야 합니다.해결 방법Desktop Agent 설치: 웹 화면 하단이나 우측 상단에서 에이전트를 Cloud Agent에서 Desktop Agent로 변경하고 안내에 따라 Postman Desktop Agent를 설치 및 실행합니다.데스크톱 앱 사용: 브라우저 대신 공식 Postman Download 페이지에서 프로그램을 내려받아 로그인하면 localhost 요청을 자유롭게 보낼 수 있습니다.주소 입력: 앱이나 에이전트 연동 후 상단 Enter request URL 입력란에 http://localhost:포트번호 형태로 입력합니다.
+
 ------------------------------
 
 
