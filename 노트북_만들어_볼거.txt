@@ -35,14 +35,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'com.mysql:mysql-connector-j'
 }
-코드를 사용할 때는 주의가 필요합니다.2. 데이터베이스 연결 설정 (src/main/resources/application.properties)MySQL 서버 주소, 계정, 비밀번호를 적습니다.propertiesspring.datasource.url=jdbc:mysql://localhost:3306/mydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+
+2. 데이터베이스 연결 설정 (src/main/resources/application.properties)MySQL 서버 주소, 계정, 비밀번호를 적습니다.
+propertiesspring.datasource.url=jdbc:mysql://localhost:3306/mydb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
 spring.datasource.username=root
 spring.datasource.password=your_password
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-코드를 사용할 때는 주의가 필요합니다.3. 엔티티(Entity) 클래스 작성테이블과 매핑될 기본 모델을 만듭니다.javapackage com.example.demo;
+
+3. 엔티티(Entity) 클래스 작성테이블과 매핑될 기본 모델을 만듭니다.java
+
+package com.example.demo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
