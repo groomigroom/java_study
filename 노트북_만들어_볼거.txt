@@ -109,7 +109,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
-#####
+네이버클라우드에 있음.
 
 
 롬복(Lombok)의 @Getter, @Setter, @ToString은 반복되는 메서드 작성 코드를 줄여주는 자바 라이브러리 어노테이션입니다. DTO나 모델 클래스 상단에 선언하여 사용합니다.1. 롬복 설정 (build.gradle)groovydependencies {
