@@ -1,3 +1,8 @@
+spring-boot-starter라는 start dependency를
+import org.springframework.stereotype.Component;
+
+------------
+
 
 spring-boot-starter
 
