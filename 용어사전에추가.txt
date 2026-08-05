@@ -1,3 +1,37 @@
+결론부터 말씀드리면, 질문하신 코드 내용만으로는 콘솔에 아무것도 출력되지 않습니다.
+Engine과 Car 클래스를 스프링 빈으로 잘 등록하고 의존성 주입(DI)되도록 설정하셨지만, 실제로 Car 빈을 가져와서 drive() 메서드를 호출하는 실행 로직이 빠져있기 때문입니다.
+콘솔에 "엔진 시동!"을 출력하려면 스프링 애플리케이션을 구동하고 아래와 같이 메서드를 직접 호출해야 합니다.
+## 올바른 실행 방법 (Spring Boot 기준)
+스프링 부트 구동 클래스나 별도의 CommandLineRunner를 이용해 Car 빈의 drive()를 호출해 주어야 합니다.
+
+import org.springframework.boot.CommandLineRunner;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.context.ApplicationContext;import org.springframework.context.annotation.Bean;
+
+@SpringBootApplicationpublic class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
+    // 애플리케이션 실행 시 자동으로 구동되는 로직
+    @Bean
+    public CommandLineRunner run(Car car) {
+        return args -> {
+            car.drive(); // 여기서 호출해야 콘솔에 출력됩니다!
+        };
+    }
+}
+
+## 요약
+
+* 작성하신 의존성 주입(DI) 구조는 완벽하게 올바릅니다.
+* 스프링이 컨테이너를 만들고 객체를 조립하는 것과, 메서드를 실행하는 것은 별개입니다.
+* 반드시 스프링 컨테이너로부터 Car 빈을 꺼내어 drive()를 호출해야 출력을 확인할 수 있습니다. [1] 
+
+스프링 프로젝트를 어떤 환경(Spring Boot 또는 순수 Spring Legacy)에서 구동하고 계신가요? 구동 환경을 알려주시면 해당 환경에 맞는 정확한 메인 메서드(Main) 작성법을 안내해 드리겠습니다.
+
+[1] [https://m.blog.naver.com](https://m.blog.naver.com/seek316/222133756594)
+
+
 자바에서는 클래스명과 파일명이 정확히 일치해야 하며, 대소문자도 구분해야 합니다. [1, 2] 
 작성하신 코드의 경우, 한 파일에 모든 클래스를 모아두었는지 또는 파일을 각각 분리했는지에 따라 파일명 명명 규칙이 달라집니다.
 ------------------------------
