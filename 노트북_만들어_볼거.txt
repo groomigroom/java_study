@@ -1,10 +1,11 @@
 
 
 
-DTD 및 XSD의 다운로드 설정 체크
+DTD 및 XSD의 다운로드 설정
 
+DTD_and_XSD_download_setting.html
 
-DTD 및 XSD의 다운로드 설정 체크
+DTD 및 XSD의 다운로드 설정
 
 XML (Wild Web developer)에서
 
