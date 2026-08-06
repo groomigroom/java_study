@@ -17,58 +17,7 @@ JPA(Java Persistence API)가 데이터를 영구적으로 관리하는 기준 �
 
 
 
-자바 스프링(Spring Boot)에서 @Entity를 사용해 데이터베이스와 매핑되는 게시판의 게시글(Post) 엔티티 예제 코드입니다. [1] 
-## 1. 게시글 엔티티 (Post.java)
 
-import jakarta.persistence.*;import lombok.Getter;import lombok.NoArgsConstructor;import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "posts") // DB에는 'posts'라는 이름의 테이블로 생성됨
-@Getter
-@NoArgsConstructor // JPA를 위한 파라미터가 없는 기본 생성자 (필수)public class Post {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // DB가 ID를 자동으로 증가시킴 (Auto Increment)
-    private Long id;
-
-    @Column(nullable = false, length = 100) // null 불가, 길이는 최대 100자
-    private String title;
-
-    @Column(columnDefinition = "TEXT", nullable = false) // 대용량 텍스트 타입 설정
-    private String content;
-
-    @Column(name = "created_at", updatable = false) // 생성일은 수정 불가능하게 설정
-    private LocalDateTime createdAt;
-
-    // 생성자 (안전한 데이터 입력을 위해 빌더 패턴을 주로 사용함)
-    public Post(String title, String content) {
-        this.title = title;
-        this.content = content;
-        this.createdAt = LocalDateTime.now();
-    }
-
-    // 비즈니스 메서드 (수정 기능)
-    public void update(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
-}
-
-## 2. 예제 코드 핵심 포인트
-
-* @Entity: 이 클래스를 데이터베이스 테이블과 매핑하겠다고 JPA에게 알립니다.
-* @NoArgsConstructor: JPA가 데이터 조회 후 객체를 생성할 때 기본 생성자를 내부적으로 반드시 사용합니다.
-* @Id & @GeneratedValue: 테이블의 PK를 설정하고 자동 증가 옵션을 부여합니다.
-* Setter 지양: 객체의 안정성을 위해 set_() 메서드 대신 의미 있는 이름의 메서드(update)를 만들어 사용합니다. [2, 3] 
-
-------------------------------
-이 예제 코드가 데이터베이스에서 어떻게 실제 테이블로 만들어지는지 DDL(테이블 생성 쿼리)이 궁금하신가요? 아니면 이 엔티티를 활용해 데이터를 저장하는 Repository(레포지토리) 예제도 함께 보여드릴까요?
-
-[1] [https://wikidocs.net](https://wikidocs.net/237215)
-[2] [https://blog.naver.com](https://blog.naver.com/goodee0205/224101942666)
-[3] [https://www.inflearn.com](https://www.inflearn.com/community/questions/1353335/builder-%EC%82%AC%EC%9A%A9-%EC%A7%88%EB%AC%B8)
-
-ㅡㅡㅡㅡㅡㅡㅡㅡ
 
 
 결론부터 말씀드리면, 질문하신 코드 내용만으로는 콘솔에 아무것도 출력되지 않습니다.
