@@ -9,3 +9,38 @@ DTO를 쓰는 이유
 보안 강화: 데이터베이스의 민감한 정보(예: 비밀번호 등)가 클라이언트에 그대로 노출되는 것을 막습니다.
 유지보수 편리: 데이터베이스 구조가 바뀌어도 DTO와 엔티티를 분리해 두면 코드가 쉽게 망가지지 않습니다.
 성능 향상: 필요한 데이터만 골라서 담을 수 있어 불필요한 데이터 전송을 줄입니다.
+
+
+dto 예제
+start dependency lombok 미리 설정하고
+
+javaimport lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserRequestDto {
+    private String username;
+    private String email;
+    private int age;
+}
+
+컨트롤러 예제
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    @PostMapping
+    public String createUser(@RequestBody UserRequestDto requestDto) {
+        // 받은 DTO 데이터를 활용하는 로직
+        String name = requestDto.getUsername();
+        return "회원 생성 성공: " + name;
+    }
+}
