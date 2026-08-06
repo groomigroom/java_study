@@ -1,3 +1,29 @@
+자바 스프링에서 Logger는 프로그램이 실행되는 동안 발생하는 기록(로그)을 남기기 위해 사용하는 인터페이스(데이터 타입)입니다. System.out.println 대신 파일이나 콘솔에 단계별(정보, 경고, 에러 등) 상태를 안전하고 체계적으로 출력하는 도구입니다. [1, 2, 3, 4] 
+## Logger의 주요 특징과 의미
+
+* 기록 도구: 변수나 상태 값, 에러 발생 시점을 콘솔이나 파일에 남기는 역할을 합니다.
+* 인터페이스 구조: Logger는 보통 직접 구현체를 쓰지 않고 SLF4J 같은 표준 인터페이스 타입을 사용합니다.
+* 성능과 효율: 단순히 글을 찍는 것을 넘어, 로그 단계를 조절(INFO, DEBUG, ERROR 등)해 불필요한 연산을 줄입니다. [1, 2, 5, 6] 
+
+## 사용 방식
+
+* 선언 방법: private static final Logger log = LoggerFactory.getLogger(MyClass.class); 형태로 선언합니다.
+* 간편식: 롬복(Lombok) 라이브러리를 쓰면 @Slf4j 어노테이션 하나로 위 선언을 대신할 수 있습니다. [1, 7] 
+
+로그 레벨(INFO, DEBUG, ERROR) 설정 방법이나 System.out.println 대신 Logger를 써야 하는 구체적인 이유가 더 궁금하신가요?
+
+[1] [https://ybum1224.tistory.com](https://ybum1224.tistory.com/5)
+[2] [https://velog.io](https://velog.io/@myway00/Java-Spring-Boot-005-2-Logging)
+[3] [https://hianna.tistory.com](https://hianna.tistory.com/1144)
+[4] [https://backtony.tistory.com](https://backtony.tistory.com/33)
+[5] [https://moodone.tistory.com](https://moodone.tistory.com/19)
+[6] [https://wikidocs.net](https://wikidocs.net/163118)
+[7] [https://dkswnkk.tistory.com](https://dkswnkk.tistory.com/445)
+
+
+mmmmmm
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
