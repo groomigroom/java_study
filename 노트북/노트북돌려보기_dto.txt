@@ -80,3 +80,40 @@ public class UserController {
 
 
 mmmmmmm
+
+
+Postman에서 Spring Boot 서버로 JSON 데이터를 보내는 방법은 아래 순서대로 세팅하시면 됩니다.
+## 1. HTTP 메서드 및 URL 설정
+
+* 메서드를 POST로 변경합니다.
+* URL 주소창에 http://localhost:8080/api/users를 입력합니다. (포트 번호가 다르다면 해당 번호 입력) [1] 
+
+## 2. Body 데이터 설정 (가장 중요)
+
+* URL 주소창 아래 메뉴에서 Body 탭을 클릭합니다.
+* 라디오 버튼 중 raw를 선택합니다.
+* 우측 끝에 있는 드롭다운 메뉴(기본값 Text)를 클릭하여 JSON으로 변경합니다. [2, 3] 
+
+## 3. JSON 데이터 작성
+텍스트 에디터 영역에 작성하신 자바 DTO 필드명과 일치하도록 아래와 같이 입력합니다.
+
+{
+  "username": "테스터",
+  "email": "test@example.com",
+  "age": 27
+}
+
+## 4. 요청 보내기
+
+* 우측의 파란색 Send 버튼을 누릅니다.
+* 하단 Response 창에 회원 생성 성공: 테스터라는 문자열이 들어오면 성공입니다. [4] 
+
+------------------------------
+만약 이렇게 보냈는데도 415 Unsupported Media Type 에러가 난다면 Headers 탭에서 Content-Type이 application/json으로 잘 들어가 있는지 확인해 보세요. (Body에서 JSON을 선택하면 자동으로 추가됩니다.) [5] 
+설정 중 막히는 부분이 있거나 에러 코드가 뜬다면 에러 메시지나 상태 코드(예: 400, 415, 500)를 알려주세요. 바로 해결해 드리겠습니다.
+
+[1] [https://apidog.com](https://apidog.com/kr/blog/how-to-make-a-post-request-postman-3/)
+[2] [https://apidog.com](https://apidog.com/kr/blog/postman-post-json-jeonsong/)
+[3] [https://apidog.com](https://apidog.com/kr/blog/how-to-upload-a-file-and-json-data-postman-2/)
+[4] [https://apidog.com](https://apidog.com/kr/blog/json-postman/)
+[5] [https://blog.naver.com](https://blog.naver.com/hanajava/222484561110?viewType=pc)
