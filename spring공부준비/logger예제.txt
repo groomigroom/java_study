@@ -1,0 +1,26 @@
+자바 스프링에서 Logger의 의미와 사용 예제    +5                    자바 스프링에서 Logger는 애플리케이션이 실행되는 동안 발생하는 이벤트, 상태, 오류 등의 정보를 체계적으로 기록(로깅)하는 도구입니다. 단순한 System.out.println()과 달리 로그 레벨 관리, 파일 저장, 성능 최적화 기능을 제공합니다.Logger의 핵심 의미상태 추적: 프로그램 흐름과 변수 값을 시간 순으로 기록해 디버깅을 돕습니다.성능 및 운영 모니터링: 서버에 문제가 생겼을 때 원인을 빠르게 찾고 시스템 부하를 줄입니다.로그 레벨: 중요도에 따라 ERROR, WARN, INFO, DEBUG, TRACE로 나누어 필요한 로그만 골라 출력합니다.스프링 로거 사용 예제 (Lombok 활용)스프링 부트 환경에서는 보통 SLF4J와 롬복(Lombok)의 @Slf4j 어노테이션을 사용해 간편하게 구현합니다.javaimport lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Slf4j  // 로거 객체를 자동으로 생성해 줍니다.
+@Service
+public class MemberService {
+
+    public void registerMember(String name) {
+        log.info("회원 가입 시작: {}", name); // 중요한 정보 기록
+
+        if (name == null || name.trim().isEmpty()) {
+            log.warn("경고: 회원 이름이 비어 있습니다."); // 잠재적 문제
+            return;
+        }
+
+        try {
+            // 비즈니스 로직 처리 예시
+            log.debug("디버그 모드: 이름 길이 = {}", name.length()); // 상세 개발 정보
+            log.info("회원 가입 완료: {}", name);
+            
+        } catch (Exception e) {
+            log.error("에러 발생: 회원 가입 실패 - {}", e.getMessage()); // 심각한 오류
+        }
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.주요 로그 레벨 순서ERROR: 시스템이 멈추거나 기능이 실패하는 심각한 문제WARN: 당장 에러는 아니지만 주의해야 하는 상황INFO: 애플리케이션의 주요 실행 흐름과 상태 변경 정보DEBUG: 개발 과정에서 상세한 정보를 확인하기 위한 기록TRACE: 가장 상세한 단계로 모든 세부 실행 단계를 추적더 자세히 알아보고 싶으신 부분이 있다면 말씀해 주세요:Logback 설정 파일(logback-xml) 작성법프로파일(dev, prod)별 로그 레벨 분리 방법System.out.println과의 성능 차이 이유티스토리Spring Boot : Logger 사용 기본 절차 및 레벨 설정2020. 5. 1. — 스프링에서 로거를 사용하기 위해서 Sl4j를 사용한다. 1. Sl4j는 Log4j와 Logback을 Wrapping하여 간단한 사용환경을 제공한다. 1-1 로깅 ...티스토리Spring Boot: 로깅(Logging) 구현하기 - 무던하게 - 티스토리2024. 11. 21. — Spring Boot: 로깅(Logging) 구현하기. moodone 2024. 11. 21. 14:49. 로깅(Logging)은 애플리케이션의 동작을 기록하여 ...티스토리[Spring] logging의 개념, Log4j 설치 및 설정, 예제 - 영암사는 승경이네2019. 8. 7. — 서버는 클라이언트와 정보를 주고받는다. 다양한 이유로 그 과정에서 발생하는 여러 사건이나 정보들을 기록으로 남기는데 이 기록을 log라고 한다. 그리고 log를 ...티스토리[Spring] logging 에 대해 알아보자 - JuHyeong.dev - 티스토리2022. 3. 21. — 별도의 logging 라이브러리를 사용하여 디버깅이나 타임스탬프 등 정해진 양식에 맞추어 화면 상이나 파일 로그를 남길 목적으로 사용합니다. 이번 게시글은 목차는...티스토리[SPRING] 로깅에 대해서 알아보자2024. 5. 25. — 로깅(logging)은 소프트웨어 시스템에서 발생하는 모든 행위와 이벤트 정보를 시간 순서대로 기록하는 작업을 말한다. 이러한 기록은 프로그램의 실행 상태를 모니...GitHub[Spring] Logback으로 로깅(Logging)하기 - 아마란스 생각2023. 8. 17. — 어떤 소프트웨어가 실행할 때 발생하는 이벤트를 추적할 수 있도록 프로그램 실행 중 기록(로그)를 남기는 것. 간단히 System.out.println() 을 사용...티스토리Logging Library2025. 9. 16. — 응답시간, 리소스 활용도 등의 성능 측정 항목을 추적하는데 도움을 주어 개발자가 애플리케이션을 최적화할 수 있습니다.재능넷🌿 Spring Boot Logging: Logback 설정 최적화 대작전! 🚀2024. 12. 4. — TRACE: 가장 상세한 로그 레벨. 개발 중 매우 자세한 정보가 필요할 때 사용해요.티스토리Logging Library2025. 9. 16. — 7⃣ 스택 추적을 사용해 예기치 않은 오류를 기록 Exception 로깅의 주요 목적 중 하나는 문제의 원인을 빠르게 파악하기 위함입니다.    AI 답변에 오류가 있을 수 있습니다. 자세히 알아보기
