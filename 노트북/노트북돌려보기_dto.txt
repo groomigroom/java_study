@@ -1,4 +1,8 @@
-dto 예제
+dto 예제 DTO.html에도 정리하기...
+
+Spring Web: @RestController, @PostMapping, @RequestBody, @RequestMapping 등 웹 요청 처리와 REST API 개발에 필요한 핵심 기능을 제공합니다.
+Lombok: @Getter, @Setter, @NoArgsConstructor, @AllArgsConstructor 어노테이션을 통해 Getter, Setter, 생성자 코드를 자동으로 컴파일 시점에 생성해 줍니다.
+
 start dependency lombok 미리 설정하고
 
 javaimport lombok.Getter;
