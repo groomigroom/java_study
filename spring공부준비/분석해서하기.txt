@@ -1,0 +1,6 @@
+private fianl BookmarkService BookmarkService;
+
+    @GetMapping //?????
+    public BookmarksDto getBookmark(@RequestParam(name = "page", defaultValue = "1") Integer page) {
+        return bookmarkService.getBookmarks(page);
+    }
