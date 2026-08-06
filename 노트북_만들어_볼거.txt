@@ -88,6 +88,9 @@ JPA(Java Persistence API)가 데이터를 영구적으로 관리하는 기준 �
 @Table: 매핑할 DB 테이블 이름을 따로 지정할 때 사용합니다.
 
 @Id
+
+spring-boot-starter-data-jpa 라는 start dependency에 있음.
+
 자바 스프링(JPA/Hibernate)에서 @Id 어노테이션은 데이터베이스 테이블의 기본 키(Primary Key)에 매핑되는 엔티티 클래스의 필드를 지정할 때 사용합니다.
 핵심 의미와 역할
 식별자 지정: 자바 객체를 구별하는 고유 번호(식별자) 역할을 합니다.
