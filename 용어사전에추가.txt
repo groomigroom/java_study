@@ -1,11 +1,13 @@
 이거 골뱅이 아이디 에다가도 연결하기
 
 
-## 💡 2. @GeneratedValue의 의미와 역할
+@GeneratedValue
 
 이거도 spring-boot-starter-data-jpa에 있음.
 
-@Id가 해당 필드가 기본키(PK)임을 선언한다면, @GeneratedValue는 "이 기본키 값을 개발자가 직접 넣지 않고, 시스템이 자동으로 생성하겠다"는 전략을 설정하는 역할입니다.
+@Id가 해당 필드가 기본키(PK)임을 선언한다면, 
+@GeneratedValue는 "이 기본키 값을 개발자가 직접 넣지 않고, 
+시스템이 자동으로 생성하겠다"는 전략을 설정하는 역할입니다.
 보통 아래와 같이 @Id와 세트로 함께 사용됩니다.
 
 @Id
@@ -14,23 +16,20 @@
 ## 🛠️ 주요 생성 전략 (4가지)
 어노테이션 내부의 strategy 속성을 통해 값을 어떻게 자동으로 채울지 결정합니다.
 
-   1. GenerationType.IDENTITY (가장 많이 사용)
-   * 의미: 기본키 생성을 데이터베이스에 위임합니다.
-      * 특징: MySQL의 AUTO_INCREMENT 처럼 데이터가 비어있는 상태로 저장(insert)되면 DB가 알아서 순차적인 번호를 부여합니다.
-   2. GenerationType.SEQUENCE
-   * 의미: 데이터베이스의 '시퀀스(Sequence)' 오브젝트를 사용해 값을 생성합니다.
-      * 특징: Oracle, PostgreSQL 등 시퀀스를 지원하는 DB에서 주로 사용하며, @SequenceGenerator와 함께 씁니다.
-   3. GenerationType.TABLE
-   * 의미: 키 생성 전용 테이블을 하나 만들어서 데이터베이스 시퀀스를 흉내 내는 방식입니다.
-      * 특징: 모든 DB에서 쓸 수 있지만, 성능이 떨어져 잘 사용하지 않습니다.
-   4. GenerationType.AUTO
-   * 의미: 사용하는 데이터베이스 방언(Dialect)에 따라 JPA가 위 3가지 전략 중 하나를 자동으로 선택합니다.
-   
-------------------------------
-현재 연동하려는 데이터베이스가 MySQL, Oracle, PostgreSQL 중 어떤 것인지 알려주시면 그에 맞는 가장 최적의 @GeneratedValue 설정 방법을 예제 코드와 함께 가이드해 드리겠습니다.
+1. GenerationType.IDENTITY (가장 많이 사용)
+* 의미: 기본키 생성을 데이터베이스에 위임합니다.
+* 특징: MySQL의 AUTO_INCREMENT 처럼 데이터가 비어있는 상태로 저장(insert)되면 DB가 알아서 순차적인 번호를 부여합니다.
+2. GenerationType.SEQUENCE
+* 의미: 데이터베이스의 '시퀀스(Sequence)' 오브젝트를 사용해 값을 생성합니다.
+* 특징: Oracle, PostgreSQL 등 시퀀스를 지원하는 DB에서 주로 사용하며, @SequenceGenerator와 함께 씁니다.
+3. GenerationType.TABLE
+* 의미: 키 생성 전용 테이블을 하나 만들어서 데이터베이스 시퀀스를 흉내 내는 방식입니다.
+* 특징: 모든 DB에서 쓸 수 있지만, 성능이 떨어져 잘 사용하지 않습니다.
+4. GenerationType.AUTO
+* 의미: 사용하는 데이터베이스 방언(Dialect)에 따라 JPA가 위 3가지 전략 중 하나를 자동으로 선택합니다.
 
-
-MySQL을 사용하신다면 기본키(PK) 자동 생성 전략으로 GenerationType.IDENTITY를 사용하는 것이 정석입니다. MySQL의 AUTO_INCREMENT 기능을 활용하는 방식입니다.
+MySQL을 사용하신다면 기본키(PK) 자동 생성 전략으로 GenerationType.IDENTITY를 사용하는 것이 정석입니다.
+MySQL의 AUTO_INCREMENT 기능을 활용하는 방식입니다.
 자바 스프링과 MySQL을 연동하기 위한 설정과 예시 코드입니다.
 ------------------------------
 ## 📦 1. 의존성 추가 (build.gradle)
