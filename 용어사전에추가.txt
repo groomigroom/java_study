@@ -1,10 +1,4 @@
 
-
-Dto???
-
-
----------
-
 자바 8에 도입된 DateTimeFormatter는 구형인 SimpleDateFormat보다 스레드 안전성, 
 불변 객체 구조, 모던 날짜 API 호환성에서 뛰어납니다.
 주요 장점
