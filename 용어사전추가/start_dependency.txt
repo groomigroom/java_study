@@ -1,6 +1,7 @@
 mysql버넠
 
-처음부터 Spring Boot와 MySQL로 프로젝트를 시작할 때, Spring Initializr(start.spring.io)나 인텔리제이(IntelliJ)에서 선택해야 하는 최적의 Starter Dependencies 목록입니다.
+처음부터 Spring Boot와 MySQL로 프로젝트를 시작할 때, 
+Spring Initializr(start.spring.io)나 인텔리제이(IntelliJ)에서 선택해야 하는 최적의 Starter Dependencies 목록입니다.
 기존 질문하셨던 구조에서 PostgreSQL만 MySQL로 깔끔하게 교체된 구성입니다.
 ------------------------------
 ## 🛠️ 처음 시작할 때 선택할 Starter 목록 (총 11개)
