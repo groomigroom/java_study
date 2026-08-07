@@ -27,3 +27,5 @@ main 패키지 안에다가
 
 #####
 controller 패키지 만들기..
+
+그리고 HelloController class 파일 만들기.
