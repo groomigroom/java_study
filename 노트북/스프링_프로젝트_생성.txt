@@ -44,6 +44,6 @@ Spring boot
 
 add dependency에
 
-spring web
+Spring Web
 
 Thymeleaf
