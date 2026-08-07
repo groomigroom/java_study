@@ -34,4 +34,9 @@ HelloController.java
 
 위에 package ---- 뭐라뭐라 뜸.
 
+import에 controller꺼 뜸....
 
+@Controller
+public class HelloController {
+    public String hello ()
+}
