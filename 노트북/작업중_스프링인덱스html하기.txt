@@ -51,3 +51,12 @@ public class HelloController {
 
 그러고 나서 recources/templates 폴더에
 hello.html 만들기
+
+
+hello.html
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www,thymeleaf.org">
+
+
+</html>
