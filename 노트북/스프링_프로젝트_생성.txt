@@ -33,20 +33,8 @@ https://start.spring.io/
 💡 결론: 처음이거나 안전하게 가고 싶다면 기본값인 Groovy를, IntelliJ의 강력한 자동완성과 타입 안정성을 경험해 보고 싶다면 Kotlin을 선택하세요. [4, 10, 11] 
 궁금한 점이 있다면 언제든 물어보세요:
 
-* 
-* 현재 참고하고 계신 스프링 강좌나 교재가 있나요?
-* 진행하려는 프로젝트가 개인 토이 프로젝트인가요, 아니면 협업/취업 준비용인가요?
-* 
 
+---------------------------------
 
-[1] [https://discuss.gradle.org](https://discuss.gradle.org/t/difference-between-old-gradle-and-gradle-groovy-kotlin/44361)
-[2] [https://www.linkedin.com](https://www.linkedin.com/pulse/gradle-groovy-vs-kotlin-tale-two-jvm-languages-rushikesh-veer-dapmf)
-[3] [https://jinhos-devlog.tistory.com](https://jinhos-devlog.tistory.com/entry/Spring-Initializr%EC%97%90%EC%84%9C-Gradle-groovy%EC%99%80-Kotlin%EC%9D%98-%EC%B0%A8%EC%9D%B4)
-[4] [https://tussle.tistory.com](https://tussle.tistory.com/1170)
-[5] [https://www.youtube.com](https://www.youtube.com/watch?v=XJPIrNDu0cc&t=282)
-[6] [https://www.inflearn.com](https://www.inflearn.com/community/questions/1543356/gradle-groovy-kotlin)
-[7] [https://tussle.tistory.com](https://tussle.tistory.com/1170)
-[8] [https://catalina.tistory.com](https://catalina.tistory.com/entry/intellij-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%83%9D%EC%84%B1%EC%8B%9C-Type%EC%97%90-Gradle-Groovy-Gradle-Kotlin-%EB%AC%B4%EC%96%BC-%EC%84%A0%ED%83%9D%ED%95%B4%EC%95%BC-%ED%95%A0%EA%B9%8C)
-[9] [https://docs.gradle.org](https://docs.gradle.org/current/userguide/groovy_plugin.html)
-[10] [https://velog.io](https://velog.io/@pp8817/Kotlin-Spring-Boot-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%84%B1)
-[11] [https://docs.gradle.org](https://docs.gradle.org/current/userguide/migrating_from_groovy_to_kotlin_dsl.html)
+Spring boot
+는 가능한 최신꺼로
