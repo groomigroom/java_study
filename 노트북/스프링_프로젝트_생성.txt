@@ -38,3 +38,10 @@ https://start.spring.io/
 
 Spring boot
 는 가능한 최신꺼로
+
+
+----------------------------------------
+
+add dependency에
+
+spring web
