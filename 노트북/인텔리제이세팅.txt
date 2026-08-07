@@ -1,3 +1,6 @@
 preference가서
 
 gradle가서 빌드하고, 런 부분 체크에 intelliJ IDEA로 바꿔주기
+
+왼쪽 아래 누르면 오른쪽 상단에 gradle 뭐 뜨ㅜㅁ
+???
