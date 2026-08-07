@@ -23,3 +23,85 @@ User.builder().name("김").age(20).build();
 순서가 헷갈림
 객체가 함부로 변할 수 있음
 안전하고 읽기 쉬움
+
+
+User.builder().name("김").age(20).build(); 코드는 롬복(Lombok) 라이브러리의 @Builder 어노테이션을 활용해 객체를 생성하는 자바 패턴입니다. 스프링 부트(Spring Boot) 애플리케이션에서는 주로 데이터베이스 엔티티, DTO(Data Transfer Object), 또는 비즈니스 로직 내에서 이 패턴을 자주 사용합니다.
+이 코드가 실제 스프링 프로젝트에서 어떻게 정의되고 활용되는지 전체 레이어(Entity/DTO ➡️ Service ➡️ Controller) 예제로 설명해 드리겠습니다.
+------------------------------
+## 1. User 도메인 클래스 정의 (Lombok 활용)
+먼저 @Builder 어노테이션을 클래스에 부여하여 빌더 패턴 코드를 자동으로 생성합니다.
+
+import lombok.Builder;import lombok.Getter;import lombok.NoArgsConstructor;import lombok.AllArgsConstructor;
+
+@Getter
+@NoArgsConstructor // 스프링/JPA가 객체를 생성할 때 필요한 기본 생성자
+@AllArgsConstructor // @Builder가 정상 작동하기 위해 필요한 전체 필드 생성자
+@Builder // 빌더 패턴 지원public class User {
+    private Long id;
+    private String name;
+    private int age;
+}
+
+------------------------------
+## 2. 비즈니스 로직에서의 활용 (Service 레이어)
+회원가입 기능이나 테스트 데이터를 생성할 때 질문하신 빌더 코드를 사용하여 객체를 직관적으로 생성하고 저장합니다.
+
+import org.springframework.stereotype.Service;import java.util.ArrayList;import java.util.List;
+
+@Servicepublic class UserService {
+
+    // 예제를 위한 임시 인메모리 저장소
+    private final List<User> userStorage = new ArrayList<>();
+
+    public User createUser() {
+        // 빌더 패턴을 사용하여 안전하고 가독성 좋게 객체 생성
+        User newUser = User.builder()
+                .name("김")
+                .age(20)
+                .build();
+
+        userStorage.add(newUser);
+        return newUser;
+    }
+}
+
+------------------------------
+## 3. 클라이언트 요청 처리 (Controller 레이어)
+사용자가 특정 주소로 요청을 보냈을 때, 서비스의 메서드를 호출하여 결과를 JSON 형태로 반환하는 컨트롤러 예제입니다.
+
+import org.springframework.web.bind.annotation.PostMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/users")public class UserController {
+
+    private final UserService userService;
+
+    // 생성자 주입
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/sample")
+    public User createSampleUser() {
+        return userService.createUser();
+    }
+}
+
+------------------------------
+## 빌더 패턴을 스프링에서 쓰는 이유
+
+* 
+* 가독성 향상: 매개변수가 많아져도 어떤 필드에 어떤 값이 들어가는지 명확히 알 수 있습니다.
+* 불변성(Immutability) 유지: Setter 메서드를 만들지 않아도 되므로 객체의 무분별한 상태 변경을 막을 수 있습니다.
+* 유연성: 생성자 오버로딩 없이 필요한 필드만 선택해서 객체를 만들 수 있습니다.
+* 
+
+------------------------------
+스프링을 활용한 구체적인 아키텍처에 대해 더 알고 싶으시다면 다음 내용을 알려주세요:
+
+* 
+* 이 User 객체를 JPA/Hibernate 엔티티로 변경하여 실제 DB와 연동하는 예제가 필요하신가요?
+* 클라이언트의 요청 데이터를 받아오는 DTO 활용 예제나 단위 테스트(JUnit) 코드가 필요하신가요?
+* 
+
+
