@@ -21,3 +21,9 @@ main/resources/static 에다가 파일 넣기...
 </body>
 
 </html>
+
+
+main 패키지 안에다가
+
+#####
+controller 패키지 만들기..
