@@ -1,3 +1,7 @@
+https://www.jetbrains.com/ko-kr/idea/download/?section=mac
+
+다운로드 링크
+
 자바 스프링(Spring) 개발에서 이클립스(Eclipse) 대신 인텔리제이(IntelliJ IDEA)를 더 많이 쓰는 이유는 강력한 스프링 프레임워크 통합 기능, 뛰어난 코드 분석 및 자동 완성, 그리고 현대적인 개발 환경 지원 때문입니다. [1, 2, 3, 4] 
 ## 뛰어난 스프링 및 빌드 도구 통합
 
