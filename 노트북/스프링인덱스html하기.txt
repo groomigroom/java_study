@@ -47,6 +47,30 @@ public class HelloController {
     }
 }
 
+
+------
+
+수정 본
+
+
+package groomi.groomgroom;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model; // 1. Model 임포트 추가
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HelloController {
+
+    @GetMapping("hello")
+    public String hello(Model model) {
+        // 2. 가이드 글자(attributeName:, attributeValue:) 제거
+        model.addAttribute("data", "hello!!");
+        return "hello";
+    }
+}
+
+
 -------------
 
 그러고 나서 recources/templates 폴더에
