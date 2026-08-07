@@ -11,3 +11,5 @@ cd libs
 
 4. java -jar hello-spring-0.0.1-SNAPSHOT.jar
 이런식으로 파일 명 가져다가 터미널에 쓰기
+
+만약 잘 안되면 유튜브 2분 28초
