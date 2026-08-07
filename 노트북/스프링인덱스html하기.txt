@@ -56,15 +56,14 @@ public class HelloController {
 package groomi.groomgroom;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model; // 1. Model 임포트 추가
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HelloController {
 
-    @GetMapping("hello")
+    @GetMapping("hello") // 또는 "/hello" 둘 다 가능합니다.
     public String hello(Model model) {
-        // 2. 가이드 글자(attributeName:, attributeValue:) 제거
         model.addAttribute("data", "hello!!");
         return "hello";
     }
