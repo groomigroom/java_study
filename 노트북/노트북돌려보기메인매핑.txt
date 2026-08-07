@@ -1,0 +1,30 @@
+Developing Your First Spring Boot Application :: Spring Boot https://share.google/1VEecqbeqOu8XcB64
+
+
+main. mapping sample
+
+package com.example.demo; // 본인의 패키지 명으로 수정
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@SpringBootApplication
+public class MyApplication {
+
+    @RequestMapping("/")
+    String home() {
+        return "Hello World!";
+    }
+
+    @RequestMapping("/groomi")
+    String groomi() {
+        return "구름구름";
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(MyApplication.class, args);
+    }
+}
