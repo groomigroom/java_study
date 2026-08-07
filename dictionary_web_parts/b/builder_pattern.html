@@ -1,3 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add unimplemented methods</title>
+</head>
+
+<body>
+    <h1>Add unimplemented methods</h1>
+    <p>
+        분석하기 ---
+
+        Add unimplemented methods
+
+        Add_unimplemented_methods.html
+
+        자바 통합개발환경(IDE)의 Add unimplemented methods
+        기능은 타입 계층 구조 분석, 추상 메서드 추출, AST(추상 구문 트) 기반 코드 생성 과정을 통해 작동합니다.
+        이 기능의 작동 원리는 다음과 같은 단계로 이루어집니다:
+        상속 및 구현 관계 분석: IDE의 컴파일러 엔진(예: 이클립스 JDT 등)이 현재 클래스가 extends한 부모 클래스나 implements한 인터페이스 정보를 스캔합니다.
+        미구현 메서드 탐색: 부모나 인터페이스에 선언된 메서드 중 현재 클래스에 오버라이딩(구현)되지 않은 abstract 메서드나 미구현 메서드 목록을 추려냅니다.
+        AST 노드 생성 및 삽입: 사용자가 기능을 실행하면 IDE 내부의 AST(추상 구문 트리) 조작기를 통해 선택된 메서드의 시그니처(이름, 반환 타입, 매개변수)를 가진 MethodDeclaration
+        노드를 동적으로 생성하고 클래스 본문 내부에 추가합니다.
+        코드 포맷팅 및 주석 템플릿 적용: 설정된 코드 스타일에 맞춰 자동으로 들여쓰기와 @Override 어노테이션 등을 붙여 최종 소스 코드 파일에 반영합니다.
+
+        https://margin1103.tistory.com/1
+    </p>
+</body>
+
+</html>
+
 자바 스프링에서 빌더 패턴의 의미?                    자바 스프링에서 빌더 패턴(Builder Pattern)은
 복잡한 객체를 쉽고 안전하게 만드는 방법입니다.
 생성자에 값을 순서대로 넣는 대신,
