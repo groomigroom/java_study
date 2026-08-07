@@ -1,1 +1,27 @@
-golbangee_AllArgsConstructor.html
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@AllArgsConstructor</title>
+</head>
+
+<body>
+    <h1>@AllArgsConstructor</h1>
+    <pre>
+        @NoArgsConstructor는 파라미터가 없는 기본 생성자를 자동으로 만들어 주는 롬복(Lombok) 어노테이션입니다. 
+        코드를 직접 치지 않아도 public ClassName() {} 형태의 생성자가 컴파일할 때 자동으로 추가됩니다.
+        주요 특징과 목적
+        JPA 엔티티 필수 조건: JPA(Java Persistence API)에서 데이터베이스 테이블과 매핑되는 엔티티 
+        클래스는 기본 생성자가 반드시 필요합니다. 
+        리플렉션(Reflection) 기술로 객체를 동적으로 만들 때 기본 생성자를 쓰기 때문입니다.
+        안전한 접근 제한자 설정: access 속성을 주어 생성자의 가시성을 조절할 수 있습니다. 
+        예를 들어 @NoArgsConstructor(access = AccessLevel.PROTECTED)를 쓰면 외부에서 무분별하게 
+        기본 생성자로 객체를 생성하는 것을 막아 안전성을 높일 수 있습니다.
+        코드 줄이기: 생성자를 일일이 수동으로 작성하는 번거로움을 없애 줍니다.
+    </pre>
+
+</body>
+
+</html>
