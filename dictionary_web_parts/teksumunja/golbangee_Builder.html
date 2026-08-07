@@ -4,24 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@Entity</title>
+    <title>@Builder</title>
 </head>
 
 <body>
-    <h1>@Entity</h1>
+    <h1>@Builder</h1>
     <pre>
-        @Entity 어노테이션을 사용하기 위해 필요한 스타터 의존성은 spring-boot-starter-data-jpa입니다. 
-
-        자바 스프링(JPA)에서 @Entity는 자바 클래스를 데이터베이스의 테이블과 연결(매핑)하는 선언입니다.
-        이 어노테이션이 붙은 클래스는 데이터베이스의 행(row) 하나와 대응되며,
-        JPA(Java Persistence API)가 데이터를 영구적으로 관리하는 기준 객체가 됩니다.
-        주요 특징
-        테이블 매핑: 클래스 이름이나 지정한 테이블 이름이 실제 DB 테이블과 연결됩니다.
-        필드 매핑: 클래스의 멤버 변수는 DB 테이블의 열(column)로 작동합니다.
-        관리 대상: JPA 영속성 컨텍스트가 데이터를 감지하고 저장, 수정(Dirty Checking)할 수 있게 됩니다.
-        함께 쓰이는 필수 어노테이션@Id: 테이블의 기본 키(Primary Key)를 지정합니다.
-        @GeneratedValue: 기본 키의 자동 생성 전략을 설정합니다 (예: Auto Increment).
-        @Table: 매핑할 DB 테이블 이름을 따로 지정할 때 사용합니다.
+        자바 스프링에서 @Builder는 롬복(Lombok) 라이브러리가 제공하는 기능으로, 복잡한 객체를 쉽고 명확하게 만들 수 있게 돕는 빌더 패턴 코드를 자동으로 작성해 주는 도구입니다. 생성자 인자가 많을 때 어떤 값이 어떤 변수인지 헷갈리는 문제를 해결해 줍니다.주요 특징 및 장점가독성 향상: 이름과 값을 직접 지정하므로 어떤 변수에 어떤 값이 들어가는지 쉽게 알 수 있습니다.순서 무관: 생성자 호출과 달리 입력하는 순서가 상관없습니다.유연한 생성: 필요한 값만 골라서 객체를 만들 수 있습니다.안정성: 값을 바꿀 수 없는 안전한(불변) 객체를 만들기 좋습니다.
 
     </pre>
 </body>
