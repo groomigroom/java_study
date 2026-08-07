@@ -1,2 +1,23 @@
 main/resources/static 에다가 파일 넣기...
 
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김구름 페이지</title>
+</head>
+
+<body>
+    <h1>김구름 페이지</h1>
+    <p>
+       김<br/>
+       구<br/>
+       름
+      
+    </p>
+</body>
+
+</html>
