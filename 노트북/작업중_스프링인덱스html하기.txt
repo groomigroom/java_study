@@ -46,3 +46,8 @@ public class HelloController {
         return "hello";
     }
 }
+
+-------------
+
+그러고 나서 recources/templates 폴더에
+hello.html 만들기
