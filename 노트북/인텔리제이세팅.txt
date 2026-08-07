@@ -1,0 +1,3 @@
+preference가서
+
+gradle가서 빌드하고, 런 부분 체크에 intelliJ IDEA로 바꿔주기
