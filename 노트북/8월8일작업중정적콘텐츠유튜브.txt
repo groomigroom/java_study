@@ -1,6 +1,9 @@
 https://www.youtube.com/watch?v=yZVTnaudGXk&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=6
 
 static 폴더에
+
+localhost:8080/hello-spring.html
+
 hello-spring.html
 
 여기다가 html 작성하기 아무거나
