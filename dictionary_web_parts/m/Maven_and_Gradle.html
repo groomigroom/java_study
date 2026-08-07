@@ -12,22 +12,7 @@
     <p>
         
 
-         
-
-        * Instant.now(): 현재 시점의 UTC 기준 시간을 나노초  작성할까요?<br>
-        보통 다음 2가지 상황에서 이와 같은 코드를 자주 사용합니다.<br>
-
-        * JWT(Json Web Token) 토큰 생성: jjwt 같은 라이브러리는 토큰 만료 시간(Expiration)을 설정할 때 인자값으로 여전히 옛날 java.util.Date 타입을
-        요구합니다.<br>
-        * 레거시 라이브러리 연동: 프레임워크나 외부 라이브러리가 최신 날짜 타입을 지원하지 않아서, <br>
-        계산은 편리하고 정확한 Instant로 처리한 뒤 변환만 해서 넘겨주는 패턴입니다.<br>
-
-        ## 3. Java 8+ 스타일로만 작성한다면?<br>
-        만약 java.util.Date를 반드시 써야 하는 제약 조건이 없다면, <br>
-        아래와 같이 최신 타입으로 변수와 계산을 통일하는 것이 훨씬 직관적이고 깔끔합니다.<br>
-
-        // 변수 타입 자체를 LocalDateTime으로 지정<br>
-        LocalDateTime expiredDate = LocalDateTime.now().plusHours(1);
+  
     </p>
 </body>
 
