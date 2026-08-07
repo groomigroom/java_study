@@ -2,3 +2,5 @@ https://youtu.be/SSzsqDeS2JI?si=UwkZY_m5NsYOjspT
 
 1. 터미널에서 해당 폴더 들어가기?
 
+2. 거기서
+./gradlew build
