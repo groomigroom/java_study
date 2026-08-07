@@ -31,7 +31,10 @@ User.builder().name("김").age(20).build(); 코드는 롬복(Lombok) 라이브�
 ## 1. User 도메인 클래스 정의 (Lombok 활용)
 먼저 @Builder 어노테이션을 클래스에 부여하여 빌더 패턴 코드를 자동으로 생성합니다.
 
-import lombok.Builder;import lombok.Getter;import lombok.NoArgsConstructor;import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Getter
 @NoArgsConstructor // 스프링/JPA가 객체를 생성할 때 필요한 기본 생성자
