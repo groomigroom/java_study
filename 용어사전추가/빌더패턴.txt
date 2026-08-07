@@ -49,9 +49,12 @@ import lombok.AllArgsConstructor;
 ## 2. 비즈니스 로직에서의 활용 (Service 레이어)
 회원가입 기능이나 테스트 데이터를 생성할 때 질문하신 빌더 코드를 사용하여 객체를 직관적으로 생성하고 저장합니다.
 
-import org.springframework.stereotype.Service;import java.util.ArrayList;import java.util.List;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
 
-@Servicepublic class UserService {
+@Service
+public class UserService {
 
     // 예제를 위한 임시 인메모리 저장소
     private final List<User> userStorage = new ArrayList<>();
