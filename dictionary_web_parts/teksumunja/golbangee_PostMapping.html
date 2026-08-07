@@ -14,8 +14,23 @@
         주로 클라이언트가 서버로 새로운 데이터를 전송하거나 생성(Create)할 때 사용하며, 
         @RequestMapping(method = RequestMethod.POST)의 축약형입니다.
 
-        주요 특징 및 역할URL 매핑: 지정한 경로(/api/users 등)로 들어오는 POST 요청을 해당 메서드가 처리하도록 지정합니다.데이터 전달: 주로 HTTP 본문(Body)에 담긴 데이터(@RequestBody)나 폼 데이터 등을 자바 객체로 받아 처리할 때 쓰입니다.자원 생성: 데이터베이스에 회원가입, 게시글 등록 등 새로운 정보를 생성하는 기능에 적합합니다.
-
+        주요 특징 및 역할URL 매핑: 지정한 경로(/api/users 등)로 들어오는 POST 요청을 해당 
+        메서드가 처리하도록 지정합니다.
+        데이터 전달: 주로 HTTP 본문(Body)에 담긴 데이터(@RequestBody)나 폼 데이터 등을 자바 객체로 받아 처리할 때 쓰입니다.
+        자원 생성: 데이터베이스에 회원가입, 
+        게시글 등록 등 새로운 정보를 생성하는 기능에 적합합니다.
+        
+        사용 예시 코드java
+        @RestController
+        @RequestMapping("/api")
+        public class UserController {
+        
+            @PostMapping("/users")
+            public String createUser(@RequestBody UserDto userDto) {
+                // 데이터 처리 로직
+                return "회원 생성 성공";
+            }
+        }
     </pre>
 </body>
 
