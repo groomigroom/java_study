@@ -32,7 +32,7 @@ Postman Desktop App (데스크톱 앱)우리가 흔히 아는 독립된 실행 �
 사이트 접속 없이 독립 실행형으로 쓰시려면 Postman Downloads에서 에이전트가 아닌 
 'Download the App' 버튼을 눌러 정식 데스크톱 클라이언트를 다시 다운로드하여 설치하셔야 합니다.
 
-------------------------------
+llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
 
 
 postman 데스크톱 앱 없이 postman agent만 설치하고, postman 사이트에서 localhost 호출이 가능한가
