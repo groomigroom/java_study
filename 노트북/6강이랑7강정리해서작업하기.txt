@@ -15,4 +15,5 @@ public class HelloController {
     }
 
     @GetMapping("/hello_mvc")
+    public String helloMvc (@RequestParam("name"))
 }
