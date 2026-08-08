@@ -43,6 +43,7 @@ public class HelloController {
 
 -----------------------------------
 
+localhost:8080/hello_string?name=groomgroom
 localhost:8080/hello_api?name=groomi
 
 //Generate 단축키 뜨게하는 법?
