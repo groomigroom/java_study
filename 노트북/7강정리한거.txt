@@ -34,3 +34,6 @@ public class HelloController {
         }
     }
 }
+
+//Generate 단축키 뜨게하는 법?
+여기에 Constructor Getter Setter 등등 만들 수 있는거 뜸.
