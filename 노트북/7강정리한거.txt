@@ -14,6 +14,12 @@ public class HelloController {
         return "hello";
     }
 
+    @GetMapping("hello_string")
+    @ResponseBody
+    public String helloString(@RequestParam("name") String name) {
+        return "hello " + name;
+    }
+
     @GetMapping("/hello_api")
     @ResponseBody
     public Hello helloApi(@RequestParam("name") String name) {
