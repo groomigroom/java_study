@@ -3,3 +3,42 @@
 
 
 위키독스2.4 스프링 부트 3 코드 이해하기 - 위키독스2024. 4. 11. — 스프링은 자바로 웹 사이트를 만들 수 있게 하는 프레임워크입니다. 여기서는 스프링의 근간이 되는 IoC, DI 개념 외의 다양한 지식을 알아보았습니다. 스프링 부...티스토리[Spring] @SpringbootApplication의 원리 - Ummchicken2023. 1. 27. — @SpringBootApplication이란? @Configuration + @EnableAutoConfiguration + @ComponentScan을 합친 것...티스토리[Spring][Spring boot] @SpringBootApplication 이란?2020. 7. 9. — @SpringBootApplication 이란? @SpringBootAplication 어노테이션은 auto-configuration을 담당합니다. 다시 이야기 ...티스토리@SpringBootApplication 완벽 이해하기 - 잡다한 지식을 알려주는 로마고누2025. 5. 17. — @SpringBootApplication은 Spring Boot 애플리케이션의 메인 클래스에 붙이는 어노테이션입니다. 이 한 줄로 Spring Boot의 다양한 ...티스토리[Spring Boot] @SpringBootApplication이란?2021. 9. 14. — Spring Boot 애플리케이션의 Application.java에는 @SpringBootApplication이라는 어노테이션이 포함되어 있습니다. @Spring...티스토리@SpringBootApplication 어노테이션이란 - 시작이 좋아 - 티스토리2024. 8. 6. — SpringBootApplication 어노테이션은Spring Boot 애플리케이션의 진입점 클래스에 사용되는 어노테이션으로, 여러 개의 중요한 Spring 어노...티스토리[spring boot] @SpringBootApplication 정리 - 개발냥발 - 티스토리2021. 3. 24. — Spring Initializr를 이용해서 프로젝트를 만들면 프로젝트명Application이 자동으로 생성됩니다. 메서드 선언부에는 main 메서드 하나만 선언되...LinkedInSpring Boot의 내부 작동 원리를 설명해 주세요.2024. 7. 22. — 각 스타터는 애플리케이션의 특정 측면과 관련된 의존성 집합을 제공합니다 (예: 웹, 데이터, 메시징). 예를 들어, spring-boot-starter-web s...티스토리제2장 마이크로서비스를 위한 스프링 (1) - 마이크로서비스를 위한 스프링2019. 1. 23. — Spring-boot-starter-* 이름 설명 spring-boot-start 자동 컨피규레이션 지원, 로깅, YAML을 포함하는 핵심 스타터 spring-b...티스토리Spring Boot 원리 : 자동 설정(Auto Configuration)2019. 9. 2. — 2. @ComponentScan @ComponentScan은 선언된 패키지를 포함한 하위 패키지의 Component를 Scan하여 Bean으로 등록한다. 그렇기 ...티스토리스프링 부트와 내장 톰캣2023. 3. 12. — 참고로 현재 클래스에는 @SpringBootApplication 애노테이션이 있는데, 이 애노테이션 안에는 컴포넌트 스캔을 포함한 여러 기능이 설정되어 있다. 기...jonghoonpark.com[Spring] Spring In Action - 스프링 시작하기 (1-2장)2025. 1. 12. — Controller 클래스 @Controller와 함께 @Component, @Service, @Repository와 같은 어노테이션은 클래스를 빈으로 등록되어 ...    AI 답변에 오류가 있을 수 있습니다. 자세히 알아보기
+
+
+
+SpringApplication.run(MyApplication.class, args);는 스프링 부트 애플리케이션을 구동(구축 및 실행)하는 실제 시작점입니다. [1] 
+일반적인 자바 프로그램이 main() 메서드에서 시작하듯, 스프링 부트 역시 이 코드를 만나면서 자바 환경 위에서 스프링 컨테이너를 초기화하고 웹 서버를 띄우는 일련의 과정을 시작합니다. [2, 3] 
+------------------------------
+## 1. 인자(Parameter)의 의미
+메서드에 넘겨주는 두 개의 인자는 각각 중요한 역할을 합니다.
+
+* 
+* MyApplication.class (기본 설정 소스)
+* 스프링 부트에게 "어떤 클래스를 기준으로 설정을 읽고 빈 스캔을 시작할지" 알려주는 기준점입니다.
+   * 앞서 설명한 @SpringBootApplication 어노테이션이 붙어 있는 클래스를 전달함으로써, 그 위치를 기준으로 컴포넌트 스캔(@ComponentScan)을 진행하게 됩니다. [3, 4, 5] 
+* args (커맨드 라인 인수)
+* 애플리케이션 실행 시 외부(터미널 등)에서 전달된 설정 인자들을 스프링 내부로 전달합니다.
+   * 예를 들어 구동 시 매개변수로 포트 번호(--server.port=8081)나 특정 프로필 설정을 동적으로 주입할 때 활용됩니다. [6, 7] 
+* 
+
+------------------------------
+## 2. 실행 시 내부에서 일어나는 일
+이 정적(static) 메서드가 호출되면, 내부적으로 다음과 같은 복잡한 작업들이 순서대로 자동 처리됩니다: [6, 8, 9, 10] 
+
+   1. 스프링 컨텍스트 생성: 빈(Bean) 객체들을 생성하고 관리할 중심 컨테이너(ApplicationContext)를 만듭니다. [6] 
+   2. 자동 설정 및 빈 등록: 프로젝트에 포함된 라이브러리(starter)와 코드를 분석해 필요한 객체들을 생성하고 컨테이너에 등록합니다. [6] 
+   3. 내장 웹 서버 구동: 톰캣(Tomcat) 같은 웹 서버를 별도 설치 없이 내부에서 자동으로 구동하여 웹 요청을 받을 준비를 마칩니다. [6] 
+
+------------------------------
+구동 중 발생하는 초기화 에러가 있거나, 특정 환경 변수(args)를 활용해 동적으로 설정을 바꾸는 방법이 알고 싶으시다면 언제든 질문해 주세요!
+
+[1] [https://docs.spring.io](https://docs.spring.io/spring-boot/reference/features/spring-application.html)
+[2] [https://medium.com](https://medium.com/@ayoubtaouam/what-actually-happens-when-you-start-a-spring-boot-application-9b85421709b5)
+[3] [https://kkum-log.tistory.com](https://kkum-log.tistory.com/25)
+[4] [https://stackoverflow.com](https://stackoverflow.com/questions/75632953/springapplication-run-why-do-we-need-the-myapplication-class-parameter-when)
+[5] [https://velog.io](https://velog.io/@dus6982/Spring-Boot-SpringApplication)
+[6] [https://medium.com](https://medium.com/@rajbhupendra588/what-does-springapplication-run-do-c8ab6b215095)
+[7] [https://sundaland.tistory.com](https://sundaland.tistory.com/380)
+[8] [https://docs.spring.io](https://docs.spring.io/spring-boot/api/java/org/springframework/boot/SpringApplication.html)
+[9] [https://docs.spring.io](https://docs.spring.io/spring-boot/api/java/org/springframework/boot/SpringApplication.html)
+[10] [https://queticle.tistory.com](https://queticle.tistory.com/1)
