@@ -13,4 +13,6 @@ public class HelloController {
         model.addAttribute(attributeName: "data", attributeValue: "hello!!");
         return "hello";
     }
+
+    @GetMapping("/hello_mvc")
 }
