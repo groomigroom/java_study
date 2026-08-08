@@ -20,7 +20,6 @@ public class HelloController {
         Hello hello = new Hello();
         hello.setName(name);
         return hello;
-        "<HTML><"
     }
 
     static class Hello {
@@ -35,6 +34,10 @@ public class HelloController {
         }
     }
 }
+
+-----------------------------------
+
+localhost:8080/hello_api?name=groomi
 
 //Generate 단축키 뜨게하는 법?
 여기에 Constructor Getter Setter 등등 만들 수 있는거 뜸.
