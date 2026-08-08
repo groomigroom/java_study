@@ -29,3 +29,9 @@ resources/templates/hello_templates.html
 </body>
 </html>
 
+
+
+------------------------------------------
+
+
+localhost:8080/hello_mvc?name
