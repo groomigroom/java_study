@@ -20,3 +20,7 @@ public class HelloController {
         return "hello_template";
     }
 }
+
+resources/templates/hello_templates.html
+
+
