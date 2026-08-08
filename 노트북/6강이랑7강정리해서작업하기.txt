@@ -1,3 +1,5 @@
+수정 정리후에 노트북 돌리기
+
 HelloController.java
 
 위에 package ---- 뭐라뭐라 뜸.
@@ -20,6 +22,34 @@ public class HelloController {
         return "hello_template";
     }
 }
+
+
+위에꼬 수정본
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class HelloController {
+
+    @GetMapping("hello")
+    public String hello (Model model) {
+        // attributeName: 구조를 제거하고 데이터만 전달합니다.
+        model.addAttribute("data", "hello!!");
+        return "hello";
+    }
+
+    @GetMapping("/hello_mvc")
+    // required 값을 false로 주거나, 필수라면 true를 적어줍니다.
+    public String helloMvc (@RequestParam(value = "name", required = false) String name, Model model) {
+        // attributeName: 구조를 제거합니다.
+        model.addAttribute("name", name);
+        return "hello_template";
+    }
+}
+
 
 resources/templates/hello_templates.html
 
