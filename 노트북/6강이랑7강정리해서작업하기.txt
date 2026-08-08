@@ -34,4 +34,4 @@ resources/templates/hello_templates.html
 ------------------------------------------
 
 
-localhost:8080/hello_mvc?name
+localhost:8080/hello_mvc?name=김구름이????
