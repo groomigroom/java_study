@@ -23,4 +23,9 @@ public class HelloController {
 
 resources/templates/hello_templates.html
 
+<html xmlns:th="https://www.thymeleaf.org">
+<body>
+    <p>hello! empty</p>
+</body>
+</html>
 
