@@ -104,7 +104,7 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public Member save(Member member) {
-        return null;
+        return member.setId(sequence);
     }
 
     @Override
