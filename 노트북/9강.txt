@@ -48,4 +48,8 @@ main/프로젝트폴더/domain 에다가
 
 Member.java 만들기
 
+패키지 뭐라뭐라 뜸
 
+public class Member {
+    private Long id;
+}
