@@ -202,6 +202,9 @@ public class MemoryMemberRepositoryTest {
 	}
 }
 
+service 패키지 만들고,
+
+
 
 shift + F6하면 똑같은 변수가 같이 바뀜??
 
