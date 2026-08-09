@@ -72,3 +72,5 @@ public class Member {
 }
 
 이거도 getter and setter 이용됨.
+
+프로젝트폴더에/repository 패키지 만들어서
