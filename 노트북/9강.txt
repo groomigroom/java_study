@@ -204,6 +204,12 @@ public class MemoryMemberRepositoryTest {
 
 service 패키지 만들고,
 
+MemberService.java 클래스로 만들기
+
+public class MemberService {
+
+}
+
 
 
 shift + F6하면 똑같은 변수가 같이 바뀜??
