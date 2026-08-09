@@ -212,6 +212,8 @@ MemberService.java 클래스로 만들기
 public class MemberService {
     private final MemberRepository memberRepository = new MemoryMemberRepository();
     public Long join (Member member) {
+		memberRepository.findByName()
+
          memberRepository.save(member);
          return member.getId();
     }
