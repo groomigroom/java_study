@@ -74,3 +74,10 @@ public class Member {
 이거도 getter and setter 이용됨.
 
 프로젝트폴더에/repository 패키지 만들어서
+여기에다가 MemberRepository 인터페이스 만들기
+
+패키지 뭐라뭐라 뜨고,
+
+public interface MemberRepository {
+    Member save(Member member);
+}
