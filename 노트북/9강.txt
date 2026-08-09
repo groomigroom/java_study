@@ -223,7 +223,9 @@ public class MemberService {
 		});
 	}
 
-	public List<Member>
+	public List<Member> findMembers() {
+
+	}
 }
 
 
