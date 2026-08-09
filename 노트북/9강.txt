@@ -52,4 +52,5 @@ Member.java 만들기
 
 public class Member {
     private Long id;
+    private String name;
 }
