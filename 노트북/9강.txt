@@ -148,5 +148,6 @@ public class MemoryMemberRepositoryTest {
         Member result = repository.findById(member.getId()).get();
         //1번
         //System.out.println("result = " + result == member);
+
     }
 }
