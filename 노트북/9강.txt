@@ -181,3 +181,5 @@ public class MemoryMemberRepositoryTest {
 shift + F6하면 똑같은 변수가 같이 바뀜??
 
 자바 파일 2개 같이 돌리기?? --> Run "Tests in "hello.hellospring" ???
+
+코드 줄번호 숫자 옆에 눌러서, 클래스 돌리기???
