@@ -170,7 +170,7 @@ public class MemoryMemberRepositoryTest {
 		member2.setName("spring2");
 		repository.save(member2);
 
-		Optional<Member> reus = repository.findByName("spring1");
+		Optional<Member> result = repository.findByName("spring1");
 	}
 }
 
