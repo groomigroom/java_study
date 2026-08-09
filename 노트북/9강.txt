@@ -179,7 +179,7 @@ public class MemoryMemberRepositoryTest {
 	@Test
 	public void findAll() {
 		Member member1 = new Member();
-		member1.
+		member1.setName("spring");
 	}
 }
 
