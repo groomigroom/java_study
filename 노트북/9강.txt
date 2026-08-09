@@ -149,6 +149,6 @@ public class MemoryMemberRepositoryTest {
         //1번
         //System.out.println("result = " + result == member);
         //2번
-        //Assertions.assertEquals();
+        //Assertions.assertEquals(result, member);
     }
 }
