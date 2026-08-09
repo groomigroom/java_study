@@ -76,6 +76,7 @@ resources/templates/hello_templates.html
 
 localhost:8080/hello_mvc?name=김구름이????
 
+application_main.java 파일
 
 애플리케이션 파일은 원래데로 이렇게???
 
