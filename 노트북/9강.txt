@@ -98,6 +98,6 @@ MemoryMemberRepository.java
 
 패키지 뭐라므ㅓ라 뜸
 
-public class MemoryMemberRepository {
+public class MemoryMemberRepository implements MemberRepository {
 
 }
