@@ -213,6 +213,7 @@ public class MemberService {
     private final MemberRepository memberRepository = new MemoryMemberRepository();
     public Long join (Member member) {
 		Optional<Member> result = memberRepository.findByName(member.getName());
+		result.ifPresent();
 
 		memberRepository.save(member);
 		return member.getId();
