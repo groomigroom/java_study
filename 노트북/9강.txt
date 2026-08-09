@@ -179,3 +179,5 @@ public class MemoryMemberRepositoryTest {
 
 
 shift + F6하면 똑같은 변수가 같이 바뀜??
+
+자바 파일 2개 같이 돌리기?? --> Run "Tests in "hello.hellospring" ???
