@@ -100,4 +100,5 @@ MemoryMemberRepository.java
 
 public class MemoryMemberRepository implements MemberRepository {
     @Override
+    public Member save(Member member)
 }
