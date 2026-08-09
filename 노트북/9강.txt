@@ -111,11 +111,10 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     Optional<Member> findById(Long id) {
-        return Optional.ofNullable()store.get(id);
+        return Optional.ofNullable(store.get(id));
     }
 
 	   @Override
 				Optional<Member> findByName(String name) {
-        return Optional.empty();    
-}
+        store.values().stream().filter(member -> member.getName().equals());
 }
