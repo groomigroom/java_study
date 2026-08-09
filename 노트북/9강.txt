@@ -1,3 +1,5 @@
+main/메인프로젝트폴더에/controller에
+
 HelloController.java
 
 위에 package ---- 뭐라뭐라 뜸.
@@ -40,3 +42,10 @@ public class HelloController {
         }
     }
 }
+
+
+main/프로젝트폴더/domain 에다가
+
+Member.java 만들기
+
+
