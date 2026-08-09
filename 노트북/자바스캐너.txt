@@ -2,7 +2,7 @@ class JavaTest {
     public static void main(String[] args) {
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         System.out.println("이름 입력하기");
-        String name = scanner.nexLine();
+        String name = scanner.nextLine();
         System.out.println("안녕하세요 " + name + "님");
         System.out.println("나이 입력하기");
         int age = scanner.nextInt();
