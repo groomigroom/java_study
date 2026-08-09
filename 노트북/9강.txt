@@ -108,4 +108,9 @@ public class MemoryMemberRepository implements MemberRepository {
     Optional<Member> findById(Long id) {
         return Optional.empty();
     }
+
+	   @Override
+				Optional<Member> findByName(String name) {
+        return Optional.empty();    
+}
 }
