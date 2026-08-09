@@ -65,3 +65,19 @@ resources/templates/hello_templates.html
 
 
 localhost:8080/hello_mvc?name=김구름이????
+
+
+애플리케이션 파일은 원래데로 이렇게???
+
+package groomi.groomgroom;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+@SpringBootApplication
+public class GroomgroomApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(GroomgroomApplication.class, args);
+	}
+}
