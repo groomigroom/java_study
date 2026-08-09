@@ -152,5 +152,7 @@ public class MemoryMemberRepositoryTest {
         //Assertions.assertEquals(result, member);
         //3번
         //Assertions.assertEquals(member, result);
+        //4번
+        //Assertions.assertEquals(member, result);
     }
 }
