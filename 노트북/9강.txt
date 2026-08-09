@@ -145,6 +145,6 @@ public class MemoryMemberRepositoryTest {
          
         repository.save(member);
 
-        repository.findById(member.getId());
+        Member result = repository.findById(member.getId()).get();
     }
 }
