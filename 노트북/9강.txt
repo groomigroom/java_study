@@ -188,7 +188,8 @@ public class MemoryMemberRepositoryTest {
 
 		List<Member> result = repository.findAll();
 
-		assertThat(result.size()).isEqualTo(2)
+		assertThat(result.size()).isEqualTo(2);
+		//위에꺼 3으로 바꿔보면 에러뜸.
 	}
 }
 
