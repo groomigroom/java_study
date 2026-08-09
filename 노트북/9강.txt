@@ -159,4 +159,7 @@ public class MemoryMemberRepositoryTest {
 		//6번
 		//assertThat(member).isEqualTo(null);
     }
+
+	//6번으로 하고 나서.
+	public void findByNa
 }
