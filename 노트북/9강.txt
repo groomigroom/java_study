@@ -213,7 +213,6 @@ public class MemberService {
     private final MemberRepository memberRepository = new MemoryMemberRepository();
     public Long join (Member member) {
 		Optional<Member> result = memberRepository.findByName(member.getName());
-		result.get
 		result.ifPresent(m -> {
 			throw new IllegalStateException("이미 존재하는 회원입니다.");
 		});
