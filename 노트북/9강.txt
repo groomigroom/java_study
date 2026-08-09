@@ -99,6 +99,8 @@ MemoryMemberRepository.java
 패키지 뭐라므ㅓ라 뜸
 
 public class MemoryMemberRepository implements MemberRepository {
+    private static Map<Long>
+
     @Override
     public Member save(Member member) {
         return null;
