@@ -84,7 +84,7 @@ Member가 import 될거임.
 
 public interface MemberRepository {
     Member save(Member member); //Member 임포트 시키기
-    Optional<Member> findBy(Long id);
+    Optional<Member> findById(Long id);
     Optional<Member> findByName(String name);
     List<Member> findAll();
 }
@@ -102,5 +102,10 @@ public class MemoryMemberRepository implements MemberRepository {
     @Override
     public Member save(Member member) {
         return null;
+    }
+
+    @Override
+    Optional<Member> findById(Long id) {
+        return Optional.empty();
     }
 }
