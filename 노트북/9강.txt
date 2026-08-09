@@ -156,5 +156,7 @@ public class MemoryMemberRepositoryTest {
         //Assertions.assertEquals(member, actual: null);
 		//5번
 		//Assertions.assertThat(member).isEqualTo(result);
+		//6번
+		//assertThat(member).isEqualTo(null);
     }
 }
