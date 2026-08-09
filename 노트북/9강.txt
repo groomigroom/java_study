@@ -78,6 +78,11 @@ public class Member {
 
 패키지 뭐라뭐라 뜨고,
 
+Member가 import 될거임.
+
+자바 유틸 Optional이 import 될거임.
+
 public interface MemberRepository {
-    Member save(Member member);
+    Member save(Member member); //Member 임포트 시키기
+    Optional<Member> findBy
 }
