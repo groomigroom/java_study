@@ -214,7 +214,7 @@ public class MemberService {
     public Long join (Member member) {
 		Optional<Member> result = memberRepository.findByName(member.getName());
 		result.ifPresent(m -> {
-			throw new
+			throw new IllegalStateException("");
 		});
 
 		memberRepository.save(member);
