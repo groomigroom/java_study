@@ -85,5 +85,5 @@ Member가 import 될거임.
 public interface MemberRepository {
     Member save(Member member); //Member 임포트 시키기
     Optional<Member> findBy(Long id);
-    Optional<>
+    Optional<Member> findByName(String name)
 }
