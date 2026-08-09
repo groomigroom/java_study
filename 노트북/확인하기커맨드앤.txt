@@ -1,1 +1,9 @@
-인텔리제이에서 Getter와 Setter를 자동 생성하려면 클래스 내부에서 단축키 Alt + Insert(Windows) 또는 Cmd + N(Mac)을 누른 뒤 Getter and Setter를 선택하고 적용할 필드를 고르면 됩니다.단축키로 생성하는 법변수 선언 후 클래스 안에서 Alt + Insert(윈도우/리눅스) 또는 Cmd + N(맥)을 누릅니다.나타나는 메뉴 창에서 Getter and Setter를 선택합니다.생성할 필드(변수)를 마우스나 방향키로 모두 선택(Shift로 다중 선택 가능)한 후 Enter를 누릅니다.롬복(Lombok)을 이용한 자동화 방법코드를 직접 만들지 않고 어노테이션으로 대체하려면 Lombok 라이브러리를 사용합니다.클래스 상단에 @Getter와 @Setter (또는 @Data)를 붙이면 코드가 보이지 않아도 자동으로 생성됩니다.
+인텔리제이에서 Getter와 Setter를 자동 생성하려면 클래스 내부에서 단축키 
+Alt + Insert(Windows) 또는 Cmd + N(Mac)을 누른 뒤 Getter and Setter를 
+선택하고 적용할 필드를 고르면 됩니다.단축키로 생성하는 법변수 선언 후 
+클래스 안에서 Alt + Insert(윈도우/리눅스) 또는 Cmd + N(맥)을 누릅니다.
+나타나는 메뉴 창에서 Getter and Setter를 선택합니다.생성할 필드(변수)를 
+마우스나 방향키로 모두 선택(Shift로 다중 선택 가능)한 후 Enter를 누릅니다.
+롬복(Lombok)을 이용한 자동화 방법코드를 직접 만들지 않고 어노테이션으로 
+대체하려면 Lombok 라이브러리를 사용합니다.클래스 상단에 @Getter와 @Setter 
+(또는 @Data)를 붙이면 코드가 보이지 않아도 자동으로 생성됩니다.
