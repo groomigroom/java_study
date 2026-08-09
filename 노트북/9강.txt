@@ -128,3 +128,5 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 }
 
+test/java/프로젝트패키지/에다가 repository 패키지 만들기
+
