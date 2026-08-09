@@ -207,7 +207,7 @@ service 패키지 만들고,
 MemberService.java 클래스로 만들기
 
 public class MemberService {
-    private final 
+    private final MemberRepository memberRepository = 
 }
 
 
