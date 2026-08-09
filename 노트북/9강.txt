@@ -153,6 +153,6 @@ public class MemoryMemberRepositoryTest {
         //3번
         //Assertions.assertEquals(member, result);
         //4번
-        //Assertions.assertEquals(member, result);
+        //Assertions.assertEquals(member, actual: null);
     }
 }
