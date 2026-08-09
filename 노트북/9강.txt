@@ -206,6 +206,9 @@ service 패키지 만들고,
 
 MemberService.java 클래스로 만들기
 
+3가지 임포트 되게
+
+
 public class MemberService {
     private final MemberRepository memberRepository = new MemoryMemberRepository();
     public Long join (Member member) {
