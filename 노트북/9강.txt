@@ -161,7 +161,7 @@ public class MemoryMemberRepositoryTest {
     }
 
 	//6번으로 하고 나서.
-	public void findByName() {"" +
-
+	public void findByName() {
+		Member member1 = new Membe
 	}
 }
