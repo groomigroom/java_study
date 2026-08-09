@@ -126,6 +126,10 @@ public class MemoryMemberRepository implements MemberRepository {
     public List<Member> findAll() {
          return new ArrayList<>();
     }
+
+	public void clearStore() {
+		store.
+	}
 }
 
 test/java/프로젝트패키지/에다가 repository 패키지 만들기
