@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model</title>
+</head>
+
+<body>
+    <h1>Model</h1>
+    <pre>
+      자바 스프링에서 Model
+      자바 스프링에서 Model은
+      컨트롤러(Controller)에서 만든 데이터를
+      화면(View)으로 보내는 전달 매개체
+      역할을 하는 객체입니다.
+      이름과 값(Key-Value) 형태의 맵(Map)
+      구조로 이루어져 있습니다.
+      Model의 주요 특징
+      데이터 전달: 컨트롤러에서 처리한 결과
+      데이터를 뷰(JSP, Thymeleaf 등)로 넘겨줍니다.
+      자동 생성 및 주입: 컨트롤러 메서드 안에서
+      파라미터로 선언하기만 하면 스프링이 알아서
+      객체를 만들어 넣어줍니다.
+      키-값 구조: addAttribute("키", 값)
+      형태를 써서 데이터를 담습니다.
+      사용 방법
+      컨트롤러 메서드 파라미터에
+      Model model을 적습니다.
+      model.addAttribute("message", "안녕하세요");처럼 데이터를 넣습니다.
+      뷰 화면에서 해당 키
+      이름(message)을 불러와 사용합니다.
+    </pre>
+</body>
+
+</html>
