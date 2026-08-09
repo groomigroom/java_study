@@ -4,6 +4,10 @@
 (@RequestParam(value = "name", required = false) String name, Model model)
 
 
+의존성에
+spring-web이랑
+thymeleaf 추가함
+
 -----------------------------------
 
 HelloController.java
