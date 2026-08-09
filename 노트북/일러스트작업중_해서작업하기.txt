@@ -1,5 +1,11 @@
 수정 정리후에 노트북 돌리기
 
+내용 추가 검색 필요
+(@RequestParam(value = "name", required = false) String name, Model model)
+
+
+-----------------------------------
+
 HelloController.java
 
 위에 package ---- 뭐라뭐라 뜸.
