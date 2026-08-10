@@ -331,6 +331,7 @@ MemberController.java
 import @Controller 뜨고
 
 @Controller
+@Component
 public class MemberController {
 	private final MemberService memberService;
 
