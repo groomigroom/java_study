@@ -89,4 +89,14 @@ SimpleDateFormat은 스레드 안전(Thread-Safe)하지 않습니다. 여러 사
 ㅡㅡㅡㅡㅡㅡㅡ
 
 
-자바에서 simpledateformat은 비권장인가?    +4                    네, 자바에서 SimpleDateFormat은 공식적으로 @Deprecated(비권장) 처리되지는 않았으나, 멀티스레드 환경에서 안전하지 않으며(Thread-unsafe) 자바 8 이후부터는 대체재가 있어 사용을 피하는 것이 좋다고 권장됩니다.주요 문제점스레드 안전성 부족: 여러 스레드가 동시에 하나의 SimpleDateFormat 인스턴스를 공유하면 내부 상태가 꼬여 잘못된 날짜를 반환하거나 오류가 발생합니다.구형 API 기반: 낡은 Date 및 Calendar 클래스와 연동되므로 직관적이지 않고 버그를 유발하기 쉽습니다.대안 (권장 방식)DateTimeFormatter: 자바 8에 도입된 java.time.format.DateTimeFormatter를 사용하세요.특징: 스레드로부터 안전하며(Thread-safe), LocalDateTime 이나 ZonedDateTime 같은 모던 날짜/시간 API와 완벽하게 호환됩니다.만약 기존 코드에서 SimpleDateFormat을 안전하게 바꾸는 방법이나 DateTimeFormatter 사용 예시가 필요하시면 말씀해 주세요.티스토리Java 날짜 및 시간 포맷 다루기. SimpleDateFormat ... - INTP 개발자2024. 9. 24. — simpleDateFormat은 Java 7 이하에서 많이 사용되던 날짜/시간 포맷 클래스입니다. ... 이는 스레드 안전하지 않다는 단점이 있어서, 멀티스레드 ...Naver Blog[JAVA] Date, Calendar, SimpleDateFormat 문제점. 실무에서 ...2022. 9. 17. — 처음에 설계한 로직은 자바 기본 날짜관련 패키지(Date, Calendar ... SimpleDateFormat 대신 DateTimeFormatter 사용을 권장...velogJava SimpleDateFormat 위험성 - velog2021. 2. 26. — 먼저, 공식 Reference 문서에서 다음의 내용을 발견하였다. 요점만 말하자면, SimpleDateFormat은 Multi-Thread 환경에서 Safe하지 ...티스토리[Java]SimpleDateFormat을 쓰면 안된다고? (feat.Thread-Safe)2022. 8. 29. — SimpleDateFormat은 String 타입을 Date 타입으로 파싱 또는 Date 타입을 String으로 포매팅하는데 이를 locale-sensitive ...티스토리Java DateTimeFormatter VS SimpleDateFormat - 영원한패밀리2023. 12. 1. — 유연성 및 오류 처리: DateTimeFormatter는 SimpleDateFormat보다 포맷팅 옵션 측면에서 더 다양한 함수를 제공하여 유연성을 높였다. 예를...티스토리[JAVA] SimpleDateFormat 클래스와 위험성 - 어제보다 성장한 오늘2019. 10. 7. — SimpleDateFormat은 Thread-safe 하지 못하기 때문에 발생하는 문제이다. 따라서 멀티 쓰레드를 사용하는 부하가 많은 시스템에서는 SimpleD...    AI 답변에 오류가 있을 수 있습니다. 자세히 알아보기
+자바에서 simpledateformat은 비권장인가
+네, 자바에서 SimpleDateFormat은 공식적으로 @Deprecated(비권장) 처리되지는 않았으나, 
+멀티스레드 환경에서 안전하지 않으며(Thread-unsafe) 자바 8 이후부터는 대체재가 있어 
+사용을 피하는 것이 좋다고 권장됩니다.
+주요 문제점
+스레드 안전성 부족: 여러 스레드가 동시에 하나의 SimpleDateFormat 인스턴스를 공유하면 
+내부 상태가 꼬여 잘못된 날짜를 반환하거나 오류가 발생합니다.
+구형 API 기반: 낡은 Date 및 Calendar 클래스와 연동되므로 직관적이지 않고 버그를 유발하기 쉽습니다.
+대안 (권장 방식)DateTimeFormatter: 자바 8에 도입된 java.time.format.DateTimeFormatter를 사용하세요.
+특징: 스레드로부터 안전하며(Thread-safe), LocalDateTime 이나 ZonedDateTime 같은 
+모던 날짜/시간 API와 완벽하게 호환됩니다.
