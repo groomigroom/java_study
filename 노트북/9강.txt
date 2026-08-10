@@ -331,6 +331,10 @@ import @Controller 뜨고
 @Controller
 public class MemberController {
 	private final MemberService memberService;
+
+	public MemberController (MemberService memberService) {
+		this.memberService = memberService;
+	}
 }
 
 https://www.youtube.com/watch?v=NffW47IBg4I
