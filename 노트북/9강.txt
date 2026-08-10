@@ -237,6 +237,13 @@ test/service 안에다가
 MemberServiceTest.java 클래스를
 test 만들기로 만들기 --> 커맨드 쉬프트 T가 테스트 만들기???
 
+class MemberServiceTest {
+	@Test
+	void join() {
+	
+	}
+}
+
 
 https://youtu.be/Ep-CIHRghFw?si=9VwYmWedoAIQx1ze
 
