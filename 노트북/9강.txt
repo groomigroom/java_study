@@ -254,7 +254,7 @@ class MemberServiceTest {
 		Long saveId = memberService.join(member);
 		
 		//then
-		assertThat
+		Assertions.assertThat()
 	}
 
 	@Test
