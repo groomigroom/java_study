@@ -213,7 +213,7 @@ MemberService.java 클래스로 만들기
 public class MemberService {
     private final MemberRepository memberRepository;
 
-	@Autowired
+	//@Autowired 이거 지웠다 썼다 해보기
 	public MemberService(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
