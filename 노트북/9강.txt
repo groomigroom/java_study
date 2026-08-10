@@ -243,6 +243,8 @@ org.junit.jupiter.api.Test; //이거 자동으로 뜨게 하는 법??
 
 class MemberServiceTest {
 
+	MemberService memberServie -
+
 	@Test
 	void join() {
 	
