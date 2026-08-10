@@ -208,7 +208,7 @@ MemberService.java 클래스로 만들기
 
 3가지 임포트 되게
 
-
+@Service
 public class MemberService {
     private final MemberRepository memberRepository;
 
