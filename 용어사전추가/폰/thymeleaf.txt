@@ -2,3 +2,7 @@ https://www.thymeleaf.org/
 
 
 th:each
+
+
+<td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">0.99</td>
+    </tr>
