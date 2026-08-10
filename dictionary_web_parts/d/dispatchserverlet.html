@@ -9,125 +9,29 @@
 
 <body>
     <h1>DTO</h1>
-    <p>
-        DTO(Data Transfer Object)는 데이터 전송 객체를 뜻합니다. <br/>
-        이는 컨트롤러, 서비스, 리포지토리 등 서로 다른 계층 사이에서 데이터를 주고받기 위해 사용하는 순수한 자바 객체입니다. <br/>
-        주로 데이터를 담는 필드와 간단한 Getter/Setter 메서드만 가집니다.<br/>
-        DTO의 주요 특징<br/>
-        로직 없음: 순수하게 데이터를 담는 용도로만 쓰이고 비즈니스 로직은 포함하지 않습니다.<br/>
-        계층 간 분리: 데이터베이스와 연결된 엔티티(Entity) 클래스를 직접 화면이나 클라이언트에 노출하지 않도록 보호합니다.<br/>
-        유연성: 클라이언트가 요구하는 데이터 모양과 데이터베이스의 테이블 구조가 다를 때 중간에서 형태를 맞춰줍니다.<br/>
-        DTO를 쓰는 이유<br/>
-        보안 강화: 데이터베이스의 민감한 정보(예: 비밀번호 등)가 클라이언트에 그대로 노출되는 것을 막습니다.<br/>
-        유지보수 편리: 데이터베이스 구조가 바뀌어도 DTO와 엔티티를 분리해 두면 코드가 쉽게 망가지지 않습니다.<br/>
-        성능 향상: 필요한 데이터만 골라서 담을 수 있어 불필요한 데이터 전송을 줄입니다.<br/>
-        <br/>
-        <br/>
-        dto 예제<br/>
-        start dependency lombok 미리 설정하고<br/>
-        <br/>
-        javaimport lombok.Getter;<br/>
-        import lombok.Setter;<br/>
-        import lombok.NoArgsConstructor;<br/>
-        import lombok.AllArgsConstructor;<br/>
-        <br/>
-        @Getter<br/>
-        @Setter<br/>
-        @NoArgsConstructor<br/>
-        @AllArgsConstructor<br/>
-        public class UserRequestDto {<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;private String username;<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;private String email;<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;private int age;<br/>
-        }<br/>
-        <br/>
-        컨트롤러 예제<br/>
-        <br/>
-        import org.springframework.web.bind.annotation.*;<br/>
-        <br/>
-        @RestController<br/>
-        @RequestMapping("/api/users")<br/>
-        public class UserController {<br/>
-        <br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;@PostMapping<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;public String createUser(@RequestBody UserRequestDto requestDto) {<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;// 받은 DTO 데이터를 활용하는 로직<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String name = requestDto.getUsername();<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return "회원 생성 성공: " + name;<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-        }<br/>
-<br/>
-        아래에는 코드만
-
-        dto 예제
-        start dependency lombok 미리 설정하고
-        
-        javaimport lombok.Getter;
-        import lombok.Setter;
-        import lombok.NoArgsConstructor;
-        import lombok.AllArgsConstructor;
-        
-        @Getter
-        @Setter
-        @NoArgsConstructor
-        @AllArgsConstructor
-        public class UserRequestDto {
-            private String username;
-            private String email;
-            private int age;
-        }
-        
-        컨트롤러 예제
-        
-        import org.springframework.web.bind.annotation.*;
-        
-        @RestController
-        @RequestMapping("/api/users")
-        public class UserController {
-        
-            @PostMapping
-            public String createUser(@RequestBody UserRequestDto requestDto) {
-                // 받은 DTO 데이터를 활용하는 로직
-                String name = requestDto.getUsername();
-                return "회원 생성 성공: " + name;
-            }
-        }
-
-    </p>
+    <pre>
+        5자바 스프링 mvc에서 DispatcherServlet
+         자바 스프링 MVC에서 DispatcherServlet(디스패처 서블릿)은
+        모든 HTTP 요청을 가장 먼저 받아 알맞은 컨트롤러에 전달하고,
+        처리 결과를 받아 응답하는 프론트 컨트롤러(Front Controller)입니다.
+        스프링 MVC의 핵심 엔진 역할을 합니다.
+        주요 역할과 특징
+        요청 통합 관리: 모든 웹 요청을 단일 서블릿에서 먼저 받아서 공통 작업을 처리합니다.
+        컨트롤러 위임: 어떤 컨트롤러가 요청을 처리해야 할지
+        찾아서 작업을 넘겨줍니다.
+        응답 생성: 컨트롤러가 돌려준 결과와 화면(View) 
+        정보를 바탕으로 최종 응답을 만듭니다.
+        동작 흐름
+        클라이언트가 요청을 보냅니다.
+        DispatcherServlet이 요청을 받습니다.
+        HandlerMapping에게 알맞은 컨트롤러를 찾아달라고
+        부탁합니다.
+        HandlerAdapter를 통해 컨트롤러를 실행합니다.
+        컨트롤러가 비즈니스 로직을 처리하고 결과를 돌려줍니다.
+        ViewResolver를 통해 뷰(화면) 파일을 찾거나 
+        데이터를 변환합니다.최종 결과를 클라이언트에게 응답합니다.
+    </pre>
 </body>
 
 </html>
 
-dto 예제
-start dependency lombok 미리 설정하고
-
-javaimport lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserRequestDto {
-    private String username;
-    private String email;
-    private int age;
-}
-
-컨트롤러 예제
-
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
-
-    @PostMapping
-    public String createUser(@RequestBody UserRequestDto requestDto) {
-        // 받은 DTO 데이터를 활용하는 로직
-        String name = requestDto.getUsername();
-        return "회원 생성 성공: " + name;
-    }
-}
