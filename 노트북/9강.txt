@@ -269,6 +269,7 @@ class MemberServiceTest {
 		member2.setName("spring");
 		
 		//when
+		memberService.join(member1);
 		
 		
 		//then
