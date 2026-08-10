@@ -251,6 +251,7 @@ class MemberServiceTest {
 		Member member = new Member();
 		member.setName("hello");
 		//when
+		memberService.join(member);
 		
 		//then
 	}
