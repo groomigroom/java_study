@@ -10,48 +10,106 @@
 <body>
     <h1>SimpleDateFormat</h1>
     <pre>
-        스프링과 스프링 부트 차이
+        
 
-        자바 스프링(Spring)과 스프링 부트(Spring Boot)의 주요 차이점은 설정 방식, 내장 서버 유무, 의존성 관리 방법에 있습니다.
-        스프링은 복잡하고 세밀한 설정이 필요한 [기반 프레임워크]이며, 스프링 부트는 이를 쉽고 빠르게 시작할 수 있게 돕는 [확장 도구]입니다.
-        주요 차이점설정 (Configuration)스프링: XML이나 자바 설정 파일을 통해 수많은 빈(Bean)과 컴포넌트를 개발자가 직접 일일이 설정해야 합니다.
-        스프링 부트: 자주 사용하는 설정을 미리 자동으로 잡아주는 [자동 설정(Auto-Configuration)] 기능을 제공하여 별도의 복잡한 설정이 필요 없습니다.
-        서버 (Server)스프링: 톰캣(Tomcat) 같은 외부 웹 서버(WAS)를 따로 설치하고 프로젝트를 WAR 파일로 묶어 배포해야 합니다.
-        스프링 부트: 톰캣 등의 웹 서버를 [내장(Embedded)]하고 있어 별도의 서버 설치 없이 바로 실행 가능합니다.
-        의존성 관리 (Dependency)스프링: 필요한 라이브러리마다 버전(Version)을 하나씩 직접 맞추어 복잡하게 관리해야 합니다.
-        스프링 부트: spring-boot-starter를 통해 호환되는 라이브러리 묶음을 제공하므로 버전 고민 없이 쉽게 추가할 수 있습니다.
-
-
-        자바에서 스프링이 프레임워크인가 아니면 스프링 부트가 프레임워크인가?
-        둘 다 프레임워크입니다.
-        엄밀히 말하면 스프링 프레임워크가 근본이 되는 거대한 핵심 프레임워크이고,
-        스프링 부트는 그 스프링 프레임워크를 더 쉽고 빠르게 쓰기 위해 만든 확장(서브) 프레임워크입니다.
-        스프링 프레임워크 (Spring Framework)핵심 기능: 자바 백엔드 개발에 필요한 기본 뼈대와 핵심 기술(DI, AOP 등)을 제공합니다.
-        특징: 개발자가 직접 수많은 설정 파일을 작성하고 라이브러리 버전을 일일이 맞춰야 합니다.
-        스프링 부트 (Spring Boot)핵심 기능: 스프링 프레임워크를 기반으로 한 도구로,
-        복잡한 초기 설정을 자동으로 처리해 줍니다.
-        특징: 웹 서버(Tomcat 등)를 내장하고 있어 별도의 서버 설치 없이 바로 실행할 수 있습니다.
-
-        스프링 해볼거
-        스프링 프로젝트 생성
-        스프링 부트로 웹서버 실행
-        회원 도메인 개발
-        웹 MVC 개발
-        DB 연동 - JDBC, JPA, 스프링 데이터 JPA
-        테스트 케이스 작성
-
-        스프링 사용 기술
-        Spring Boot
-        Gradle
-        Thymeleaf
-        JPA java persistence API
-        HiberNate
-
-        스프링 정복
-
-        스프링 핵심 원리
-        스프링 웹 MVC
-        스프링 DB 데이터 접근 기술
+        자바에서 SimpleDateFormat 클래스는 날짜(Date) 객체를 원하는 포맷의 문자열로 변환하거나, 반대로 문자열을 Date 객체로 파싱할 때 사용합니다. [1] 
+        ## 1. 기본 사용 순서
+        
+           1. java.text.SimpleDateFormat 패키지를 임포트합니다.
+           2. 원하는 날짜 패턴을 생성자 인자로 전달하여 인스턴스를 만듭니다.
+           3. format() 메서드로 날짜를 문자열로 변환하거나, parse() 메서드로 문자열을 날짜 객체로 변환합니다. [1, 2, 3, 4, 5] 
+        
+        ## 2. 자주 사용하는 날짜 패턴 기호
+        
+        | 기호 | 의미 | 표현 예시 |
+        |---|---|---|
+        | y | 연도 (Year) | yyyy(2026), yy(26) |
+        | M | 월 (Month) | MM(08), M(8) |
+        | d | 일 (Day) | dd(05), d(5) |
+        | E | 요일 (Day in week) | E(수) |
+        | H | 시간 (Hour, 0~23) | HH(14), H(14) |
+        | m | 분 (Minute) | mm(30) |
+        | s | 초 (Second) | ss(45) |
+        
+        
+        ## 3. 실제 코드 예제## ① Date 객체를 원하는 문자열(String)로 바꾸기 (format) [6] 
+        
+        import java.text.SimpleDateFormat;import java.util.Date;
+        public class DateFormatExample {
+            public static void main(String[] args) {
+                // 현재 날짜 객체 생성
+                Date now = new Date();
+                
+                // 패턴 형식 지정
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss (E)");
+                
+                // 포맷팅 적용
+                String formattedDate = sdf.format(now);
+                
+                // 결과 출력: 2026-08-05 14:30:45 (수) 형태
+                System.out.println("현재 시간: " + formattedDate);
+            }
+        }
+        
+        ## ② 날짜 형식의 문자열(String)을 Date 객체로 바꾸기 (parse) [3] 
+        문자열을 날짜로 변경할 때는 패턴이 정확히 일치해야 하며, 반드시 ParseException 예외 처리를 해야 합니다. [7, 8] 
+        
+        import java.text.ParseException;import java.text.SimpleDateFormat;import java.util.Date;
+        public class DateParseExample {
+            public static void main(String[] args) {
+                String dateStr = "2026/08/05";
+                
+                // 입력할 문자열 구조와 똑같은 패턴 지정
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                
+                try {
+                    // 파싱 수행
+                    Date parsedDate = sdf.parse(dateStr);
+                    System.out.println("변환된 Date 객체: " + parsedDate);
+                } catch (ParseException e) {
+                    System.out.println("날짜 형식 포맷이 일치하지 않습니다.");
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+        
+        아래와 같이도 가능..
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd E'요일입니다.'");
+        
+        
+        ## ⚠️ 주의할 점 (멀티스레드 환경)
+        SimpleDateFormat은 스레드 안전(Thread-Safe)하지 않습니다. 여러 사용자가 동시에 접근하는 웹 애플리케이션(예: Spring 환경)의 멤버 변수로 공유하여 사용하면 날짜 데이터가 꼬이는 치명적인 오류가 발생할 수 있습니다. [9] 
+        
+        * 
+        * 해결책: 메서드 내부의 지역 변수로 매번 생성해 쓰거나, 자바 8 이상부터 제공하는 스레드 안전한 java.time.format.DateTimeFormatter 클래스를 사용하는 것을 권장합니다.
+        * 
+        
+        추가로 궁금한 내용이 있다면 답변해 주세요:
+        
+        * 
+        * DateTimeFormatter를 사용하는 최신 방식 코드가 필요하신가요?
+        * 특정 형식을 맞추는 데 에러(ParseException)가 발생하고 있나요?
+        * 
+        
+        
+        
+        
+        ㅡㅡㅡㅡㅡㅡㅡ
+        
+        
+        자바에서 simpledateformat은 비권장인가
+        네, 자바에서 SimpleDateFormat은 공식적으로 @Deprecated(비권장) 처리되지는 않았으나, 
+        멀티스레드 환경에서 안전하지 않으며(Thread-unsafe) 자바 8 이후부터는 대체재가 있어 
+        사용을 피하는 것이 좋다고 권장됩니다.
+        주요 문제점
+        스레드 안전성 부족: 여러 스레드가 동시에 하나의 SimpleDateFormat 인스턴스를 공유하면 
+        내부 상태가 꼬여 잘못된 날짜를 반환하거나 오류가 발생합니다.
+        구형 API 기반: 낡은 Date 및 Calendar 클래스와 연동되므로 직관적이지 않고 버그를 유발하기 쉽습니다.
+        대안 (권장 방식)DateTimeFormatter: 자바 8에 도입된 java.time.format.DateTimeFormatter를 사용하세요.
+        특징: 스레드로부터 안전하며(Thread-safe), LocalDateTime 이나 ZonedDateTime 같은 
+        모던 날짜/시간 API와 완벽하게 호환됩니다.
 
     </pre>
 </body>
