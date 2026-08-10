@@ -270,7 +270,7 @@ class MemberServiceTest {
 		
 		//when
 		memberService.join(member1);
-		assertThrows(IllegalStateException.class, () -> memberService.join(member2))
+		IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
 		//null뭐 익셉션도 해보기???
 
 /*
