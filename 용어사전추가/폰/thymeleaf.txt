@@ -100,7 +100,93 @@ th:each
 
 
 
+타임리프(th:each)와 연동되는 Spring Boot 컨트롤러 및 데이터 클래스(DTO) 예시 코드입니다.
+## 1. 데이터 클래스 작성 (UserDto)
+화면에 전달할 사용자 정보를 담을 가상의 객체입니다.
 
+package com.example.demo.dto;
+public class UserDto {
+    private String name;
+    private int age;
+
+    // 생성자
+    public UserDto(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // Getter (타임리프가 데이터를 읽을 때 필수)
+    public String getName() { return name; }
+    public int getAge() { return age; }
+}
+
+------------------------------
+## 2. 스프링 컨트롤러 작성 (UserController)
+리스트에 데이터를 담아 Model 객체를 통해 타임리프로 넘겨줍니다.
+
+package com.example.demo.controller;
+import com.example.demo.dto.UserDto;import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.GetMapping;
+import java.util.ArrayList;import java.util.List;
+
+@Controllerpublic class UserController {
+
+    @GetMapping("/users")
+    public String getUserList(Model model) {
+        // 1. 가상의 리스트 데이터 생성
+        List<UserDto> userList = new ArrayList<>();
+        userList.add(new UserDto("홍길동", 20));
+        userList.add(new UserDto("이순신", 30));
+        userList.add(new UserDto("강감찬", 40));
+
+        // 2. Model에 "users"라는 이름으로 리스트 전달
+        // 이 이름이 타임리프의 ${users}와 매핑됩니다.
+        model.addAttribute("users", userList);
+
+        // 3. 호출할 HTML 뷰 파일명 반환 (src/main/resources/templates/user-list.html)
+        return "user-list";
+    }
+}
+
+------------------------------
+## 3. 타임리프 HTML 작성 (user-list.html)
+컨트롤러가 넘겨준 users 키값을 받아 화면에 반복 출력합니다.
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 목록</title>
+</head>
+<body>
+    <h1>사용자 리스트</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>순번</th>
+                <th>이름</th>
+                <th>나이</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ${users}는 컨트롤러의 model.addAttribute("users", ...)와 일치해야 합니다 -->
+            <tr th:each="user, stat : ${users}">
+                <td th:text="${stat.count}">1</td>
+                <td th:text="${user.name}">이름</td>
+                <td th:text="${user.age}">나이</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+
+브라우저에서 http://localhost:8080/users로 접속하면 컨트롤러가 가공한 3명의 데이터가 표 형태로 반복되어 출력됩니다.
+이 흐름과 관련하여 더 보충하고 싶은 부분이 있으신가요?
+
+* 데이터가 비어있을 때 예외 처리(th:if)하는 방법이 궁금하신가요?
+* 데이터베이스(JPA/MyBatis)에서 실제 DB 데이터를 조회해 오는 연동 코드가 필요하신가요?
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 
 
