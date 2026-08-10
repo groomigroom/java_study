@@ -261,6 +261,13 @@ class MemberServiceTest {
 	@Test
 	public void 중복_회원_예외() {
 
+		//given
+		
+		
+		//when
+		
+		
+		//then
 	}
 
 	@Test
