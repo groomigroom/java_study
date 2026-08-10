@@ -254,7 +254,7 @@ class MemberServiceTest {
 		Long saveId = memberService.join(member);
 		
 		//then
-		memberService.findOne(saveId);
+		Optional<Member> one = memberService.findOne(saveId).get();
 		Assertions.assertThat()
 	}
 
