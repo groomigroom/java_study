@@ -298,7 +298,7 @@ class MemberServiceTest {
 
 https://www.youtube.com/watch?v=NffW47IBg4I
 
-49초까지 봄
+10분 22초까지 봄
 
 
 
