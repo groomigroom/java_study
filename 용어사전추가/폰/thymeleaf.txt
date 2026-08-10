@@ -6,3 +6,8 @@ th:each
 
 <td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">0.99</td>
     </tr>
+
+
+아래꺼부터보기
+
+튜토리얼: 타임리프 사용법 https://share.google/Mg6FBYEO4idVeRTCj
