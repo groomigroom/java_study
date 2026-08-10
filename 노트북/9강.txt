@@ -316,6 +316,12 @@ class MemberServiceTest {
 }
 
 
+---------------------------------
+
+메인프로젝트/controller/에다가 만들기
+
+
+
 https://www.youtube.com/watch?v=NffW47IBg4I
 
 10분 22초까지 봄
