@@ -259,7 +259,9 @@ class MemberServiceTest {
 	}
 
 	@Test
-	public void 중복_회원
+	public void 중복_회원_예외() {
+
+	}
 
 	@Test
 	void findMembers() {
