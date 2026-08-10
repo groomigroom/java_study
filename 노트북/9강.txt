@@ -372,6 +372,9 @@ public class SpringConfig {
 	}
 
 	@Bean
+	public MemberRepository memberRepository() {
+		return new MemoryMemberRepository();
+	}
 }
 
 https://www.youtube.com/watch?v=ff1xgVrQy1E&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=15
