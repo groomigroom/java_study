@@ -248,7 +248,7 @@ class MemberServiceTest {
 
 	@AfterEach
 	public void afterEach() {
-		repository.clearStroe();
+		memberRepository.clearStore();
 	}
 
 	@Test
