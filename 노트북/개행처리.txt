@@ -1,0 +1,10 @@
+public class JavaTest {
+    public static void main(String[] args) {
+        String bichon = """
+             이름: 김구름    \s
+             나이: 9.            \s
+             직업: 잠꾸러기 \s
+        """;
+        System.out.println(bichon);
+    }
+}
