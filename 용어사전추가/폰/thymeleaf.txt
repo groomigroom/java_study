@@ -4,6 +4,106 @@ https://www.thymeleaf.org/
 th:each
 
 
+타임리프(Thymeleaf)의 th:each는 자바의 for-each 문처럼 목록(List, 배열 등)의 데이터를 반복해서 처리할 때 사용하는 반복문 속성입니다. HTML 태그에 지정해 컬렉션의 요소를 하나씩 꺼내며 동적인 요소를 쉽게 만들 수 있습니다. [1, 2, 3, 4] 
+## 기본 사용법
+
+* 형식: th:each="변수명 : ${리스트}"
+* 동작: 지정한 리스트(${...})에서 값을 하나씩 꺼내 왼쪽 변수(변수명)에 담고, 해당 HTML 태그를 데이터 개수만큼 반복합니다.
+* 예시: <tr th:each="user : ${users}"><td th:text="${user.name}">이름</td></tr> [1, 2, 4, 5] 
+
+## 반복 상태 유지 (Status Variable)
+
+* 두 번째 파라미터를 추가해 반복 상태(인덱스, 짝/홀수 여부 등)를 알 수 있습니다. [3, 6] 
+* 형식: th:each="user, stat : ${users}" 또는 변수명 뒤에 Stat 자동 생성 (th:each="user : ${users}"일 때 userStat 사용 가능).
+* 제공하는 주요 상태 값:
+* index: 0부터 시작하는 순서
+   * count: 1부터 시작하는 순서
+   * size: 전체 개수
+   * even, odd: 짝수/홀수 여부 (boolean)
+   * first, last: 첫 번째/마지막 여부 (boolean) [6] 
+
+더 궁금한 점이 있다면 알려주세요:
+
+* 구체적인 반복문 예시 코드가 필요하신가요?
+* 상태 변수(Stat) 활용법이나 조건문(th:if)과의 조합이 궁금하신가요?
+
+
+[1] [https://whitewise95.tistory.com](https://whitewise95.tistory.com/290)
+[2] [https://jddng.tistory.com](https://jddng.tistory.com/233)
+[3] [https://exhibitlove.tistory.com](https://exhibitlove.tistory.com/420)
+[4] [https://velog.io](https://velog.io/@slug0248/Thymeleaf-%EB%B0%98%EB%B3%B5%EB%AC%B8-each-%EB%B0%98%EB%B3%B5-%EC%83%81%ED%83%9C-Stat)
+[5] [https://baesj.tistory.com](https://baesj.tistory.com/70)
+[6] [https://jaehwaseo.tistory.com](https://jaehwaseo.tistory.com/42)
+
+
+타임리프(th:each)의 실제 활용 예시 코드입니다.
+컨트롤러에서 users라는 리스트에 사용자 3명(홍길동, 이순신, 강감찬)의 데이터를 담아 보냈다고 가정하고 작성한 HTML입니다.
+## 1. 기본 반복문 예시
+가장 단순하게 이름 목록을 반복해서 출력하는 방법입니다.
+
+<ul>
+  <!-- users 리스트를 반복하며, 각 데이터를 user 변수에 담습니다 -->
+  <li th:each="user : ${users}" th:text="${user.name}">기본 이름</li>
+</ul>
+
+브라우저 렌더링 결과:
+
+* 홍길동
+* 이순신
+* 강감찬
+
+------------------------------
+## 2. 상태 변수(Stat)를 활용한 표(Table) 예시
+순번, 홀짝 스타일 변경, 첫 번째/마지막 요소 체크 등을 적용한 데이터 표 예시입니다.
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>번호 (count)</th>
+      <th>인덱스 (index)</th>
+      <th>이름</th>
+      <th>특이사항</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- userStat이라는 상태 변수를 명시적으로 선언했습니다 -->
+    <tr th:each="user, userStat : ${users}" th:style="${userStat.odd} ? 'background-color: #f2f2f2;' : ''">
+      <!-- 1부터 시작하는 번호 표시 -->
+      <td th:text="${userStat.count}">1</td>
+      <!-- 0부터 시작하는 인덱스 표시 -->
+      <td th:text="${userStat.index}">0</td>
+      <!-- 데이터 출력 -->
+      <td th:text="${user.name}">이름</td>
+      <!-- 첫 번째와 마지막 요소에만 텍스트 표시 -->
+      <td>
+        <span th:if="${userStat.first}">★ 첫 손님</span>
+        <span th:if="${userStat.last}">끝</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+------------------------------
+## 3. 상태 변수 생략 예시 (자동 생성)
+두 번째 파라미터(userStat)를 적지 않아도, 타임리프가 [변수명] + Stat 조합으로 자동 생성해 줍니다.
+
+<div th:each="user : ${users}">
+  <!-- userStat을 선언하지 않았지만 자동으로 사용할 수 있습니다 -->
+  <p th:text="${userStat.count} + '번째 사용자: ' + ${user.name}">1번째 사용자</p>
+</div>
+
+------------------------------
+혹시 작성 중인 코드에서 막히는 부분이나, 추가로 구현하고 싶은 기능이 있으신가요?
+
+* Spring Controller에서 데이터를 넘기는 자바 코드가 필요하신가요?
+* 이중 반복문(중첩 loop) 구현 방법이 궁금하신가요?
+
+
+
+
+
+
+
 <td th:text="${#numbers.formatDecimal(prod.price, 1, 2)}">0.99</td>
     </tr>
 
