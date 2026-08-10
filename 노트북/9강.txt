@@ -270,7 +270,8 @@ class MemberServiceTest {
 		
 		//when
 		memberService.join(member1);
-		assertThrows(NullPointerException.class, () -> memberService.join(member2))
+		assertThrows(IllegalStateException.class, () -> memberService.join(member2))
+		//null뭐 익셉션도 해보기???
 
 /*
 		try {
