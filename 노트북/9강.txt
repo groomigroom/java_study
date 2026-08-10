@@ -244,6 +244,7 @@ org.junit.jupiter.api.Test; //이거 자동으로 뜨게 하는 법??
 class MemberServiceTest {
 
 	MemberService memberServie = new MemberService();
+	MemoryMemberRepository memberRepository
 
 	@Test
 	void 회원가입() {
