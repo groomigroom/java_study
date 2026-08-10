@@ -259,7 +259,7 @@ class MemberServiceTest {
 	}
 
 	@Test
-	public
+	public void 중복_회원
 
 	@Test
 	void findMembers() {
