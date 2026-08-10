@@ -246,8 +246,12 @@ class MemberServiceTest {
 	MemberService memberServie = new MemberService();
 
 	@Test
-	void join() {
-	
+	void 회원가입() {
+		//given
+
+		//when
+		
+		//then
 	}
 
 	@Test
