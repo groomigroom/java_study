@@ -1,7 +1,8 @@
 
 
 
-User.builder().name("김").age(20).build(); 코드는 롬복(Lombok) 라이브러리의 @Builder 어노테이션을 활용해 객체를 생성하는 자바 패턴입니다. 스프링 부트(Spring Boot) 애플리케이션에서는 주로 데이터베이스 엔티티, DTO(Data Transfer Object), 또는 비즈니스 로직 내에서 이 패턴을 자주 사용합니다.
+User.builder().name("김").age(20).build(); 코드는 롬복(Lombok) 라이브러리의 @Builder 어노테이션을 활용해 객체를 생성하는 자바 패턴입니다. 
+스프링 부트(Spring Boot) 애플리케이션에서는 주로 데이터베이스 엔티티, DTO(Data Transfer Object), 또는 비즈니스 로직 내에서 이 패턴을 자주 사용합니다.
 이 코드가 실제 스프링 프로젝트에서 어떻게 정의되고 활용되는지 전체 레이어(Entity/DTO ➡️ Service ➡️ Controller) 예제로 설명해 드리겠습니다.
 ------------------------------
 ## 1. User 도메인 클래스 정의 (Lombok 활용)
