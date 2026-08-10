@@ -1,1 +1,152 @@
-start_dependency.html
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>start dependency</title>
+</head>
+
+<body>
+    <h1>start dependency</h1>
+    <pre>
+        mysql버전
+        
+        처음부터 Spring Boot와 MySQL로 프로젝트를 시작할 때, 
+        Spring Initializr(start.spring.io)나 인텔리제이(IntelliJ)에서 선택해야 하는 최적의 Starter Dependencies 목록입니다.
+        기존 질문하셨던 구조에서 PostgreSQL만 MySQL로 깔끔하게 교체된 구성입니다.
+        ------------------------------
+        ## 🛠️ 처음 시작할 때 선택할 Starter 목록 (총 11개)
+        
+        | 카테고리 | 의존성 이름 (Starter Name) | 필수 선택 이유 |
+        |---|---|---|
+        | 웹 & 모니터링 | Spring Web | REST API 및 웹 서버 구축을 위한 핵심 엔진 |
+        | | Spring Boot Actuator | 모니터링 및 애플리케이션 상태 체크 엔드포인트 제공 |
+        | 데이터베이스 | Spring Data JPA | MySQL 테이블과 자바 객체를 매핑(ORM)하고 CRUD 구현 |
+        | | MySQL Driver | (중요) 스프링이 MySQL 데이터베이스와 통신하기 위한 드라이버 |
+        | | Flyway Migration | MySQL 테이블 구조 변경 이력을 관리하는 형상관리 툴 |
+        | | H2 Database | 로컬 개발이나 간단한 유닛 테스트용 인메모리 DB |
+        | 테스트 | Testcontainers | 테스트 실행 시 도커로 실제 MySQL을 띄워 검증하는 도구 |
+        | 개발 편의성 | Lombok | Getter, Setter, 생성자 등 반복 코드 자동 생성 |
+        | | Spring Boot DevTools | 코드 변경 시 서버 자동 재시작 (생산성 향상) |
+        | | Spring Configuration Processor | application.yml 설정 시 자동 완성 힌트 제공 |
+        | 검증 | Validation | 회원가입, 로그인 등 입력 데이터 유효성 검증 |
+        
+        ------------------------------
+        ## 📝 초기 설정 파일 구성 (application.yml)
+        의존성을 추가한 후, 프로젝트의 src/main/resources/application.yml 파일을 아래와 같이 작성하여 MySQL과 연결합니다.
+        
+        spring:
+          datasource:
+            # localhost:3306 뒤에 사용할 데이터베이스(스키마) 이름을 적어주세요.
+            url: jdbc:mysql://localhost:3306/YOUR_DB_NAME?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+            username: root
+            password: YOUR_PASSWORD
+            driver-class-name: com.mysql.cj.jdbc.Driver
+        
+          jpa:
+            database-platform: org.hibernate.dialect.MySQLDialect
+            hibernate:
+              # Flyway를 사용하므로 JPA가 테이블을 자동으로 바꾸지 못하게 validate(검증)로 설정합니다.
+              ddl-auto: validate 
+            show-sql: true
+            properties:
+              hibernate:
+                format_sql: true
+        
+        ------------------------------
+        ## 💡 주의할 점 (꿀팁)
+        
+           1. 데이터베이스 선 생성: Spring 부트를 켜기 전에, MySQL 워크벤치나 CLI를 통해 YOUR_DB_NAME에 해당하는 데이터베이스(스키마)를 미리 생성(CREATE DATABASE ...)해 두어야 에러가 나지 않습니다.
+           2. Flyway 폴더 위치: Flyway가 활성화되면 src/main/resources/db/migration/ 폴더 안에 V1__init.sql 같은 마이그레이션 파일이 있어야 서버가 정상 구동됩니다. 첫 실행 시 파일이 없다면 에러가 날 수 있으니 빈 파일이라도 만들어 두는 것이 좋습니다.
+        
+        현재 로컬 환경에 MySQL 서버가 이미 설치되어 실행 중이신가요? 만약 설치 전이시라면 도커(Docker)로 1분 만에 MySQL을 띄우는 방법을 소개해 드릴 수 있습니다.
+        
+        
+        ㅡㅡㅡㅡㅡ
+        
+        
+        starter dependencies
+        
+        spring boot DevTools
+        Lombok
+        Spring Configuration Process
+        Spring Web
+        Spring Boot Actuator
+        TestContainers
+        Spring Data JPA
+        Flyway Migration
+        H2 Database
+        PostgreSQL Driver
+        Validation
+        
+        
+        요청하신 스타터 의존성(Starter Dependencies)들은 자바 스프링 부트(Spring Boot) 애플리케이션 개발의 전 과정을 지원하는 핵심 라이브러리들입니다.
+        역할에 따라 5가지 카테고리로 분류하여 핵심 기능을 요약해 드립니다.
+        ------------------------------
+        ## 1. 개발 생산성 및 편의성 개선
+        
+        * 
+        * Spring Boot DevTools
+        * 코드 변경 시 애플리케이션을 자동으로 재시작(Live Reload)합니다.
+           * 브라우저 새로고침을 자동화하여 개발 주기를 단축합니다. [1] 
+        * Lombok (롬복)
+        * 어노테이션(@Getter, @Setter, @ToString 등) 기반으로 반복적인 자바 코드를 자동 생성합니다.
+           * 보일러플레이트 코드(반복 코드)를 제거하여 소스코드를 가독성 있게 유지합니다. [2, 3, 4] 
+        * Spring Configuration Processor
+        * @ConfigurationProperties 사용 시, application.properties나 application.yml 파일에서 자동 완성 기능과 메타데이터 힌트를 제공합니다.
+        * 
+        
+        ## 2. 웹 개발 및 모니터링
+        
+        * 
+        * Spring Web
+        * RESTful API 및 MVC 웹 애플리케이션 구축의 기본입니다.
+           * 내장형 톰캣(Tomcat) 서버를 포함하고 있어 별도 WAS 설치 없이 웹 서비스 구동이 가능합니다. [5, 6] 
+        * Spring Boot Actuator
+        * 실행 중인 애플리케이션의 HTTP 엔드포인트를 통해 상태 모니터링 정보를 제공합니다.
+           * 앱 상태(Health), 로그 레벨 변경, 메트릭 수집 등 운영 환경 필수 기능을 지원합니다. [7] 
+        * 
+        
+        ## 3. 데이터베이스 및 데이터 접근 기술
+        
+        * 
+        * Spring Data JPA
+        * 관계형 데이터베이스를 객체 지향적으로 다룰 수 있게 돕는 ORM(Object-Relational Mapping) 기술입니다.
+           * 반복적인 CRUD SQL을 직접 작성하지 않고, 인터페이스 정의만으로 데이터 작업을 수행합니다.
+        * H2 Database
+        * 인메모리(In-Memory) 관계형 데이터베이스입니다.
+           * 로컬 개발 환경이나 테스트 코드 실행 시 빠르고 가볍게 가상 DB를 띄우는 용도로 쓰입니다.
+        * PostgreSQL Driver
+        * 자바 애플리케이션이 실제 PostgreSQL 데이터베이스와 통신할 수 있도록 연결해주는 JDBC 드라이버입니다.
+        * Flyway Migration
+        * 데이터베이스 형상관리(버전 관리) 툴입니다.
+           * SQL 스크립트를 이용해 테이블 구조 변경 이력을 추적하고, 여러 서버의 DB 스키마 버전을 자동으로 일치시킵니다.
+        * 
+        
+        ## 4. 데이터 검증
+        
+        * 
+        * Validation
+        * 사용자가 입력한 데이터의 유효성을 어노테이션 기반으로 검증(Bean Validation)합니다.
+           * @NotNull, @Size, @Email 등을 사용하여 컨트롤러나 서비스 계층에서 잘못된 값이 들어오는 것을 차단합니다. [8] 
+        * 
+        
+        ## 5. 테스트 환경 구성
+        
+        * 
+        * Testcontainers
+        * 도커(Docker) 컨테이너를 활용해 실제 데이터베이스(PostgreSQL 등)를 독립된 테스트 환경으로 구동해주는 라이브러리입니다.
+           * 가짜(Mock) 객체나 H2 같은 대체 DB 대신, 운영 환경과 완전히 동일한 환경에서 통합 테스트를 수행할 수 있게 만듭니다. [9, 10] 
+        * 
+        
+        ------------------------------
+        이 의존성 조합은 "테스트 코드와 데이터베이스 버전 관리까지 완벽히 갖춘 최신 Spring Boot 웹 백엔드"를 만들 때 구성하는 표준적이고 강력한 환경 입니라.
+        추가로 이 라이브러리들을 활용한 실무 예제 코드나 build.gradle 설정 방법이 궁금하신가요?
+        
+        
+        ㅡㅡㅡㅡㅡㅡㅡ
+    </pre>
+</body>
+
+</html>
