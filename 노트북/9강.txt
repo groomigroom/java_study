@@ -320,7 +320,18 @@ class MemberServiceTest {
 
 메인프로젝트/controller/에다가 만들기
 
+클래스 파일로 만들기
 
+MemberController.java
+
+패키지 뭐라뭐라 뜨고,
+
+import @Controller 뜨고
+
+@Controller
+public class MemberController {
+
+}
 
 https://www.youtube.com/watch?v=NffW47IBg4I
 
