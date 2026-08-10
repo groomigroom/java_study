@@ -2,6 +2,9 @@
 
 https://groomigroom.github.io/java_study/
 
+
+용어 사전에 start dependency 정리하기
+
 example에 AraayList 봐보기...
 ArrayList_Comparator.java 도 보기...
 
