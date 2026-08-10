@@ -363,8 +363,11 @@ SpringConfig.java 클래스로 파일 만들기
 
 패키지 뭐라뭐라 뜨고;
 
+@Configuration
 public class SpringConfig {
 
+	@Bean
+	public MemberService memberService
 }
 
 https://www.youtube.com/watch?v=ff1xgVrQy1E&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=15
