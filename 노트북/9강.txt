@@ -330,7 +330,7 @@ import @Controller 뜨고
 
 @Controller
 public class MemberController {
-	private final MemberService memberService = new MemberService();
+	private final MemberService memberService;
 }
 
 https://www.youtube.com/watch?v=NffW47IBg4I
