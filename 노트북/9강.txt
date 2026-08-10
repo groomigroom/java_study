@@ -345,6 +345,16 @@ public class MemberController {
 
 java/폴더에 메인 프로젝트 아니게 demo 라는 패키지 만들기.
 
+여기에다가
+
+Demo.java 만들기 클래스로
+
+패키지 뭐라 뜨고;
+
+@
+public class Demo {
+
+}
 
 
 https://www.youtube.com/watch?v=NffW47IBg4I
