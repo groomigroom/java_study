@@ -1,4 +1,6 @@
-@RequestParam(value = "name", required = false)은 사용자가 웹 브라우저 주소창이나 폼(Form)을 통해 보낸 데이터(name)를 자바 스프링 컨트롤러에서 받아올 때 쓰는 도구입니다. 이 코드는 값이 없어도 오류를 내지 않고 안전하게 처리합니다.
+@RequestParam(value = "name", required = false)은 사용자가 웹 브라우저 주소창이나 폼(Form)을 
+통해 보낸 데이터(name)를 자바 스프링 컨트롤러에서 받아올 때 쓰는 도구입니다. 
+이 코드는 값이 없어도 오류를 내지 않고 안전하게 처리합니다.
 ## 코드 구성 요소
 
 * @RequestParam: 웹 요청의 파라미터 값을 가져옵니다.
@@ -18,19 +20,13 @@
 * 기본값 처리: 값이 없을 때 기본값을 넣고 싶다면 defaultValue = "손님"을 추가할 수 있습니다.
 * 데이터 전달: model.addAttribute("msg", name);처럼 쓰면 화면에 값을 보여줄 수 있습니다.
 
-이 코드를 적용할 때 기본값을 설정하는 방법이나 데이터를 화면에 출력하는 예제가 더 필요하신가요?
-
-[1] [https://aridom.tistory.com](https://aridom.tistory.com/63)
-[2] [https://brilliantdevelop.tistory.com](https://brilliantdevelop.tistory.com/208)
-[3] [https://gilssang97.tistory.com](https://gilssang97.tistory.com/15)
-[4] [https://m.hanbit.co.kr](https://m.hanbit.co.kr/channel/view.html?cmscode=CMS3743029973)
-
-
 
 mmmmmmmmmmmmmmmmmm
 
 
-required = true가 들어가면 해당 파라미터는 필수 항목이 됩니다. 즉, 사용자가 URL이나 폼을 통해 name이라는 값을 반드시 보내야만 페이지가 열립니다.
+required = true가 들어가면 해당 파라미터는 필수 항목이 됩니다. 
+즉, 사용자가 URL이나 폼을 통해 name이라는 값을 반드시 보내야만 페이지가 열립니다.
+
 ## 주요 변화와 특징
 
 * 필수값 강제: 사용자가 name 값을 보내지 않으면 스프링이 요청을 거절합니다.
@@ -41,7 +37,3 @@ required = true가 들어가면 해당 파라미터는 필수 항목이 됩니�
 
 * /hello?name=Tom 접속 시: 정상 작동하며 name 변수에 "Tom"이 저장됩니다.
 * /hello 접속 시: name 파라미터가 없으므로 화면에 400 에러가 발생하고 서버 로그에 경고가 찍힙니다.
-
-------------------------------
-이 에러를 방지하기 위해 400 에러를 예쁘게 처리하는 예외 처리 방법이 궁금하신가요? 아니면 에러 없이 빈 문자열이나 기본값을 채우는 방법을 알아볼까요?
-
