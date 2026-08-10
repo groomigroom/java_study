@@ -270,7 +270,7 @@ class MemberServiceTest {
 		
 		//when
 		memberService.join(member1);
-
+		assertThrows(IllegalStateException.class)
 
 /*
 		try {
