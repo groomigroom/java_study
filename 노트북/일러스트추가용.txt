@@ -24,3 +24,24 @@
 [2] [https://brilliantdevelop.tistory.com](https://brilliantdevelop.tistory.com/208)
 [3] [https://gilssang97.tistory.com](https://gilssang97.tistory.com/15)
 [4] [https://m.hanbit.co.kr](https://m.hanbit.co.kr/channel/view.html?cmscode=CMS3743029973)
+
+
+
+mmmmmmmmmmmmmmmmmm
+
+
+required = true가 들어가면 해당 파라미터는 필수 항목이 됩니다. 즉, 사용자가 URL이나 폼을 통해 name이라는 값을 반드시 보내야만 페이지가 열립니다.
+## 주요 변화와 특징
+
+* 필수값 강제: 사용자가 name 값을 보내지 않으면 스프링이 요청을 거절합니다.
+* 400 에러 발생: 값이 누락되면 브라우저에 HTTP Status 400 – Bad Request 에러 화면이 뜹니다.
+* 기본값 (생략 시 상태): @RequestParam은 required 옵션을 적지 않으면 기본적으로 true로 설정됩니다.
+
+## 요청 결과 비교
+
+* /hello?name=Tom 접속 시: 정상 작동하며 name 변수에 "Tom"이 저장됩니다.
+* /hello 접속 시: name 파라미터가 없으므로 화면에 400 에러가 발생하고 서버 로그에 경고가 찍힙니다.
+
+------------------------------
+이 에러를 방지하기 위해 400 에러를 예쁘게 처리하는 예외 처리 방법이 궁금하신가요? 아니면 에러 없이 빈 문자열이나 기본값을 채우는 방법을 알아볼까요?
+
