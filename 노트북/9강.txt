@@ -246,6 +246,11 @@ class MemberServiceTest {
 	MemberService memberServie = new MemberService();
 	MemoryMemberRepository memberRepository = new MemoryMemberRepository();
 
+	@AfterEach
+	public void afterEach() {
+		repository.clearStroe();
+	}
+
 	@Test
 	void 회원가입() {
 		//given
