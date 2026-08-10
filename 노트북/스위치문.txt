@@ -1,0 +1,9 @@
+public class JavaTest {
+    public static void main(String[] args) {
+        int ranking = 2;
+        String groomhouse = switch(ranking) {
+               case 1 -> "동쪽집";
+나머지도 default도
+         }
+    }
+}
