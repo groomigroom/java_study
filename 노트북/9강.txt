@@ -351,7 +351,7 @@ Demo.java 만들기 클래스로
 
 패키지 뭐라 뜨고;
 
-@
+@Service
 public class Demo {
 
 }
