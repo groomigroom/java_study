@@ -102,7 +102,7 @@ MemoryMemberRepository.java
 
 import java.util.*;
 
-@Repository
+//@Repository 이거 썼다 지웠다 해보기
 public class MemoryMemberRepository implements MemberRepository {
     private static Map<Long, Member> store = new HashMap<>();
     private static Long sequence = 0L;
