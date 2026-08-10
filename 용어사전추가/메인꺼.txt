@@ -1,8 +1,23 @@
-자바 스프링에서 @SpringBootApplication의 의미?    +10                    자바 스프링 부트에서 @SpringBootApplication은 핵심 메인 클래스에 붙이는 통합 어노테이션으로, 스프링 부트 애플리케이션의 자동 설정(Auto-Configuration), 빈 스캔(Component Scan), 스프링 설정(Configuration) 등 3가지 핵심 기능을 한 번에 활성화합니다.구성하는 3가지 핵심 어노테이션@SpringBootConfiguration스프링의 @Configuration과 같은 역할을 합니다.해당 클래스가 스프링 빈(Bean) 설정 클래스임을 나타냅니다.@EnableAutoConfiguration스프링 부트가 사전에 정의한 다양한 라이브러리와 설정들을 자동으로 구성해 줍니다.예를 들어, spring-boot-starter-web이 있다면 톰캣(Tomcat)과 스프링 MVC를 자동으로 설정합니다.@ComponentScan현재 패키지와 그 하위 패키지를 전부 탐색합니다.@Component, @Service, @Repository, @Controller 등의 어노테이션이 붙은 클래스를 찾아 스프링 빈으로 등록합니다.주의해야 할 점 (위치)@SpringBootApplication이 선언된 클래스는 항상 프로젝트의 최상단(Root 패키지)에 위치해야 합니다.하위 패키지 전체를 스캔하기 때문에, 패키지 구조가 잘못되면 다른 컴포넌트나 서비스 빈들을 찾지 못하는 문제가 발생할 수 있습니다.만약 빈 스캔 범위나 자동 설정에 대해 추가로 궁금한 점이 있거나, 특정 에러 상황이 있다면 말씀해 주세요!
+자바 스프링에서 @SpringBootApplication의 의미
+자바 스프링 부트에서 @SpringBootApplication은 핵심 
+메인 클래스에 붙이는 통합 어노테이션으로, 
+스프링 부트 애플리케이션의 자동 설정(Auto-Configuration), 
+빈 스캔(Component Scan), 스프링 설정(Configuration) 등 
+3가지 핵심 기능을 한 번에 활성화합니다.구성하는 3가지 핵심 
+어노테이션@SpringBootConfiguration스프링의 @Configuration과 같은 역할을 합니다.
+해당 클래스가 스프링 빈(Bean) 설정 클래스임을 나타냅니다.
+@EnableAutoConfiguration스프링 부트가 사전에 정의한 다양한 라이브러리와 
+설정들을 자동으로 구성해 줍니다.
+예를 들어, spring-boot-starter-web이 있다면 톰캣(Tomcat)과 스프링 MVC를 
+자동으로 설정합니다.
+@ComponentScan현재 패키지와 그 하위 패키지를 전부 탐색합니다.
+@Component, @Service, @Repository, @Controller 등의 어노테이션이 붙은 클래스를 찾아 스프링 빈으로 등록합니다.
+주의해야 할 점 (위치)
+@SpringBootApplication이 선언된 클래스는 항상 프로젝트의 최상단(Root 패키지)에 위치해야 합니다.
+하위 패키지 전체를 스캔하기 때문에, 
+패키지 구조가 잘못되면 다른 컴포넌트나 서비스 빈들을 찾지 못하는 문제가 발생할 수 있습니다.
 
 
-
-위키독스2.4 스프링 부트 3 코드 이해하기 - 위키독스2024. 4. 11. — 스프링은 자바로 웹 사이트를 만들 수 있게 하는 프레임워크입니다. 여기서는 스프링의 근간이 되는 IoC, DI 개념 외의 다양한 지식을 알아보았습니다. 스프링 부...티스토리[Spring] @SpringbootApplication의 원리 - Ummchicken2023. 1. 27. — @SpringBootApplication이란? @Configuration + @EnableAutoConfiguration + @ComponentScan을 합친 것...티스토리[Spring][Spring boot] @SpringBootApplication 이란?2020. 7. 9. — @SpringBootApplication 이란? @SpringBootAplication 어노테이션은 auto-configuration을 담당합니다. 다시 이야기 ...티스토리@SpringBootApplication 완벽 이해하기 - 잡다한 지식을 알려주는 로마고누2025. 5. 17. — @SpringBootApplication은 Spring Boot 애플리케이션의 메인 클래스에 붙이는 어노테이션입니다. 이 한 줄로 Spring Boot의 다양한 ...티스토리[Spring Boot] @SpringBootApplication이란?2021. 9. 14. — Spring Boot 애플리케이션의 Application.java에는 @SpringBootApplication이라는 어노테이션이 포함되어 있습니다. @Spring...티스토리@SpringBootApplication 어노테이션이란 - 시작이 좋아 - 티스토리2024. 8. 6. — SpringBootApplication 어노테이션은Spring Boot 애플리케이션의 진입점 클래스에 사용되는 어노테이션으로, 여러 개의 중요한 Spring 어노...티스토리[spring boot] @SpringBootApplication 정리 - 개발냥발 - 티스토리2021. 3. 24. — Spring Initializr를 이용해서 프로젝트를 만들면 프로젝트명Application이 자동으로 생성됩니다. 메서드 선언부에는 main 메서드 하나만 선언되...LinkedInSpring Boot의 내부 작동 원리를 설명해 주세요.2024. 7. 22. — 각 스타터는 애플리케이션의 특정 측면과 관련된 의존성 집합을 제공합니다 (예: 웹, 데이터, 메시징). 예를 들어, spring-boot-starter-web s...티스토리제2장 마이크로서비스를 위한 스프링 (1) - 마이크로서비스를 위한 스프링2019. 1. 23. — Spring-boot-starter-* 이름 설명 spring-boot-start 자동 컨피규레이션 지원, 로깅, YAML을 포함하는 핵심 스타터 spring-b...티스토리Spring Boot 원리 : 자동 설정(Auto Configuration)2019. 9. 2. — 2. @ComponentScan @ComponentScan은 선언된 패키지를 포함한 하위 패키지의 Component를 Scan하여 Bean으로 등록한다. 그렇기 ...티스토리스프링 부트와 내장 톰캣2023. 3. 12. — 참고로 현재 클래스에는 @SpringBootApplication 애노테이션이 있는데, 이 애노테이션 안에는 컴포넌트 스캔을 포함한 여러 기능이 설정되어 있다. 기...jonghoonpark.com[Spring] Spring In Action - 스프링 시작하기 (1-2장)2025. 1. 12. — Controller 클래스 @Controller와 함께 @Component, @Service, @Repository와 같은 어노테이션은 클래스를 빈으로 등록되어 ...    AI 답변에 오류가 있을 수 있습니다. 자세히 알아보기
 
 
 
