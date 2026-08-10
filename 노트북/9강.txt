@@ -248,13 +248,13 @@ org.junit.jupiter.api.Test; //이거 자동으로 뜨게 하는 법??
 
 class MemberServiceTest {
 
-	MemberService memberServie = new MemberService();
+	MemberService memberServie;
 	MemoryMemberRepository memberRepository;
 
 	@BeforeEach
 	public void beforeEach() {
 		memberRepository = new MemoryMemberRepository();
-		memberService = new MemberService()
+		memberService = new MemberService(memberRepository);
 	}
 
 	@AfterEach
