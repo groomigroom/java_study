@@ -357,6 +357,16 @@ public class Demo {
 }
 
 
+/메인프로젝트/service/ 폴더에다가
+
+SpringConfig.java 클래스로 파일 만들기
+
+패키지 뭐라뭐라 뜨고;
+
+public class SpringConfig {
+
+}
+
 https://www.youtube.com/watch?v=ff1xgVrQy1E&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=15
 
 14강부터 보기
