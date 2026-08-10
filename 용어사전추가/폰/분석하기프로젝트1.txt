@@ -6,7 +6,11 @@ Engine과 Car 클래스를 스프링 빈으로 잘 등록하고 의존성 주입
 ## 올바른 실행 방법 (Spring Boot 기준)
 스프링 부트 구동 클래스나 별도의 CommandLineRunner를 이용해 Car 빈의 drive()를 호출해 주어야 합니다.
 
-import org.springframework.boot.CommandLineRunner;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;import org.springframework.context.ApplicationContext;import org.springframework.context.annotation.Bean;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplicationpublic class Application {
 
