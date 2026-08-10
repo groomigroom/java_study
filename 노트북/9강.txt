@@ -341,6 +341,12 @@ public class MemberController {
 	}
 }
 
+-------------------------
+
+java/폴더에 메인 프로젝트 아니게 demo 라는 패키지 만들기.
+
+
+
 https://www.youtube.com/watch?v=NffW47IBg4I
 
 10분 22초까지 봄
