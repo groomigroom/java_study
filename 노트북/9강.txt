@@ -367,6 +367,7 @@ public class MemberController {
 		Member member = new Member();
 		member.setName(form.getName());
 
+		//출력하는거 주석 처리도 하기
 		System.out.println("member = " + member.getName());
 
 		memberService.join(member);
