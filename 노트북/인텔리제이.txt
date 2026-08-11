@@ -1,4 +1,4 @@
-intellij_install.html ???
+intellij_install.html
 
 https://www.jetbrains.com/ko-kr/idea/download/?section=mac
 
