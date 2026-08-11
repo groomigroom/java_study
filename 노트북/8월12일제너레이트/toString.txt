@@ -1,4 +1,6 @@
-인텔리제이(Alt + Insert 또는 맥 Cmd + N)의 toString() 자동 생성 기능은 필드가 여러 개인 도메인 객체나 VO(Value Object)를 디버깅할 때 유용하다. 이름, 나이, 가입일 등 다양한 타입이 섞인 Member 클래스가 가장 좋은 예제이다.javapublic class Member {
+인텔리제이(Alt + Insert 또는 맥 Cmd + N)의 toString() 자동 생성 기능은 필드가 여러 개인 도메인 객체나 VO(Value Object)를 디버깅할 때 유용하다. 이름, 나이, 
+가입일 등 다양한 타입이 섞인 Member 클래스가 가장 좋은 예제이다.java
+public class Member {
     private Long id;
     private String username;
     private int age;
