@@ -367,7 +367,9 @@ public class MemberController {
 		Member member = new Member();
 		member.setName(form.getName());
 
-		memberService.join()
+		memberService.join(member);
+
+		return "redirect:/";
 	}
 }
 
@@ -477,7 +479,7 @@ public class MemberForm {
 
 https://www.youtube.com/watch?v=BqwX8MF6js0&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=18
 
-16강 3분 51초부터 보기 
+16강 4분 27초부터 보기 
 
 
 
