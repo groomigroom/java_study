@@ -208,7 +208,8 @@ templateEngine.setTemplateResolver(templateResolver);
 3.1 다국어 환영 인사
 우리의 첫 번째 과제는 식료품점 웹사이트의 홈페이지를 만드는 것입니다.
 
-이 페이지의 첫 번째 버전은 매우 간단합니다. 제목과 환영 메시지만 있을 것입니다. /WEB-INF/templates/home.html파일은 다음과 같습니다.
+제목과 환영 메시지만 있을 것입니다. 
+/WEB-INF/templates/home.html파일은 다음과 같습니다.
 
 <!DOCTYPE html>
 
