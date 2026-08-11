@@ -395,6 +395,19 @@ public class SpringConfig {
 	}
 }
 
+
+메인프로젝트/controller에 
+
+HomeController.java 클래스로 만들기
+
+패키지 뭐라뭐라 뜨고...
+
+@Controller
+public class HomeController {
+
+
+}
+
 https://www.youtube.com/watch?v=JBX_FTKkuZ4&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=16
 
 15강부터 보기
