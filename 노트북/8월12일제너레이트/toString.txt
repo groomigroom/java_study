@@ -4,4 +4,7 @@
     private int age;
     private LocalDateTime createdAt;
 }
-코드를 사용할 때는 주의가 필요합니다.인텔리제이 생성 방법 및 활용 포인트단축키 실행: 클래스 내부에서 Alt + Insert (윈도우) 또는 Cmd + N (맥)을 누르고 toString()을 선택한다.템플릿 선택: 생성 창에서 String Concat, StringBuilder, Apache Commons Lang5 등 원하는 포맷 스타일을 고를 수 있다.디버깅 활용: System.out.println(member) 나 log.info() 출력 시 메모리 주소 대신 필드 값이 깔끔하게 출력되어 상태 추적이 편해진다.
+인텔리제이 생성 방법 및 활용 포인트
+단축키 실행: 클래스 내부에서 Alt + Insert (윈도우) 또는 Cmd + N (맥)을 누르고 toString()을 선택한다.
+템플릿 선택: 생성 창에서 String Concat, StringBuilder, Apache Commons Lang5 등 원하는 포맷 스타일을 고를 수 있다.
+디버깅 활용: System.out.println(member) 나 log.info() 출력 시 메모리 주소 대신 필드 값이 깔끔하게 출력되어 상태 추적이 편해진다.
