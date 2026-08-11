@@ -435,6 +435,17 @@ resources/templates/에 members 패키지 만들고. 거기에다가
 
 createMemberForm.html 만들기
 
+<html xmlns:th = "http://www.thymeleaf.org">
+<body>
+<div class="container">
+	<form>
+		<label></label>
+	</form>
+</div>
+</body>
+</html>
+
+
 https://www.youtube.com/watch?v=BqwX8MF6js0&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=17
 
 16강부터 보기
