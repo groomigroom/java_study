@@ -1,7 +1,17 @@
-인텔리제이에서 Alt + Insert(윈도우/리눅스) 또는 Cmd + N(맥)을 눌러 Getter and Setter를 연습하기 가장 좋은 예제는 다양한 데이터 타입(String, int, boolean, 객체)이 섞여 있는 회원(Member) 클래스입니다.추천 예제 코드javapublic class Member {
+인텔리제이에서 Alt + Insert(윈도우/리눅스) 또는 Cmd + N(맥)을 눌러 
+Getter and Setter를 연습하기 가장 좋은 예제는 다양한 데이터 타입(String, int, boolean, 객체)이 
+섞여 있는 회원(Member) 클래스입니다.
+추천 예제 코드java
+public class Member {
     private Long id;
     private String username;
     private int age;
     private boolean subscribed;
 }
-코드를 사용할 때는 주의가 필요합니다.실습 방법위 코드를 인텔리제이 클래스 내부에 작성합니다.빈 줄에서 단축키(Alt + Insert 또는 Cmd + N)를 누릅니다.메뉴에서 Getter and Setter를 선택합니다.Shift 키를 이용해 변수 4개를 모두 선택한 뒤 OK를 누르면 모든 메서드가 한 번에 생성됩니다.이 예제가 좋은 이유boolean 타입(isSubscribed): 일반적인 get... 대신 is... 형태의 네이밍 규칙이 어떻게 적용되는지 확인할 수 있습니다.다양한 타입 혼합: Long, String, int, boolean 등 실무에서 가장 흔히 쓰는 필드 구성이라 자동 생성의 효용성을 바로 체감할 수 있습니다.
+
+실습 방법
+위 코드를 인텔리제이 클래스 내부에 작성합니다.
+빈 줄에서 단축키(Alt + Insert 또는 Cmd + N)를 누릅니다.
+메뉴에서 Getter and Setter를 선택합니다.
+Shift 키를 이용해 변수 4개를 모두 선택한 뒤 OK를 누르면 모든 메서드가 한 번에 생성됩니다.
+이 예제가 좋은 이유boolean 타입(isSubscribed): 일반적인 get... 대신 is... 형태의 네이밍 규칙이 어떻게 적용되는지 확인할 수 있습니다.다양한 타입 혼합: Long, String, int, boolean 등 실무에서 가장 흔히 쓰는 필드 구성이라 자동 생성의 효용성을 바로 체감할 수 있습니다.
