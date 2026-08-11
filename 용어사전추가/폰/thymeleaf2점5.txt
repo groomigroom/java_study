@@ -1,1 +1,2369 @@
+<img src="../../images/gtvglogo.png" 
+     th:src="@{/images/gtvglogo.png}" th:title="#{logo}" th:alt="#{logo}" />
+…이것과 함께:
 
+<img src="../../images/gtvglogo.png" 
+     th:src="@{/images/gtvglogo.png}" th:alt-title="#{logo}" />
+5.4 추가 및 전치 추가
+Thymeleaf는 또한 평가 결과를 기존 속성 값에 접미사(suffix) 또는 접두사(prefix)로 추가하는 속성을 th:attrappend제공 합니다.th:attrprepend
+
+예를 들어, 버튼에 추가할(설정하는 것이 아니라 추가하는) CSS 클래스의 이름을 컨텍스트 변수에 저장하고 싶을 수 있습니다. 왜냐하면 사용할 특정 CSS 클래스는 사용자가 이전에 수행한 작업에 따라 달라지기 때문입니다.
+
+<input type="button" value="Do it!" class="btn" th:attrappend="class=${' ' + cssStyle}" />
+cssStyle변수를 로 설정하여 이 템플릿을 처리하면 다음과 같은 "warning"결과가 나옵니다.
+
+<input type="button" value="Do it!" class="btn warning" />
+표준 다이얼렉트에는 CSS 클래스나 스타일 조각을 기존 속성을 덮어쓰지 않고 요소에 추가하는 데 사용되는 두 가지 특정 속성인 `append` 및 `append` 속성 이 있습니다 .th:classappendth:styleappend
+
+<tr th:each="prod : ${prods}" class="row" th:classappend="${prodStat.odd}? 'odd'">
+(해당 속성은 걱정하지 마세요 . 반복되는 속성th:each 이므로 나중에 자세히 설명하겠습니다.)
+
+5.5 고정값 부울 속성
+HTML에는 불리언 속성 이라는 개념이 있습니다 . 불리언 속성은 값이 없는 속성으로, 값이 존재하면 "참"을 의미합니다. XHTML에서는 이러한 속성이 오직 하나의 값, 즉 자기 자신만을 가집니다.
+
+예를 들어, checked:
+
+<input type="checkbox" name="option2" checked /> <!-- HTML -->
+<input type="checkbox" name="option1" checked="checked" /> <!-- XHTML -->
+표준 방언에는 조건을 평가하여 속성을 설정할 수 있는 속성이 포함되어 있습니다. 즉, 조건이 참으로 평가되면 해당 속성은 고정된 값으로 설정되고, 거짓으로 평가되면 속성은 설정되지 않습니다.
+
+<input type="checkbox" name="active" th:checked="${user.active}" />
+표준 방언에는 다음과 같은 고정값 부울 속성이 있습니다.
+
+th:async	th:autofocus	th:autoplay
+th:checked	th:controls	th:declare
+th:default	th:defer	th:disabled
+th:formnovalidate	th:hidden	th:ismap
+th:loop	th:multiple	th:novalidate
+th:nowrap	th:open	th:pubdate
+th:readonly	th:required	th:reversed
+th:scoped	th:seamless	th:selected
+5.6 속성 값 설정(기본 속성 처리기)
+Thymeleaf는 기본 속성 처리기를 제공하므로 표준 방언에서 특정 처리기가 정의되지 않은 속성이라도 모든 속성 의 값을 설정할 수 있습니다 .th:*
+
+예를 들면 다음과 같습니다.
+
+<span th:whatever="${user.name}">...</span>
+결과는 다음과 같습니다:
+
+<span whatever="John Apricot">...</span>
+5.7 HTML5 친화적인 속성 및 요소 이름 지원
+또한 완전히 다른 구문을 사용하여 HTML5 친화적인 방식으로 템플릿에 프로세서를 적용할 수도 있습니다.
+
+<table>
+    <tr data-th-each="user : ${users}">
+        <td data-th-text="${user.login}">...</td>
+        <td data-th-text="${user.name}">...</td>
+    </tr>
+</table>
+이 data-{prefix}-{name}구문은 개발자가 네임스페이스 이름(예: `<code>`)을 사용하지 않고도 HTML5에서 사용자 지정 속성을 작성하는 표준 방식입니다 th:*. Thymeleaf는 이 구문을 모든 방언트(표준 방언뿐만 아니라)에서 자동으로 사용할 수 있도록 지원합니다.
+
+또한 사용자 정의 태그를 지정하는 구문도 있습니다. {prefix}-{name}이는 W3C 사용자 정의 요소 사양 (더 큰 W3C 웹 구성 요소 사양 의 일부 )을 따릅니다. 예를 들어, 이 구문은 th:block요소(또는 ) 에 사용할 수 있으며 th-block, 이는 뒷부분에서 설명하겠습니다.
+
+중요: 이 구문은 네임스페이스 th:*구문에 추가되는 기능이며, 기존 구문을 대체하는 것이 아닙니다. 향후 네임스페이스 구문을 더 이상 사용하지 않도록 할 계획은 전혀 없습니다.
+
+6회 반복
+지금까지 홈페이지, 사용자 프로필 페이지, 뉴스레터 구독 페이지를 만들었습니다. 하지만 제품 페이지는 어떻게 만들까요? 제품 페이지를 만들려면 컬렉션에 있는 항목들을 순회하면서 구축할 수 있는 방법이 필요합니다.
+
+6.1 반복의 기본 사항
+페이지 에 제품을 표시하기 위해 /WEB-INF/templates/product/list.html테이블을 사용하겠습니다. 각 제품은 행( <tr>요소)에 표시되므로 템플릿을 위해 각 제품이 어떻게 표시될지 보여주는 예시 행을 만들고 , Thymeleaf에게 각 제품에 대해 이 템플릿 행을 한 번씩 반복하도록 지시해야 합니다.
+
+표준 방언은 바로 그러한 목적을 위한 속성을 제공합니다 th:each.
+
+th:each를 사용하여
+제품 목록 페이지의 경우, 서비스 계층에서 제품 목록을 가져와 템플릿 컨텍스트에 추가하는 컨트롤러 메서드가 필요합니다.
+
+public void process(
+        final IWebExchange webExchange, 
+        final ITemplateEngine templateEngine, 
+        final Writer writer)
+        throws Exception {
+    
+    final ProductService productService = new ProductService();
+    final List<Product> allProducts = productService.findAll();
+    
+    final WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
+    ctx.setVariable("prods", allProducts);
+    
+    templateEngine.process("product/list", ctx, writer);
+    
+}
+th:each그런 다음 템플릿에서 제품 목록을 순회하는 데 사용할 것입니다 .
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" 
+          href="../../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+  </head>
+
+  <body>
+
+    <h1>Product list</h1>
+  
+    <table>
+      <tr>
+        <th>NAME</th>
+        <th>PRICE</th>
+        <th>IN STOCK</th>
+      </tr>
+      <tr th:each="prod : ${prods}">
+        <td th:text="${prod.name}">Onions</td>
+        <td th:text="${prod.price}">2.41</td>
+        <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+      </tr>
+    </table>
+  
+    <p>
+      <a href="../home.html" th:href="@{/}">Return to home</a>
+    </p>
+
+  </body>
+
+</html>
+위에 보이는 속성 prod : ${prods}값은 "평가 결과의 각 요소에 대해 ${prods}, 현재 요소를 'prod'라는 변수에 저장하고 이 템플릿 조각을 반복 실행하라"는 의미입니다. 이제 보이는 각 요소에 이름을 붙여 보겠습니다.
+
+반복되는 표현식${prods} 또는 반복 되는 변수를 라고 부르겠습니다 .
+prod우리는 이 반복 변수를 또는 간단히 반복 변수 라고 부르겠습니다 .
+proditer 변수는 요소 내에만 적용 <tr>되므로, <div>와 같은 내부 태그에서도 사용할 수 있다는 점 에 유의하세요 <td>.
+
+반복 가능한 값
+Thymeleaf에서 반복에 사용할 수 있는 값은 클래스 뿐만이 아닙니다. 속성을 통해 반복 가능한java.util.List 것으로 간주되는 객체의 전체 집합이 있습니다 .th:each
+
+구현하는 모든 객체java.util.Iterable
+를 구현하는 모든 객체 java.util.Enumeration.
+`Inventory` 인터페이스를 구현하는 모든 객체는 java.util.Iterator해당 객체의 값이 이터레이터에서 반환되는 그대로 사용되므로 모든 값을 메모리에 캐시할 필요가 없습니다.
+를 구현하는 모든 객체 java.util.Map. 맵을 순회할 때, iter 변수는 클래스가 됩니다 java.util.Map.Entry.
+를 구현하는 모든 객체 java.util.stream.Stream.
+임의의 배열.
+다른 모든 객체는 해당 객체 자체를 포함하는 단일 값 리스트처럼 처리됩니다.
+6.2 반복 상태 유지
+Thymeleaf를 사용할 때 th:each, Thymeleaf는 반복 작업의 상태를 추적하는 데 유용한 메커니즘인 ` status` 변수를 제공합니다 .
+
+상태 변수는 속성 내에 정의되며 th:each다음과 같은 데이터를 포함합니다.
+
+현재 반복 인덱스 (0부터 시작). 이것이 index속성입니다.
+현재 반복 인덱스는 1부터 시작합니다. 이것이 count속성입니다.
+반복 변수에 포함된 요소의 총 개수입니다. 이것이 size속성입니다.
+각 반복마다 사용되는 iter 변수입니다 . 이것이 current속성입니다.
+현재 반복이 짝수인지 홀수인지 여부. 이것은 even/odd부울 속성입니다.
+현재 반복이 첫 번째 반복인지 여부입니다. 이는 first부울 속성입니다.
+현재 반복이 마지막 반복인지 여부입니다. 이는 last부울 속성입니다.
+앞의 예시를 통해 어떻게 활용할 수 있는지 살펴보겠습니다.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+  </tr>
+  <tr th:each="prod,iterStat : ${prods}" th:class="${iterStat.odd}? 'odd'">
+    <td th:text="${prod.name}">Onions</td>
+    <td th:text="${prod.price}">2.41</td>
+    <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+  </tr>
+</table>
+이 예시에서 상태 변수는 반복 변수 바로 뒤에 쉼표로 구분하여 이름을 붙여 속성 iterStat에 정의됩니다 . 반복 변수와 마찬가지로 상태 변수도 해당 속성을 포함하는 태그로 정의된 코드 조각 내에서만 유효합니다.th:eachth:each
+
+템플릿 처리 결과를 살펴보겠습니다.
+
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <link rel="stylesheet" type="text/css" media="all" href="/gtvg/css/gtvg.css" />
+  </head>
+
+  <body>
+
+    <h1>Product list</h1>
+  
+    <table>
+      <tr>
+        <th>NAME</th>
+        <th>PRICE</th>
+        <th>IN STOCK</th>
+      </tr>
+      <tr class="odd">
+        <td>Fresh Sweet Basil</td>
+        <td>4.99</td>
+        <td>yes</td>
+      </tr>
+      <tr>
+        <td>Italian Tomato</td>
+        <td>1.25</td>
+        <td>no</td>
+      </tr>
+      <tr class="odd">
+        <td>Yellow Bell Pepper</td>
+        <td>2.50</td>
+        <td>yes</td>
+      </tr>
+      <tr>
+        <td>Old Cheddar</td>
+        <td>18.75</td>
+        <td>yes</td>
+      </tr>
+    </table>
+  
+    <p>
+      <a href="/gtvg/" shape="rect">Return to home</a>
+    </p>
+
+  </body>
+  
+</html>
+참고로, 저희의 반복 상태 변수는 완벽하게 작동하여 odd홀수 행에만 CSS 클래스를 적용했습니다.
+
+상태 변수를 명시적으로 설정하지 않으면 Thymeleaf는 항상 Stat반복 변수 이름에 접미사를 붙여 자동으로 상태 변수를 생성합니다.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+  </tr>
+  <tr th:each="prod : ${prods}" th:class="${prodStat.odd}? 'odd'">
+    <td th:text="${prod.name}">Onions</td>
+    <td th:text="${prod.price}">2.41</td>
+    <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+  </tr>
+</table>
+6.3 지연 데이터 검색을 통한 최적화
+때때로 우리는 데이터 모음(예: 데이터베이스)의 검색을 최적화하여 실제로 사용될 경우에만 해당 모음을 검색하도록 하고 싶을 수 있습니다.
+
+사실 이는 어떤 데이터 에든 적용할 수 있는 내용이지만 , 메모리 내 컬렉션의 크기를 고려할 때, 반복 처리가 필요한 컬렉션을 검색하는 경우가 이 시나리오에서 가장 일반적인 경우입니다.
+
+이를 지원하기 위해 Thymeleaf는 컨텍스트 변수를 지연 로드 하는 메커니즘을 제공합니다 . 인터페이스를 구현하는 컨텍스트 변수 ILazyContextVariable(대부분 LazyContextVariable기본 구현을 확장하는 방식)는 실행 시점에 해석됩니다. 예를 들면 다음과 같습니다.
+
+context.setVariable(
+     "users",
+     new LazyContextVariable<List<User>>() {
+         @Override
+         protected List<User> loadValue() {
+             return databaseRepository.findAllUsers();
+         }
+     });
+이 변수는 지연 평가 방식 이라는 사실을 몰라도 다음과 같은 코드에서 사용할 수 있습니다 .
+
+<ul>
+  <li th:each="u : ${users}" th:text="${u.name}">user name</li>
+</ul>
+하지만 동시에, 다음과 같은 코드에서 값이 로 평가 loadValue()되면 해당 객체는 절대 초기화되지 않습니다(해당 메서드는 절대 호출되지 않습니다) .conditionfalse
+
+<ul th:if="${condition}">
+  <li th:each="u : ${users}" th:text="${u.name}">user name</li>
+</ul>
+7. 조건부 평가
+7.1 간단한 조건문: “if”와 “unless”
+때로는 특정 조건이 충족될 때만 템플릿의 일부가 결과에 나타나도록 해야 할 필요가 있습니다.
+
+예를 들어, 제품 테이블에 각 제품에 대한 댓글 수를 표시하는 열을 추가하고, 댓글이 있는 경우 해당 제품의 댓글 상세 페이지 링크를 표시하고 싶다고 가정해 보겠습니다.
+
+이를 위해 다음과 th:if같은 속성을 사용합니다.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+    <th>COMMENTS</th>
+  </tr>
+  <tr th:each="prod : ${prods}" th:class="${prodStat.odd}? 'odd'">
+    <td th:text="${prod.name}">Onions</td>
+    <td th:text="${prod.price}">2.41</td>
+    <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+    <td>
+      <span th:text="${#lists.size(prod.comments)}">2</span> comment/s
+      <a href="comments.html" 
+         th:href="@{/product/comments(prodId=${prod.id})}" 
+         th:if="${not #lists.isEmpty(prod.comments)}">view</a>
+    </td>
+  </tr>
+</table>
+여기 볼거리가 꽤 많으니 중요한 선에 집중해 봅시다.
+
+<a href="comments.html"
+   th:href="@{/product/comments(prodId=${prod.id})}" 
+   th:if="${not #lists.isEmpty(prod.comments)}">view</a>
+이렇게 하면 해당 제품에 댓글이 있는 경우에만 제품의 댓글 페이지로 연결되는 링크(URL 포함 /product/comments) 가 생성되며, prodId링크의 매개변수는 제품의 댓글 번호로 설정됩니다 .id
+
+결과로 나온 마크업을 살펴보겠습니다.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+    <th>COMMENTS</th>
+  </tr>
+  <tr>
+    <td>Fresh Sweet Basil</td>
+    <td>4.99</td>
+    <td>yes</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Italian Tomato</td>
+    <td>1.25</td>
+    <td>no</td>
+    <td>
+      <span>2</span> comment/s
+      <a href="/gtvg/product/comments?prodId=2">view</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Yellow Bell Pepper</td>
+    <td>2.50</td>
+    <td>yes</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Old Cheddar</td>
+    <td>18.75</td>
+    <td>yes</td>
+    <td>
+      <span>1</span> comment/s
+      <a href="/gtvg/product/comments?prodId=4">view</a>
+    </td>
+  </tr>
+</table>
+완벽해요! 바로 우리가 원했던 거예요.
+
+해당 속성은 부울th:if 조건 만 평가하는 것이 아니라는 점에 유의하십시오 . 그 기능은 그보다 조금 더 나아가 지정된 표현식을 다음 규칙에 따라 평가합니다.true
+
+값이 null이 아닌 경우:
+값이 부울이고 true. 인 경우
+값이 숫자이고 0이 아닌 경우
+값이 문자이고 0이 아닌 경우
+값이 문자열이고 "false", "off" 또는 "no"가 아닌 경우
+값이 불리언, 숫자, 문자 또는 문자열이 아닌 경우.
+(값이 null인 경우, th:if는 false로 평가됩니다.)
+또한, th:if에는 역 속성인 가 있는데, 이전 예제에서 OGNL 표현식 내부에 th:unless를 사용하는 대신 이 속성을 사용할 수도 있었습니다 .not
+
+<a href="comments.html"
+   th:href="@{/comments(prodId=${prod.id})}" 
+   th:unless="${#lists.isEmpty(prod.comments)}">view</a>
+7.2 스위치 문
+자바의 switch 문과 유사한 방식으로 조건을 걸어 콘텐츠를 표시하는 방법도 있습니다 . 바로 ` th:switch/` th:case속성 세트를 사용하는 것입니다.
+
+<div th:switch="${user.role}">
+  <p th:case="'admin'">User is an administrator</p>
+  <p th:case="#{roles.manager}">User is a manager</p>
+</div>
+th:case참고로, 하나의 속성이 로 평가되는 즉시 동일한 스위치 컨텍스트에 있는 true다른 모든 속성도 로 평가됩니다 .th:casefalse
+
+기본 옵션은 다음과 같이 지정됩니다 th:case="*".
+
+<div th:switch="${user.role}">
+  <p th:case="'admin'">User is an administrator</p>
+  <p th:case="#{roles.manager}">User is a manager</p>
+  <p th:case="*">User is some other thing</p>
+</div>
+8가지 템플릿 레이아웃
+8.1 템플릿 조각 포함
+조각 정의 및 참조
+템플릿을 만들 때, 푸터, 헤더, 메뉴 등 다른 템플릿의 요소들을 포함시키고 싶을 때가 많습니다.
+
+이를 위해 Thymeleaf는 포함할 부분, 즉 "조각"을 정의해야 하며, 이는 th:fragment속성을 사용하여 수행할 수 있습니다.
+
+예를 들어 모든 식료품점 페이지에 표준 저작권 바닥글을 추가하고 싶다고 가정해 보겠습니다. 그래서 /WEB-INF/templates/footer.html다음과 같은 코드가 포함된 파일을 만듭니다.
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <body>
+  
+    <div th:fragment="copy">
+      &copy; 2011 The Good Thymes Virtual Grocery
+    </div>
+  
+  </body>
+  
+</html>
+위 코드는 `<script>`라는 이름의 조각을 정의하며, `<script>` 또는 `<script>` 속성 copy중 하나를 사용하여 홈페이지에 쉽게 포함할 수 있습니다 .th:insertth:replace
+
+<body>
+
+  ...
+
+  <div th:insert="~{footer :: copy}"></div>
+  
+</body>
+참고로, 이는 단편 표현식 ( ) 을 th:insert예상하는데 , 이는 단편을 생성하는 표현식 입니다 .~{...}
+
+조각 명세 구문
+프래그먼트 표현식 의 구문은 매우 간단합니다. 세 가지 형식이 있습니다.
+
+"~{templatename::selector}"지정된 마크업 선택기를 이름이 지정된 템플릿에 적용하여 생성된 조각을 포함합니다 templatename. 여기서 는 selector단순한 조각 이름일 수 있으므로 위와 ~{templatename::fragmentname}같이 간단하게 지정할 수도 있습니다 ~{footer :: copy}.
+
+마크업 선택자 구문은 기본 AttoParser 구문 분석 라이브러리에 의해 정의되며 XPath 표현식이나 CSS 선택자와 유사합니다. 자세한 내용은 부록 C를 참조하십시오.
+
+"~{templatename}"이라는 이름의 전체 템플릿이 포함되어 있습니다 templatename.
+
+th:insert참고로, `/` 태그 에 사용하는 템플릿 이름은 th:replace현재 템플릿 엔진에서 사용 중인 템플릿 확인자가 해석할 수 있어야 합니다.
+
+~{::selector}"또는 "~{this::selector}"동일한 템플릿에서 일치하는 조각을 삽입합니다 selector. 표현식이 나타나는 템플릿에서 해당 조각을 찾지 못하면 템플릿 호출(삽입) 스택을 원래 처리된 템플릿(루트 ) 방향 으로 탐색하여 selector어떤 수준에서든 일치하는 항목을 찾습니다.
+
+위 예시의 ` and`는 모두 다음 templatename과 같이 완전한 기능을 갖춘 표현식(조건문 포함!)이 될 수 있습니다.selector
+
+<div th:insert="~{ footer :: (${user.isAdmin}? #{footer.admin} : #{footer.normaluser}) }"></div>
+프래그먼트는 어떤 th:*속성이든 포함할 수 있습니다. 이러한 속성은 프래그먼트가 대상 템플릿(` th:insert/` th:replace속성이 있는 템플릿)에 포함되면 평가되며, 대상 템플릿에 정의된 컨텍스트 변수를 참조할 수 있습니다.
+
+이러한 프래그먼트 접근 방식의 큰 장점은 완전하고 유효한 마크업 구조를 갖춘, 브라우저에서 완벽하게 표시 가능한 페이지에 프래그먼트를 작성할 수 있으면서도 Thymeleaf가 다른 템플릿에 해당 프래그먼트를 포함할 수 있도록 하는 기능을 유지할 수 있다는 것입니다.
+
+참고로, 프래그먼트 표현식은 보안상의 이유로 더 엄격한 표현식 평가 제한을 받습니다. 부록 D: 표현식 제한 사항을 참조하십시오 .
+
+참조 조각 없이th:fragment
+마크업 선택자의 강력한 기능 덕분에 th:fragment속성을 전혀 사용하지 않는 코드 조각도 포함할 수 있습니다. 심지어 Thymeleaf에 대해 전혀 알지 못하는 다른 애플리케이션에서 가져온 마크업 코드도 포함할 수 있습니다.
+
+...
+<div id="copy-section">
+  &copy; 2011 The Good Thymes Virtual Grocery
+</div>
+...
+id위 코드 조각은 CSS 선택자와 유사한 방식으로 속성 을 참조하여 사용할 수 있습니다 .
+
+<body>
+
+  ...
+
+  <div th:insert="~{footer :: #copy-section}"></div>
+  
+</body>
+th:insert와 의 차이점th:replace
+th:insert그렇다면 와 의 차이점은 무엇일까요 th:replace?
+
+th:insert지정된 조각을 호스트 태그의 본문으로 삽입합니다.
+
+th:replace실제로 호스트 태그를 지정된 조각으로 바꿉니다 .
+
+다음과 같은 HTML 조각입니다.
+
+<footer th:fragment="copy">
+  &copy; 2011 The Good Thymes Virtual Grocery
+</footer>
+…호스트 <div>태그에 다음과 같이 두 번 포함됩니다.
+
+<body>
+
+  ...
+
+  <div th:insert="~{footer :: copy}"></div>
+
+  <div th:replace="~{footer :: copy}"></div>
+  
+</body>
+…는 다음과 같은 결과를 초래할 것입니다:
+
+<body>
+
+  ...
+
+  <div>
+    <footer>
+      &copy; 2011 The Good Thymes Virtual Grocery
+    </footer>
+  </div>
+
+  <footer>
+    &copy; 2011 The Good Thymes Virtual Grocery
+  </footer>
+  
+</body>
+8.2 매개변수화 가능한 프래그먼트 시그니처
+템플릿 조각에 보다 함수적인 메커니즘을 구현하기 위해 , 정의된 조각은 th:fragment일련의 매개변수를 지정할 수 있습니다.
+
+<div th:fragment="frag (onevar,twovar)">
+    <p th:text="${onevar} + ' - ' + ${twovar}">...</p>
+</div>
+이를 위해서는 다음 두 구문 중 하나를 사용하여 해당 조각 을 호출해야 합니다 th:insert.th:replace
+
+<div th:replace="~{ ::frag (${value1},${value2}) }">...</div>
+<div th:replace="~{ ::frag (onevar=${value1},twovar=${value2}) }">...</div>
+마지막 옵션에서는 순서가 중요하지 않다는 점에 유의하세요.
+
+<div th:replace="~{ ::frag (twovar=${value2},onevar=${value1}) }">...</div>
+프래그먼트 인자 없이 프래그먼트 로컬 변수 사용
+조각이 다음과 같이 인자 없이 정의되더라도:
+
+<div th:fragment="frag">
+    ...
+</div>
+위에서 언급한 두 번째 구문을 사용하여 해당 함수들을 호출할 수 있습니다(그리고 두 번째 구문만 사용 가능합니다).
+
+<div th:replace="~{::frag (onevar=${value1},twovar=${value2})}">
+th:replace이는 와 의 조합과 같습니다 th:with.
+
+<div th:replace="~{::frag}" th:with="onevar=${value1},twovar=${value2}">
+참고 로, 프래그먼트에 대한 지역 변수 지정은 인자 시그니처가 있든 없든 관계없이 실행 전에 컨텍스트를 비우지 않습니다. 프래그먼트는 현재와 마찬가지로 호출 템플릿에서 사용되는 모든 컨텍스트 변수에 계속 접근할 수 있습니다.
+
+th:템플릿 내 어설션을 위한 assert
+이 th:assert속성은 평가해야 하는 표현식 목록을 쉼표로 구분하여 지정할 수 있으며, 모든 평가에서 참을 반환해야 하고 그렇지 않을 경우 예외를 발생시켜야 합니다.
+
+<div th:assert="${onevar},(${twovar} != 43)">...</div>
+이는 프래그먼트 서명에서 매개변수를 검증하는 데 유용합니다.
+
+<header th:fragment="contentheader(title)" th:assert="${!#strings.isEmpty(title)}">...</header>
+8.3 유연한 레이아웃: 단순한 조각 삽입을 넘어
+프래그먼트 표현식 덕분에 텍스트, 숫자, 빈 객체 등이 아닌 마크업 프래그먼트에 대한 매개변수를 지정할 수 있습니다.
+
+이를 통해 호출하는 템플릿에서 가져온 마크업으로 보강할 수 있는 방식으로 조각을 생성할 수 있으므로 매우 유연한 템플릿 레이아웃 메커니즘을 구현할 수 있습니다 .
+
+아래 코드 조각에서 ` titleand` 변수 의 사용에 유의하세요 .links
+
+<head th:fragment="common_header(title,links)">
+
+  <title th:replace="${title}">The awesome application</title>
+
+  <!-- Common styles and scripts -->
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/awesomeapp.css}">
+  <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+  <script type="text/javascript" th:src="@{/sh/scripts/codebase.js}"></script>
+
+  <!--/* Per-page placeholder for additional links */-->
+  <th:block th:replace="${links}" />
+
+</head>
+이제 이 조각을 다음과 같이 부를 수 있습니다.
+
+...
+<head th:replace="~{ base :: common_header(~{::title},~{::link}) }">
+
+  <title>Awesome - Main</title>
+
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/themes/smoothness/jquery-ui.css}">
+
+</head>
+...
+…결과적으로 호출 템플릿의 실제 태그가 변수 값으로 사용되어 <title>삽입 중에 <link>프래그먼트 가 사용자 지정됩니다.titlelinks
+
+...
+<head>
+
+  <title>Awesome - Main</title>
+
+  <!-- Common styles and scripts -->
+  <link rel="stylesheet" type="text/css" media="all" href="/awe/css/awesomeapp.css">
+  <link rel="shortcut icon" href="/awe/images/favicon.ico">
+  <script type="text/javascript" src="/awe/sh/scripts/codebase.js"></script>
+
+  <link rel="stylesheet" href="/awe/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/awe/themes/smoothness/jquery-ui.css">
+
+</head>
+...
+빈 조각을 사용하여
+특수한 조각 표현식인 빈 조각 ( )을 사용하여 마크업을 지정하지 않을~{} 수 있습니다 . 이전 예제를 사용하면 다음과 같습니다.
+
+<head th:replace="~{ base :: common_header(~{::title},~{}) }">
+
+  <title>Awesome - Main</title>
+
+</head>
+...
+조각의 두 번째 매개변수( links)가 빈 조각 으로 설정되어 있으므로 블록 에 아무것도 기록되지 않는다는 점에 유의하십시오 <th:block th:replace="${links}" />.
+
+...
+<head>
+
+  <title>Awesome - Main</title>
+
+  <!-- Common styles and scripts -->
+  <link rel="stylesheet" type="text/css" media="all" href="/awe/css/awesomeapp.css">
+  <link rel="shortcut icon" href="/awe/images/favicon.ico">
+  <script type="text/javascript" src="/awe/sh/scripts/codebase.js"></script>
+
+</head>
+...
+무작업 토큰 사용
+아무런 동작도 하지 않는 `no-op`은 프래그먼트가 현재 마크업을 기본값으로 사용하도록 하려는 경우 프래그먼트의 매개변수로도 사용할 수 있습니다. 다시 예시를 들어 설명하겠습니다 common_header.
+
+...
+<head th:replace="~{base :: common_header(_,~{::link})}">
+
+  <title>Awesome - Main</title>
+
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/themes/smoothness/jquery-ui.css}">
+
+</head>
+...
+title인수(프래그먼트의 첫 번째 인수 ) 가 no-op ( ) common_header으로 설정되어 이 프래그먼트 부분이 전혀 실행되지 않는 것을 확인하세요 ( = 아무 작업도 수행하지 않음 )._title
+
+  <title th:replace="${title}">The awesome application</title>
+결과는 다음과 같습니다.
+
+...
+<head>
+
+  <title>The awesome application</title>
+
+  <!-- Common styles and scripts -->
+  <link rel="stylesheet" type="text/css" media="all" href="/awe/css/awesomeapp.css">
+  <link rel="shortcut icon" href="/awe/images/favicon.ico">
+  <script type="text/javascript" src="/awe/sh/scripts/codebase.js"></script>
+
+  <link rel="stylesheet" href="/awe/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/awe/themes/smoothness/jquery-ui.css">
+
+</head>
+...
+조각의 고급 조건부 삽입
+빈 조각 과 아무 작업도 수행하지 않는 토큰을 모두 사용할 수 있으므로 매우 쉽고 우아한 방식으로 조각의 조건부 삽입을 수행할 수 있습니다.
+
+예를 들어, 사용자가 관리자인 경우 에만common :: adminhead 조각을 삽입하고, 관리자가 아닌 경우에는 아무것도 삽입하지 않도록(빈 조각) 다음과 같이 할 수 있습니다 .
+
+...
+<div th:insert="${user.isAdmin()} ? ~{common :: adminhead} : ~{}">...</div>
+...
+또한, 지정된 조건이 충족될 경우에만 조각을 삽입하고, 조건이 충족되지 않으면 마크업을 수정하지 않고 그대로 두기 위해 ' no-operation' 토큰을 사용할 수 있습니다.
+
+...
+<div th:insert="${user.isAdmin()} ? ~{common :: adminhead} : _">
+    Welcome [[${user.name}]], click <a th:href="@{/support}">here</a> for help-desk support.
+</div>
+...
+또한, 템플릿 리졸버가 플래그 를 통해 템플릿 리소스의 존재 여부를 확인 하도록 구성한 경우 , 기본checkExistence 작업 에서 해당 프래그먼트 자체의 존재 여부를 조건으로 사용할 수 있습니다 .
+
+...
+<!-- The body of the <div> will be used if the "common :: salutation" fragment  -->
+<!-- does not exist (or is empty).                                              -->
+<div th:insert="~{common :: salutation} ?: _">
+    Welcome [[${user.name}]], click <a th:href="@{/support}">here</a> for help-desk support.
+</div>
+...
+8.4 템플릿 조각 제거
+예제 애플리케이션으로 돌아가서, 제품 목록 템플릿의 이전 버전을 다시 살펴보겠습니다.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+    <th>COMMENTS</th>
+  </tr>
+  <tr th:each="prod : ${prods}" th:class="${prodStat.odd}? 'odd'">
+    <td th:text="${prod.name}">Onions</td>
+    <td th:text="${prod.price}">2.41</td>
+    <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+    <td>
+      <span th:text="${#lists.size(prod.comments)}">2</span> comment/s
+      <a href="comments.html" 
+         th:href="@{/product/comments(prodId=${prod.id})}" 
+         th:unless="${#lists.isEmpty(prod.comments)}">view</a>
+    </td>
+  </tr>
+</table>
+이 코드는 템플릿으로는 괜찮지만, 정적 페이지(Thymeleaf를 사용하지 않고 브라우저에서 직접 열었을 때)로는 좋은 프로토타입이 되지 못할 것입니다.
+
+왜냐하면 브라우저에서는 완벽하게 표시되지만, 해당 표에는 행이 하나뿐이고 그 행에는 가상의 데이터만 있기 때문입니다. 프로토타입으로서 현실감이 떨어지죠. 제품이 하나 이상 있어야 하고, 행도 더 필요합니다 .
+
+그럼 몇 가지를 더 추가해 보겠습니다.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+    <th>COMMENTS</th>
+  </tr>
+  <tr th:each="prod : ${prods}" th:class="${prodStat.odd}? 'odd'">
+    <td th:text="${prod.name}">Onions</td>
+    <td th:text="${prod.price}">2.41</td>
+    <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+    <td>
+      <span th:text="${#lists.size(prod.comments)}">2</span> comment/s
+      <a href="comments.html" 
+         th:href="@{/product/comments(prodId=${prod.id})}" 
+         th:unless="${#lists.isEmpty(prod.comments)}">view</a>
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Blue Lettuce</td>
+    <td>9.55</td>
+    <td>no</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr>
+    <td>Mild Cinnamon</td>
+    <td>1.99</td>
+    <td>yes</td>
+    <td>
+      <span>3</span> comment/s
+      <a href="comments.html">view</a>
+    </td>
+  </tr>
+</table>
+좋아, 이제 세 개가 생겼네. 확실히 프로토타입으로는 더 나아졌어. 그런데… 이걸 타임리프(Thymeleaf)로 처리하면 어떻게 될까?
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+    <th>COMMENTS</th>
+  </tr>
+  <tr>
+    <td>Fresh Sweet Basil</td>
+    <td>4.99</td>
+    <td>yes</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Italian Tomato</td>
+    <td>1.25</td>
+    <td>no</td>
+    <td>
+      <span>2</span> comment/s
+      <a href="/gtvg/product/comments?prodId=2">view</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Yellow Bell Pepper</td>
+    <td>2.50</td>
+    <td>yes</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Old Cheddar</td>
+    <td>18.75</td>
+    <td>yes</td>
+    <td>
+      <span>1</span> comment/s
+      <a href="/gtvg/product/comments?prodId=4">view</a>
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Blue Lettuce</td>
+    <td>9.55</td>
+    <td>no</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr>
+    <td>Mild Cinnamon</td>
+    <td>1.99</td>
+    <td>yes</td>
+    <td>
+      <span>3</span> comment/s
+      <a href="comments.html">view</a>
+    </td>
+  </tr>
+</table>
+마지막 두 줄은 가짜 행입니다! 당연히 그렇죠. 반복 작업은 첫 번째 행에만 적용되었으므로 Thymeleaf가 나머지 두 줄을 제거할 이유가 없습니다.
+
+th:remove템플릿 처리 중에 해당 두 행을 제거하는 방법이 필요합니다. 두 번째 및 세 번째 태그에 속성을 사용해 보겠습니다 <tr>.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+    <th>COMMENTS</th>
+  </tr>
+  <tr th:each="prod : ${prods}" th:class="${prodStat.odd}? 'odd'">
+    <td th:text="${prod.name}">Onions</td>
+    <td th:text="${prod.price}">2.41</td>
+    <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+    <td>
+      <span th:text="${#lists.size(prod.comments)}">2</span> comment/s
+      <a href="comments.html" 
+         th:href="@{/product/comments(prodId=${prod.id})}" 
+         th:unless="${#lists.isEmpty(prod.comments)}">view</a>
+    </td>
+  </tr>
+  <tr class="odd" th:remove="all">
+    <td>Blue Lettuce</td>
+    <td>9.55</td>
+    <td>no</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr th:remove="all">
+    <td>Mild Cinnamon</td>
+    <td>1.99</td>
+    <td>yes</td>
+    <td>
+      <span>3</span> comment/s
+      <a href="comments.html">view</a>
+    </td>
+  </tr>
+</table>
+처리가 완료되면 모든 것이 원래대로 돌아올 것입니다.
+
+<table>
+  <tr>
+    <th>NAME</th>
+    <th>PRICE</th>
+    <th>IN STOCK</th>
+    <th>COMMENTS</th>
+  </tr>
+  <tr>
+    <td>Fresh Sweet Basil</td>
+    <td>4.99</td>
+    <td>yes</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Italian Tomato</td>
+    <td>1.25</td>
+    <td>no</td>
+    <td>
+      <span>2</span> comment/s
+      <a href="/gtvg/product/comments?prodId=2">view</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Yellow Bell Pepper</td>
+    <td>2.50</td>
+    <td>yes</td>
+    <td>
+      <span>0</span> comment/s
+    </td>
+  </tr>
+  <tr class="odd">
+    <td>Old Cheddar</td>
+    <td>18.75</td>
+    <td>yes</td>
+    <td>
+      <span>1</span> comment/s
+      <a href="/gtvg/product/comments?prodId=4">view</a>
+    </td>
+  </tr>
+</table>
+그렇다면 해당 all속성 값은 무엇을 의미할까요? th:remove해당 속성 값은 다섯 가지不同的 방식으로 작동할 수 있습니다.
+
+all: 포함하는 태그와 그 하위 태그를 모두 제거합니다.
+body: 상위 태그는 삭제하지 말고, 해당 태그의 하위 요소만 모두 삭제합니다.
+tag: 포함하는 태그를 제거하되, 하위 태그는 제거하지 않습니다. ( tags복수형인 `< ...
+all-but-first해당 태그를 포함하는 첫 번째 자식 태그를 제외한 모든 자식 태그를 제거합니다.
+none: 아무것도 하지 않습니다. 이 값은 동적 평가에 유용합니다.
+그 값은 어떤 용도로 유용할까요? 프로토타입 제작 시 all-but-first비용을 절약하는 데 도움이 될 것입니다 .th:remove="all"
+
+<table>
+  <thead>
+    <tr>
+      <th>NAME</th>
+      <th>PRICE</th>
+      <th>IN STOCK</th>
+      <th>COMMENTS</th>
+    </tr>
+  </thead>
+  <tbody th:remove="all-but-first">
+    <tr th:each="prod : ${prods}" th:class="${prodStat.odd}? 'odd'">
+      <td th:text="${prod.name}">Onions</td>
+      <td th:text="${prod.price}">2.41</td>
+      <td th:text="${prod.inStock}? #{true} : #{false}">yes</td>
+      <td>
+        <span th:text="${#lists.size(prod.comments)}">2</span> comment/s
+        <a href="comments.html" 
+           th:href="@{/product/comments(prodId=${prod.id})}" 
+           th:unless="${#lists.isEmpty(prod.comments)}">view</a>
+      </td>
+    </tr>
+    <tr class="odd">
+      <td>Blue Lettuce</td>
+      <td>9.55</td>
+      <td>no</td>
+      <td>
+        <span>0</span> comment/s
+      </td>
+    </tr>
+    <tr>
+      <td>Mild Cinnamon</td>
+      <td>1.99</td>
+      <td>yes</td>
+      <td>
+        <span>3</span> comment/s
+        <a href="comments.html">view</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+해당 속성은 허용된 문자열 값( , , , 또는 ) 중 하나를 반환하는 한 모든 Thymeleaf 표준 표현식을th:remove 사용할 수 있습니다 .alltagbodyall-but-firstnone
+
+이는 삭제가 다음과 같은 조건부일 수 있음을 의미합니다.
+
+<a href="/something" th:remove="${condition}? tag : none">Link text not to be removed</a>
+또한 , 는 의 동의어로 th:remove간주되므로 다음 예시는 위의 예시와 동일하게 작동합니다.nullnone
+
+<a href="/something" th:remove="${condition}? tag">Link text not to be removed</a>
+이 경우, 만약 ${condition}거짓이면 null거짓이 반환되므로 삭제 작업이 수행되지 않습니다.
+
+8.5 레이아웃 상속
+레이아웃을 하나의 파일로 구성하려면 프래그먼트를 사용할 수 있습니다. 다음은 프래그먼트를 사용하는 title간단한 레이아웃의 예입니다 .contentth:fragmentth:replace
+
+<!DOCTYPE html>
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="${title}">Layout Title</title>
+</head>
+<body>
+    <h1>Layout H1</h1>
+    <div th:replace="${content}">
+        <p>Layout content</p>
+    </div>
+    <footer>
+        Layout footer
+    </footer>
+</body>
+</html>
+이 예제는 제목 과 내용을 매개변수로 받는 '레이아웃' 이라는 프래그먼트를 선언합니다 . 이 프래그먼트를 상속받는 페이지에서는 제목과 내용이 아래 예제에 제공된 프래그먼트 표현식으로 대체됩니다.
+
+<!DOCTYPE html>
+<html th:replace="~{layoutFile :: layout(~{::title}, ~{::section})}">
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+<section>
+    <p>Page content</p>
+    <div>Included on page</div>
+</section>
+</body>
+</html>
+이 파일에서 태그는 레이아웃html 으로 대체되지만 , 레이아웃에서는 와 가 각각 및 블록으로 대체됩니다 .titlecontenttitlesection
+
+원하는 경우, 레이아웃은 헤더 와 푸터 와 같은 여러 조각으로 구성할 수 있습니다 .
+
+9 지역 변수
+Thymeleaf에서는 로컬 변수를 템플릿의 특정 부분에 대해 정의된 변수로, 해당 부분 내에서만 평가할 수 있는 변수라고 합니다 .
+
+이미 살펴본 예시로 prod제품 목록 페이지의 iter 변수를 들 수 있습니다.
+
+<tr th:each="prod : ${prods}">
+    ...
+</tr>
+해당 prod변수는 태그 범위 내에서만 사용 가능합니다 <tr>. 구체적으로는 다음과 같습니다.
+
+th:*해당 태그에서 우선순위가 낮은 다른 속성에 대해 이 속성을 사용할 수 있습니다 th:each(즉, 해당 속성이 실행된 후에 실행됩니다 th:each).
+<tr>이 기능은 태그의 모든 하위 요소, 예를 들어 다른 요소들 에서도 사용할 수 있습니다 <td>.
+Thymeleaf는 속성을 사용하여 반복문 없이 지역 변수를 선언하는 방법을 제공하며 th:with, 그 구문은 속성 값 할당과 유사합니다.
+
+<div th:with="firstPer=${persons[0]}">
+  <p>
+    The name of the first person is <span th:text="${firstPer.name}">Julius Caesar</span>.
+  </p>
+</div>
+th:with해당 변수가 처리될 때 , firstPer로컬 변수로 생성되어 컨텍스트에서 가져온 변수 맵에 추가됩니다. 따라서 컨텍스트에 선언된 다른 변수들과 함께 평가할 수 있지만, 포함하는 <div>태그의 범위 내에서만 가능합니다.
+
+일반적인 다중 변수 할당 구문을 사용하여 여러 변수를 동시에 정의할 수 있습니다.
+
+<div th:with="firstPer=${persons[0]},secondPer=${persons[1]}">
+  <p>
+    The name of the first person is <span th:text="${firstPer.name}">Julius Caesar</span>.
+  </p>
+  <p>
+    But the name of the second person is 
+    <span th:text="${secondPer.name}">Marcus Antonius</span>.
+  </p>
+</div>
+이 th:with속성을 사용하면 동일한 속성에 정의된 변수를 재사용할 수 있습니다.
+
+<div th:with="company=${user.company + ' Co.'},account=${accounts[company]}">...</div>
+이 코드를 우리 식료품점 홈페이지에 사용해 봅시다! 형식화된 날짜를 출력하기 위해 작성했던 코드 기억하시죠?
+
+<p>
+  Today is: 
+  <span th:text="${#calendars.format(today,'dd MMMM yyyy')}">13 february 2011</span>
+</p>
+그런데 만약 이 기능이 지역 설정에 따라 달라지도록 하고 싶다면 어떻게 해야 할까요 "dd MMMM yyyy"? 예를 들어, 다음과 같은 메시지를 추가하고 싶을 수도 있습니다 home_en.properties.
+
+date.format=MMMM dd'','' yyyy
+…그리고 우리와 동등한 것 home_es.properties:
+
+date.format=dd ''de'' MMMM'','' yyyy
+이제 th:with지역화된 날짜 형식을 변수에 저장한 다음, 해당 변수를 표현식에 사용해 보겠습니다 th:text.
+
+<p th:with="df=#{date.format}">
+  Today is: <span th:text="${#calendars.format(today,df)}">13 February 2011</span>
+</p>
+깔끔하고 간단했습니다. 사실, 값 이 보다 th:with높다는 점을 고려하면 , 이 모든 것을 태그 안에서 해결할 수 있었을 것입니다 .precedenceth:textspan
+
+<p>
+  Today is: 
+  <span th:with="df=#{date.format}" 
+        th:text="${#calendars.format(today,df)}">13 February 2011</span>
+</p>
+'우선순위? 아직 그런 얘기는 안 했잖아!'라고 생각하실지도 모르겠네요. 하지만 걱정 마세요. 다음 장에서 바로 그 주제를 다룰 예정입니다.
+
+10. 속성 우선순위
+th:*같은 태그에 속성을 두 개 이상 작성하면 어떻게 될까요 ? 예를 들면 다음과 같습니다.
+
+<ul>
+  <li th:each="item : ${items}" th:text="${item.description}">Item description here...</li>
+</ul>
+원하는 결과를 얻으려면 해당 th:each속성이 먼저 실행될 것으로 예상했지만 , HTML/XML 표준은 태그 내 속성이 작성되는 순서에 아무런 의미를 부여하지 않기 때문에 예상대로 작동하도록 속성 자체에 우선순위 메커니즘을 설정해야 했습니다.th:text
+
+따라서 모든 Thymeleaf 속성은 숫자 우선순위를 정의하며, 이는 태그에서 속성이 실행되는 순서를 결정합니다. 그 순서는 다음과 같습니다.
+
+주문하다	특징	속성
+1	조각 포함	th:insert
+th:replace
+2	조각 반복	th:each
+3	조건부 평가	th:if
+th:unless
+th:switch
+th:case
+4	지역 변수 정의	th:object
+th:with
+5	일반 속성 수정	th:attr
+th:attrprepend
+th:attrappend
+6	특정 속성 수정	th:value
+th:href
+th:src
+...
+7	텍스트(태그 본문 수정)	th:text
+th:utext
+8	조각 명세	th:fragment
+9	조각 제거	th:remove
+이 우선순위 메커니즘은 속성 위치를 반전시키더라도 위의 반복문이 정확히 동일한 결과를 제공한다는 것을 의미합니다(다만 가독성은 약간 떨어질 수 있습니다).
+
+<ul>
+  <li th:text="${item.description}" th:each="item : ${items}">Item description here...</li>
+</ul>
+댓글 및 차단 11개
+11.1. 표준 HTML/XML 주석
+표준 HTML/XML 주석은 <!-- ... -->Thymeleaf 템플릿 어디에서든 사용할 수 있습니다. 주석 안에 있는 내용은 Thymeleaf에서 템플릿의 다른 텍스트 블록과 마찬가지로 처리됩니다.
+
+<!-- User info follows -->
+<div th:text="${...}">
+  ...
+</div>
+11.2. Thymeleaf 파서 수준 주석 블록
+파서 레벨 주석 블록은 Thymeleaf가 템플릿을 파싱할 때 단순히 제거되는 코드입니다. 다음과 같은 형식입니다.
+
+<!--/* This code will be removed at Thymeleaf parsing time! */-->
+<!--/*Thymeleaf는 와 사이의 모든 내용을 제거하므로 */-->, 이러한 주석 블록은 템플릿이 정적으로 열려 있을 때 코드를 표시하는 데 사용할 수도 있습니다. 단, Thymeleaf가 처리할 때 제거된다는 점을 염두에 두어야 합니다.
+
+<!--/*--> 
+  <div>
+     you can see me only before Thymeleaf processes me!
+  </div>
+<!--*/-->
+<tr>예를 들어, 's'가 많이 포함된 표의 프로토타입을 만들 때 매우 유용할 수 있습니다 .
+
+<table>
+   <tr th:each="x : ${xs}">
+     ...
+   </tr>
+   <!--/*-->
+   <tr>
+     ...
+   </tr>
+   <tr>
+     ...
+   </tr>
+   <!--*/-->
+</table>
+11.3. Thymeleaf 프로토타입 전용 댓글 블록
+Thymeleaf는 템플릿이 정적으로 열려 있을 때(즉, 프로토타입으로 열려 있을 때) 주석으로 표시되지만, 템플릿을 실행할 때는 Thymeleaf에서 일반 마크업으로 간주되는 특수 주석 블록을 정의할 수 있도록 합니다.
+
+<span>hello!</span>
+<!--/*/
+  <div th:text="${...}">
+    ...
+  </div>
+/*/-->
+<span>goodbye!</span>
+<!--/*/Thymeleaf의 구문 분석 시스템은 ` &` 및 `& ` 마커 만 제거하고 /*/-->그 내용은 그대로 남겨두기 때문에 주석 처리되지 않습니다. 따라서 템플릿을 실행할 때 Thymeleaf는 실제로 다음과 같은 내용을 보게 됩니다.
+
+<span>hello!</span>
+ 
+  <div th:text="${...}">
+    ...
+  </div>
+ 
+<span>goodbye!</span>
+파서 수준 주석 블록과 마찬가지로 이 기능은 방언에 구애받지 않습니다.
+
+11.4. 합성 th:block태그
+Thymeleaf의 표준 방언에 포함된 유일한 요소 처리기(속성이 아님)는 입니다 th:block.
+
+th:block`__`는 템플릿 개발자가 원하는 속성을 지정할 수 있도록 하는 단순한 속성 컨테이너입니다. Thymeleaf는 이러한 속성을 실행한 다음 블록 자체는 사라지게 하지만 블록의 내용은 그대로 유지합니다.
+
+<tr>예를 들어 각 요소에 대해 여러 개가 필요한 반복 테이블을 만들 때 유용할 수 있습니다 .
+
+<table>
+  <th:block th:each="user : ${users}">
+    <tr>
+        <td th:text="${user.login}">...</td>
+        <td th:text="${user.name}">...</td>
+    </tr>
+    <tr>
+        <td colspan="2" th:text="${user.address}">...</td>
+    </tr>
+  </th:block>
+</table>
+특히 프로토타입 전용 댓글 블록과 함께 사용하면 더욱 유용합니다.
+
+<table>
+    <!--/*/ <th:block th:each="user : ${users}"> /*/-->
+    <tr>
+        <td th:text="${user.login}">...</td>
+        <td th:text="${user.name}">...</td>
+    </tr>
+    <tr>
+        <td colspan="2" th:text="${user.address}">...</td>
+    </tr>
+    <!--/*/ </th:block> /*/-->
+</table>
+<div>이 해결책은 템플릿을 유효한 HTML로 만들 수 있도록 해주며(금지된 블록을 내부에 추가할 필요 없음 <table>), 프로토타입으로 브라우저에서 정적으로 열었을 때도 제대로 작동한다는 점에 주목하세요!
+
+12 인라인
+12.1 표현식 인라인화
+표준 HTML 구문에서는 태그 속성을 사용하여 거의 모든 작업을 수행할 수 있지만, HTML 텍스트에 직접 표현식을 작성하는 것이 더 편리한 경우도 있습니다. 예를 들어 다음과 같이 작성하는 것이 더 나을 수 있습니다.
+
+<p>Hello, [[${session.user.name}]]!</p>
+…이것 대신에:
+
+<p>Hello, <span th:text="${session.user.name}">Sebastian</span>!</p>
+[[...]]Thymeleaf에서 `or` 사이에 있는 표현식은 인라인 표현식[(...)] 으로 간주되며 , 그 안에는 `a` 또는 `b` 속성 에서 유효한 모든 종류의 표현식을 사용할 수 있습니다 .th:textth:utext
+
+참고로, 는 (결과가 HTML 이스케이프 처리됨 ) [[...]]에 해당 하지만, 는 HTML 이스케이프 처리를 수행하지 않습니다. 따라서 와 같은 변수를 사용하면 다음 코드 조각을 예로 들 수 있습니다.th:text[(...)]th:utextmsg = 'This is <b>great!</b>'
+
+<p>The message is "[(${msg})]"</p>
+결과적으로 해당 <b>태그들은 이스케이프 처리되지 않은 상태가 됩니다. 따라서 다음과 같습니다.
+
+<p>The message is "This is <b>great!</b>"</p>
+반면에 다음과 같이 탈출하면:
+
+<p>The message is "[[${msg}]]"</p>
+결과는 HTML 이스케이프 처리됩니다.
+
+<p>The message is "This is &lt;b&gt;great!&lt;/b&gt;"</p>
+참고로, 텍스트 인라인 기능은 마크업의 모든 태그 본문(태그 자체가 아니라)에서 기본적으로 활성화되어 있으므로 , 별도로 활성화할 필요가 없습니다.
+
+인라인 방식 vs. 내추럴 템플릿
+만약 여러분이 이런 방식의 텍스트 출력이 일반적인 다른 템플릿 엔진을 사용해 본 경험이 있다면, " 왜 처음부터 이렇게 하지 않았을까? th:text 속성들을 일일이 입력하는 것보다 코드가 훨씬 간단한데!" 라고 생각할 수도 있습니다.
+
+하지만 인라인 구문이 꽤 흥미로울 수 있지만, 인라인으로 작성된 표현식은 HTML 파일을 정적으로 열었을 때 그대로 표시되므로 디자인 프로토타입으로 더 이상 사용할 수 없다는 점을 항상 명심해야 합니다!
+
+인라인 처리를 사용하지 않고 브라우저가 코드 조각을 정적으로 표시하는 방식과 그렇지 않은 방식의 차이점은 다음과 같습니다.
+
+Hello, Sebastian!
+…그리고 그것을 사용하는 것…
+
+Hello, [[${session.user.name}]]!
+디자인 유용성 측면에서 보면 …매우 명확합니다.
+
+인라인 기능 비활성화
+하지만 이 메커니즘은 비활성화할 수 있습니다. 왜냐하면 내용이 표현식으로 처리되지 않고 [[...]]또는 시퀀스만 출력해야 하는 경우가 있을 수 있기 때문입니다 . 이를 위해 다음과 같이 사용합니다 .[(...)]th:inline="none"
+
+<p th:inline="none">A double array looks like this: [[1, 2, 3], [4, 5]]!</p>
+이로 인해 다음과 같은 결과가 나타납니다.
+
+<p>A double array looks like this: [[1, 2, 3], [4, 5]]!</p>
+12.2 텍스트 인라인
+텍스트 인라인은 방금 살펴본 표현식 인라인 기능 과 매우 유사 하지만, 실제로는 더 강력한 기능을 제공합니다. 이 기능은 명시적으로 활성화해야 합니다 th:inline="text".
+
+텍스트 인라인 기능을 사용하면 방금 살펴본 인라인 표현식을 그대로 사용할 수 있을 뿐만 아니라, 태그 본문을 템플릿 모드 에서 처리되는 템플릿처럼 처리할 수 있습니다 TEXT. 이를 통해 텍스트 기반 템플릿 로직(출력 표현식뿐 아니라)도 수행할 수 있습니다.
+
+텍스트 템플릿 모드 에 대한 다음 장에서 이에 대해 더 자세히 살펴보겠습니다 .
+
+12.3 자바스크립트 인라이닝
+<script>JavaScript 인라이닝을 사용하면 템플릿 모드 에서 처리되는 템플릿에 JavaScript 블록을 더 효과적으로 통합할 수 있습니다 HTML.
+
+텍스트 인라인 과 마찬가지로 , 이는 스크립트 내용을 템플릿 모드의 템플릿처럼 처리하는 것과 동일하며 JAVASCRIPT, 따라서 텍스트 템플릿 모드 의 모든 강력한 기능 (다음 장 참조)을 활용할 수 있습니다. 하지만 이 섹션에서는 Thymeleaf 표현식의 출력을 JavaScript 블록에 추가하는 데 이 기능을 사용하는 방법에 초점을 맞추겠습니다.
+
+이 모드는 다음을 사용하여 명시적으로 활성화해야 합니다 th:inline="javascript".
+
+<script th:inline="javascript">
+    ...
+    var username = [[${session.user.name}]];
+    ...
+</script>
+이로 인해 다음과 같은 결과가 나타납니다.
+
+<script th:inline="javascript">
+    ...
+    var username = "Sebastian \"Fruity\" Applejuice";
+    ...
+</script>
+위 코드에서 주목해야 할 두 가지 중요한 사항은 다음과 같습니다.
+
+첫째 , JavaScript 인라인은 필요한 텍스트를 출력할 뿐만 아니라 따옴표로 묶고 JavaScript 이스케이프 처리를 하여 표현식 결과가 올바른 형식의 JavaScript 리터럴 로 출력되도록 합니다 .
+
+둘째 , 이러한 현상이 발생하는 이유는 ${session.user.name}표현식을 이스케이프 처리 하여 출력하기 때문입니다 . 즉, 이중 대괄호 표현식을 사용하고 있습니다 [[${session.user.name}]]. 만약 이스케이프 처리하지 않은 표현식을 사용한다면 다음 과 같습니다.
+
+<script th:inline="javascript">
+    ...
+    var username = [(${session.user.name})];
+    ...
+</script>
+결과는 다음과 같습니다.
+
+<script th:inline="javascript">
+    ...
+    var username = Sebastian "Fruity" Applejuice;
+    ...
+</script>
+…이는 형식이 잘못된 자바스크립트 코드입니다. 하지만 인라인 표현식을 추가하여 스크립트의 일부를 구성하는 경우 이스케이프되지 않은 출력이 필요할 수 있으므로 이 도구를 사용하는 것이 좋습니다.
+
+자바스크립트 자연 템플릿
+앞서 언급한 자바스크립트 인라이닝 메커니즘의 지능은 단순히 자바스크립트 특유의 이스케이핑을 적용하고 표현식 결과를 유효한 리터럴로 출력하는 것 이상입니다.
+
+예를 들어, (이스케이프 처리된) 인라인 표현식을 다음과 같은 JavaScript 주석으로 감쌀 수 있습니다.
+
+<script th:inline="javascript">
+    ...
+    var username = /*[[${session.user.name}]]*/ "Gertrud Kiwifruit";
+    ...
+</script>
+그리고 Thymeleaf는 주석 뒤와 세미콜론 (이 경우 ) 앞에 쓴 모든 내용을 무시하므로 'Gertrud Kiwifruit', 이 코드를 실행하면 래핑 주석을 사용하지 않았을 때와 정확히 같은 결과가 나타납니다.
+
+<script th:inline="javascript">
+    ...
+    var username = "Sebastian \"Fruity\" Applejuice";
+    ...
+</script>
+하지만 원래 템플릿 코드를 다시 한번 자세히 살펴보세요.
+
+<script th:inline="javascript">
+    ...
+    var username = /*[[${session.user.name}]]*/ "Gertrud Kiwifruit";
+    ...
+</script>
+이 코드가 유효한 자바스크립트 코드 라는 점에 주목하세요 . 그리고 서버에서 실행하지 않고 템플릿 파일을 정적으로 열면 이 코드가 완벽하게 실행됩니다.
+
+그러니까 여기서는 자바스크립트를 이용한 자연스러운 템플릿을 만드는 방법을 보여드리겠습니다 !
+
+고급 인라인 평가 및 JavaScript 직렬화
+JavaScript 인라이닝과 관련하여 중요한 점은 이 표현식 평가가 지능적이며 문자열에만 국한되지 않는다는 것입니다. Thymeleaf는 다음과 같은 종류의 객체를 JavaScript 구문으로 올바르게 작성합니다.
+
+현악기
+숫자
+부울
+배열
+컬렉션
+지도
+빈( 게터 및 세터 메서드를 가진 객체 )
+예를 들어 다음과 같은 코드가 있다고 가정해 보겠습니다.
+
+<script th:inline="javascript">
+    ...
+    var user = /*[[${session.user}]]*/ null;
+    ...
+</script>
+해당 ${session.user}표현식은 객체로 평가되며 User, Thymeleaf는 이를 자바스크립트 구문으로 정확하게 변환합니다.
+
+<script th:inline="javascript">
+    ...
+    var user = {"age":null,"firstName":"John","lastName":"Apricot",
+                "name":"John Apricot","nationality":"Antarctica"};
+    ...
+</script>
+이 JavaScript 직렬화 방식은 인터페이스 구현을 통해 이루어지며 , 이 인터페이스는 템플릿 엔진에서 사용되는 org.thymeleaf.standard.serializer.IStandardJavaScriptSerializer인스턴스에서 구성할 수 있습니다 .StandardDialect
+
+이 JavaScript 직렬화 메커니즘의 기본 구현은 클래스패스에서 Jackson 라이브러리를 찾고 , 있으면 해당 라이브러리를 사용합니다. 없으면 대부분의 시나리오 요구 사항을 충족하고 유사한 결과를 생성하는 내장 직렬화 메커니즘을 적용합니다(단, 유연성은 떨어집니다).
+
+12.4 CSS 인라인
+<style>Thymeleaf는 다음과 같은 CSS 태그의 인라인 사용도 허용합니다 .
+
+<style th:inline="css">
+  ...
+</style>
+예를 들어, 서로 다른 값으로 설정된 두 개의 변수가 있다고 가정해 보겠습니다 String.
+
+classname = 'main elems'
+align = 'center'
+우리는 이것들을 다음과 같이 사용할 수 있습니다:
+
+<style th:inline="css">
+    .[[${classname}]] {
+      text-align: [[${align}]];
+    }
+</style>
+그 결과는 다음과 같습니다.
+
+<style th:inline="css">
+    .main\ elems {
+      text-align: center;
+    }
+</style>
+CSS 인라인에도 자바스크립트처럼 지능적인 기능이 있다는 점에 주목하세요 . 특히, `<code>` 와 같이 이스케이프된 표현식을 통해 출력되는 표현식은 CSS 식별자[[${classname}]] 로 이스케이프됩니다 . 이것이 바로 위 코드 조각에서 ` <code>`가 `<code>`로 바뀌는 이유입니다 .classname = 'main elems'main\ elems
+
+고급 기능: CSS 자연어 템플릿 등
+자바스크립트에서 설명했던 것과 마찬가지로, CSS 인라인 기능을 사용하면 인라인 표현식을 주석으로 감싸서 CSS 템플릿<style> 처럼 정적 및 동적 방식으로 태그를 사용할 수 있습니다. 자세한 내용은 다음을 참조하세요.
+
+<style th:inline="css">
+    .main\ elems {
+      text-align: /*[[${align}]]*/ left;
+    }
+</style>
+13가지 텍스트 템플릿 모드
+13.1 텍스트 구문
+Thymeleaf 템플릿 모드 중 세 가지 ( , 및 )는 텍스트 기반입니다 . 이는 마크업 템플릿 모드인 ( 및 ) 와 구별되는 점입니다 .TEXTJAVASCRIPTCSSHTMLXML
+
+텍스트 템플릿 모드와 마크업 모드 의 주요 차이점은 텍스트 템플릿에는 속성 형태로 로직을 삽입할 수 있는 태그가 없으므로 다른 메커니즘에 의존해야 한다는 것입니다.
+
+이러한 메커니즘 중 첫 번째이자 가장 기본적인 것은 인라인 처리 이며 , 이는 이전 장에서 이미 자세히 설명했습니다. 인라인 구문은 텍스트 템플릿 모드에서 표현식 결과를 출력하는 가장 간단한 방법이므로 텍스트 이메일에 완벽하게 적합한 템플릿입니다.
+
+  Dear [(${name})],
+
+  Please find attached the results of the report you requested
+  with name "[(${report.name})]".
+
+  Sincerely,
+    The Reporter.
+태그가 없더라도 위의 예시는 TEXT템플릿 모드에서 실행할 수 있는 완전하고 유효한 Thymeleaf 템플릿입니다.
+
+하지만 단순한 출력 표현식 보다 더 복잡한 논리를 포함하려면 태그 기반이 아닌 새로운 구문이 필요합니다.
+
+[# th:each="item : ${items}"]
+  - [(${item})]
+[/]
+이는 사실 더 자세한 설명을 간략하게 줄인 버전입니다.
+
+[#th:block th:each="item : ${items}"]
+  - [#th:block th:utext="${item}" /]
+[/th:block]
+[#element ...]이 새로운 구문은 <p> 대신 <div> 로 선언되는 요소(즉, 처리 가능한 태그)를 기반으로 한다는 점에 유의하십시오 <element ...>. 요소는 <p>처럼 열고 [#element ...]<div>처럼 닫 으며, 독립형 태그는 XML 태그와 거의 동일한 방식 [/element]으로 <p>를 사용하여 여는 요소를 최소화함으로써 선언할 수 있습니다 ./[#element ... /]
+
+표준 방언에는 이러한 요소 중 하나, 즉 이미 알려진 요소에 대한 프로세서만 포함되어 있지만 th:block, 일반적인 방식으로 방언을 확장하고 새 요소를 만들 수 있습니다. 또한 th:block요소( [#th:block ...] ... [/th:block])는 빈 문자열( )로 축약할 수 있으므로 [# ...] ... [/]위의 블록은 실제로 다음과 같습니다.
+
+[# th:each="item : ${items}"]
+  - [# th:utext="${item}" /]
+[/]
+그리고 `enable`은 이스케이프되지 않은 인라인 표현식[# th:utext="${item}" /] 과 동일하므로 , 코드를 줄이기 위해 이를 사용할 수 있습니다. 따라서 위에서 보았던 첫 번째 코드 조각을 얻게 됩니다.
+
+[# th:each="item : ${items}"]
+  - [(${item})]
+[/]
+참고로, 텍스트 구문은 모든 요소의 균형을 유지해야 하며(닫히지 않은 태그 없음) 속성을 따옴표로 묶어야 합니다 . 이는 HTML 스타일보다는 XML 스타일에 더 가깝습니다.
+
+TEXT좀 더 완벽한 템플릿 예시인 일반 텍스트 이메일 템플릿을 살펴보겠습니다 .
+
+Dear [(${customer.name})],
+
+This is the list of our products:
+
+[# th:each="prod : ${products}"]
+   - [(${prod.name})]. Price: [(${prod.price})] EUR/kg
+[/]
+
+Thanks,
+  The Thymeleaf Shop
+실행 후 결과는 다음과 같을 수 있습니다.
+
+Dear Mary Ann Blueberry,
+
+This is the list of our products:
+
+
+   - Apricots. Price: 1.12 EUR/kg
+
+   - Bananas. Price: 1.78 EUR/kg
+
+   - Apples. Price: 0.85 EUR/kg
+
+   - Watermelon. Price: 1.91 EUR/kg
+
+
+Thanks,
+  The Thymeleaf Shop
+참고로 [# th:each="..."], <p>와 [/]<p> 태그는 각각 템플릿에서 한 줄씩 차지하며, 각 줄 끝의 줄 바꿈 문자는 주변 텍스트의 일부로 출력에 포함됩니다. 즉, <p> 태그가 있는 줄은 [# ...]첫 번째 항목 앞에 빈 줄을 하나 더 추가하고, 각 반복 경계는 항목 사이에 빈 줄을 하나 더 추가하며, <p> [/]태그가 있는 줄은 "Thanks," 앞에 빈 줄을 하나 더 추가합니다. 출력 형식을 간결하게 해야 하는 경우, 태그를 별도의 줄에 배치하는 대신 인접한 콘텐츠 줄 끝에 배치할 수 있습니다.
+
+JAVASCRIPT템플릿 모드 의 또 다른 예로 , greeter.js파일을 텍스트 템플릿으로 처리하고 그 결과를 HTML 페이지에서 호출하는 경우가 있습니다. 여기서 중요한 것은 이것이 HTML 템플릿의 블록이 아니라, 파일 자체 가 템플릿으로 처리된다는 점입니다.<script>.js
+
+var greeter = function() {
+
+    var username = [[${session.user.name}]];
+
+    [# th:each="salut : ${salutations}"]    
+      alert([[${salut}]] + " " + username);
+    [/]
+
+};
+실행 후 결과는 다음과 같을 수 있습니다.
+
+var greeter = function() {
+
+    var username = "Bertrand \"Crunchy\" Pear";
+
+      alert("Hello" + " " + username);
+      alert("Ol\u00E1" + " " + username);
+      alert("Hola" + " " + username);
+
+};
+TEXT보안상의 이유로 템플릿 모드 는 표현식 평가에 더 엄격한 제한이 적용됩니다. 부록 D: 표현식 제한을 참조하십시오 .
+
+이스케이프된 요소 속성
+textThymeleaf 3.0은 다른 모드(예: 템플릿 내부의 인라인 모드 ) 에서 처리될 수 있는 템플릿 부분과의 상호 작용을 방지하기 위해  텍스트 구문HTML 의 요소 속성을 이스케이프 처리할 수 있도록 합니다. 따라서 다음과 같습니다.
+
+TEXT템플릿 모드 의 속성은 HTML 이스케이프가 적용되지 않습니다 .
+JAVASCRIPT템플릿 모드 의 속성은 JavaScript 이스케이프가 적용되지 않습니다 .
+CSS템플릿 모드 의 속성은 CSS 이스케이프가 적용되지 않습니다 .
+따라서 이는 -mode 템플릿에서 완벽하게 작동합니다 TEXT(참고: &gt;):
+
+  [# th:if="${120&lt;user.age}"]
+     Congratulations!
+  [/]
+물론 실제 텍스트&lt; 템플릿 에서는 말이 안 되겠지만 , 위 코드가 포함된 블록이 있는 HTML 템플릿을 처리할 때 브라우저가 파일을 프로토타입으로 정적으로 열 때 해당 코드를 여는 태그 이름으로 인식하지 않도록 하려면 좋은 방법입니다.th:inline="text"<user.age
+
+13.2 확장성
+이 구문의 장점 중 하나는 마크업 구문 만큼 확장성이 뛰어나다는 것입니다 . 개발자는 사용자 정의 요소와 속성을 사용하여 자신만의 방언을 정의하고, (선택적으로) 접두사를 적용한 다음, 텍스트 템플릿 모드에서 이를 사용할 수 있습니다.
+
+  [#myorg:dosomething myorg:importantattr="211"]some text[/myorg:dosomething]
+13.3 텍스트 프로토타입 전용 주석 블록: 코드 추가
+및 템플릿 모드(에서 사용할 수 없음 )를 사용하면 특수 주석 구문 사이에 코드를 포함할 수 있으므로 Thymeleaf는 템플릿을 처리할 때 해당 코드의 주석을 자동으로 해제합니다 JAVASCRIPT.CSSTEXT/*[+...+]*/
+
+var x = 23;
+
+/*[+
+
+var msg  = "This is a working application";
+
++]*/
+
+var f = function() {
+    ...
+다음과 같이 실행됩니다:
+
+var x = 23;
+
+var msg  = "This is a working application";
+
+var f = function() {
+...
+이 주석 안에 표현식을 포함할 수 있으며, 포함된 표현식은 평가됩니다.
+
+var x = 23;
+
+/*[+
+
+var msg  = "Hello, " + [[${session.user.name}]];
+
++]*/
+
+var f = function() {
+...
+13.4 텍스트 파서 수준 주석 블록: 코드 제거
+프로토타입 전용 주석 블록과 유사하게, 세 가지 텍스트 템플릿 모드( TEXT, JAVASCRIPT및 ) 모두 특수 마크 와 표시 CSS사이의 코드를 제거하도록 Thymeleaf에 지시할 수 있습니다 . 예를 들어 다음과 같습니다./*[- *//* -]*/
+
+var x = 23;
+
+/*[- */
+
+var msg  = "This is shown only when executed statically!";
+
+/* -]*/
+
+var f = function() {
+...
+또는 다음과 같은 TEXT모드입니다.
+
+...
+/*[- Note the user is obtained from the session, which must exist -]*/
+Welcome [(${session.user.name})]!
+...
+13.5 자연스러운 JavaScript 및 CSS 템플릿
+이전 장에서 살펴본 것처럼 JavaScript 및 CSS 인라인 기능을 사용하면 다음과 같이 JavaScript/CSS 주석 내부에 인라인 표현식을 포함할 수 있습니다.
+
+...
+var username = /*[[${session.user.name}]]*/ "Sebastian Lychee";
+...
+…이는 유효한 자바스크립트 코드이며, 실행되면 다음과 같이 나타날 수 있습니다.
+
+...
+var username = "John Apricot";
+...
+인라인 표현식을 주석으로 감싸는 이와 같은 요령은 실제로 텍스트 모드 구문 전체에 사용할 수 있습니다.
+
+  /*[# th:if="${user.admin}"]*/
+     alert('Welcome admin');
+  /*[/]*/
+위 코드의 경고창은 템플릿이 정적으로 열려 있을 때 표시됩니다. 왜냐하면 해당 코드는 100% 유효한 JavaScript이기 때문입니다. 또한 사용자가 관리자 권한으로 템플릿을 실행할 때도 경고창이 표시됩니다. 이는 다음과 같은 의미입니다.
+
+  [# th:if="${user.admin}"]
+     alert('Welcome admin');
+  [/]
+…이것은 실제로 템플릿 구문 분석 중에 초기 버전이 변환되는 코드입니다.
+
+단, 주석으로 요소를 감싸는 것은 인라인 출력 표현식처럼 해당 요소가 있는 줄(a가 발견될 때까지 오른쪽으로 ;)을 정리하지 않는다는 점에 유의하십시오. 이러한 동작은 인라인 출력 표현식에만 적용됩니다.
+
+따라서 Thymeleaf 3.0은 프로토타입 과 실제 작업 템플릿 으로 모두 사용 가능한 자연스러운 템플릿 형태로 복잡한 JavaScript 스크립트와 CSS 스타일시트를 개발할 수 있도록 지원합니다 .
+
+14. 저희 식료품점에 대한 추가 페이지 몇 장 더
+이제 타임리프 사용법에 대해 많이 알게 되었으니, 주문 관리를 위해 웹사이트에 새로운 페이지를 추가할 수 있습니다.
+
+참고로, 본 문서에서는 HTML 코드에 초점을 맞추겠지만, 해당 컨트롤러를 확인하고 싶다면 번들로 제공되는 소스 코드를 참조할 수 있습니다.
+
+14.1 주문 목록
+먼저 주문 목록 페이지를 만들어 보겠습니다 /WEB-INF/templates/order/list.html.
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" 
+          href="../../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+  </head>
+
+  <body>
+
+    <h1>Order list</h1>
+  
+    <table>
+      <tr>
+        <th>DATE</th>
+        <th>CUSTOMER</th>
+        <th>TOTAL</th>
+        <th></th>
+      </tr>
+      <tr th:each="o : ${orders}" th:class="${oStat.odd}? 'odd'">
+        <td th:text="${#calendars.format(o.date,'dd/MMM/yyyy')}">13 jan 2011</td>
+        <td th:text="${o.customer.name}">Frederic Tomato</td>
+        <td th:text="${#aggregates.sum(o.orderLines.{purchasePrice * amount})}">23.32</td>
+        <td>
+          <a href="details.html" th:href="@{/order/details(orderId=${o.id})}">view</a>
+        </td>
+      </tr>
+    </table>
+  
+    <p>
+      <a href="../home.html" th:href="@{/}">Return to home</a>
+    </p>
+    
+  </body>
+  
+</html>
+여기에는 우리를 놀라게 할 만한 것이 아무것도 없지만, OGNL 특유의 이 작은 마법은 예외입니다.
+
+<td th:text="${#aggregates.sum(o.orderLines.{purchasePrice * amount})}">23.32</td>
+이 함수는 OrderLine주문의 각 주문 라인(객체)에 대해 해당 라인 purchasePrice과 속성을 곱하고( 해당 메서드를 amount호출하여 ) 그 결과를 숫자 목록으로 반환합니다. 이 목록은 나중에 함수에 의해 집계되어 주문의 총 가격을 얻습니다.getPurchasePrice()getAmount()#aggregates.sum(...)
+
+OGNL의 위력은 정말 대단하죠.
+
+14.2 주문 상세 정보
+이제 주문 상세 페이지를 살펴보겠습니다. 이 페이지에서는 별표(*) 구문을 많이 사용할 것입니다.
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <title>Good Thymes Virtual Grocery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" 
+          href="../../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+  </head>
+
+  <body th:object="${order}">
+
+    <h1>Order details</h1>
+
+    <div>
+      <p><b>Code:</b> <span th:text="*{id}">99</span></p>
+      <p>
+        <b>Date:</b>
+        <span th:text="*{#calendars.format(date,'dd MMM yyyy')}">13 jan 2011</span>
+      </p>
+    </div>
+
+    <h2>Customer</h2>
+
+    <div th:object="*{customer}">
+      <p><b>Name:</b> <span th:text="*{name}">Frederic Tomato</span></p>
+      <p>
+        <b>Since:</b>
+        <span th:text="*{#calendars.format(customerSince,'dd MMM yyyy')}">1 jan 2011</span>
+      </p>
+    </div>
+  
+    <h2>Products</h2>
+  
+    <table>
+      <tr>
+        <th>PRODUCT</th>
+        <th>AMOUNT</th>
+        <th>PURCHASE PRICE</th>
+      </tr>
+      <tr th:each="ol,row : *{orderLines}" th:class="${row.odd}? 'odd'">
+        <td th:text="${ol.product.name}">Strawberries</td>
+        <td th:text="${ol.amount}" class="number">3</td>
+        <td th:text="${ol.purchasePrice}" class="number">23.32</td>
+      </tr>
+    </table>
+
+    <div>
+      <b>TOTAL:</b>
+      <span th:text="*{#aggregates.sum(orderLines.{purchasePrice * amount})}">35.23</span>
+    </div>
+  
+    <p>
+      <a href="list.html" th:href="@{/order/list}">Return to order list</a>
+    </p>
+
+  </body>
+  
+</html>
+중첩 객체 선택 기능을 제외하면 딱히 새로운 점은 없습니다.
+
+<body th:object="${order}">
+
+  ...
+
+  <div th:object="*{customer}">
+    <p><b>Name:</b> <span th:text="*{name}">Frederic Tomato</span></p>
+    ...
+  </div>
+
+  ...
+</body>
+…이는 다음 *{name}과 같은 의미입니다:
+
+<p><b>Name:</b> <span th:text="${order.customer.name}">Frederic Tomato</span></p>
+15. 구성에 대한 추가 정보
+15.1 템플릿 리졸버
+저희 Good Thymes 가상 식료품점에서는 애플리케이션 리소스( 서블릿 기반 웹 애플리케이션의 서블릿 컨텍스트ITemplateResolver )에서 템플릿을 리소스로 가져올 수 있는 구현 방식 을 선택했습니다.WebApplicationTemplateResolver
+
+Thymeleaf는 자체 템플릿 리졸버를 구현할 수 있는 기능을 제공할 뿐만 아니라 ITemplateResolver,기본적으로 네 가지 구현체를 제공합니다.
+
+org.thymeleaf.templateresolver.ClassLoaderTemplateResolver이는 템플릿을 다음과 같은 클래스로더 리소스로 해석합니다.
+
+return Thread.currentThread().getContextClassLoader().getResourceAsStream(template);
+org.thymeleaf.templateresolver.FileTemplateResolver파일 시스템에서 템플릿을 파일로 해석하는 기능입니다. 예를 들면 다음과 같습니다.
+
+return new FileInputStream(new File(template));
+org.thymeleaf.templateresolver.UrlTemplateResolver템플릿을 URL(로컬 URL이 아닌 경우에도 포함)로 해석하는 기능은 다음과 같습니다.
+
+return (new URL(template)).openStream();
+org.thymeleaf.templateresolver.StringTemplateResolver이는 String지정된 대로 템플릿을 직접 해석합니다 template(또는 템플릿 이름 , 이 경우 템플릿 이름은 단순한 이름 이상의 의미를 가집니다).
+
+return new StringReader(templateName);
+미리 번들로 제공되는 모든 구현체는 ITemplateResolver다음과 같은 동일한 구성 매개변수 세트를 허용합니다.
+
+접두사와 접미사(앞서 살펴본 바와 같이):
+
+templateResolver.setPrefix("/WEB-INF/templates/");
+templateResolver.setSuffix(".html");
+파일 이름과 직접적으로 일치하지 않는 템플릿 이름을 사용할 수 있도록 하는 템플릿 별칭입니다. 접미사/접두사와 별칭이 모두 있는 경우, 별칭이 접두사/접미사보다 먼저 적용됩니다.
+
+templateResolver.addTemplateAlias("adminHome","profiles/admin/home");
+templateResolver.setTemplateAliases(aliasesMap);
+템플릿을 읽을 때 적용할 인코딩:
+
+templateResolver.setCharacterEncoding("UTF-8");
+사용할 템플릿 모드:
+
+// Default is HTML
+templateResolver.setTemplateMode(TemplateMode.XML);
+템플릿 캐시의 기본 모드와 특정 템플릿의 캐시 가능 여부를 정의하는 패턴:
+
+// Default is true
+templateResolver.setCacheable(false);
+templateResolver.getCacheablePatternSpec().addPattern("/users/*");
+이 템플릿 리졸버에서 생성된 파싱된 템플릿 캐시 항목의 TTL(밀리초)입니다. 설정하지 않으면 캐시에서 항목을 제거하는 유일한 방법은 캐시 최대 크기를 초과하는 것뿐입니다(가장 오래된 항목이 제거됨).
+
+// Default is no TTL (only cache size exceeded would remove entries)
+templateResolver.setCacheTTLMs(60000L);
+Thymeleaf와 Spring 통합 패키지는 SpringResourceTemplateResolver애플리케이션에서 리소스에 접근하고 읽기 위해 Spring 인프라를 모두 활용하는 구현을 제공하며, 이는 Spring 기반 애플리케이션에서 권장되는 구현입니다.
+
+체이닝 템플릿 리졸버
+또한, 템플릿 엔진은 여러 개의 템플릿 리졸버를 지정할 수 있으며, 이 경우 템플릿 해결 순서를 정할 수 있습니다. 즉, 첫 번째 리졸버가 템플릿을 해결할 수 없는 경우 두 번째 리졸버에 요청하는 식으로 진행됩니다.
+
+ClassLoaderTemplateResolver classLoaderTemplateResolver = new ClassLoaderTemplateResolver();
+classLoaderTemplateResolver.setOrder(Integer.valueOf(1));
+
+WebApplicationTemplateResolver webApplicationTemplateResolver = 
+        new WebApplicationTemplateResolver(application);
+webApplicationTemplateResolver.setOrder(Integer.valueOf(2));
+
+templateEngine.addTemplateResolver(classLoaderTemplateResolver);
+templateEngine.addTemplateResolver(webApplicationTemplateResolver);
+여러 템플릿 리졸버를 사용하는 경우, 각 템플릿 리졸버에 패턴을 지정하여 Thymeleaf가 해당 템플릿을 해석하도록 설계되지 않은 리졸버를 신속하게 걸러내도록 하는 것이 좋습니다. 이렇게 하면 성능이 향상됩니다. 이는 필수 사항은 아니지만 권장 사항입니다.
+
+ClassLoaderTemplateResolver classLoaderTemplateResolver = new ClassLoaderTemplateResolver();
+classLoaderTemplateResolver.setOrder(Integer.valueOf(1));
+// This classloader will not be even asked for any templates not matching these patterns 
+classLoaderTemplateResolver.getResolvablePatternSpec().addPattern("/layout/*.html");
+classLoaderTemplateResolver.getResolvablePatternSpec().addPattern("/menu/*.html");
+
+WebApplicationTemplateResolver webApplicationTemplateResolver = 
+        new WebApplicationTemplateResolver(application);
+webApplicationTemplateResolver.setOrder(Integer.valueOf(2));
+해결 가능한 패턴 이 지정되지 않은 경우 , ITemplateResolver사용 중인 각 구현체의 특정 기능에 의존하게 됩니다 . 모든 구현체가 해석 전에 템플릿의 존재 여부를 확인할 수 있는 것은 아니며, 따라서 템플릿을 항상 해석 가능한 것으로 간주 하여 해석 체인을 중단할 수 있습니다(다른 해석기가 동일한 템플릿을 확인할 수 없도록 함). 이 경우 실제 리소스를 읽을 수 없게 됩니다.
+
+ITemplateResolverThymeleaf 코어에 포함된 모든 구현에는 리졸버가 리소스가 실제로 존재하는지 확인한 후에야 리졸버 로 간주할 수 있도록 하는 메커니즘이 포함되어 있습니다 . 이는 checkExistence다음과 같이 작동하는 플래그입니다.
+
+ClassLoaderTemplateResolver classLoaderTemplateResolver = new ClassLoaderTemplateResolver();
+classLoaderTemplateResolver.setOrder(Integer.valueOf(1));
+classLoaderTemplateResolver.setCheckExistence(true);
+이 checkExistence플래그는 리졸버가 해석 단계에서 리소스 존재 여부를 실제로 확인 하도록 강제합니다 (존재 여부 확인이 실패하면 체인의 다음 리졸버가 호출됩니다). 모든 경우에 좋아 보일 수 있지만, 대부분의 경우 리소스 자체에 두 번 접근하게 됩니다(한 번은 존재 여부 확인, 다른 한 번은 읽기). 따라서 일부 시나리오에서는 성능 문제가 발생할 수 있습니다. 예를 들어 원격 URL 기반 템플릿 리소스의 경우, 템플릿 캐시를 사용하면 이러한 성능 문제를 상당 부분 완화할 수 있습니다(템플릿은 처음 접근할 때만 해석 됩니다).
+
+15.2 메시지 리졸버
+저희는 식료품점 애플리케이션에 대한 메시지 리졸버 구현을 명시적으로 지정하지 않았으며, 앞서 설명드린 바와 같이 이는 사용된 구현이 객체임을 의미합니다 org.thymeleaf.messageresolver.StandardMessageResolver.
+
+StandardMessageResolver이는 인터페이스의 표준 구현이지만 IMessageResolver, 원한다면 애플리케이션의 특정 요구 사항에 맞춰 자체 구현을 만들 수도 있습니다.
+
+Thymeleaf와 Spring 통합 패키지는 기본적으로 Spring 애플리케이션 컨텍스트에 선언된 빈을 IMessageResolver사용하여 외부화된 메시지를 가져오는 표준 Spring 방식을 사용하는 구현을 제공합니다.MessageSource
+
+표준 메시지 리졸버
+그렇다면 StandardMessageResolver특정 템플릿에서 요청된 메시지는 어떤 모습일까요?
+
+템플릿 이름이 home이고 해당 템플릿이 에 있으며 /WEB-INF/templates/home.html요청된 로케일이 인 경우, gl_ES이 리졸버는 다음 파일에서 이 순서대로 메시지를 찾습니다.
+
+/WEB-INF/templates/home_gl_ES.properties
+/WEB-INF/templates/home_gl.properties
+/WEB-INF/templates/home.properties
+클래스 의 JavaDoc 문서를 참조하면 StandardMessageResolver전체 메시지 해결 메커니즘이 어떻게 작동하는지에 대한 자세한 내용을 확인할 수 있습니다.
+
+메시지 리졸버 구성
+템플릿 엔진에 메시지 리졸버(또는 그 이상)를 추가하고 싶다면 어떻게 해야 할까요? 간단합니다.
+
+// For setting only one
+templateEngine.setMessageResolver(messageResolver);
+
+// For setting more than one
+templateEngine.addMessageResolver(messageResolver);
+그렇다면 메시지 리졸버를 두 개 이상 두려는 이유는 무엇일까요? 템플릿 리졸버와 같은 이유입니다. 메시지 리졸버는 순서대로 작동하며, 첫 번째 리졸버가 특정 메시지를 해결할 수 없으면 두 번째 리졸버에 요청하고, 그 다음에는 세 번째 리졸버에 요청하는 식으로 진행됩니다.
+
+15.3 변환 서비스
+이중 중괄호 구문( ) 을 사용하여 데이터 변환 및 서식 지정 작업을 수행할 수 있도록 하는 변환 서비스는 실제로 Thymeleaf 템플릿 엔진 자체의 기능이 아니라 표준 방언의 기능입니다.${{...}}
+
+따라서 이를 구성하는 방법은 템플릿 엔진에 구성 중인 IStandardConversionService인스턴스에 인터페이스의 사용자 지정 구현을 직접 설정하는 것입니다. 예를 들면 다음과 같습니다.StandardDialect
+
+IStandardConversionService customConversionService = ...
+
+StandardDialect dialect = new StandardDialect();
+dialect.setConversionService(customConversionService);
+
+templateEngine.setDialect(dialect);
+참고로 thymeleaf-spring3 및 thymeleaf-spring4 패키지에는 해당 기능이 포함되어 있으며 , 이 다이얼렉트는 Spring 자체의 변환 서비스 인프라를 Thymeleaf에 통합하는 SpringStandardDialect구현이 이미 사전 구성되어 있습니다 .IStandardConversionService
+
+15.4 로깅
+Thymeleaf는 로깅에 상당한 신경을 쓰고 있으며, 로깅 인터페이스를 통해 최대한 많은 유용한 정보를 제공하기 위해 항상 노력합니다.
+
+사용된 로깅 라이브러리는 slf4j,실제로 애플리케이션에서 사용하려는 모든 로깅 구현(예: log4j)과의 연결 고리 역할을 합니다.
+
+Thymeleaf 클래스는 원하는 세부 수준에 따라 일반 로깅 TRACE, 하위 로깅 DEBUG및 하위 수준 정보를 기록하며 , 일반 로깅 외에도 TemplateEngine 클래스와 관련된 세 가지 특수 로거를 사용하는데, 이 로거들은 각각 다른 용도로 개별적으로 구성할 수 있습니다.INFO
+
+org.thymeleaf.TemplateEngine.CONFIG초기화 중에 라이브러리의 상세 구성 정보를 출력합니다.
+org.thymeleaf.TemplateEngine.TIMER각 템플릿을 처리하는 데 걸린 시간에 대한 정보를 출력합니다(벤치마킹에 유용합니다!).
+org.thymeleaf.TemplateEngine.cache는 캐시에 대한 특정 정보를 출력하는 로거 집합의 접두사입니다. 캐시 로거의 이름은 사용자가 구성할 수 있으므로 변경될 수 있지만 기본값은 다음과 같습니다.
+org.thymeleaf.TemplateEngine.cache.TEMPLATE_CACHE
+org.thymeleaf.TemplateEngine.cache.EXPRESSION_CACHE
+Thymeleaf의 로깅 인프라를 사용하는 예시 구성은 log4j다음과 같습니다.
+
+log4j.logger.org.thymeleaf=DEBUG
+log4j.logger.org.thymeleaf.TemplateEngine.CONFIG=TRACE
+log4j.logger.org.thymeleaf.TemplateEngine.TIMER=TRACE
+log4j.logger.org.thymeleaf.TemplateEngine.cache.TEMPLATE_CACHE=TRACE
+16 템플릿 캐시
+Thymeleaf는 마크업 및 텍스트 파서 세트를 통해 템플릿을 일련의 이벤트(열기 태그, 텍스트, 닫기 태그, 주석 등)로 파싱하고, 적용해야 하는 각 동작 유형에 대한 프로세서 세트를 통해 파싱된 템플릿 이벤트 시퀀스를 수정하여 원래 템플릿과 데이터를 결합함으로써 원하는 결과를 생성합니다.
+
+또한 기본적으로 파싱된 템플릿을 저장하는 캐시가 포함되어 있습니다. 이는 템플릿 파일을 읽고 파싱한 후 처리하기 전에 발생하는 일련의 이벤트를 저장합니다. 특히 웹 애플리케이션 작업 시 유용하며, 다음과 같은 개념을 기반으로 합니다.
+
+입출력은 거의 모든 애플리케이션에서 가장 느린 부분입니다. 반면에 메모리 처리는 매우 빠릅니다.
+기존 메모리 내 이벤트 시퀀스를 복제하는 것은 템플릿 파일을 읽고 구문 분석하여 새 이벤트 시퀀스를 생성하는 것보다 항상 훨씬 빠릅니다.
+웹 애플리케이션은 일반적으로 템플릿이 수십 개 정도밖에 없습니다.
+템플릿 파일은 크기가 작거나 중간 정도이며, 애플리케이션이 실행되는 동안에는 수정되지 않습니다.
+이 모든 것을 종합해 보면, 웹 애플리케이션에서 가장 많이 사용되는 템플릿을 캐싱하는 것이 많은 메모리를 낭비하지 않고도 가능하며, 실제로 변경되지 않는 소수의 파일에 대한 입출력 작업에 소요되는 시간을 크게 절약할 수 있다는 결론에 도달합니다.
+
+그렇다면 이 캐시를 어떻게 제어할 수 있을까요? 우선, 템플릿 리졸버에서 캐시를 활성화 또는 비활성화할 수 있으며, 특정 템플릿에만 적용할 수도 있다는 것을 이미 배웠습니다.
+
+// Default is true
+templateResolver.setCacheable(false);
+templateResolver.getCacheablePatternSpec().addPattern("/users/*");
+또한, 기본 구현의 인스턴스가 될 수 있는 자체 캐시 관리자StandardCacheManager 객체를 설정하여 구성을 수정할 수도 있습니다 .
+
+// Default is 200
+StandardCacheManager cacheManager = new StandardCacheManager();
+cacheManager.setTemplateCacheMaxSize(100);
+...
+templateEngine.setCacheManager(cacheManager);
+org.thymeleaf.cache.StandardCacheManager캐시 구성에 대한 자세한 내용은 해당 API의 Javadoc을 참조하십시오 .
+
+템플릿 캐시에서 항목을 수동으로 삭제할 수 있습니다.
+
+// Clear the cache completely
+templateEngine.clearTemplateCache();
+
+// Clear a specific template from the cache
+templateEngine.clearTemplateCacheFor("/users/userList");
+17. 분리형 템플릿 로직
+17.1 분리된 논리: 개념
+지금까지 저희는 일반적인 방식 으로 템플릿을 만들어 식료품점 웹사이트를 운영해 왔으며 , 템플릿에 속성 형태로 로직을 삽입해 왔습니다.
+
+하지만 Thymeleaf는 템플릿 마크업과 로직을 완전히 분리할 수 있도록 해주므로 , 로직이 전혀 없는 마크업 템플릿을HTML 템플릿 모드 에서 생성할 수 있습니다 XML.
+
+핵심 아이디어는 템플릿 로직이 별도의 로직 파일 (더 정확히는 로직 리소스 이며, 반드시 파일 일 필요는 없음 )에 정의된다는 것입니다. 기본적으로 이 로직 리소스는 템플릿 파일과 동일한 위치(예: 폴더)에 있는 추가 파일로, 이름은 같지만 .th.xml확장자는 다릅니다.
+
+/templates
++->/home.html
++->/home.th.xml
+따라서 home.html파일에는 논리적인 내용이 전혀 없을 수 있습니다. 예를 들어 다음과 같을 수 있습니다.
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <table id="usersTable">
+      <tr>
+        <td class="username">Jeremy Grapefruit</td>
+        <td class="usertype">Normal User</td>
+      </tr>
+      <tr>
+        <td class="username">Alice Watermelon</td>
+        <td class="usertype">Administrator</td>
+      </tr>
+    </table>
+  </body>
+</html>
+여기에는 Thymeleaf 코드가 전혀 없습니다. Thymeleaf나 템플릿에 대한 지식이 없는 디자이너도 만들거나 편집하거나 이해할 수 있는 템플릿 파일입니다. 또는 Thymeleaf 관련 코드가 전혀 없는 외부 시스템에서 제공한 HTML 조각일 수도 있습니다.
+
+이제 다음과 같이 home.html추가 파일을 생성하여 해당 템플릿을 Thymeleaf 템플릿으로 바꿔 보겠습니다 .home.th.xml
+
+<?xml version="1.0"?>
+<thlogic>
+  <attr sel="#usersTable" th:remove="all-but-first">
+    <attr sel="/tr[0]" th:each="user : ${users}">
+      <attr sel="td.username" th:text="${user.name}" />
+      <attr sel="td.usertype" th:text="#{|user.type.${user.type}|}" />
+    </attr>
+  </attr>
+</thlogic>
+<attr>여기서는 블록 안에 많은 태그가 있는 것을 볼 수 있습니다 thlogic. 이러한 <attr>태그는 속성을 통해 선택된 원래 템플릿의 노드에 속성을 삽입sel 하는데 , 이 속성에는 Thymeleaf 마크업 선택자 (실제로는 AttoParser 마크업 선택자 )가 포함되어 있습니다.
+
+또한 <attr>태그는 중첩될 수 있으며, 이 경우 선택자가 태그 뒤에 추가 됩니다 . sel="/tr[0]"예를 들어 위의 코드는 로 처리됩니다 sel="#usersTable/tr[0]". 그리고 사용자 이름에 대한 선택자는 <td>로 처리됩니다 sel="#usersTable/tr[0]//td.username".
+
+따라서 두 파일을 병합하면 위에 보이는 두 파일은 다음과 같이 동일해집니다.
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <table id="usersTable" th:remove="all-but-first">
+      <tr th:each="user : ${users}">
+        <td class="username" th:text="${user.name}">Jeremy Grapefruit</td>
+        <td class="usertype" th:text="#{|user.type.${user.type}|}">Normal User</td>
+      </tr>
+      <tr>
+        <td class="username">Alice Watermelon</td>
+        <td class="usertype">Administrator</td>
+      </tr>
+    </table>
+  </body>
+</html>
+이 방식이 더 익숙해 보이고, 실제로 두 개의 별도 파일을 만드는 것보다 간결합니다 . 하지만 템플릿을 분리하는 장점은 템플릿을 Thymeleaf와 완전히 독립적으로 만들 수 있어 설계 관점에서 유지 관리가 훨씬 용이하다는 것입니다.
+
+물론 디자이너와 개발자 간의 일부 계약 , 예를 들어 사용자가 <table>필요로 하는 사항 등은 여전히 ​​필요하겠지만 id="usersTable", 많은 경우 순수 HTML 템플릿이 디자인 팀과 개발 팀 간의 훨씬 더 나은 소통 수단이 될 것입니다.
+
+17.2 분리형 템플릿 구성
+분리된 템플릿 활성화
+기본적으로 모든 템플릿에 대해 분리된 로직이 요구되지는 않습니다. 대신, 구성된 템플릿 리졸버(구현체)는 분리된 로직을 사용ITemplateResolver 하는 템플릿을 명시적으로 표시해야 합니다 .
+
+(분리된 로직을 허용하지 않는) 예외를 제외하고 StringTemplateResolver, 의 다른 모든 기본 구현은 해당 리졸버가 해결하는 모든 템플릿에 로직의 전부 또는 일부가 별도의 리소스에 있을 가능성이 있음을 표시하는 ITemplateResolver플래그를 제공합니다 .useDecoupledLogic
+
+final WebApplicationTemplateResolver templateResolver = 
+        new WebApplicationTemplateResolver(application);
+...
+templateResolver.setUseDecoupledLogic(true);
+결합 논리와 비결합 논리의 혼합
+분리된 템플릿 로직은 활성화 시 필수 사항이 아닙니다. 활성화되면 엔진은 분리된 로직이 포함된 리소스를 찾아 해당 리소스를 파싱하고, 존재하면 원래 템플릿과 병합합니다. 분리된 로직 리소스가 없더라도 오류는 발생하지 않습니다.
+
+또한, 동일한 템플릿 내에서 결합된 로직 과 분리된 로직을 혼합하여 사용할 수 있습니다. 예를 들어, 일부 Thymeleaf 속성은 원래 템플릿 파일에 추가하고 나머지는 별도의 분리된 로직 파일에 남겨둘 수 있습니다. 가장 일반적인 예는 (v3.0에서 새로 추가된) th:ref속성을 사용하는 것입니다.
+
+17.3 th:ref 속성
+th:ref이는 단지 마커 속성일 뿐입니다. 처리 관점에서는 아무런 역할을 하지 않으며 템플릿이 처리될 때 단순히 사라지지만, 마크업 참조 역할을 한다는 점에서 유용합니다. 즉, 태그 이름 이나 프래그먼트 처럼 마크업 선택기 에서 이름 으로 확인할 수 있습니다 .th:fragment
+
+만약 다음과 같은 선택자가 있다면:
+
+  <attr sel="whatever" .../>
+이것은 다음과 일치합니다:
+
+태그 없음 <whatever>.
+속성을 가진 모든 태그 th:fragment="whatever".
+속성을 가진 모든 태그 th:ref="whatever".
+th:ref예를 들어 순수 HTML 속성을 사용하는 것과 비교했을 때 어떤 장점이 있을까요 ? 단순히 논리 앵커 역할을 하는 속성 을 태그에 너무 많이 추가하여 출력 결과를 복잡하게 만들지 id않으려는 것뿐입니다 .idclass
+
+같은 맥락에서, 단점은 무엇일까요 ? 당연히 템플릿에 Thymeleaf 로직( "로직"th:ref ) 을 조금 추가해야 한다는 점입니다 .
+
+참고로 이 th:ref속성 의 적용 가능성은 분리된 로직 템플릿 파일에만 적용되는 것이 아닙니다 . 프래그먼트 표현식( )과 같은 다른 유형의 시나리오에서도 동일하게 작동합니다 ~{...}.
+
+17.4 분리된 템플릿의 성능 영향
+영향은 극히 미미합니다. 해결된 템플릿이 분리된 로직을 사용하도록 표시되어 있고 캐시되지 않은 경우, 템플릿 로직 리소스가 먼저 해결되어 메모리에서 구문 분석되고 일련의 명령어로 처리됩니다. 기본적으로 각 마크업 선택기에 삽입될 속성 목록입니다.
+
+하지만 이것이 필요한 유일한 추가 단계 입니다 . 이후에는 실제 템플릿이 파싱되고, 파싱 과정에서 AttoParser의 고급 노드 선택 기능 덕분에 파서 자체에서 이러한 속성들을 즉시 삽입합니다 . 따라서 파싱된 노드는 마치 원래 템플릿 파일에 삽입된 속성이 이미 작성된 것처럼 파서에서 출력됩니다.
+
+이것의 가장 큰 장점은 무엇일까요? 템플릿이 캐시되도록 구성되면, 주입된 속성이 이미 포함된 상태로 캐시됩니다. 따라서 캐시 가능한 템플릿에 대해 분리된 템플릿을 사용하는 데 따른 오버헤드는 일단 캐시되면 완전히 0이 됩니다 .
+
+17.5 분리된 논리의 해결
+Thymeleaf가 각 템플릿에 해당하는 분리된 로직 리소스를 해결하는 방식은 사용자가 구성할 수 있습니다. 이는 확장 지점인 에 의해 결정되며, org.thymeleaf.templateparser.markup.decoupled.IDecoupledTemplateLogicResolver기본 구현이 제공됩니다 StandardDecoupledTemplateLogicResolver.
+
+이 표준 구현 방식은 무엇을 하는가?
+
+먼저, 해당 메서드를 통해 얻은 템플릿 리소스의 기본 이름 에 접두사 prefix와 접미사를 적용합니다 . 접두사와 접미사 모두 구성 가능하며, 기본적으로 접두사는 비어 있고 접미사는 비어 있습니다 .suffixITemplateResource#getBaseName().th.xml
+둘째, 템플릿 리소스에게 해당 메서드를 사용하여 계산된 이름으로 상대 리소스를ITemplateResource#relative(String relativeLocation) 확인하도록 요청합니다 .
+IDecoupledTemplateLogicResolver사용할 구체적인 구현 방식은 다음에서 TemplateEngine쉽게 설정할 수 있습니다.
+
+final StandardDecoupledTemplateLogicResolver decoupledResolver = 
+        new StandardDecoupledTemplateLogicResolver();
+decoupledResolver.setPrefix("../viewlogic/");
+...
+templateEngine.setDecoupledTemplateLogicResolver(decoupledResolver);
+18 부록 A: 표현식 기본 객체
+일부 객체와 변수 맵은 항상 호출할 수 있습니다. 하나씩 살펴보겠습니다.
+
+기본 객체
+#ctx : 컨텍스트 객체. 환경(독립 실행형 또는 웹)에 따라 구현체 org.thymeleaf.context.IContext가 달라집니다.org.thymeleaf.context.IWebContext
+
+참고: #vars와 는 #root같은 대상을 나타내는 동의어이지만, 를 사용하는 #ctx것이 좋습니다.
+
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.context.IContext
+ * ======================================================================
+ */
+
+${#ctx.locale}
+${#ctx.variableNames}
+
+/*
+ * ======================================================================
+ * See javadoc API for classes org.thymeleaf.context.IWebContext
+ * and org.thymeleaf.web.IWebExchange
+ * ======================================================================
+ */
+
+${#ctx.exchange}
+${#ctx.exchange.request}
+${#ctx.exchange.session}
+${#ctx.exchange.application}
+#localejava.util.Locale : 현재 요청과 관련된 항목에 직접 접근할 수 있습니다 .
+${#locale}
+요청/세션 속성 등에 사용되는 웹 컨텍스트 네임스페이스
+웹 환경에서 Thymeleaf를 사용할 때 요청 매개변수, 세션 속성 및 애플리케이션 속성에 접근하기 위한 일련의 단축 기능을 사용할 수 있습니다.
+
+이것들은 컨텍스트 객체가 아니라 컨텍스트에 변수로 추가된 맵이므로, 별도의 참조 없이 접근할 수 있습니다 #. 어떤 면에서는 네임스페이스 와 유사한 역할을 합니다 .
+
+param : 요청 매개변수를 검색하는 데 사용됩니다. 요청 매개변수 의 값을 담고 있는 ${param.foo}배열이므로 일반적으로 첫 번째 값을 가져오는 데 사용됩니다.String[]foo${param.foo[0]}
+${param.foo}              // Retrieves a String[] with the values of request parameter 'foo'
+${param.size()}
+${param.isEmpty()}
+${param.containsKey('foo')}
+...
+세션 : 세션 속성을 검색하는 데 사용됩니다.
+${session.foo}                 // Retrieves the session attribute 'foo'
+${session.size()}
+${session.isEmpty()}
+${session.containsKey('foo')}
+...
+application : 애플리케이션/서블릿 컨텍스트 속성을 검색하는 데 사용됩니다.
+${application.foo}              // Retrieves the ServletContext attribute 'foo'
+${application.size()}
+${application.isEmpty()}
+${application.containsKey('foo')}
+...
+요청 속성에 접근할 때는 ( 요청 매개변수 와는 달리 ) 네임스페이스를 지정할 필요가 없습니다. 모든 요청 속성은 컨텍스트 루트의 변수로 컨텍스트에 자동으로 추가되기 때문입니다.
+
+${myRequestAttribute}
+19 부록 B: 표현식 유틸리티 객체
+실행 정보
+#execInfo : Thymeleaf 표준 표현식 내부에서 처리 중인 템플릿에 대한 유용한 정보를 제공하는 표현식 객체입니다.
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.ExecutionInfo
+ * ======================================================================
+ */
+
+/*
+ * Return the name and mode of the 'leaf' template. This means the template
+ * from where the events being processed were parsed. So if this piece of
+ * code is not in the root template "A" but on a fragment being inserted
+ * into "A" from another template called "B", this will return "B" as a
+ * name, and B's mode as template mode.
+ */
+${#execInfo.templateName}
+${#execInfo.templateMode}
+
+/*
+ * Return the name and mode of the 'root' template. This means the template
+ * that the template engine was originally asked to process. So if this
+ * piece of code is not in the root template "A" but on a fragment being
+ * inserted into "A" from another template called "B", this will still 
+ * return "A" and A's template mode.
+ */
+${#execInfo.processedTemplateName}
+${#execInfo.processedTemplateMode}
+
+/*
+ * Return the stacks (actually, List<String> or List<TemplateMode>) of
+ * templates being processed. The first element will be the 
+ * 'processedTemplate' (the root one), the last one will be the 'leaf'
+ * template, and in the middle all the fragments inserted in nested
+ * manner to reach the leaf from the root will appear.
+ */
+${#execInfo.templateNames}
+${#execInfo.templateModes}
+
+/*
+ * Return the stack of templates being processed similarly (and in the
+ * same order) to 'templateNames' and 'templateModes', but returning
+ * a List<TemplateData> with the full template metadata.
+ */
+${#execInfo.templateStack}
+메시지
+#messages : 변수 표현식 내에서 외부화된 메시지를 구문을 사용하여 얻는 방식과 동일하게 얻기 위한 유틸리티 메서드입니다 #{...}.
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Messages
+ * ======================================================================
+ */
+
+/*
+ * Obtain externalized messages. Can receive a single key, a key plus arguments,
+ * or an array/list/set of keys (in which case it will return an array/list/set of 
+ * externalized messages).
+ * If a message is not found, a default message (like '??msgKey??') is returned.
+ */
+${#messages.msg('msgKey')}
+${#messages.msg('msgKey', param1)}
+${#messages.msg('msgKey', param1, param2)}
+${#messages.msg('msgKey', param1, param2, param3)}
+${#messages.msgWithParams('msgKey', new Object[] {param1, param2, param3, param4})}
+${#messages.arrayMsg(messageKeyArray)}
+${#messages.listMsg(messageKeyList)}
+${#messages.setMsg(messageKeySet)}
+
+/*
+ * Obtain externalized messages or null. Null is returned instead of a default
+ * message if a message for the specified key is not found.
+ */
+${#messages.msgOrNull('msgKey')}
+${#messages.msgOrNull('msgKey', param1)}
+${#messages.msgOrNull('msgKey', param1, param2)}
+${#messages.msgOrNull('msgKey', param1, param2, param3)}
+${#messages.msgOrNullWithParams('msgKey', new Object[] {param1, param2, param3, param4})}
+${#messages.arrayMsgOrNull(messageKeyArray)}
+${#messages.listMsgOrNull(messageKeyList)}
+${#messages.setMsgOrNull(messageKeySet)}
+URI/URL
+#uris : Thymeleaf 표준 표현식 내에서 URI/URL 작업(특히 이스케이핑/이스케이핑 해제)을 수행하기 위한 유틸리티 객체입니다.
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Uris
+ * ======================================================================
+ */
+
+/*
+ * Escape/Unescape as a URI/URL path
+ */
+${#uris.escapePath(uri)}
+${#uris.escapePath(uri, encoding)}
+${#uris.unescapePath(uri)}
+${#uris.unescapePath(uri, encoding)}
+
+/*
+ * Escape/Unescape as a URI/URL path segment (between '/' symbols)
+ */
+${#uris.escapePathSegment(uri)}
+${#uris.escapePathSegment(uri, encoding)}
+${#uris.unescapePathSegment(uri)}
+${#uris.unescapePathSegment(uri, encoding)}
+
+/*
+ * Escape/Unescape as a Fragment Identifier (#frag)
+ */
+${#uris.escapeFragmentId(uri)}
+${#uris.escapeFragmentId(uri, encoding)}
+${#uris.unescapeFragmentId(uri)}
+${#uris.unescapeFragmentId(uri, encoding)}
+
+/*
+ * Escape/Unescape as a Query Parameter (?var=value)
+ */
+${#uris.escapeQueryParam(uri)}
+${#uris.escapeQueryParam(uri, encoding)}
+${#uris.unescapeQueryParam(uri)}
+${#uris.unescapeQueryParam(uri, encoding)}
+변환
+#conversions : 템플릿의 어느 지점에서든 변환 서비스 를 실행할 수 있도록 하는 유틸리티 객체입니다 .
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Conversions
+ * ======================================================================
+ */
+
+/*
+ * Execute the desired conversion of the 'object' value into the
+ * specified class.
+ */
+${#conversions.convert(object, 'java.util.TimeZone')}
+${#conversions.convert(object, targetClass)}
+날짜
+#날짜 : 객체에 대한 유틸리티 메서드 java.util.Date:
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Dates
+ * ======================================================================
+ */
+
+/*
+ * Format date with the standard locale format
+ * Also works with arrays, lists or sets
+ */
+${#dates.format(date)}
+${#dates.arrayFormat(datesArray)}
+${#dates.listFormat(datesList)}
+${#dates.setFormat(datesSet)}
+
+/*
+ * Format date with the ISO8601 format
+ * Also works with arrays, lists or sets
+ */
+${#dates.formatISO(date)}
+${#dates.arrayFormatISO(datesArray)}
+${#dates.listFormatISO(datesList)}
+${#dates.setFormatISO(datesSet)}
+
+/*
+ * Format date with the specified pattern
+ * Also works with arrays, lists or sets
+ */
+${#dates.format(date, 'dd/MMM/yyyy HH:mm')}
+${#dates.arrayFormat(datesArray, 'dd/MMM/yyyy HH:mm')}
+${#dates.listFormat(datesList, 'dd/MMM/yyyy HH:mm')}
+${#dates.setFormat(datesSet, 'dd/MMM/yyyy HH:mm')}
+
+/*
+ * Obtain date properties
+ * Also works with arrays, lists or sets
+ */
+${#dates.day(date)}                    // also arrayDay(...), listDay(...), etc.
+${#dates.month(date)}                  // also arrayMonth(...), listMonth(...), etc.
+${#dates.monthName(date)}              // also arrayMonthName(...), listMonthName(...), etc.
+${#dates.monthNameShort(date)}         // also arrayMonthNameShort(...), listMonthNameShort(...), etc.
+${#dates.year(date)}                   // also arrayYear(...), listYear(...), etc.
+${#dates.dayOfWeek(date)}              // also arrayDayOfWeek(...), listDayOfWeek(...), etc.
+${#dates.dayOfWeekName(date)}          // also arrayDayOfWeekName(...), listDayOfWeekName(...), etc.
+${#dates.dayOfWeekNameShort(date)}     // also arrayDayOfWeekNameShort(...), listDayOfWeekNameShort(...), etc.
+${#dates.hour(date)}                   // also arrayHour(...), listHour(...), etc.
+${#dates.minute(date)}                 // also arrayMinute(...), listMinute(...), etc.
+${#dates.second(date)}                 // also arraySecond(...), listSecond(...), etc.
+${#dates.millisecond(date)}            // also arrayMillisecond(...), listMillisecond(...), etc.
+
+/*
+ * Create date (java.util.Date) objects from its components
+ */
+${#dates.create(year,month,day)}
+${#dates.create(year,month,day,hour,minute)}
+${#dates.create(year,month,day,hour,minute,second)}
+${#dates.create(year,month,day,hour,minute,second,millisecond)}
+
+/*
+ * Create a date (java.util.Date) object for the current date and time
+ */
+${#dates.createNow()}
+
+${#dates.createNowForTimeZone()}
+
+/*
+ * Create a date (java.util.Date) object for the current date (time set to 00:00)
+ */
+${#dates.createToday()}
+
+${#dates.createTodayForTimeZone()}
+달력
+#달력 : 와 유사 #dates하지만 java.util.Calendar객체에 대한 것입니다.
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Calendars
+ * ======================================================================
+ */
+
+/*
+ * Format calendar with the standard locale format
+ * Also works with arrays, lists or sets
+ */
+${#calendars.format(cal)}
+${#calendars.arrayFormat(calArray)}
+${#calendars.listFormat(calList)}
+${#calendars.setFormat(calSet)}
+
+/*
+ * Format calendar with the ISO8601 format
+ * Also works with arrays, lists or sets
+ */
+${#calendars.formatISO(cal)}
+${#calendars.arrayFormatISO(calArray)}
+${#calendars.listFormatISO(calList)}
+${#calendars.setFormatISO(calSet)}
+
+/*
+ * Format calendar with the specified pattern
+ * Also works with arrays, lists or sets
+ */
+${#calendars.format(cal, 'dd/MMM/yyyy HH:mm')}
+${#calendars.arrayFormat(calArray, 'dd/MMM/yyyy HH:mm')}
+${#calendars.listFormat(calList, 'dd/MMM/yyyy HH:mm')}
+${#calendars.setFormat(calSet, 'dd/MMM/yyyy HH:mm')}
+
+/*
+ * Obtain calendar properties
+ * Also works with arrays, lists or sets
+ */
+${#calendars.day(date)}                // also arrayDay(...), listDay(...), etc.
+${#calendars.month(date)}              // also arrayMonth(...), listMonth(...), etc.
+${#calendars.monthName(date)}          // also arrayMonthName(...), listMonthName(...), etc.
+${#calendars.monthNameShort(date)}     // also arrayMonthNameShort(...), listMonthNameShort(...), etc.
+${#calendars.year(date)}               // also arrayYear(...), listYear(...), etc.
+${#calendars.dayOfWeek(date)}          // also arrayDayOfWeek(...), listDayOfWeek(...), etc.
+${#calendars.dayOfWeekName(date)}      // also arrayDayOfWeekName(...), listDayOfWeekName(...), etc.
+${#calendars.dayOfWeekNameShort(date)} // also arrayDayOfWeekNameShort(...), listDayOfWeekNameShort(...), etc.
+${#calendars.hour(date)}               // also arrayHour(...), listHour(...), etc.
+${#calendars.minute(date)}             // also arrayMinute(...), listMinute(...), etc.
+${#calendars.second(date)}             // also arraySecond(...), listSecond(...), etc.
+${#calendars.millisecond(date)}        // also arrayMillisecond(...), listMillisecond(...), etc.
+
+/*
+ * Create calendar (java.util.Calendar) objects from its components
+ */
+${#calendars.create(year,month,day)}
+${#calendars.create(year,month,day,hour,minute)}
+${#calendars.create(year,month,day,hour,minute,second)}
+${#calendars.create(year,month,day,hour,minute,second,millisecond)}
+
+${#calendars.createForTimeZone(year,month,day,timeZone)}
+${#calendars.createForTimeZone(year,month,day,hour,minute,timeZone)}
+${#calendars.createForTimeZone(year,month,day,hour,minute,second,timeZone)}
+${#calendars.createForTimeZone(year,month,day,hour,minute,second,millisecond,timeZone)}
+
+/*
+ * Create a calendar (java.util.Calendar) object for the current date and time
+ */
+${#calendars.createNow()}
+
+${#calendars.createNowForTimeZone()}
+
+/*
+ * Create a calendar (java.util.Calendar) object for the current date (time set to 00:00)
+ */
+${#calendars.createToday()}
+
+${#calendars.createTodayForTimeZone()}
+시간 변수(java.time)
+#temporals : JDK8+ java.timeAPI의 날짜/시간 객체를 처리합니다.
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Temporals
+ * ======================================================================
+ */
+
+/*
+ *
+ * Format date with the standard locale format
+ * Also works with arrays, lists or sets
+ */
+${#temporals.format(temporal)}
+${#temporals.arrayFormat(temporalsArray)}
+${#temporals.listFormat(temporalsList)}
+${#temporals.setFormat(temporalsSet)}
+
+/*
+ * Format date with the standard format for the provided locale
+ * Also works with arrays, lists or sets
+ */
+${#temporals.format(temporal, locale)}
+${#temporals.arrayFormat(temporalsArray, locale)}
+${#temporals.listFormat(temporalsList, locale)}
+${#temporals.setFormat(temporalsSet, locale)}
+
+/*
+ * Format date with the specified pattern
+ * SHORT, MEDIUM, LONG and FULL can also be specified in order to use
+ * the default java.time.format.FormatStyle patterns
+ * Also works with arrays, lists or sets
+ */
+${#temporals.format(temporal, 'dd/MMM/yyyy HH:mm')}
+${#temporals.format(temporal, 'dd/MMM/yyyy HH:mm', 'Europe/Paris')}
+${#temporals.arrayFormat(temporalsArray, 'dd/MMM/yyyy HH:mm')}
+${#temporals.listFormat(temporalsList, 'dd/MMM/yyyy HH:mm')}
+${#temporals.setFormat(temporalsSet, 'dd/MMM/yyyy HH:mm')}
+
+/*
+ * Format date with the specified pattern and locale
+ * Also works with arrays, lists or sets
+ */
+${#temporals.format(temporal, 'dd/MMM/yyyy HH:mm', locale)}
+${#temporals.arrayFormat(temporalsArray, 'dd/MMM/yyyy HH:mm', locale)}
+${#temporals.listFormat(temporalsList, 'dd/MMM/yyyy HH:mm', locale)}
+${#temporals.setFormat(temporalsSet, 'dd/MMM/yyyy HH:mm', locale)}
+
+/*
+ * Format date with ISO-8601 format
+ * Also works with arrays, lists or sets
+ */
+${#temporals.formatISO(temporal)}
+${#temporals.arrayFormatISO(temporalsArray)}
+${#temporals.listFormatISO(temporalsList)}
+${#temporals.setFormatISO(temporalsSet)}
+
+/*
+ * Obtain date properties
+ * Also works with arrays, lists or sets
+ */
+${#temporals.day(temporal)}                    // also arrayDay(...), listDay(...), etc.
+${#temporals.month(temporal)}                  // also arrayMonth(...), listMonth(...), etc.
+${#temporals.monthName(temporal)}              // also arrayMonthName(...), listMonthName(...), etc.
+${#temporals.monthNameShort(temporal)}         // also arrayMonthNameShort(...), listMonthNameShort(...), etc.
+${#temporals.year(temporal)}                   // also arrayYear(...), listYear(...), etc.
+${#temporals.dayOfWeek(temporal)}              // also arrayDayOfWeek(...), listDayOfWeek(...), etc.
+${#temporals.dayOfWeekName(temporal)}          // also arrayDayOfWeekName(...), listDayOfWeekName(...), etc.
+${#temporals.dayOfWeekNameShort(temporal)}     // also arrayDayOfWeekNameShort(...), listDayOfWeekNameShort(...), etc.
+${#temporals.hour(temporal)}                   // also arrayHour(...), listHour(...), etc.
+${#temporals.minute(temporal)}                 // also arrayMinute(...), listMinute(...), etc.
+${#temporals.second(temporal)}                 // also arraySecond(...), listSecond(...), etc.
+${#temporals.nanosecond(temporal)}             // also arrayNanosecond(...), listNanosecond(...), etc.
+
+/*
+ * Create temporal (java.time.Temporal) objects from its components
+ */
+${#temporals.create(year,month,day)}                                // return a instance of java.time.LocalDate
+${#temporals.create(year,month,day,hour,minute)}                    // return a instance of java.time.LocalDateTime
+${#temporals.create(year,month,day,hour,minute,second)}             // return a instance of java.time.LocalDateTime
+${#temporals.create(year,month,day,hour,minute,second,nanosecond)}  // return a instance of java.time.LocalDateTime
+
+/*
+ * Create a temporal (java.time.Temporal) object for the current date and time
+ */
+${#temporals.createNow()}                      // return a instance of java.time.LocalDateTime
+${#temporals.createNowForTimeZone(zoneId)}     // return a instance of java.time.ZonedDateTime
+${#temporals.createToday()}                    // return a instance of java.time.LocalDate
+${#temporals.createTodayForTimeZone(zoneId)}   // return a instance of java.time.LocalDate
+
+/*
+ * Create a temporal (java.time.Temporal) object for the provided date
+ */
+${#temporals.createDate(isoDate)}              // return a instance of java.time.LocalDate
+${#temporals.createDateTime(isoDate)}          // return a instance of java.time.LocalDateTime
+${#temporals.createDate(isoDate, pattern)}     // return a instance of java.time.LocalDate
+${#temporals.createDateTime(isoDate, pattern)} // return a instance of java.time.LocalDateTime
