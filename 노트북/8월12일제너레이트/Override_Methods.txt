@@ -23,4 +23,8 @@ public class BaseActivity {
 자식 클래스 (MyActivity)에서 적용상속받은 후 Ctrl + O를 눌러 생명주기 
 메서드들을 한 번에 오버라이드하고 
 부모 메서드 호출(super.onCreate()) 코드가 자동 포함되는 것을 확인합니다.
-3. 스프링 프레임워크 (HandlerInterceptor 등) 예제인터페이스/클래스 (HandlerInterceptor 구현 또는 상속)스프링 웹 프로젝트에서 HandlerInterceptorAdapter나 기타 공통 훅 클래스를 상속받을 때 preHandle, postHandle 등을 오버라이드하면 실무 감각을 익히기 좋습니다.
+
+3. 스프링 프레임워크 (HandlerInterceptor 등) 예제인터페이스/클래스 
+(HandlerInterceptor 구현 또는 상속)스프링 웹 프로젝트에서 
+HandlerInterceptorAdapter나 기타 공통 훅 클래스를 상속받을 때 
+preHandle, postHandle 등을 오버라이드하면 실무 감각을 익히기 좋습니다.
