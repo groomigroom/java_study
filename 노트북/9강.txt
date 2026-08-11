@@ -331,14 +331,14 @@ MemberController.java
 import @Controller 뜨고
 
 @Controller
-@Component
+//@Component
 public class MemberController {
-	private final MemberService memberService;
+	@Autowired private final MemberService memberService;
 
-	@Autowired
-	public MemberController (MemberService memberService) {
-		this.memberService = memberService;
-	}
+//	@Autowired
+//	public MemberController (MemberService memberService) {
+//		this.memberService = memberService;
+//	}
 }
 
 -------------------------
