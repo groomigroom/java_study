@@ -1,27 +1,4 @@
-<form:inputText name="userName" value="${user.name}" />
-…타임리프 표준 방언을 사용하면 다음과 같은 기능을 구현할 수 있습니다.
 
-<input type="text" name="userName" value="James Carrot" th:value="${user.name}" />
-이렇게 하면 브라우저에서 올바르게 표시될 뿐만 아니라
-
-
-
-mmm
-
-
-public class ProductService {
-
-    ...
-
-    public List<Product> findAll() {
-        return ProductRepository.getInstance().findAll();
-    }
-
-    public Product findById(Integer id) {
-        return ProductRepository.getInstance().findById(id);
-    }
-    
-}
 
 /*
  * The application object needs to be declared first (implements IWebApplication)
