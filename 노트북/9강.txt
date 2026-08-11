@@ -412,6 +412,13 @@ public class HomeController {
 
 resources/templates/에 home.html 만들기
 
+<html xmlns:th = "http://www.thymeleaf.org">
+<body>
+<div>
+	<h1></h1>
+</div>
+</body>
+</html>
 
 
 https://www.youtube.com/watch?v=JBX_FTKkuZ4&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=16
