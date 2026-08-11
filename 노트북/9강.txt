@@ -391,7 +391,7 @@ public class SpringConfig {
 
 https://www.youtube.com/watch?v=ff1xgVrQy1E&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=16
 
-4분 21초부터
+11분 13초부터
 
 
 
