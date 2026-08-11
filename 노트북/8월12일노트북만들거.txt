@@ -1,0 +1,175 @@
+제공해주신 ProductService를 기반으로, Spring Boot(스프링 부트)와 Thymeleaf(타임리프)를 활용하여 상품 목록 조회 및 상품 상세 조회를 구현한 전체 예제 코드입니다.
+------------------------------
+## 1. Product (도메인 모델 클래스)
+먼저 상품 정보를 담을 기본 객체를 정의합니다.
+
+package com.example.demo.domain;
+public class Product {
+    private Integer id;
+    private String name;
+    private Integer price;
+
+    public Product(Integer id, String name, Integer price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+    // Getter, Setter
+    public Integer getId() { return id; }
+    public String getName() { return name; }
+    public Integer getPrice() { return price; }
+}
+
+## 2. ProductRepository (싱글톤 저장소 가짜 구현)
+ProductService에서 사용하는 싱글톤 패턴의 Repository 데이터베이스 대용 코드입니다.
+
+package com.example.demo.repository;
+import com.example.demo.domain.Product;import java.util.*;
+public class ProductRepository {
+    private static final ProductRepository instance = new ProductRepository();
+    private final Map<Integer, Product> store = new HashMap<>();
+
+    private ProductRepository() {
+        // 테스트용 샘플 데이터 세팅
+        store.put(1, new Product(1, "노트북", 1500000));
+        store.put(2, new Product(2, "스마트폰", 1000000));
+        store.put(3, new Product(3, "무선 이어폰", 200000));
+    }
+
+    public static ProductRepository getInstance() {
+        return instance;
+    }
+
+    public List<Product> findAll() {
+        return new ArrayList<>(store.values());
+    }
+
+    public Product findById(Integer id) {
+        return store.get(id);
+    }
+}
+
+## 3. ProductController (스프링 컨트롤러)
+타임리프 템플릿에 데이터를 전달하고 화면을 연결해주는 컨트롤러입니다.
+
+package com.example.demo.controller;
+import com.example.demo.domain.Product;import com.example.demo.service.ProductService;import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PathVariable;import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.List;
+
+@Controller
+@RequestMapping("/products")public class ProductController {
+
+    // Service를 스프링 빈으로 등록하여 사용하도록 설정 필요 (클래스 상단에 @Service 부착 필수)
+    private final ProductService productService = new ProductService();
+
+    // 상품 전체 목록 조회
+    @GetMapping
+    public String list(Model model) {
+        List<Product> products = productService.findAll();
+        model.addAttribute("products", products);
+        return "product/list"; // src/main/resources/templates/product/list.html 파일 호출
+    }
+
+    // 상품 상세 조회
+    @GetMapping("/{id}")
+    public String detail(@PathVariable("id") Integer id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "product/detail"; // src/main/resources/templates/product/detail.html 파일 호출
+    }
+}
+
+(참고: 실제 프로젝트에서는 ProductService 클래스 상단에 @Service 어노테이션을 붙이고, 컨트롤러에서 생성자 주입 방식으로 사용하는 것이 올바른 스프링 표준 패턴입니다.)
+------------------------------
+## 4. Thymeleaf HTML 템플릿 파일
+파일들은 반드시 src/main/resources/templates/ 경로 아래에 생성해야 스프링이 인식합니다.
+## 📄 상품 목록 화면 (templates/product/list.html)
+
+* th:each 문법을 사용해 상품 리스트를 반복 출력합니다.
+* th:href 문법을 사용해 상세 페이지 링크를 동적으로 생성합니다. [1] 
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <style>
+        table { width: 50%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+
+    <h1>📦 등록된 상품 목록</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>상품명</th>
+                <th>가격</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- products 리스트를 순회하며 행을 생성 -->
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}">1</td>
+                <td>
+                    <!-- 클릭 시 상세 페이지(/products/{id})로 이동하는 링크 -->
+                    <a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}">상품명</a>
+                </td>
+                <!-- #numbers.formatInteger를 사용해 금액에 콤마(,) 표시 -->
+                <td th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')} + '원'">0원</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
+
+## 📄 상품 상세 화면 (templates/product/detail.html)
+
+* 전달받은 하나의 product 객체 정보를 화면에 바인딩합니다.
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세 정보</title>
+</head>
+<body>
+
+    <h1>🔍 상품 상세 정보</h1>
+    
+    <!-- 컨트롤러에서 넘겨준 product 객체가 있을 때만 출력 -->
+    <div th:if="${product != null}">
+        <p><strong>상품 번호:</strong> <span th:text="${product.id}">ID</span></p>
+        <p><strong>상품 이름:</strong> <span th:text="${product.name}">이름</span></p>
+        <p><strong>판매 가격:</strong> <span th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')} + '원'">0원</span></p>
+    </div>
+    
+    <!-- product 객체가 비어있을 경우 예외 처리 -->
+    <div th:unless="${product != null}">
+        <p style="color: red;">해당 상품 정보를 찾을 수 없습니다.</p>
+    </div>
+
+    <br>
+    <a th:href="@{/products}">🔙 목록으로 돌아가기</a>
+
+</body>
+</html>
+
+------------------------------
+## 실행 테스트 방법
+
+   1. 스프링 부트 애플리케이션을 구동합니다.
+   2. 브라우저 주소창에 http://localhost:8080/products를 입력합니다.
+   3. 상품 목록이 테이블 형태로 출력되며, 상품명을 클릭하면 상세 페이지(http://localhost:8080/products/1 등)로 이동하는지 확인합니다. [2, 3] 
+
+다음 단계로 이 구조에 상품 등록 기능(Form 데이터 전송)이나 삭제 기능을 추가해보고 싶으신가요? 추가를 원하시는 특정 기능이나 적용하고 싶은 스타일(Bootstrap 등)이 있다면 말씀해주세요!
+
+[1] [https://rlaehddnd0422.tistory.com](https://rlaehddnd0422.tistory.com/62)
+[2] [https://github.com](https://github.com/frtt0608/springboot-webservice)
+[3] [https://thebook.io](https://thebook.io/080266/0555/)
