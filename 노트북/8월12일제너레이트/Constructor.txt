@@ -1,0 +1,12 @@
+추천 실습 예제: Member 클래스javapublic class Member {
+    private String id;
+    private String name;
+    private int age;
+    private String email;
+}
+인텔리제이 Generate 활용 방법
+클래스 내부에서 Alt + Insert (맥 Cmd + N) ➔ Constructor를 선택합니다.
+기본 생성자(No-args): 필드를 아무것도 선택하지 않고 생성 (Ctrl/Cmd 누른 채로 빈 상태 유지)
+필수 생성자(Required-args): id, name 등 꼭 필요한 필드만 선택해서 생성
+  전체 생성자(All-args): 모든 필드(id, name, age, email)를 마우스나 방향키로 
+  전체 선택(Shift + 방향키)하여 생성
