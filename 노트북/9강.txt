@@ -438,8 +438,10 @@ createMemberForm.html 만들기
 <html xmlns:th = "http://www.thymeleaf.org">
 <body>
 <div class="container">
-	<form>
-		<label></label>
+	<form action="/members/new" method="post">
+		<div>
+		<label for="name">이름</label>
+		</div>
 	</form>
 </div>
 </body>
