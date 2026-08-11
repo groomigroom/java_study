@@ -1,0 +1,22 @@
+인텔리제이에서 Ctrl + Shift + T(Mac은 Cmd + Shift + T)를 눌러 테스트를 자동 생성(Create Test)할 때, 
+조건문과 계산 로직이 포함된 계산기(Calculator)나 할인 정책(DiscountPolicy) 
+클래스가 가장 명확하고 실습하기 좋습니다. 
+선택한 메서드별로 테스트 뼈대가 깔끔하게 생성되어 단위 테스트의 기초를 익히기 적합합니다.
+추천 예제: 주문 할인 금액 계산 클래스구현 클래스 예시
+다양한 조건(정액 할인, VIP 여부 등)이 포함된 메서드를 가진 클래스를 작성합니다.
+예: OrderService 또는 DiscountCalculator
+java
+public class DiscountCalculator {
+    public int calculateDiscount(String grade, int price) {
+        if (price < 0) {
+            throw new IllegalArgumentException("가격은 음수일 수 없습니다.");
+        }
+        if ("VIP".equals(grade)) {
+            return (int) (price * 0.2); // 20% 할인
+        } else if ("NORMAL".equals(grade)) {
+            return (int) (price * 0.1); // 10% 할인
+        }
+        return 0;
+    }
+}
+인텔리제이 테스트 생성 방법위 클래스 코드 내부에서 Ctrl + Shift + T (Mac: Cmd + Shift + T)를 누릅니다.Create New Test...를 선택합니다.테스트 프레임워크(JUnit 5 등)를 고르고, calculateDiscount 메서드를 체크한 후 확인을 누릅니다.생성된 테스트 메서드에서 정상 케이스(VIP 할인, 일반 할인)와 예외 케이스(음수 가격 입력 시 예외 발생)를 채워 넣으며 실습합니다.
