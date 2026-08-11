@@ -404,8 +404,10 @@ HomeController.java 클래스로 만들기
 
 @Controller
 public class HomeController {
-
-
+	@GetMapping("/")
+	public String home() {
+		return "home";
+	}
 }
 
 https://www.youtube.com/watch?v=JBX_FTKkuZ4&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=16
