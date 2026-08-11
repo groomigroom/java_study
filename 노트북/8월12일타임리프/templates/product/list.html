@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <style>
+        table { width: 50%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+
+    <h1>📦 등록된 상품 목록</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>상품명</th>
+                <th>가격</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- products 리스트를 순회하며 행을 생성 -->
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}">1</td>
+                <td>
+                    <!-- 클릭 시 상세 페이지(/products/{id})로 이동하는 링크 -->
+                    <a th:href="@{/products/{id}(id=${product.id})}" th:text="${product.name}">상품명</a>
+                </td>
+                <!-- #numbers.formatInteger를 사용해 금액에 콤마(,) 표시 -->
+                <td th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')} + '원'">0원</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
