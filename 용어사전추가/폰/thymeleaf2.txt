@@ -5,3 +5,22 @@
 
 <input type="text" name="userName" value="James Carrot" th:value="${user.name}" />
 이렇게 하면 브라우저에서 올바르게 표시될 뿐만 아니라
+
+
+
+mmm
+
+
+public class ProductService {
+
+    ...
+
+    public List<Product> findAll() {
+        return ProductRepository.getInstance().findAll();
+    }
+
+    public Product findById(Integer id) {
+        return ProductRepository.getInstance().findById(id);
+    }
+    
+}
