@@ -2,7 +2,6 @@ public void init(final FilterConfig filterConfig) throws ServletException {
     this.application =
             JakartaServletWebApplication.buildApplication(
                 filterConfig.getServletContext());
-    // We will see later how the TemplateEngine object is built and configured
     this.templateEngine = buildTemplateEngine(this.application);
 }
 
