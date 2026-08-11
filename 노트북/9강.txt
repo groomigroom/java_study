@@ -395,9 +395,9 @@ public class SpringConfig {
 	}
 }
 
-https://www.youtube.com/watch?v=ff1xgVrQy1E&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=16
+https://www.youtube.com/watch?v=JBX_FTKkuZ4&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=16
 
-11분 13초부터
+15강부터 보기
 
 
 
