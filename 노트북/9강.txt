@@ -335,6 +335,7 @@ import @Controller 뜨고
 public class MemberController {
 	private MemberService memberService;
 
+	//아래꺼 @Autowired랑 주석 서로 바꿔 가면서
 	@Autowired
 	public void setMemberService(MemberService memberService) {
 		this.memberService = memberService;
