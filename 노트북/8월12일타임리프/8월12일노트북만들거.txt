@@ -56,7 +56,13 @@ public class ProductRepository {
 타임리프 템플릿에 데이터를 전달하고 화면을 연결해주는 컨트롤러입니다.
 
 package com.example.demo.controller;
-import com.example.demo.domain.Product;import com.example.demo.service.ProductService;import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.PathVariable;import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.demo.domain.Product;
+import com.example.demo.service.ProductService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
