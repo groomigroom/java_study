@@ -1,0 +1,606 @@
+숫자
+#숫자 : 숫자 객체에 대한 유틸리티 메서드:
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Numbers
+ * ======================================================================
+ */
+
+/*
+ * ==========================
+ * Formatting integer numbers
+ * ==========================
+ */
+
+/* 
+ * Set minimum integer digits.
+ * Also works with arrays, lists or sets
+ */
+${#numbers.formatInteger(num,3)}
+${#numbers.arrayFormatInteger(numArray,3)}
+${#numbers.listFormatInteger(numList,3)}
+${#numbers.setFormatInteger(numSet,3)}
+
+
+/* 
+ * Set minimum integer digits and thousands separator: 
+ * 'POINT', 'COMMA', 'WHITESPACE', 'NONE' or 'DEFAULT' (by locale).
+ * Also works with arrays, lists or sets
+ */
+${#numbers.formatInteger(num,3,'POINT')}
+${#numbers.arrayFormatInteger(numArray,3,'POINT')}
+${#numbers.listFormatInteger(numList,3,'POINT')}
+${#numbers.setFormatInteger(numSet,3,'POINT')}
+
+
+/*
+ * ==========================
+ * Formatting decimal numbers
+ * ==========================
+ */
+
+/*
+ * Set minimum integer digits and (exact) decimal digits.
+ * Also works with arrays, lists or sets
+ */
+${#numbers.formatDecimal(num,3,2)}
+${#numbers.arrayFormatDecimal(numArray,3,2)}
+${#numbers.listFormatDecimal(numList,3,2)}
+${#numbers.setFormatDecimal(numSet,3,2)}
+
+/*
+ * Set minimum integer digits and (exact) decimal digits, and also decimal separator.
+ * Also works with arrays, lists or sets
+ */
+${#numbers.formatDecimal(num,3,2,'COMMA')}
+${#numbers.arrayFormatDecimal(numArray,3,2,'COMMA')}
+${#numbers.listFormatDecimal(numList,3,2,'COMMA')}
+${#numbers.setFormatDecimal(numSet,3,2,'COMMA')}
+
+/*
+ * Set minimum integer digits and (exact) decimal digits, and also thousands and 
+ * decimal separator.
+ * Also works with arrays, lists or sets
+ */
+${#numbers.formatDecimal(num,3,'POINT',2,'COMMA')}
+${#numbers.arrayFormatDecimal(numArray,3,'POINT',2,'COMMA')}
+${#numbers.listFormatDecimal(numList,3,'POINT',2,'COMMA')}
+${#numbers.setFormatDecimal(numSet,3,'POINT',2,'COMMA')}
+
+
+/* 
+ * =====================
+ * Formatting currencies
+ * =====================
+ */
+
+${#numbers.formatCurrency(num)}
+${#numbers.arrayFormatCurrency(numArray)}
+${#numbers.listFormatCurrency(numList)}
+${#numbers.setFormatCurrency(numSet)}
+
+/*
+ * Format using the locale's formatting conventions but with a specific currency
+ * (symbol, ISO code, and number of fraction digits), regardless of the locale's
+ * default currency. The currency argument is a java.util.Currency instance.
+ */
+${#numbers.formatCurrency(num, currency)}
+${#numbers.arrayFormatCurrency(numArray, currency)}
+${#numbers.listFormatCurrency(numList, currency)}
+${#numbers.setFormatCurrency(numSet, currency)}
+
+
+/* 
+ * ======================
+ * Formatting percentages
+ * ======================
+ */
+
+${#numbers.formatPercent(num)}
+${#numbers.arrayFormatPercent(numArray)}
+${#numbers.listFormatPercent(numList)}
+${#numbers.setFormatPercent(numSet)}
+
+/* 
+ * Set minimum integer digits and (exact) decimal digits.
+ */
+${#numbers.formatPercent(num, 3, 2)}
+${#numbers.arrayFormatPercent(numArray, 3, 2)}
+${#numbers.listFormatPercent(numList, 3, 2)}
+${#numbers.setFormatPercent(numSet, 3, 2)}
+
+
+/*
+ * ===============
+ * Utility methods
+ * ===============
+ */
+
+/*
+ * Create a sequence (array) of integer numbers going
+ * from x to y
+ */
+${#numbers.sequence(from,to)}
+${#numbers.sequence(from,to,step)}
+현악기
+#strings : 객체에 대한 유틸리티 메서드 String:
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Strings
+ * ======================================================================
+ */
+
+/*
+ * Null-safe toString()
+ */
+${#strings.toString(obj)}                           // also array*, list* and set*
+
+/*
+ * Check whether a String is empty (or null). Performs a trim() operation before check
+ * Also works with arrays, lists or sets
+ */
+${#strings.isEmpty(name)}
+${#strings.arrayIsEmpty(nameArr)}
+${#strings.listIsEmpty(nameList)}
+${#strings.setIsEmpty(nameSet)}
+
+/*
+ * Perform an 'isEmpty()' check on a string and return it if false, defaulting to
+ * another specified string if true.
+ * Also works with arrays, lists or sets
+ */
+${#strings.defaultString(text,default)}
+${#strings.arrayDefaultString(textArr,default)}
+${#strings.listDefaultString(textList,default)}
+${#strings.setDefaultString(textSet,default)}
+
+/*
+ * Check whether a fragment is contained in a String
+ * Also works with arrays, lists or sets
+ */
+${#strings.contains(name,'ez')}                     // also array*, list* and set*
+${#strings.containsIgnoreCase(name,'ez')}           // also array*, list* and set*
+
+/*
+ * Check whether a String starts or ends with a fragment
+ * Also works with arrays, lists or sets
+ */
+${#strings.startsWith(name,'Don')}                  // also array*, list* and set*
+${#strings.endsWith(name,endingFragment)}           // also array*, list* and set*
+
+/*
+ * Substring-related operations
+ * Also works with arrays, lists or sets
+ */
+${#strings.indexOf(name,frag)}                      // also array*, list* and set*
+${#strings.substring(name,3,5)}                     // also array*, list* and set*
+${#strings.substringAfter(name,prefix)}             // also array*, list* and set*
+${#strings.substringBefore(name,suffix)}            // also array*, list* and set*
+${#strings.replace(name,'las','ler')}               // also array*, list* and set*
+
+/*
+ * Replace several before/after pairs in one go
+ * Also works with arrays, lists or sets
+ */
+${#strings.multipleReplace(name,{'las','o'},{'ler','a'})}   // also array*, list* and set*
+
+/*
+ * Append and prepend
+ * Also works with arrays, lists or sets
+ */
+${#strings.prepend(str,prefix)}                     // also array*, list* and set*
+${#strings.append(str,suffix)}                      // also array*, list* and set*
+
+/*
+ * Change case
+ * Also works with arrays, lists or sets
+ */
+${#strings.toUpperCase(name)}                       // also array*, list* and set*
+${#strings.toLowerCase(name)}                       // also array*, list* and set*
+
+/*
+ * Split and join
+ */
+${#strings.arrayJoin(namesArray,',')}
+${#strings.listJoin(namesList,',')}
+${#strings.setJoin(namesSet,',')}
+${#strings.arraySplit(namesStr,',')}                // returns String[]
+${#strings.listSplit(namesStr,',')}                 // returns List<String>
+${#strings.setSplit(namesStr,',')}                  // returns Set<String>
+
+/*
+ * Trim
+ * Also works with arrays, lists or sets
+ */
+${#strings.trim(str)}                               // also array*, list* and set*
+
+/*
+ * Compute length
+ * Also works with arrays, lists or sets
+ */
+${#strings.length(str)}                             // also array*, list* and set*
+
+/*
+ * Abbreviate text making it have a maximum size of n. If text is bigger, it
+ * will be clipped and finished in "..."
+ * Also works with arrays, lists or sets
+ */
+${#strings.abbreviate(str,10)}                      // also array*, list* and set*
+
+/*
+ * Convert the first character to upper-case (and vice-versa)
+ */
+${#strings.capitalize(str)}                         // also array*, list* and set*
+${#strings.unCapitalize(str)}                       // also array*, list* and set*
+
+/*
+ * Convert the first character of every word to upper-case
+ */
+${#strings.capitalizeWords(str)}                    // also array*, list* and set*
+${#strings.capitalizeWords(str,delimiters)}         // also array*, list* and set*
+
+/*
+ * Escape the string
+ */
+${#strings.escapeXml(str)}                          // also array*, list* and set*
+${#strings.escapeJava(str)}                         // also array*, list* and set*
+${#strings.escapeJavaScript(str)}                   // also array*, list* and set*
+${#strings.unescapeJava(str)}                       // also array*, list* and set*
+${#strings.unescapeJavaScript(str)}                 // also array*, list* and set*
+
+/*
+ * Null-safe comparison and concatenation
+ */
+${#strings.equals(first, second)}
+${#strings.equalsIgnoreCase(first, second)}
+${#strings.concat(values...)}
+${#strings.concatReplaceNulls(nullValue, values...)}
+
+/*
+ * Random
+ */
+${#strings.randomAlphanumeric(count)}
+사물
+#객체 : 일반적인 객체에 대한 유틸리티 메서드
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Objects
+ * ======================================================================
+ */
+
+/*
+ * Return obj if it is not null, and default otherwise
+ * Also works with arrays, lists or sets
+ */
+${#objects.nullSafe(obj,default)}
+${#objects.arrayNullSafe(objArray,default)}
+${#objects.listNullSafe(objList,default)}
+${#objects.setNullSafe(objSet,default)}
+부울
+#bools : 불리언 평가를 위한 유틸리티 메서드
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Bools
+ * ======================================================================
+ */
+
+/*
+ * Evaluate a condition in the same way that it would be evaluated in a th:if tag
+ * (see conditional evaluation chapter afterwards).
+ * Also works with arrays, lists or sets
+ */
+${#bools.isTrue(obj)}
+${#bools.arrayIsTrue(objArray)}
+${#bools.listIsTrue(objList)}
+${#bools.setIsTrue(objSet)}
+
+/*
+ * Evaluate with negation
+ * Also works with arrays, lists or sets
+ */
+${#bools.isFalse(cond)}
+${#bools.arrayIsFalse(condArray)}
+${#bools.listIsFalse(condList)}
+${#bools.setIsFalse(condSet)}
+
+/*
+ * Evaluate and apply AND operator
+ * Receive an array, a list or a set as parameter
+ */
+${#bools.arrayAnd(condArray)}
+${#bools.listAnd(condList)}
+${#bools.setAnd(condSet)}
+
+/*
+ * Evaluate and apply OR operator
+ * Receive an array, a list or a set as parameter
+ */
+${#bools.arrayOr(condArray)}
+${#bools.listOr(condList)}
+${#bools.setOr(condSet)}
+배열
+#배열 : 배열을 위한 유틸리티 메서드
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Arrays
+ * ======================================================================
+ */
+
+/*
+ * Converts to array, trying to infer array component class.
+ * Note that if resulting array is empty, or if the elements
+ * of the target object are not all of the same class,
+ * this method will return Object[].
+ */
+${#arrays.toArray(object)}
+
+/*
+ * Convert to arrays of the specified component class.
+ */
+${#arrays.toStringArray(object)}
+${#arrays.toIntegerArray(object)}
+${#arrays.toLongArray(object)}
+${#arrays.toDoubleArray(object)}
+${#arrays.toFloatArray(object)}
+${#arrays.toBooleanArray(object)}
+
+/*
+ * Compute length
+ */
+${#arrays.length(array)}
+
+/*
+ * Check whether array is empty
+ */
+${#arrays.isEmpty(array)}
+
+/*
+ * Check if element or elements are contained in array
+ */
+${#arrays.contains(array, element)}
+${#arrays.containsAll(array, elements)}
+기울기
+#리스트 : 리스트에 대한 유틸리티 메서드
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Lists
+ * ======================================================================
+ */
+
+/*
+ * Converts to list
+ */
+${#lists.toList(object)}
+
+/*
+ * Compute size
+ */
+${#lists.size(list)}
+
+/*
+ * Check whether list is empty
+ */
+${#lists.isEmpty(list)}
+
+/*
+ * Check if element or elements are contained in list
+ */
+${#lists.contains(list, element)}
+${#lists.containsAll(list, elements)}
+
+/*
+ * Sort a copy of the given list. The members of the list must implement
+ * comparable or you must define a comparator.
+ */
+${#lists.sort(list)}
+${#lists.sort(list, comparator)}
+세트
+#집합 : 집합에 대한 유틸리티 메서드
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Sets
+ * ======================================================================
+ */
+
+/*
+ * Converts to set
+ */
+${#sets.toSet(object)}
+
+/*
+ * Compute size
+ */
+${#sets.size(set)}
+
+/*
+ * Check whether set is empty
+ */
+${#sets.isEmpty(set)}
+
+/*
+ * Check if element or elements are contained in set
+ */
+${#sets.contains(set, element)}
+${#sets.containsAll(set, elements)}
+지도
+#지도 : 지도 관련 유틸리티 메서드
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Maps
+ * ======================================================================
+ */
+
+/*
+ * Compute size
+ */
+${#maps.size(map)}
+
+/*
+ * Check whether map is empty
+ */
+${#maps.isEmpty(map)}
+
+/*
+ * Check if key/s or value/s are contained in maps
+ */
+${#maps.containsKey(map, key)}
+${#maps.containsAllKeys(map, keys)}
+${#maps.containsValue(map, value)}
+${#maps.containsAllValues(map, value)}
+골재
+#aggregates : 배열 또는 컬렉션에 대한 집계를 생성하기 위한 유틸리티 메서드
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Aggregates
+ * ======================================================================
+ */
+
+/*
+ * Compute sum. Returns null if array or collection is empty
+ */
+${#aggregates.sum(array)}
+${#aggregates.sum(collection)}
+
+/*
+ * Compute average. Returns null if array or collection is empty
+ */
+${#aggregates.avg(array)}
+${#aggregates.avg(collection)}
+ID
+#idsid : 반복될 수 있는 속성(예: 반복 작업의 결과)을 처리하기 위한 유틸리티 메서드입니다 .
+/*
+ * ======================================================================
+ * See javadoc API for class org.thymeleaf.expression.Ids
+ * ======================================================================
+ */
+
+/*
+ * Normally used in th:id attributes, for appending a counter to the id attribute value
+ * so that it remains unique even when involved in an iteration process.
+ */
+${#ids.seq('someId')}
+
+/*
+ * Normally used in th:for attributes in <label> tags, so that these labels can refer to Ids
+ * generated by means if the #ids.seq(...) function.
+ *
+ * Depending on whether the <label> goes before or after the element with the #ids.seq(...)
+ * function, the "next" (label goes before "seq") or the "prev" function (label goes after 
+ * "seq") function should be called.
+ */
+${#ids.next('someId')}
+${#ids.prev('someId')}
+20 부록 C: 마크업 선택자 구문
+Thymeleaf의 마크업 선택기는 Thymeleaf의 구문 분석 라이브러리인 AttoParser 에서 직접 가져온 것입니다 .
+
+이 선택자의 구문은 XPath, CSS 및 jQuery의 선택자 구문과 매우 유사하여 대부분의 사용자가 쉽게 사용할 수 있습니다. 전체 구문 참조는 AttoParser 문서 에서 확인할 수 있습니다 .
+
+예를 들어, 다음 선택자는 마크업 내의 모든 위치에서 <div>클래스가 인 모든 요소를 ​​선택합니다 content(단, 이는 더 간결하게 만들 수 있는데, 그 이유는 아래에서 설명합니다).
+
+<div th:insert="~{mytemplate :: //div[@class='content']}">...</div>
+모든 선택자 표현식은 절대적입니다. 즉, 현재:: 템플릿 인 경우에도 왼쪽에 선택된 템플릿의 루트에서 계산됩니다 .
+
+기본 구문은 다음과 같습니다.
+
+n/x이름이 x인 자식을 의미합니다 n. 만약 /x이면, 루트의 자식을 의미합니다.
+
+n//x이름이 x인 자식 노드를 의미하며 n, 깊이에 관계없이 적용됩니다. 만약 //x이면, 루트 노드에서 계산됩니다.
+
+x[@z="v"]이는 이름이 x이고 속성 이름이 z이며 값이 "v"인 요소를 의미합니다.
+
+x[@z1="v1" and @z2="v2"]이는 이름이 x이고 속성 z1과 z2에 각각 "v1"과 "v2" 값이 있는 요소를 의미합니다.
+
+x[i]이는 이름이 x이고 형제 요소 중 i번째에 위치한 요소를 의미합니다.
+
+x[@z="v"][i]이는 이름이 x이고, 속성 z의 값이 "v"이며, 해당 조건을 만족하는 형제 요소 중 i번째에 위치한 요소를 의미합니다.
+
+하지만 더 간결한 구문도 사용할 수 있습니다.
+
+x이는 ( 어떤 깊이 수준에서든 //x이름이나 참조를 사용하여 요소를 검색하는 것과 정확히 동일하며 , 참조는 속성 또는 이름입니다 )와 같습니다.xth:refth:fragment
+
+요소 이름/참조 없이도 선택자를 사용할 수 있으며, 단 인수를 명시해야 합니다. 예를 들어, [@class='oneclass']`class` 속성 값이 인 모든 요소(태그)를 찾는 선택자는 유효한 선택자입니다 "oneclass".
+
+고급 속성 선택 기능:
+
+=같음 외에도 !=같지 않음, ~ ^=로 시작, ~ $=로 끝남과 같은 다른 비교 연산자도 유효합니다. 예를 들어, x[@class^='section']는 이름 x과 속성 값이 class~로 시작하는 요소를 의미합니다 section.
+
+@속성은 (XPath 스타일)로 시작하거나 (jQuery 스타일) 없이 지정할 수 있습니다 . 따라서 x[z='v']는 와 동일합니다 x[@z='v'].
+
+여러 속성을 가진 수정자는 and(XPath 스타일)로 결합할 수도 있고, (jQuery 스타일)로 여러 수정자를 연결하여 결합할 수도 있습니다. 따라서 x[@z1='v1' and @z2='v2']는 실제로 와 동일하며 x[@z1='v1'][@z2='v2'], 와도 동일합니다 x[z1='v1'][z2='v2'].
+
+jQuery와 유사한 직접 선택자:
+
+x.oneclass는 와 동등합니다 x[class='oneclass'].
+
+.oneclass는 와 동등합니다 [class='oneclass'].
+
+x#oneid는 와 동등합니다 x[id='oneid'].
+
+#oneid는 와 동등합니다 [id='oneid'].
+
+x%oneref즉 , 또는 속성을 <x>가진 태그를 의미합니다 .th:ref="oneref"th:fragment="oneref"
+
+%onerefth:ref="oneref"`<tag>` 또는 ` <tag>` 속성을 가진 모든 태그를 의미합니다 . 참고로, 이는 요소 이름 대신 참조를 사용할 수 있기 때문에 th:fragment="oneref"사실상 `<tag>`와 동일합니다 .oneref
+
+직접 선택자와 속성 선택자를 혼합하여 사용할 수 있습니다 a.external[@href^='https'].
+
+위의 마크업 선택자 표현식은 다음과 같습니다.
+
+<div th:insert="~{mytemplate :: //div[@class='content']}">...</div>
+다음과 같이 쓸 수 있습니다:
+
+<div th:insert="~{mytemplate :: div.content}">...</div>
+다른 예를 들어보겠습니다.
+
+<div th:replace="~{mytemplate :: myfrag}">...</div>
+th:fragment="myfrag"프래그먼트 시그니처(또는 참조)를 찾습니다 th:ref. 하지만 존재하는 경우 이름이 같은 태그도 찾습니다 myfrag(HTML에서는 존재하지 않음). 다음 내용과의 차이점을 참고하세요.
+
+<div th:replace="~{mytemplate :: .myfrag}">...</div>
+…이는 서명(또는 참조) class="myfrag"에 관계없이 를 포함하는 모든 요소를 ​​찾습니다 .th:fragmentth:ref
+
+다중값 클래스 매칭
+마크업 선택자는 class 속성이 다중값을 가질 수 있음 을 이해하므로 요소에 여러 class 값이 있더라도 이 속성에 선택자를 적용할 수 있습니다.
+
+예를 들어, div.two일치합니다.<div class="one two three" />
+
+21 부록 D: 표현 제한
+보안상의 이유로 Thymeleaf는 특정 Thymeleaf 표준 표현식이 평가되는 컨텍스트에 따라 해당 표현식의 사용에 제한을 적용합니다. 제한에는 두 가지 유형이 있습니다.
+
+모든 표현식에 적용되는 일반적인 제한 사항: Thymeleaf, Spring 및 Java/Jakarta 기본 인프라의 대부분 클래스와 여러 유명 타사 프레임워크 패키지의 정적 사용(인스턴스 생성, 정적 메서드 호출 등)이 금지됩니다. 이는 완벽한 필터가 아니라 오용될 가능성이 있는 가장 일반적인 클래스들을 금지하는 데 도움을 주는 기능입니다.
+특정 컨텍스트에서 일부 표현식 구문 및 사용 가능한 객체의 사용에 더 엄격한 제한이 적용됩니다. 이러한 제한 사항을 통칭하여 제한된 표현식 평가 모드 라고 합니다 .
+하지만 이러한 제한 사항이 적절한 입력 유효성 검사를 대체하는 것은 아니라는 점을 강조해야 합니다 . 애플리케이션은 사용자가 입력하는 데이터나 외부 소스에서 입력하는 모든 데이터를 어떤 방식으로든 사용하기 전에, 특히 템플릿 컨텍스트에 추가하기 전에 유효성을 검사하고 정제해야 할 책임이 있습니다. Thymeleaf는 단지 템플릿 엔진일 뿐이며, 이러한 표현 제한은 추가적인 심층 방어 메커니즘일 뿐, 1차 방어선이 아닙니다.
+
+제한 모드: 적용 가능한 상황
+제한된 표현식 평가 모드는 다음과 같은 상황에서 표현식을 평가할 때 적용됩니다.
+
+전처리 표현식 :__...__
+이스케이프 처리되지 않은 텍스트 출력 : th:utext및 이스케이프 처리되지 않은 인라인 표현식.
+JavaScript 이벤트 핸들러 속성 : th:on*값이 Thymeleaf 표준 표현식인 모든 속성 프로세서입니다.
+속성 th:attr프로세서는 임의의 이름으로 속성을 생성할 때 사용됩니다.
+기본 속성 처리기는 임의의 이름을 가진 모든 속성을 렌더링할 수 있도록 합니다.
+템플릿 및 프래그먼트 이름, 그리고 프래그먼트 표현식( ~{...})과 th:insert, th:replace, th:include, 및 th:substituteby속성의 프래그먼트 매개변수입니다.
+URL 표현식의 기본(매개변수 제외) 부분 : @{...}URL 기본 요소, th:href, 및 th:src(링크 표현식 내의 URL 매개변수는 제한되지 않습니다).
+TEXT템플릿 모드 에서 출력되는 모든 표현식은 사용될 특정 컨텍스트에 대한 정보가 부족하기 때문에 이스케이프 여부와 관계없이 모두 템플릿 형태로 표시됩니다.
+Thymeleaf는 위에 나열된 시나리오 외에는 이러한 검사를 적용하지 않으므로 , 다른 곳에서는 표현식이 제한 없이 실행된다고 가정해야 한다는 점을 기억하는 것이 중요합니다 .
+
+제한 모드: 제한 사항 적용됨
+제한 모드에서 표현식을 평가할 때 다음 사항은 금지됩니다.
+
+요청 매개변수에 대한 접근은 다음을 통해 이루어집니다 ${param.*}.
+새 객체의 인스턴스화(예:  new com.example.SomeClass()).
+정적 클래스와 해당 멤버에 대한 접근 (OGNL @identifier@구문 또는 Spring EL T(identifier)구문).
+Thymeleaf의 컨텍스트 수준 표현식 유틸리티 객체 중 일부에 대한 액세스(예: #execInfo.)
+특히 이벤트 핸들러 속성 에서 th:on*숫자 또는 부울 유형 이외의 값을 반환하는 변수 표현식은 금지됩니다.
+Spring 애플리케이션에서: 애플리케이션 컨텍스트를 통해 @beanName구문으로 빈에 접근할 수 있습니다.
+위의 시나리오 중 하나에서 제한된 표현식을 평가하려고 하면 런타임에 템플릿 처리 예외가 발생합니다.
+
+위에 명시적으로 나열되지 않은 검사는 수행되지 않으며 , 이러한 검사는 애플리케이션 코드에서 수행되는 데이터 및 사용자 입력 유효성 검사를 대체할 수 없다는 점 에 유의해야 합니다 .
+
+애플리케이션 개발자를 위한 중요 공지
+이러한 제한 사항은 구성 옵션이 아니라 보안 기능입니다. 이는 민감한 표현식 위치에서 사용자 제어 입력을 사용할 때 발생할 수 있는 특정 유형의 인젝션 취약점을 방지하기 위해 설계되었습니다. 이러한 제한 사항은 템플릿 엔진에 의해 자동으로 적용되며 표현식별 또는 템플릿별로 비활성화할 수 없습니다.
+
+하지만 어떤 템플릿 엔진 보안 메커니즘도 애플리케이션 수준에서 신중하고 철저한 입력 유효성 검사를 대체할 수는 없습니다. 사용자 또는 기타 외부 소스에서 제공되는 모든 데이터(요청 매개변수, 헤더, 쿠키, 데이터베이스 내용, 타사 서비스 응답 등)는 템플릿에 최종적으로 어떻게 나타나든 관계없이 사용 전에 애플리케이션에서 유효성을 검사하고 필요한 경우 정제해야 합니다. 유효성 검사 없이 외부 데이터를 신뢰하고 보호를 위해 Thymeleaf의 표현 제한에만 의존하는 것은 허용 가능한 보안 태세가 아닙니다.
+
+더욱이, Thymeleaf는 완전한 애플리케이션 프레임워크가 아닌 템플릿 엔진이기 때문에 애플리케이션이 템플릿 처리를 위해 컨텍스트에 넣는 값이 현재 또는 이전 요청이나 사용자 상호 작용에서 직접 사용자 입력으로 생성된 것인지 확인할 수 있는 기술적 기능이 없습니다. 따라서 어떤 경우에도 Thymeleaf가 그러한 출처를 확인할 수 있다고 가정해서는 안 됩니다. 실행되는 표현식의 출처와 관계없이, 위에 나열된 특정 컨텍스트에서 위에 나열된 필터 중 어느 것과도 일치하지 않으면 해당 표현식이 실행됩니다 .
+
+마지막으로, 이전에 정상적으로 작동했던 표현식이 Thymeleaf 업그레이드 후 제한 오류를 발생시키는 경우, 이는 해당 표현식이 잠재적인 보안 위험을 초래하는 방식으로 사용되었음을 의미할 가능성이 높습니다. 권장되는 접근 방식은 영향을 받는 데이터가 제한된 컨텍스트 내의 템플릿 표현식에서 직접 계산되는 대신 애플리케이션 코드를 통해 템플릿 컨텍스트에 도입되도록 템플릿 로직을 리팩토링하는 것입니다. 물론, 해당 데이터가 템플릿 컨텍스트에 도달하기 전에 적절한 유효성 검사를 거쳐야 합니다.
