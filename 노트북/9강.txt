@@ -449,6 +449,14 @@ createMemberForm.html 만들기
 </body>
 </html>
 
+메인프로젝트/controller 폴더/에
+class 파일로 MemberForm.java 만들기
+
+패키지 뭐라뭐라 뜨고;
+
+public class MemberForm {
+
+}
 
 https://www.youtube.com/watch?v=BqwX8MF6js0&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=17
 
