@@ -455,7 +455,16 @@ class 파일로 MemberForm.java 만들기
 패키지 뭐라뭐라 뜨고;
 
 public class MemberForm {
+	private String name;
 
+	//아래꺼 매서드 2개 generate getter and setter로
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
 
 https://www.youtube.com/watch?v=BqwX8MF6js0&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=17
