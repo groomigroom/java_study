@@ -426,9 +426,9 @@ resources/templates/에 home.html 만들기
 </html>
 
 
-https://www.youtube.com/watch?v=JBX_FTKkuZ4&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=16
+https://www.youtube.com/watch?v=BqwX8MF6js0&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=17
 
-15강부터 보기
+16강부터 보기
 
 
 
