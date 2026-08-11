@@ -19,4 +19,10 @@ public class DiscountCalculator {
         return 0;
     }
 }
-인텔리제이 테스트 생성 방법위 클래스 코드 내부에서 Ctrl + Shift + T (Mac: Cmd + Shift + T)를 누릅니다.Create New Test...를 선택합니다.테스트 프레임워크(JUnit 5 등)를 고르고, calculateDiscount 메서드를 체크한 후 확인을 누릅니다.생성된 테스트 메서드에서 정상 케이스(VIP 할인, 일반 할인)와 예외 케이스(음수 가격 입력 시 예외 발생)를 채워 넣으며 실습합니다.
+인텔리제이 테스트 생성 방법위 클래스 코드 내부에서 
+Ctrl + Shift + T (Mac: Cmd + Shift + T)를 누릅니다.
+Create New Test...를 선택합니다.
+테스트 프레임워크(JUnit 5 등)를 고르고, 
+calculateDiscount 메서드를 체크한 후 확인을 누릅니다.
+생성된 테스트 메서드에서 정상 케이스(VIP 할인, 일반 할인)와 
+예외 케이스(음수 가격 입력 시 예외 발생)를 채워 넣으며 실습합니다.
