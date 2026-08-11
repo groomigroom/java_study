@@ -6,11 +6,6 @@ public void init(final FilterConfig filterConfig) throws ServletException {
     this.templateEngine = buildTemplateEngine(this.application);
 }
 
-/*
- * Each request will be processed by creating an exchange object (modeling
- * the request, its response and all the data needed for this process) and
- * then calling the corresponding controller.
- */
 private boolean process(HttpServletRequest request, HttpServletResponse response)
         throws ServletException {
     
