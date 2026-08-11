@@ -211,12 +211,17 @@ MemberService.java 클래스로 만들기
 
 //@Service 이거 썼다 지웠닥하기
 public class MemberService {
-    private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository; //더 아래꺼 @Autowired로 하려면 private final로 해야함?? 
 
-	//@Autowired 이거 지웠다 썼다 해보기
-	public MemberService(MemberRepository memberRepository) {
+	@Autowired
+	public void setMemberRepository(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
 	}
+
+	//@Autowired 이거 지웠다 썼다 해보기
+//	public MemberService(MemberRepository memberRepository) {
+//		this.memberRepository = memberRepository;
+//	}
 
     public Long join (Member member) {
 		validateDuplicateMember(member);
@@ -333,7 +338,7 @@ import @Controller 뜨고
 @Controller
 //@Component
 public class MemberController {
-	private MemberService memberService;
+	private MemberService memberService; //더 아래꺼 @Autowired로 하려면 private final로 해야함??
 
 	//아래꺼 @Autowired랑 주석 서로 바꿔 가면서
 	@Autowired
