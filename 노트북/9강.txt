@@ -223,6 +223,11 @@ public class MemberService {
 //		this.memberRepository = memberRepository;
 //	}
 
+	//이 매서드는 주석 처리도 해보기??
+	public static void main(String[] args) {
+		MemberService memberService = new MemberService();
+	}
+
     public Long join (Member member) {
 		validateDuplicateMember(member);
 		memberRepository.save(member);
@@ -378,6 +383,7 @@ SpringConfig.java 클래스로 파일 만들기
 @Configuration
 public class SpringConfig {
 
+	//아래 빈 두 개 주석 처리도 해보기
 	@Bean
 	public MemberService memberService() {
 		return new MemberService(memberRepository());
