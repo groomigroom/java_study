@@ -1,4 +1,0 @@
-##### 노트북 이클립스 확인해 보기.
-
-
-spring-boot-starter-data-jpa 라는 start dependency에 있음.
