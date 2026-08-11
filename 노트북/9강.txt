@@ -333,7 +333,7 @@ import @Controller 뜨고
 @Controller
 //@Component
 public class MemberController {
-	@Autowired private final MemberService memberService;
+	@Autowired private MemberService memberService;
 
 //	@Autowired
 //	public MemberController (MemberService memberService) {
