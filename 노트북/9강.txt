@@ -415,7 +415,12 @@ resources/templates/에 home.html 만들기
 <html xmlns:th = "http://www.thymeleaf.org">
 <body>
 <div>
-	<h1></h1>
+	<h1>Hello Spring</h1>
+	<p>회원 기능</p>
+	<p>
+		<a href="/members/new">회원 가입</a>
+		<a href="/members">회원 목록</a>
+	</p>
 </div>
 </body>
 </html>
