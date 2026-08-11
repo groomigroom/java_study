@@ -480,9 +480,9 @@ public class MemberForm {
 	}
 }
 
-https://www.youtube.com/watch?v=BqwX8MF6js0&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=18
+https://www.youtube.com/watch?v=wCCMoUatat8&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=18
 
-16강 4분 27초부터 보기 
+17강부터 보기 
 
 
 
