@@ -4,6 +4,42 @@
 가장 단순하게 이름 목록을 반복해서 출력하는 방법입니다.
 
 
+package groomi.groomgroom;
+
+​
+
+import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
+​
+
+@Controller
+
+public class HelloController {
+
+​
+
+    @GetMapping("hello") // 또는 "/hello" 둘 다 가능합니다.
+
+    public String hello(Model model) {
+
+        model.addAttribute("data", "hello!!");
+
+        return "hello";
+
+    }
+
+}
+
+
+-------------------------------------
+
+
+
+
 <!DOCTYPE HTML>
 
 <html xmlns:th="http://thymeleaf.org">
