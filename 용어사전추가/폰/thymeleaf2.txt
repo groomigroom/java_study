@@ -1,9 +1,3 @@
-
-
-/*
- * The application object needs to be declared first (implements IWebApplication)
- * In this case, the Jakarta-based version will be used.
- */
 public void init(final FilterConfig filterConfig) throws ServletException {
     this.application =
             JakartaServletWebApplication.buildApplication(
