@@ -1,0 +1,14 @@
+인텔리제이(IntelliJ IDEA)의 Override Methods 기능(Ctrl + O 또는 Alt + Insert ➔ Override Methods)을 실습하기 가장 좋은 예제는 동물 소리 내기(Animal), UI 컴포넌트(View), 혹은 Spring 프레임워크의 설정/컴포넌트 클래스입니다.1.부모 클래스 (Animal)javapublic class Animal {
+    public void sound() {
+        System.out.println("동물이 소리를 냅니다.");
+    }
+    public void eat() {
+        System.out.println("무언가를 먹습니다.");
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.자식 클래스 (Dog)에서 적용Dog 클래스 안에서 Ctrl + O를 누른 뒤 sound와 eat을 선택해 생성합니다.결과로 생성된 @Override 메서드 안의 내용을 각 동물에 맞게 수정해봅니다.2. 안드로이드 / UI 뷰 생명주기 예제 (Activity 또는 View)부모 클래스 (BaseActivity)javapublic class BaseActivity {
+    protected void onCreate() { System.out.println("Create"); }
+    protected void onResume() { System.out.println("Resume"); }
+    protected void onDestroy() { System.out.println("Destroy"); }
+}
+코드를 사용할 때는 주의가 필요합니다.자식 클래스 (MyActivity)에서 적용상속받은 후 Ctrl + O를 눌러 생명주기 메서드들을 한 번에 오버라이드하고 부모 메서드 호출(super.onCreate()) 코드가 자동 포함되는 것을 확인합니다.3. 스프링 프레임워크 (HandlerInterceptor 등) 예제인터페이스/클래스 (HandlerInterceptor 구현 또는 상속)스프링 웹 프로젝트에서 HandlerInterceptorAdapter나 기타 공통 훅 클래스를 상속받을 때 preHandle, postHandle 등을 오버라이드하면 실무 감각을 익히기 좋습니다.
