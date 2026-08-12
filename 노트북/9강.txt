@@ -527,6 +527,11 @@ create table member
 );
 
 
+h2 관련 --------------------------------
+properties??에
+denpendencies 부분에다가
+runtimeOnly 'com.h2database:h2'
+
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
 19강부터 보기 
