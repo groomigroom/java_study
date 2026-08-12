@@ -561,7 +561,9 @@ public class JdbcMemberRepository implements MemberRepository {
 	public Member save(Member member) {
 		String sql = "insert into member(name) values(?)";
 
-		dataSource.getConnection();
+		Connection connection = dataSource.getConnection();
+
+		connection.prepareStatement(sql, )
 
 		return null;
 	}
