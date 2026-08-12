@@ -564,6 +564,7 @@ public class JdbcMemberRepository implements MemberRepository {
 		Connection conn = dataSource.getConnection();
 
 		PreparedStatement pstmt = connection.prepareStatement(sql);
+		pstmt.setString(parameterIndex: 1, member.getName());
 
 		return null;
 	}
