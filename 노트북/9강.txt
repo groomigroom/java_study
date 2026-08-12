@@ -561,7 +561,7 @@ public class JdbcMemberRepository implements MemberRepository {
 	public Member save(Member member) {
 		String sql = "insert into member(name) values(?)";
 
-		Connection connection = dataSource.getConnection();
+		Connection conn = dataSource.getConnection();
 
 		PreparedStatement pstmt = connection.prepareStatement(sql);
 
@@ -586,7 +586,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
-19강 4분 31초부터 보기 
+19강 6ㅂ 30초부터 보기 
 
 
 
