@@ -538,7 +538,7 @@ runtimeOnly 'com.h2database:h2'
 resources/templates/에다가
 application.properties에
 
-spring.datasource.u
+spring.datasource.url=
 
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
