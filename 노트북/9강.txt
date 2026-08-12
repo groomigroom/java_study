@@ -580,6 +580,7 @@ public class JdbcMemberRepository implements MemberRepository {
 			}
 			return member;
 		} catch (Exception e) {
+			throw new IllegalStateException(e);
 
 		PreparedStatement pstmt = connection.prepareStatement(sql);
 		
