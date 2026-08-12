@@ -514,6 +514,12 @@ memberList.html 만들기
 </body>
 </html>
 
+
+메인프로젝트 폴더 바깥에다가 sql 폴더 만들어서->
+ddl.sql
+
+
+
 https://www.youtube.com/watch?v=2M8BQE4awRU&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
 18강 7분 28초부터 보기 
