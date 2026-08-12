@@ -16,7 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Calendar;
 
-@Controllerpublic class HomeController {
+@Controller
+public class HomeController {
 
     // ControllerMappings 클래스 대신 @GetMapping으로 URL을 매핑합니다.
     @GetMapping({"/", "/home"})
