@@ -560,6 +560,14 @@ public class JdbcMemberRepository implements MemberRepository {
 	}
 
 	@Override
+	public Optional<Member> findByName(String name) {
+		return Optional.empty();
+	}
+
+	@Override
+	public List<Member> findAll() {
+		return null;
+	}
 }
 
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
