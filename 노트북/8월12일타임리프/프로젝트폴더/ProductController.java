@@ -12,8 +12,15 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    // Service를 스프링 빈으로 등록하여 사용하도록 설정 필요 (클래스 상단에 @Service 부착 필수)
-    private final ProductService productService = new ProductService();
+    // ❌ private final ProductService productService = new ProductService(); (삭제)
+    
+    // ⭕ 스프링 빈으로 등록된 서비스를 생성자를 통해 주입받도록 변경 (DI)
+    private final ProductService productService;
+
+    // 스프링 부트가 자동으로 서비스 빈을 찾아서 넣어줍니다 (생성자가 1개면 @Autowired 생략 가능)
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     // 상품 전체 목록 조회
     @GetMapping
