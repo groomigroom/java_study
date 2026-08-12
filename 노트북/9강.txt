@@ -549,6 +549,13 @@ spring.datasource.driver-class-name=org.h2.Driver
 패키지 뭐라뭐라뜨고,
 
 public class JdbcMemberRepository implements MemberRepository {
+
+	private final DataSource dataSource;
+
+	public JdbcMemeberRepository(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
 	@Override
 	public Member save(Member member) {
 		return null;
