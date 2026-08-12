@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Good Thymes Virtual Garden</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+    <!-- 컨트롤러에서 넘겨준 환영 메시지 출력 -->
+    <h1 th:text="${welcomeMessage}">Hello World!</h1>
+  
+    <p>
+        현재 시간: <span th:text="${#calendar.format(today, 'yyyy년 MM월 dd일 HH시 mm분')}">1970년 1월 1일</span>
+    </p>
+
+</body>
+</html>
