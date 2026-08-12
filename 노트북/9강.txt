@@ -527,9 +527,9 @@ create table member
 );
 
 
-https://www.youtube.com/watch?v=2M8BQE4awRU&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
+https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
-18강 7분 28초부터 보기 
+19강부터 보기 
 
 
 
