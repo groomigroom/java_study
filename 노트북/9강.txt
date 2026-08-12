@@ -530,6 +530,7 @@ create table member
 h2 관련 --------------------------------
 properties??에
 denpendencies 부분에다가
+implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 runtimeOnly 'com.h2database:h2'
 
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
