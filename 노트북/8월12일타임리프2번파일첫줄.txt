@@ -1,0 +1,80 @@
+제공해주신 코드는 스프링(Spring) 프레임워크가 아닌, 타임리프(Thymeleaf) 3.1+ 버전의 서블릿/자카르타(Jakarta) 환경 통합 공식 예제(GTVG: Good Thymes Virtual Garden)의 핵심 구조입니다. 스프링 없이 서블릿 필터(Filter)와 타임리프를 직접 연동하는 아키텍처입니다.
+이 구조에서 작동하는 IGTVGController 구현체 예제와 이를 테스트할 수 있는 타임리프 HTML 템플릿 예시를 작성해 드리겠습니다.
+------------------------------
+## 1. Controller 구현체 예제 (HomeController)
+메인 페이지 요청을 처리하고, 화면에 표시할 데이터를 타임리프 컨텍스트에 담아 템플릿을 렌더링하는 구현체입니다.
+
+import org.thymeleaf.ITemplateEngine;import org.thymeleaf.context.WebContext;import org.thymeleaf.web.IWebExchange;import java.io.Writer;import java.util.Calendar;
+public class HomeController implements IGTVGController {
+
+    @Override
+    public void process(
+            final IWebExchange webExchange, 
+            final ITemplateEngine templateEngine, 
+            final Writer writer) throws Exception {
+
+        // 1. 타임리프 3.1 방식의 WebContext 생성
+        final WebContext ctx = new WebContext(webExchange, webExchange.getLocale());
+
+        // 2. 템플릿에 전달할 데이터(Model) 바인딩
+        ctx.setVariable("welcomeMessage", "안녕하세요! GTVG 쇼핑몰에 오신 것을 환영합니다.");
+        ctx.setVariable("today", Calendar.getInstance());
+
+        // 3. "home" 이라는 이름의 템플릿을 찾아 writer에 결과 출력
+        templateEngine.process("home", ctx, writer);
+    }
+}
+
+------------------------------
+## 2. 타임리프 HTML 템플릿 예시 (home.html)
+컨트롤러에서 보낸 welcomeMessage와 today 데이터를 화면에 출력하는 타임리프 마크업입니다. 이 파일은 프로젝트의 템플릿 경로(예: /WEB-INF/templates/home.html)에 위치해야 합니다.
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Good Thymes Virtual Garden</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/gtvg.css}" />
+</head>
+<body>
+
+    <!-- 컨트롤러에서 넘겨준 환영 메시지 출력 -->
+    <h1 th:text="${welcomeMessage}">Hello World!</h1>
+  
+    <p>
+        현재 시간: <span th:text="${#calendar.format(today, 'yyyy년 MM월 dd일 HH시 mm분')}">1970년 1월 1일</span>
+    </p>
+
+</body>
+</html>
+
+------------------------------
+## 3. URL 매핑 클래스 예시 (ControllerMappings)
+제공해주신 process 메서드 내부의 ControllerMappings.resolveControllerForRequest(webRequest)가 올바르게 동작하기 위한 매핑 클래스 예시입니다.
+
+import org.thymeleaf.web.IWebRequest;import java.util.HashMap;import java.util.Map;
+public class ControllerMappings {
+
+    private static final Map<String, IGTVGController> controllersRepository = new HashMap<>();
+
+    static {
+        // 경로와 컨트롤러 구현체를 매핑
+        controllersRepository.put("/", new HomeController());
+        controllersRepository.put("/home", new HomeController());
+    }
+
+    public static IGTVGController resolveControllerForRequest(final IWebRequest request) {
+        // 요청한 URI 경로를 가져옴 (예: / 또는 /home)
+        final String path = request.getPathWithinApplication();
+        return controllersRepository.get(path);
+    }
+}
+
+------------------------------
+## 구조 특징 요약
+
+* 스프링 독립성: 이 구조는 org.springframework 패키지를 전혀 쓰지 않는 순수 자카르타 서블릿(Jakarta Servlet) 예제입니다.
+* 타임리프 3.1+ 스펙: IWebExchange, JakartaServletWebApplication 등은 타임리프 3.1 버전부터 도입된 서블릿 API 컨테이너 추상화 객체들입니다.
+
+이 구동 환경을 테스트하기 위해 프로젝트 설정 파일(예: TemplateEngine 초기화 코드)이나 웹 서블릿 설정(web.xml 또는 Filter 등록 코드)이 추가로 필요하신가요? 구체적인 실행 환경(Tomcat 버전, 빌드 도구 등)을 말씀해주시면 맞춤형 코드를 더 제공해 드릴 수 있습니다.
+
