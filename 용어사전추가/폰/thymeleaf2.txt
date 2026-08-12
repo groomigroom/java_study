@@ -1,67 +1,3 @@
-public void init(final FilterConfig filterConfig) throws ServletException {
-    this.application =
-            JakartaServletWebApplication.buildApplication(
-                filterConfig.getServletContext());
-    this.templateEngine = buildTemplateEngine(this.application);
-}
-
-private boolean process(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException {
-    
-    try {
-
-        final IWebExchange webExchange = 
-            this.application.buildExchange(request, response);
-        final IWebRequest webRequest = webExchange.getRequest();
-
-        if (request.getRequestURI().startsWith("/css") ||
-                request.getRequestURI().startsWith("/images") ||
-                request.getRequestURI().startsWith("/favicon")) {
-            return false;
-        }
-        
-        /*
-         * Query controller/URL mapping and obtain the controller
-         * that will process the request. If no controller is available,
-         * return false and let other filters/servlets process the request.
-         */
-        final IGTVGController controller = 
-            ControllerMappings.resolveControllerForRequest(webRequest);
-        if (controller == null) {
-            return false;
-        }
-
-        /*
-         * Write the response headers
-         */
-        response.setContentType("text/html;charset=UTF-8");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-
-        /*
-         * Obtain the response writer
-         */
-        final Writer writer = response.getWriter();
-
-        /*
-         * Execute the controller and process view template,
-         * writing the results to the response writer. 
-         */
-        controller.process(webExchange, this.templateEngine, writer);
-        
-        return true;
-        
-    } catch (Exception e) {
-        try {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        } catch (final IOException ignored) {
-            // Just ignore this
-        }
-        throw new ServletException(e);
-    }
-    
-}
 이것이 저희 IGTVGController인터페이스입니다:
 
 public interface IGTVGController {
@@ -73,7 +9,8 @@ public interface IGTVGController {
             throws Exception;
     
 }
-이제 우리가 해야 할 일은 IGTVGController인터페이스의 구현체를 만들고, 서비스에서 데이터를 가져오고, ITemplateEngine객체를 사용하여 템플릿을 처리하는 것입니다.
+이제 우리가 해야 할 일은 IGTVGController인터페이스의 구현체를 만들고, 
+서비스에서 데이터를 가져오고, ITemplateEngine객체를 사용하여 템플릿을 처리하는 것입니다.
 
 최종적으로는 이런 모습이 될 것입니다:
 
