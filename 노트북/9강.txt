@@ -527,7 +527,7 @@ create table member
 );
 
 
-h2 관련 --------------------------------
+h2 관련 --------------------------------아니라고 표시한 부분까지
 properties??에
 denpendencies 부분에다가
 implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -540,6 +540,17 @@ application.properties에
 
 spring.datasource.url=jdbc:h2:tcp://localhost/~/test
 spring.datasource.driver-class-name=org.h2.Driver
+
+
+-------
+
+메인프로젝트/repository/JdbcMemberRepository.java 만들기 class 파일로
+
+패키지 뭐라뭐라뜨고,
+
+public class JdbcMemberRepository {
+
+}
 
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
