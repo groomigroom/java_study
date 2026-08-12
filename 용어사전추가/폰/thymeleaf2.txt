@@ -14,7 +14,6 @@ private boolean process(HttpServletRequest request, HttpServletResponse response
             this.application.buildExchange(request, response);
         final IWebRequest webRequest = webExchange.getRequest();
 
-        // This prevents triggering engine executions for resource URLs
         if (request.getRequestURI().startsWith("/css") ||
                 request.getRequestURI().startsWith("/images") ||
                 request.getRequestURI().startsWith("/favicon")) {
