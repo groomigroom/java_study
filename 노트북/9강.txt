@@ -487,6 +487,20 @@ public class MemberForm {
 	}
 }
 
+templates/members/에다가
+
+memberList.html 만들기
+
+<html xmlns:th = "http://www.thymeleaf.org">
+<body>
+<div class="container">
+	<div>
+		
+	</div>
+</div>
+</body>
+</html>
+
 https://www.youtube.com/watch?v=wCCMoUatat8&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=18
 
 17강부터 보기 
