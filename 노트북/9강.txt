@@ -560,6 +560,9 @@ public class JdbcMemberRepository implements MemberRepository {
 	@Override
 	public Member save(Member member) {
 		String sql = "insert into member(name) values(?)";
+
+		dataSource.getConnection();
+
 		return null;
 	}
 
