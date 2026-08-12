@@ -2,6 +2,8 @@
 
 https://groomigroom.github.io/java_study/
 
+8월12일타임리프꺼 파일들 수정해서 다시 돌리기
+
 
 용어 사전에 start dependency 정리하기
 
