@@ -607,7 +607,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
-19강 6ㅂ 30초부터 보기 
+19강 9ㅂ 40초부터 보기 
 
 
 
