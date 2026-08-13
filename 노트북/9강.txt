@@ -417,6 +417,8 @@ public class SpringConfig {
 	@Bean
 	public MemberRepository memberRepository() {
 		return new MemoryMemberRepository();
+		//위에꺼 return 주석처리하고 h2 이후에 아래꺼 리턴 작성함.
+		//return new MemoryMemberRepository();
 	}
 }
 
