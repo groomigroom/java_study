@@ -1,1 +1,31 @@
-ProductRepository.html
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProductRepository</title>
+</head>
+
+<body>
+    <h1>ProductRepository</h1>
+    <pre>
+
+        자바 스프링에서 ProductRepository의 의미
+        자바 스프링(Spring)에서 ProductRepository는 상품(Product) 
+        데이터가 저장된 데이터베이스와 소통하여 
+        저장, 조회, 수정, 삭제(CRUD) 작업을 처리하는 
+        인터페이스(Interface)입니다. 
+        보통 Spring Data JPA를 사용할 때 생성되며, 
+        SQL을 직접 작성하지 않고도 자바 메서드만으로 DB를 다룰 수 있게 해줍니다.
+        주요 역할과 특징
+        데이터 접근 계층(DAO): 비즈니스 로직과 데이터베이스를 연결해 주는 역할입니다.
+        JPA 상속: JpaRepository<Product, Long> 등을 상속받아 만들어집니다.
+        기본 메서드 제공: save()(저장), findById()(ID로 조회), 
+        findAll()(전체 조회), delete()(삭제) 같은 기본 기능을 공짜로 쓸 수 있습니다.
+        메서드 이름 기반 쿼리: findByName(String name)처럼 메서드 이름을 짓기만 해도 
+        스프링이 알아서 적절한 SQL 쿼리를 만들어 실행해 줍니다.
+    </pre>
+</body>
+
+</html>
