@@ -643,6 +643,11 @@ public class JdbcMemberRepository implements MemberRepository {
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
+
+			List<Member> members = new ArrayList<>();
+			while(rs.next()) {
+				Member member = new Member();
+			}
 		}
 		
 		return null;
