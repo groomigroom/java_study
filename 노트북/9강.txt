@@ -706,6 +706,9 @@ public class JdbcMemberRepository implements MemberRepository {
 			e.printStackTrace();
 		}
 	}	
+	private void close(Connection conn) throws SQLException {
+
+	}
 		
 		return null;
 	}
