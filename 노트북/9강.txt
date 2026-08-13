@@ -702,6 +702,8 @@ public class JdbcMemberRepository implements MemberRepository {
 			if (pstmt != null) {
 				pstmt.close();
 			}
+		} catch  (SQLException e) {
+			e.printStackTrace();
 		}
 	}	
 		
@@ -712,7 +714,7 @@ public class JdbcMemberRepository implements MemberRepository {
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
 672번줄 작업중
-19강 12ㅂ 14초부터 보기 
+19강 13ㅂ 21초부터 보기 
 
 
 
