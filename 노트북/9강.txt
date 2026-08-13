@@ -616,6 +616,8 @@ public class JdbcMemberRepository implements MemberRepository {
 			} else {
 				return Optional.empty();
 			}
+		} catch (Exception e) {
+
 		}
 		
 		return Optional.empty();
