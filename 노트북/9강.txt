@@ -617,7 +617,9 @@ public class JdbcMemberRepository implements MemberRepository {
 				return Optional.empty();
 			}
 		} catch (Exception e) {
-
+			throw new IllegalStateException(e);
+		} finally {
+			close(conn, pstmt, rs);
 		}
 		
 		return Optional.empty();
