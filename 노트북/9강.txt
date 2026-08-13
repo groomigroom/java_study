@@ -408,8 +408,11 @@ SpringConfig.java 클래스로 파일 만들기
 @Configuration
 public class SpringConfig {
 
-	DataSource dataSource;
+	//h2이후에 작성함
+	//private DataSource dataSource;
 
+	//h2이후에 작성함 @Bean없애고
+	//@Autowired
 	//아래 빈 두 개 주석 처리도 해보기
 	@Bean
 	public MemberService memberService() {
