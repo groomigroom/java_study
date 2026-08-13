@@ -672,13 +672,13 @@ public class JdbcMemberRepository implements MemberRepository {
 			rs = pstmt.executeQuery();
 
 			List<Member> members = new ArrayList<>();
-			while(rs.next()) {
+			if(rs.next()) {
 				Member member = new Member();
 				member.setId(rs.getLong(columnLabel: "id"));
 				member.setName(rs.getString(columnLabel: "name"));
-				members.add(member);
+				return Optional.of(member);
 			}
-			return members;
+			return Optional.empty();
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		} finally {
