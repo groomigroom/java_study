@@ -409,10 +409,14 @@ SpringConfig.java 클래스로 파일 만들기
 public class SpringConfig {
 
 	//h2이후에 작성함
-	//private DataSource dataSource;
+	/*
+	private DataSource dataSource;
 
-	//h2이후에 작성함 @Bean없애고
-	//@Autowired
+	@Autowired
+	public SpringConfig(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
 	//아래 빈 두 개 주석 처리도 해보기
 	@Bean
 	public MemberService memberService() {
@@ -724,7 +728,8 @@ public class JdbcMemberRepository implements MemberRepository {
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
 672번줄 작업중
-19강 13ㅂ 21초부터 보기 
+19강 15분 34초부터 보기 
+413번대줄 쯤 하다맘
 
 
 
