@@ -408,6 +408,8 @@ SpringConfig.java 클래스로 파일 만들기
 @Configuration
 public class SpringConfig {
 
+	DataSource dataSource;
+
 	//아래 빈 두 개 주석 처리도 해보기
 	@Bean
 	public MemberService memberService() {
@@ -418,7 +420,7 @@ public class SpringConfig {
 	public MemberRepository memberRepository() {
 		return new MemoryMemberRepository();
 		//위에꺼 return 주석처리하고 h2 이후에 아래꺼 리턴 작성함.
-		//return new MemoryMemberRepository();
+		//return new JdbcMemberRepository();
 	}
 }
 
