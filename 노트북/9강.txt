@@ -416,7 +416,7 @@ public class SpringConfig {
 	public SpringConfig(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-
+	*/
 	//아래 빈 두 개 주석 처리도 해보기
 	@Bean
 	public MemberService memberService() {
