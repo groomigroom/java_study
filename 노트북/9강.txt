@@ -609,7 +609,10 @@ public class JdbcMemberRepository implements MemberRepository {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				
+				Member member = new Member();
+				member.setId(rs.getLong(columnLabel: "id"));
+				member.setName(rs.getString(columnLabel: "name"));
+				return Optional.of(member);
 			}
 		}
 		
