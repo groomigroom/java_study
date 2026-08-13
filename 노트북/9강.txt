@@ -625,10 +625,7 @@ public class JdbcMemberRepository implements MemberRepository {
 		return Optional.empty();
 	}
 
-	@Override
-	public Optional<Member> findByName(String name) {
-		return Optional.empty();
-	}
+	
 
 	@Override
 	public List<Member> findAll() {
@@ -656,6 +653,12 @@ public class JdbcMemberRepository implements MemberRepository {
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
+
+
+	@Override
+	public Optional<Member> findByName(String name) {
+		return Optional.empty();
+	}
 		
 		return null;
 	}
