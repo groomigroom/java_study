@@ -690,7 +690,20 @@ public class JdbcMemberRepository implements MemberRepository {
 		return DataSourceUtils.getConnection(dataSource);
 	}
 
-		
+	private void close (Connection conn, PreparedStatement pstmt, ResultSet rs) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+		}
+	}	
 		
 		return null;
 	}
