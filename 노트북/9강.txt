@@ -613,6 +613,8 @@ public class JdbcMemberRepository implements MemberRepository {
 				member.setId(rs.getLong(columnLabel: "id"));
 				member.setName(rs.getString(columnLabel: "name"));
 				return Optional.of(member);
+			} else {
+				return Optional.empty();
 			}
 		}
 		
@@ -632,7 +634,8 @@ public class JdbcMemberRepository implements MemberRepository {
 
 https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
 
-19강 9ㅂ 40초부터 보기 
+617번줄 작업중
+19강 11ㅂ 56초부터 보기 
 
 
 
