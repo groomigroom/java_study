@@ -1,0 +1,62 @@
+자바 스프링(Spring Data JPA)에서 @CreatedDate는 엔티티가 생성되어 데이터베이스에 처음 저장(INSERT)될 때의 시간을 자동으로 기록해 주는 어노테이션입니다. [1] 
+개발자가 매번 new Date()나 LocalDateTime.now()를 직접 넣어줄 필요 없이, 스프링이 자동으로 등록 시간을 관리해 주므로 매우 편리합니다.
+------------------------------
+## 🛠️ 사용을 위한 3단계 설정
+@CreatedDate는 단독으로 작동하지 않고, 스프링 데이터의 Auditing(감시/기록) 기능을 활성화해야 합니다.
+## 1. 메인 클래스에 설정 추가
+애플리케이션 메인 클래스 위에 @EnableJpaAuditing 어노테이션을 붙여 기능을 켭니다. [2] 
+
+@EnableJpaAuditing // 🔥 Auditing 기능 활성화
+@SpringBootApplicationpublic class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+## 2. 엔티티에 리스너 등록
+시간을 자동으로 기록할 엔티티 클래스 위에 @EntityListeners(AuditingEntityListener.class)를 추가합니다. [3, 4] 
+
+@Entity
+@EntityListeners(AuditingEntityListener.class) // 🔥 이벤트 리스너 등록public class Board {
+
+    @Id @GeneratedValue
+    private Long id;
+    
+    private String title;
+
+    @CreatedDate // 🔥 생성 시간이 자동으로 입력됨
+    @Column(updatable = false) // 생성 후 수정 불가능하도록 설정
+    private LocalDateTime createdAt;
+}
+
+------------------------------
+## 💡 실무를 위한 꿀팁 (BaseEntity 분리)
+보통 생성 시간(@CreatedDate)과 수정 시간(@LastModifiedDate)은 서비스 내 거의 모든 테이블에 공통으로 들어갑니다. 따라서 실무에서는 이를 부모 클래스로 빼서 상속받아 사용합니다.
+
+@MappedSuperclass // 부모 클래스의 필드를 자식 엔티티의 컬럼으로 인식하게 함
+@EntityListeners(AuditingEntityListener.class)public abstract class BaseTimeEntity {
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate // 변경 시 수정 시간 자동 기록
+    private LocalDateTime modifiedAt;
+}
+
+이제 실제 엔티티는 아래처럼 BaseTimeEntity만 상속받으면 자동으로 시간이 기록됩니다. [5] 
+
+@Entitypublic class Post extends BaseTimeEntity {
+    @Id @GeneratedValue
+    private Long id;
+    private String content;
+}
+
+------------------------------
+혹시 생성/수정 시간 외에 등록한 사람(@CreatedBy)이나 수정한 사람(@LastModifiedBy)도 자동으로 기록하고 싶으신가요? 아니면 스프링 부트 3.x 버전이나 최신 환경에서 연동하는 과정 중 오류가 발생했는지 알려주시면 더 자세히 안내해 드릴게요.
+
+[1] [https://m.blog.naver.com](https://m.blog.naver.com/seek316/223355950299)
+[2] [https://trypassit.com](https://trypassit.com/questions/jpa-hibernate/78)
+[3] [https://wonyong-jang.github.io](https://wonyong-jang.github.io/jpa/2020/06/21/JPA-Auditing.html)
+[4] [https://colour-my-memories-blue.tistory.com](https://colour-my-memories-blue.tistory.com/11)
+[5] [https://wonyong-jang.github.io](https://wonyong-jang.github.io/jpa/2020/06/21/JPA-Auditing.html)
