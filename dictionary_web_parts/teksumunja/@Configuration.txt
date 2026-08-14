@@ -1,0 +1,50 @@
+자바 스프링(Spring)에서 @Configuration은 해당 클래스가 "스프링의 설정(Configuration) 정보"를 담고 있는 클래스임을 나타내는 어노테이션입니다. [1, 2] 
+과거에는 XML 파일로 작성하던 스프링 빈(Bean) 설정 및 의존성 주입(DI) 코드를, 자바 클래스 형태로 작성할 수 있게 만들어 줍니다. [3, 4] 
+핵심적인 역할과 특징은 다음과 같이 정리할 수 있습니다.
+## 1. 스프링 빈(Bean) 수동 등록
+@Configuration이 붙은 클래스 내부에서 메서드에 @Bean 어노테이션을 붙여 스프링 컨테이너에 객체를 직접 등록할 수 있습니다. 스프링은 애플리케이션을 구동할 때 이 클래스를 읽어 메서드가 리턴하는 객체들을 빈으로 생성하고 관리합니다. [5, 6, 7] 
+
+@Configurationpublic class AppConfig {
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberServiceImpl(memberRepository());
+    }
+
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+}
+
+## 2. 싱글톤(Singleton) 유지 보장 (가장 중요 ⭐)
+단순히 빈을 등록하는 역할만 하는 것이 아닙니다. 스프링 내부적으로 매우 중요한 기능을 수행하는데요, 바로 자바 객체의 싱글톤(단 하나의 인스턴스만 생성) 구조를 보장한다는 점입니다. [1, 8] 
+
+* 
+* 위 코드에서 memberService()를 호출할 때 내부에서 memberRepository()를 호출하고 있습니다.
+* 만약 다른 빈 설정 메서드에서도 memberRepository()를 또 호출한다면, 순수한 자바 코드 상으로는 new MemoryMemberRepository()가 여러 번 실행되어 각각 다른 객체가 생겨나야 합니다.
+* 하지만 @Configuration을 붙이면 스프링이 CGLIB라는 바이트코드 조작 라이브러리를 사용해 이 클래스를 상속받은 프록시 객체를 만들어 냅니다. [1, 8] 
+* 이를 통해 이미 스프링 컨테이너에 등록된 빈이 있다면 새로 생성하지 않고 기존의 빈을 반환하도록 제어하여 싱글톤을 완벽하게 유지해 줍니다. [1, 8, 9] 
+* 
+
+## Summary: @Component와의 차이점
+@Configuration 내부를 뜯어보면 결국 @Component를 포함하고 있어서 자동으로 스프링 빈으로 등록됩니다. 하지만 결정적인 차이가 있습니다. [1] 
+
+| 구분 | @Component 클래스 안의 @Bean | @Configuration 클래스 안의 @Bean |
+|---|---|---|
+| 싱글톤 보장 여부 | 보장 안 됨 (메서드 호출할 때마다 새로운 객체 생성) | 완벽 보장 (프록시 기술을 사용해 항상 같은 객체 반환) |
+| 주요 용도 | 일반적인 비즈니스 로직 클래스 자동 등록 (@Service, @Repository 등) | 애플리케이션의 인프라, 환경 설정 및 수동 빈 등록 |
+
+따라서 스프링에서 수동으로 객체들을 엮어주는 설정 클래스를 만들 때는 반드시 @Configuration을 붙여야 안전하게 싱글톤 기반의 의존성 주입을 처리할 수 있습니다. [8, 10] 
+현재 작성 중이신 설정 코드에서 특정 라이브러리를 빈으로 등록하려 하시나요? 아니면 싱글톤 멀티스레드 이슈 관련해서 찾아보시던 중인지 말씀해 주시면 상황에 맞게 더 자세히 설명해 드릴게요!
+
+[1] [https://aliencoder.tistory.com](https://aliencoder.tistory.com/177)
+[2] [https://velog.io](https://velog.io/@yerinnnn/Configuration%EB%9E%80)
+[3] [https://www.youtube.com](https://www.youtube.com/watch?v=yZzUxEp97Ho&t=180)
+[4] [https://ittrue.tistory.com](https://ittrue.tistory.com/226)
+[5] [https://blogshine.tistory.com](https://blogshine.tistory.com/551)
+[6] [https://www.quora.com](https://translate.google.com/translate?u=https://www.quora.com/What-is-configuration-in-Java&hl=ko&sl=en&tl=ko&client=sge)
+[7] [https://pabeba.tistory.com](https://pabeba.tistory.com/190)
+[8] [https://chanhan.tistory.com](https://chanhan.tistory.com/entry/Spring-Spring-Boot-Configuration%EC%9D%B4%EB%9E%80)
+[9] [https://heesutory.tistory.com](https://heesutory.tistory.com/13)
+[10] [https://devjh.tistory.com](https://devjh.tistory.com/309)
