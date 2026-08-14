@@ -5,6 +5,11 @@ https://groomigroom.github.io/java_study/
 8월12일타임리프꺼 파일들 수정해서 다시 돌리기
 
 
+https://github.com/groomigroom/java_study/blob/main/dictionary_web_parts/teksumunja/golbangee_Service.html
+위에꺼 좀 더 공부하기
+
+@Service
+
 용어 사전에 start dependency 정리하기
 
 example에 AraayList 봐보기...
