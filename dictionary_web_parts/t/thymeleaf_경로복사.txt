@@ -1,0 +1,32 @@
+인텔리제이 자바 스프링에서 thymeleaf를 
+적용한 html 경로를 복사하는 법
+인텔리제이에서 타임리프(Thymeleaf) 
+HTML 파일의 경로를 복사하려면, 
+프로젝트 뷰에서 해당 파일을 우클릭한 뒤 
+Copy Path/Reference를 누르고 Path 
+from Template Root 또는 Relative 
+Path를 선택하면 됩니다. 스프링 부트 
+기본 설정 기준 타임리프 경로(templates/)에 
+맞춘 상대 경로를 얻을 수 있습니다.
+경로 복사 방법 세부 단계프로젝트 
+창에서 HTML 파일 우클릭Copy 
+Path/Reference... 선택 
+(단축키: Ctrl + Shift + Alt + C 또는 
+맥 Cmd + Shift + Option + C)
+팝업 메뉴에서 원하는 형태 선택:Path from Template Root: templates 폴더를 
+기준으로 한 경로
+ (예: index 또는 board/view)
+Relative Path: 프로젝트 루트 기준 
+전체 상대 경로
+ (예: src/main/resources/templates/index.html)
+Absolute Path: 운영체제상의 
+절대 경로컨트롤러 반환 값 작성 
+팁타임리프는 기본적으로 
+src/main/resources/templates/ 
+아래의 .html 파일을 읽습니다.
+컨트롤러에서 뷰 이름을 반환할 때는 
+확장자(.html)와 앞의 templates/ 
+경로를 제외한 이름만 적거나
+ 하위 폴더 경로를 포함해 적습니다.
+예시 
+(src/main/resources/templates/members/createForm.html인 경우): return "members/createForm";
