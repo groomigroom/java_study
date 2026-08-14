@@ -1,0 +1,127 @@
+제시해주신 IGTVGController 인터페이스는 Thymeleaf(타임리프) 공식 가이드의 튜토리얼(GTVG: Good Thymes Virtual Garden)에서 사용되는 구조와 매우 유사합니다. 스프링부트(Spring Boot) 환경에서 이 인터페이스를 구현하고, 요청을 처리하여 타임리프 템플릿을 화면에 렌더링하는 전체 예제 코드를 작성해 드립니다.
+------------------------------
+## 1. 프로젝트 설정 (스프링 부트 & 타임리프 의존성)
+pom.xml (Maven) 또는 build.gradle에 타임리프 의존성이 추가되어 있어야 합니다. (최신 스프링 부트 기준 기본 내장 패키지 활용)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+------------------------------
+## 2. Java 소스 코드 구현## ① 인터페이스 확인 (제공해주신 코드)
+
+package com.example.gtvg.controller;
+import org.thymeleaf.ITemplateEngine;import org.thymeleaf.web.IWebExchange;import java.io.Writer;
+public interface IGTVGController {
+    void process(
+            final IWebExchange webExchange, 
+            final ITemplateEngine templateEngine,
+            final Writer writer)
+            throws Exception;
+}
+
+## ② 인터페이스 구현 클래스 (HomeController)
+사용자 이름과 오늘 날짜 데이터를 타임리프 컨텍스트에 담아 home이라는 템플릿 파일로 렌더링하는 구현체입니다.
+
+package com.example.gtvg.controller;
+import org.springframework.stereotype.Component;import org.thymeleaf.ITemplateEngine;import org.thymeleaf.context.WebContext;import org.thymeleaf.web.IWebExchange;import java.io.Writer;import java.time.LocalDateTime;import java.time.format.DateTimeFormatter;
+
+@Component("homeController") // 스프링 빈으로 등록public class HomeController implements IGTVGController {
+
+    @Override
+    public void process(
+            final IWebExchange webExchange, 
+            final ITemplateEngine templateEngine, 
+            final Writer writer) throws Exception {
+
+        // 1. 타임리프 3버전(IWebExchange)에 맞는 WebContext 생성
+        final WebContext ctx = new WebContext(webExchange);
+
+        // 2. 화면에 전달할 데이터(Model) 바인딩
+        ctx.setVariable("welcomeMessage", "Good Thymes Virtual Garden에 오신 것을 환영합니다!");
+        ctx.setVariable("serverTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+        // 3. 'home' 템플릿(home.html)을 찾아 데이터를 채운 후 writer를 통해 출력
+        templateEngine.process("home", ctx, writer);
+    }
+}
+
+## ③ 스프링 MVC 컨트롤러 어댑터 (GtvgRoutingController)
+스프링 MVC가 클라이언트의 HTTP 요청(/home)을 받아 타임리프 서블릿 인프라 구조(IWebExchange)로 변환한 뒤, 위에서 만든 IGTVGController를 실행해 주는 다리 역할을 합니다.
+
+package com.example.gtvg.controller;
+import jakarta.servlet.http.HttpServletRequest;import jakarta.servlet.http.HttpServletResponse;import lombok.RequiredArgsConstructor;import org.springframework.stereotype.Controller;import org.springframework.web.bind.annotation.GetMapping;import org.thymeleaf.ITemplateEngine;import org.thymeleaf.web.IWebExchange;import org.thymeleaf.web.servlet.JakartaServletWebApplication;
+import java.io.Writer;
+
+@Controller
+@RequiredArgsConstructorpublic class GtvgRoutingController {
+
+    // 스프링이 자동 주입해주는 타임리프 엔진과 우리가 만든 커스텀 컨트롤러
+    private final ITemplateEngine templateEngine;
+    private final IGTVGController homeController;
+
+    @GetMapping("/home")
+    public void handleHomeRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        // 1. 응답 인코딩 및 콘텐트 타입 설정
+        response.setContentType("text/html;charset=UTF-8");
+
+        // 2. 타임리프 3.1+ 버전 스타일로 서블릿 전개(Exchange) 객체 빌드
+        JakartaServletWebApplication application = JakartaServletWebApplication.buildApplication(request.getServletContext());
+        IWebExchange webExchange = application.buildExchange(request, response);
+
+        // 3. 응답 스트림(Writer) 가져오기
+        Writer writer = response.getWriter();
+
+        // 4. 커스텀 인터페이스 실행
+        homeController.process(webExchange, templateEngine, writer);
+    }
+}
+
+------------------------------
+## 3. Thymeleaf 템플릿 파일 생성
+스프링 부트의 기본 템플릿 경로인 src/main/resources/templates/ 디렉터리에 home.html 파일을 생성합니다.
+src/main/resources/templates/home.html
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>GTVG Home</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; line-height: 1.6; }
+        .container { border: 1px solid #ddd; padding: 20px; border-radius: 8px; background-color: #fafafa; }
+        h1 { color: #2e7d32; }
+        .time { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HomeController에서 담은 welcomeMessage 출력 -->
+        <h1 th:text="${welcomeMessage}">기본 환영 메시지 (로딩 실패시 출력)</h1>
+        
+        <p>이 페이지는 커스텀 <code>IGTVGController</code>와 타임리프 엔진에 의해 렌더링되었습니다.</p>
+        
+        <!-- HomeController에서 담은 serverTime 출력 -->
+        <p class="time">현재 서버 시간: <span th:text="${serverTime}">2026-01-01 00:00:00</span></p>
+    </div>
+
+</body>
+</html>
+
+------------------------------
+## 4. 실행 및 결과 확인
+
+   1. 스프링 부트 애플리케이션을 실행합니다.
+   2. 브라우저를 열고 http://localhost:8080/home에 접속합니다.
+   3. 화면에 "Good Thymes Virtual Garden에 오신 것을 환영합니다!" 문구와 현재 서버 구동 시간이 실시간으로 표시되면 정상적으로 매핑과 렌더링이 완료된 것입니다.
+
+------------------------------
+혹시 예제에서 다룬 단일 텍스트 출력 외에 리스트 목록 데이터(예: 상품 목록)를 타임리프의 th:each 반복문으로 출력하는 구조도 필요하신가요? 아니면 폼(Form) 데이터를 POST 요청으로 전송받아 처리하는 예제가 필요하신지 말씀해 주세요!
+
