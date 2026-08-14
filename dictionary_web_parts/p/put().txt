@@ -1,1 +1,7 @@
-자바 Map의 .put() 메서드자바의 자료구조인 Map 인터페이스(HashMap 등)에서 키(Key)와 값(Value) 한 쌍을 데이터 저장소에 추가하거나 덮어쓸 때 쓰는 메서드입니다.주요 특징:이미 있는 키라면 기존 값을 새로운 값으로 바꿉니다.새로운 키라면 데이터를 새로 등록합니다.스프링 코드 예시:Map<String, Object> response = new HashMap<>();response.put("status", "success");
+자바 Map의 .put() 메서드자바의 자료구조인 
+Map 인터페이스(HashMap 등)에서 키(Key)와 값(Value) 
+한 쌍을 데이터 저장소에 추가하거나 덮어쓸 때 쓰는 메서드입니다.
+주요 특징:이미 있는 키라면 기존 값을 새로운 값으로 바꿉니다.
+새로운 키라면 데이터를 새로 등록합니다.
+스프링 코드 예시:Map<String, Object> response = new HashMap<>();
+response.put("status", "success");
