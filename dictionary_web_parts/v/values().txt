@@ -1,0 +1,22 @@
+HashMap 객체의 .values() 메서드는 맵에 저장된 모든 값(Value)들만 
+모아서 Collection 뷰(View) 형태로 반환하는 기능입니다. 
+키(Key)는 제외되고 값들만 필요할 때 사용합니다.
+주요 특징 및 동작 방식
+반환 타입: Collection<V> (값의 중복을 허용하므로 Set이 아닌 Collection으로 반환됩니다).
+원본 연동: 반환된 컬렉션은 새로운 메모리에 복사되는 것이 아니라, 
+원본 HashMap 객체와 연결되어 있습니다. 
+컬렉션에서 요소를 삭제하면 원본 맵에서도 데이터가 지워집니다.
+주요 용도: 맵 안의 모든 값에 대해 반복문(for-each)을 돌리거나, 
+  총합을 구하거나, 리스트로 변환할 때 쓰입니다.
+  사용 예시 코드java
+Map<String, Integer> map = new HashMap<>();
+map.put("A", 100);
+map.put("B", 200);
+
+// values()를 이용해 값만 추출
+Collection<Integer> values = map.values();
+
+for (Integer v : values) {
+    System.out.println(v); // 100, 200 출력
+}
+코드를 사용할 때는 주의가 필요합니다.
