@@ -1,0 +1,51 @@
+자바 스프링(Spring)에서 @EnableJpaAuditing은 엔티티의 생성 시간, 수정 시간, 생성자, 수정자를 자동으로 기록하는 'JPA Auditing' 기능을 활성화하는 어노테이션입니다. [1, 2, 3, 4] 
+데이터베이스에 값을 넣거나 수정할 때 createdAt, updatedAt 같은 필드를 매번 자바 코드로 직접 채워 넣는 번거로움을 스프링 데이터 JPA가 자동으로 처리하도록 지시하는 역할을 합니다. [5] 
+핵심적인 역할과 동작 방식은 다음과 같습니다.
+## 1. 주요 감시(Auditing) 대상 필드
+@EnableJpaAuditing을 켜두면, 엔티티 클래스에서 다음과 같은 네 가지 어노테이션을 감지하고 데이터를 자동으로 채워줍니다. [6] 
+
+* @CreatedDate: 엔티티가 처음 생성되어 저장될 때의 시간을 자동으로 기록합니다.
+* @LastModifiedDate: 엔티티의 값이 변경될 때의 시간을 자동으로 기록합니다.
+* @CreatedBy: 엔티티를 생성한 사람(로그인 유저 등)을 자동으로 기록합니다.
+* @LastModifiedBy: 엔티티를 수정한 사람을 자동으로 기록합니다. [7, 8, 9, 10] 
+
+## 2. 일반적인 구현 및 연동 방법
+보통 매번 모든 엔티티에 시간 필드를 만드는 것은 비효율적이므로, 공통 정보를 담은 BaseEntity(추상 클래스)를 만들어 상속받는 방식을 사용합니다. [11] 
+① BaseEntity 클래스 정의 (공통 필드 분리)
+
+@MappedSuperclass // 테이블로 매핑하지 않고, 자식 엔티티에 매핑 정보만 제공
+@EntityListeners(AuditingEntityListener.class) // 중요: JPA 이벤트 이벤트를 감지하는 리스너 설정public abstract class BaseTimeEntity {
+
+    @CreatedDate
+    @Column(updatable = false) // 생성 시간은 수정 불가능하도록 설정
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+}
+
+② 기능을 활성화하기 위한 @EnableJpaAuditing 설정
+주로 애플리케이션 시작 클래스(@SpringBootApplication이 있는 곳)나 별도의 설정 클래스(@Configuration)에 작성합니다. [12] 
+
+@Configuration
+@EnableJpaAuditing // JPA Auditing 활성화!public class JpaConfig {
+}
+
+## 3. 설정 시 주의할 점 (팁)
+스프링 부트 메인 클래스에 @EnableJpaAuditing을 직접 붙여도 작동은 잘 되지만, JUnit을 활용한 슬라이스 테스트(@WebMvcTest 등)를 진행할 때 에러가 발생할 수 있습니다.
+@WebMvcTest는 JPA 관련 빈들을 로드하지 않는데, 메인 클래스에 붙은 @EnableJpaAuditing 때문에 JPA 설정(EntityManagerFactory 등)을 찾으려고 시도하기 때문입니다.
+따라서 위 예시 코드처럼 별도의 @Configuration 설정 클래스를 만들어 분리하는 것이 스프링 부트 베스트 프랙티스(Best Practice)로 권장됩니다.
+현재 이 설정을 통해 생성/수정 시간(Date)만 자동으로 기록하고 싶으신가요? 아니면 누가 등록했는지(CreatedBy/ModifiedBy) 유저 정보까지 함께 연동하는 방법이 필요하신지 알려주시면 코드를 더 안내해 드릴게요!
+
+[1] [https://trypassit.com](https://trypassit.com/questions/jpa-hibernate/78)
+[2] [https://adjh54.tistory.com](https://adjh54.tistory.com/485)
+[3] [https://gaeggu.tistory.com](https://gaeggu.tistory.com/28)
+[4] [https://dkswnkk.tistory.com](https://dkswnkk.tistory.com/542)
+[5] [https://tear94fall.tistory.com](https://tear94fall.tistory.com/12)
+[6] [https://tear94fall.tistory.com](https://tear94fall.tistory.com/12)
+[7] [https://chanho0912.tistory.com](https://chanho0912.tistory.com/24)
+[8] [https://dkswnkk.tistory.com](https://dkswnkk.tistory.com/542)
+[9] [https://colour-my-memories-blue.tistory.com](https://colour-my-memories-blue.tistory.com/11)
+[10] [https://m.blog.naver.com](https://m.blog.naver.com/seek316/223358799817)
+[11] [https://gaeggu.tistory.com](https://gaeggu.tistory.com/28)
+[12] [https://colour-my-memories-blue.tistory.com](https://colour-my-memories-blue.tistory.com/11)
