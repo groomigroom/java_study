@@ -1,0 +1,37 @@
+자바 스프링(정확히는 JPA/Hibernate)에서 @Column은 엔티티 클래스의 필드를 데이터베이스 테이블의 컬럼과 매핑하는 역할을 합니다. [1, 2] 
+별다른 설정이 필요 없다면 생략해도 자동으로 매핑되지만, DB 컬럼명을 바꾸거나 제약 조건을 추가할 때 필수로 사용합니다. [2, 3, 4] 
+## 주요 속성 정리
+
+| 속성명 | 기능 | 기본값 |
+|---|---|---|
+| name | 매핑할 DB의 컬럼 이름을 지정합니다. (자바 변수명과 다를 때 사용) | 자바 필드 이름 |
+| nullable | false로 설정하면 NOT NULL 제약 조건이 붙습니다. | true (NULL 허용) |
+| unique | true로 설정하면 해당 컬럼에 고유(Unique) 제약 조건이 붙습니다. | false |
+| length | 문자열(String) 데이터의 최대 길이를 지정합니다. (주로 VARCHAR) | 255 |
+| insertable | false 설정 시, 데이터 저장(INSERT)할 때 이 필드는 제외됩니다. | true |
+| updatable | false 설정 시, 데이터 수정(UPDATE)할 때 이 필드는 제외됩니다. | true |
+| columnDefinition | TEXT나 VARCHAR(100) DEFAULT 'USER'처럼 SQL 문구를 직접 지정합니다. | 기본 데이터 타입 자동 생성 |
+
+## 코드 예시
+
+@Entitypublic class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // DB에는 user_name으로 저장되고, NULL을 허용하지 않으며, 길이는 최대 30자
+    @Column(name = "user_name", nullable = false, length = 30)
+    private String name;
+
+    // 등록 후 수정 불가능한 컬럼 설정
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+}
+
+추가로 데이터베이스 테이블 구조(DDL)를 어떻게 설계하고 계신가요? 상황에 맞는 구체적인 속성 조합이나 int/Integer 타입에 따른 차이점도 함께 설명해 드릴 수 있습니다.
+
+[1] [https://elsem.tistory.com](https://elsem.tistory.com/118)
+[2] [https://post-this.tistory.com](https://post-this.tistory.com/140)
+[3] [https://blog.naver.com](https://blog.naver.com/dsz08082/223437025343?viewType=pc)
+[4] [https://www.inflearn.com](https://www.inflearn.com/community/questions/1290924/column-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%95%88%EC%8D%A8%EB%8F%84-%EB%90%98%EB%8A%94-%EA%B2%BD%EC%9A%B0-%EC%A7%88%EB%AC%B8%EC%9D%B4%EC%9A%94?focusComment=346890)
