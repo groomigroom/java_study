@@ -1,0 +1,45 @@
+자바 스프링(Spring Data JPA)에서 @LastModifiedDate는 엔티티의 값이 변경(UPDATE)될 때 최종 수정 시간을 자동으로 기록해 주는 어노테이션입니다. [1] 
+앞서 다룬 @CreatedDate가 처음에 딱 한 번만 저장된다면, @LastModifiedDate는 데이터가 수정될 때마다 해당 시점의 시간으로 매번 갱신됩니다.
+------------------------------
+## 💻 코드 예시 및 작동 방식
+게시글을 수정하는 상황을 가정해 보면 이해하기 쉽습니다.
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)public class Article {
+
+    @Id @GeneratedValue
+    private Long id;
+    
+    private String content;
+
+    @CreatedDate
+    @Column(updatable = false) // 생성 시간은 수정 불가능하게 막음
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate // 🔥 데이터가 수정(UPDATE)될 때마다 자동으로 변경됨
+    private LocalDateTime modifiedAt;
+
+    // 비즈니스 로직 (내용 수정)
+    public void updateContent(String newContent) {
+        this.content = newContent;
+    }
+}
+
+## 🔄 실제 작동 시나리오
+
+   1. 처음 저장할 때 (INSERT): createdAt과 modifiedAt에 동일한 현재 시간이 들어갑니다.
+   2. 내용을 수정할 때 (UPDATE): createdAt은 처음 값을 유지하고, modifiedAt만 수정된 현재 시간으로 자동 업데이트됩니다.
+
+------------------------------
+## ⏱️ @CreatedDate vs @LastModifiedDate 핵심 차이점
+
+| 어노테이션 | 기록 시점 | 주요 설정 (@Column) | 용도 |
+|---|---|---|---|
+| @CreatedDate | 최초 저장(INSERT) 시 1회 | updatable = false 권장 | 등록일, 가입일, 작성일 등 |
+| @LastModifiedDate | 저장 및 수정(UPDATE) 시 매번 | 별도 설정 없음 | 최종 수정일, 업데이트 일자 등 |
+
+이 두 어노테이션은 항상 세트로 쓰이기 때문에, 앞서 설명해 드린 BaseTimeEntity 공통 클래스를 만들어 상속받는 방식으로 실무에서 100% 사용합니다.
+------------------------------
+현재 개발 중이신 엔티티에 수정 시간(@LastModifiedDate) 외에 누가 수정했는지(@LastModifiedBy) 회원 ID도 자동으로 남기고 싶으신가요? 아니면 테스트 코드를 작성할 때 시간이 자동으로 들어가지 않는 문제를 겪고 계시는지 알려주시면 답변해 드릴게요!
+
+[1] [https://dkswnkk.tistory.com](https://dkswnkk.tistory.com/542)
