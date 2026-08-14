@@ -1,4 +1,14 @@
-자바 스프링(Spring Data JPA)에서 .findById()는 데이터베이스 테이블에서 기본키(Primary Key, ID) 값을 이용해 특정 데이터를 찾아올 때 사용하는 기본 메서드입니다. 결과가 있으면 값을 담은 Optional 객체를 반환하고, 없으면 빈(empty) Optional을 반환합니다.주요 특징Optional 반환: 데이터가 없을 때 발생할 수 있는 NullPointerException을 막기 위해 Optional<T> 형태로 값을 감싸서 줍니다.즉시 로딩(Immediate DB Access): 메서드가 불리는 순간 바로 데이터베이스나 1차 캐시를 확인해 실제 데이터(엔티티)를 가져옵니다.CrudRepository 제공: 개발자가 직접 쿼리를 짜지 않아도 기본 Repository 인터페이스를 상속받으면 바로 쓸 수 있습니다.사용 예시java// ID가 1인 회원 찾기
+자바 스프링(Spring Data JPA)에서 .findById()는 데이터베이스 테이블에서 
+기본키(Primary Key, ID) 값을 이용해 특정 데이터를 찾아올 때 사용하는 기본 메서드입니다. 
+결과가 있으면 값을 담은 Optional 객체를 반환하고, 없으면 빈(empty) Optional을 반환합니다.
+주요 특징
+Optional 반환: 데이터가 없을 때 발생할 수 있는 NullPointerException을 막기 위해 
+Optional<T> 형태로 값을 감싸서 줍니다.
+즉시 로딩(Immediate DB Access): 메서드가 불리는 순간 바로 데이터베이스나 1차 캐시를 
+확인해 실제 데이터(엔티티)를 가져옵니다.
+CrudRepository 제공: 개발자가 직접 쿼리를 짜지 않아도 기본 Repository 인터페이스를 
+상속받으면 바로 쓸 수 있습니다.
+사용 예시java// ID가 1인 회원 찾기
 Optional<Member> optionalMember = memberRepository.findById(1L);
 
 // 값이 있으면 꺼내고, 없으면 예외 처리 또는 기본값 사용
