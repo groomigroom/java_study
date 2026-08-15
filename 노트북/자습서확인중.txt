@@ -8,4 +8,4 @@ https://docs.spring.io/spring-boot/reference/using/using-the-springbootapplicati
 
 아래꺼까지 어노테이션 분석함
 
-https://docs.spring.io/spring-boot/reference/features/spring-application.html
+https://docs.spring.io/spring-boot/reference/features/profiles.html
