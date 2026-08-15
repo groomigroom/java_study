@@ -725,11 +725,9 @@ public class JdbcMemberRepository implements MemberRepository {
 	}
 }
 
-https://www.youtube.com/watch?v=RUU-QbDVC0M&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=20
+https://www.youtube.com/watch?v=YxaYMEAUfDg&list=PLumVmq_uRGHgBrimIp2-7MCnoPUskVMnd&index=21
 
-672번줄 작업중
-19강 15분 34초부터 보기 
-413번대줄 쯤 하다맘
+20강부터 보기
 
 
 
