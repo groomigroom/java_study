@@ -24,49 +24,12 @@ public class MyBean {
 
 }
 
+ListSetBinder
+@PropertySourceYAML
+@TestPropertySource. 
+@Value("${property}")
+@Value
 
-  - "dev.example.com"
-  - "another.example.com"
-앞의 예시는 다음과 같은 속성으로 변환됩니다.
-
-my.servers[0]=dev.example.com
-my.servers[1]=another.example.com
-해당 표기법을 사용하는 속성은 Spring Boot의 클래스를 사용하여 Java 또는 객체 [index]에 바인딩할 수 있습니다 . 자세한 내용은 아래의 타입 안전 구성 속성 섹션을 참조하십시오. ListSetBinder
-@PropertySourceYAML 파일은 `<include> ` 또는 ` <include>` 어노테이션을 사용하여 로드할 수 없습니다 @TestPropertySource. 따라서 이러한 방식으로 값을 로드해야 하는 경우 속성 파일을 사용해야 합니다.
-YAML 직접 로드
-Spring Framework는 YAML 문서를 로드하는 데 사용할 수 있는 두 가지 편리한 클래스를 제공합니다. 하나는 YamlPropertiesFactoryBeanYAML을 다음과 같은 형식으로 로드하고 Properties, 다른 하나는 YamlMapFactoryBeanYAML을 다음과 같은 형식으로 로드합니다 Map.
-
-YamlPropertySourceLoaderSpring에서 YAML을 로드하려는 경우에도 해당 클래스를 사용할 수 있습니다 PropertySource.
-
-난수 설정
-이 함수는 RandomValuePropertySource(예를 들어 비밀 키나 테스트 케이스에) 임의의 값을 주입하는 데 유용합니다. 다음 예시와 같이 정수, long형 데이터, UUID 또는 문자열을 생성할 수 있습니다.
-
-속성
-
-YAML
-
-my.secret=${random.value}
-my.number=${random.int}
-my.bignumber=${random.long}
-my.uuid=${random.uuid}
-my.number-less-than-ten=${random.int(10)}
-my.number-in-range=${random.int[1024,65536]}
-구문 random.int*은 다음과 같습니다 . OPEN value (,max) CLOSE여기서 는 OPEN,CLOSE임의의 문자이고 value,max는 정수입니다. 가 max제공된 경우 value는 최소값이고 max는 최대값(제외)입니다.
-
-시스템 환경 속성 구성
-Spring Boot는 환경 속성에 접두사를 설정하는 기능을 지원합니다. 이는 서로 다른 구성 요구 사항을 가진 여러 Spring Boot 애플리케이션이 시스템 환경을 공유하는 경우에 유용합니다. 시스템 환경 속성에 대한 접두사는 애플리케이션 실행 전에 SpringApplication해당 메서드를 호출하여 직접 설정할 수 있습니다 .setEnvironmentPrefix(…​)
-
-예를 들어, 접두사를 로 설정하면 input와 같은 속성은 시스템 환경에서 remote.timeout로 해석됩니다 .INPUT_REMOTE_TIMEOUT
-
-접두사는 시스템 환경 속성 에만 적용됩니다. 위의 예시에서는 remote.timeout다른 소스에서 속성을 읽을 때도 접두사를 계속 사용합니다.
-타입 안전 구성 속성
-어노테이션을 사용하여 @Value("${property}")설정 속성을 주입하는 것은 특히 여러 속성을 다루거나 데이터가 계층적인 구조를 가질 때 번거로울 수 있습니다. 스프링 부트는 강력한 타입의 빈을 통해 애플리케이션의 설정을 관리하고 유효성을 검사할 수 있는 대안적인 속성 관리 방법을 제공합니다.
-
-타입 안전 구성 속성과 다른 속성 간의 차이점 도 참조하십시오 .@Value
-JavaBean 속성 바인딩
-다음 예제와 같이 표준 JavaBean 속성을 선언하여 빈을 바인딩할 수 있습니다.
-
-자바
 
 코틀린
 
@@ -145,17 +108,8 @@ public class MyProperties {
 	}
 
 }
-위의 POJO는 다음과 같은 속성을 정의합니다.
 
-my.service.enabled기본값은 입니다 false.
 
-my.service.remote-address에서 강제 변환될 수 있는 유형을 가지고 있습니다 String.
-
-my.service.security.username중첩된 "security" 객체가 있는데, 이 객체의 이름은 속성 이름에 따라 결정됩니다. 특히, 해당 위치에서는 형식이 전혀 사용되지 않았으며, 다른 형식이 사용될 수도 있었습니다 SecurityProperties.
-
-my.service.security.password.
-
-my.service.security.rolesString기본값이 인 컬렉션이 포함되어 있습니다 USER.
 
 속성 이름에 예약어(예: `#`)를 사용하려면 해당 속성 필드에 어노테이션을 my.service.import사용하십시오 .@Name
 Spring Boot에서 사용 가능한 클래스 에 매핑되는 속성은 @ConfigurationProperties속성 파일, YAML 파일, 환경 변수 및 기타 메커니즘을 통해 구성되며 공개 API이지만 클래스 자체의 접근자(getter/setter)는 직접 사용하도록 설계되지 않았습니다.
