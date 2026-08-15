@@ -1,1 +1,53 @@
-https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html
+자바 스프링에서 @Configuration은 해당 클래스가 스프링 컨테이너의 설정(Configuration) 정보로 사용되며, 내부에 스프링 빈(Bean)을 수동으로 등록하는 메서드들을 포함하고 있음을 선언하는 애노테이션입니다. [1, 2] 
+이 애노테이션은 스프링 프레임워크의 핵심 라이브러리에 포함되어 있어, 모든 spring-boot-starter-* 형태의 스타터 의존성에 기본적으로 내장되어 있습니다. [3, 4] 
+------------------------------
+## 1. @Configuration의 핵심 의미와 역할
+
+* 
+* 수동 빈 등록의 허브: @Configuration이 붙은 클래스 내부에서 @Bean 애노테이션을 사용해 메서드를 작성하면, 그 메서드가 반환하는 객체가 스프링 컨테이너의 빈으로 관리됩니다. [1, 2] 
+* 싱글톤 보장 (CGLIB 프록시): @Configuration은 단순히 빈을 등록하는 것을 넘어 싱글톤(Singleton)을 보장합니다. 스프링은 바이트코드를 조작하는 CGLIB 기술을 사용해 해당 클래스를 상속받은 프록시 객체를 만들어 컨테이너에 등록합니다. 이를 통해 빈을 생성하는 메서드가 여러 번 호출되더라도 항상 동일한 인스턴스를 반환하도록 보장합니다. [5] 
+* 설정의 모듈화: 여러 기능(데이터베이스 설정, 보안 설정 등)을 목적에 맞게 독립된 클래스로 쪼개어 관리할 수 있도록 돕습니다. [6, 7] 
+* 
+
+------------------------------
+## 2. 어떤 Starter Dependency에 속해 있나요?
+@Configuration은 특정 확장 기능이 아닌 스프링의 가장 근본이 되는 spring-context 모듈에 위치합니다. 따라서 스프링 부트가 제공하는 모든 스타터(Starter) 의존성을 추가하면 자동으로 포함됩니다. [8, 9, 10] 
+스프링 부트 프로젝트를 생성할 때 가장 흔히 사용하는 대표적인 스타터들은 다음과 같습니다.
+
+* 
+* spring-boot-starter-web: 웹 애플리케이션 및 RESTful API를 개발할 때 사용
+* spring-boot-starter-data-jpa: 데이터베이스 및 JPA ORM을 사용할 때 사용
+* spring-boot-starter: 웹 환경이 필요 없는 일반 애플리케이션의 핵심 기능을 제공하는 기본 스타터 [3, 4, 11, 12, 13] 
+* 
+
+## 📦 의존성 포함 구조 (내부 관계)
+실제 빌드 도구(Gradle이나 Maven)가 라이브러리를 당겨오는 계층 구조를 보면 다음과 같이 연결되어 있습니다.
+
+[내가 추가한 스타터] (예: spring-boot-starter-web)
+       └── [기본 스타터] (spring-boot-starter)
+                └── [스프링 부트 코어] (spring-boot)
+                         └── [스프링 컨텍스트] (spring-context) ──> 여기에 @Configuration이 존재!
+
+결과적으로 개발자는 어떤 종류의 spring-boot-starter-* 패키지를 프로젝트에 가져오든 관계없이 별도의 추가 설정 없이 @Configuration을 바로 사용할 수 있습니다. [3, 4] 
+------------------------------
+진행 중이신 프로젝트와 관련하여 추가로 궁금한 점이 있으시면 언제든 말씀해 주세요!
+
+* 
+* 현재 어떤 의존성(starter)들을 조합해서 프로젝트 설정을 구성하고 계시나요?
+* 외부 라이브러리 객체를 직접 빈으로 등록하기 위한 @Configuration과 @Bean 작성 방법 예시가 필요하신가요?
+* 
+
+
+[1] [https://alkhwa-113.tistory.com](https://alkhwa-113.tistory.com/m/entry/Using-Spring-Boot-Build-System-Auto-Configuration)
+[2] [https://blogshine.tistory.com](https://blogshine.tistory.com/551)
+[3] [https://alkhwa-113.tistory.com](https://alkhwa-113.tistory.com/entry/Using-Spring-Boot-Build-System-Auto-Configuration)
+[4] [https://velog.io](https://velog.io/@keemnayn/spring-boot-starter-autoconfig)
+[5] [https://chanhan.tistory.com](https://chanhan.tistory.com/entry/Spring-Spring-Boot-Configuration%EC%9D%B4%EB%9E%80)
+[6] [https://catsbi.oopy.io](https://catsbi.oopy.io/6c4846a1-130d-4aba-94ea-e630cc15056d)
+[7] [https://m.blog.naver.com](https://m.blog.naver.com/hj_kim97/223091852988)
+[8] [https://spring.io](https://spring.io/guides/gs/spring-boot/)
+[9] [https://spring.io](https://spring.io/guides/gs/spring-boot)
+[10] [https://moodone.tistory.com](https://moodone.tistory.com/7)
+[11] [https://supawer0728.github.io](https://supawer0728.github.io/2018/03/15/create-spring-boot-starter/)
+[12] [https://alkhwa-113.tistory.com](https://alkhwa-113.tistory.com/entry/Using-Spring-Boot-Build-System-Auto-Configuration)
+[13] [https://12bme.tistory.com](https://12bme.tistory.com/460)
