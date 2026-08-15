@@ -14,22 +14,11 @@ https://docs.spring.io/spring-boot/reference/features/external-config.html
 
 @Configuration
 
+@DynamicPropertySource
 
+@TestPropertySource
 
-
-
- 
-명령줄 인수.
-
-properties테스트에 속성을 추가할 수 있습니다. @SpringBootTest이 속성 은 애플리케이션의 특정 부분을 테스트하기 위한 테스트 어노테이션 과 함께 사용할 수 있습니다 .
-
-@DynamicPropertySource테스트에 주석을 추가하세요.
-
-@TestPropertySource시험에 주석을 달아보세요.
-
-$HOME/.config/spring-bootDevtools가 활성화된 경우 디렉터리 에 있는 Devtools 전역 설정 속성입니다 .
-
-설정 데이터 파일은 다음 순서대로 고려됩니다.
+ 고려됩니다.
 
 JAR 파일( application.properties및 YAML 형식) 에 포함된 애플리케이션 속성입니다 .
 
