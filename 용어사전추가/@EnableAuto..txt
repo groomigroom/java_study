@@ -1,0 +1,1 @@
+https://docs.spring.io/spring-boot/4.1.0/api/java/org/springframework/boot/autoconfigure/EnableAutoConfiguration.html
