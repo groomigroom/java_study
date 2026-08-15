@@ -1,8 +1,7 @@
-https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Component.html
+@Component.txt
 
-
-
-@Component는 개발자가 작성한 클래스를 스프링 컨테이너에 빈(Bean)으로 자동 등록하라고 알려주는 자바 애노테이션입니다. 이 애노테이션은 별도의 의존성을 추가할 필요 없이, 스프링의 가장 핵심이 되는 라이브러리인 spring-context 모듈에 기본적으로 포함되어 있습니다. [1, 2, 3] 
+@Component는 개발자가 작성한 클래스를 스프링 컨테이너에 빈(Bean)으로 자동 등록하라고 알려주는 자바 애노테이션입니다. 
+이 애노테이션은 별도의 의존성을 추가할 필요 없이, 스프링의 가장 핵심이 되는 라이브러리인 spring-context 모듈에 기본적으로 포함되어 있습니다.
 ------------------------------
 ## 1. @Component의 핵심 의미
 
@@ -50,15 +49,3 @@ import org.springframework.stereotype.Component;
 * 빌드 도구로 Gradle을 쓰시나요, 아니면 Maven을 쓰시나요?
 * 프로젝트에서 웹(@RestController) 기능이나 데이터베이스 연결이 필요하신가요?
 * 
-
-
-[1] [https://coding-nyan.tistory.com](https://coding-nyan.tistory.com/158)
-[2] [https://youngjinmo.github.io](https://youngjinmo.github.io/2021/06/bean-component/)
-[3] [https://developerjob.tistory.com](https://developerjob.tistory.com/246)
-[4] [https://curiousjinan.tistory.com](https://curiousjinan.tistory.com/entry/spring-component)
-[5] [https://www.quora.com](https://translate.google.com/translate?u=https://www.quora.com/What-is-the-use-of-component-in-Spring&hl=ko&sl=en&tl=ko&client=sge)
-[6] [https://rebugs.tistory.com](https://rebugs.tistory.com/587)
-[7] [https://velog.io](https://velog.io/@albaneo0724/Spring-Component%EC%99%80-Configuration%EC%9D%98-%EC%B0%A8%EC%9D%B4)
-[8] [https://aroma-bok.tistory.com](https://aroma-bok.tistory.com/entry/Spring-Spring-Boot-%EC%9E%85%EB%AC%B8-13-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88%EA%B3%BC-%EC%9D%98%EC%A1%B4%EA%B4%80%EA%B3%84-DIDependency-Injection-%EC%9D%98%EC%A1%B4%EA%B4%80%EA%B3%84-Component-Scan-%EC%8B%B1%EA%B8%80%ED%86%A4-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88)
-[9] [https://johngrib.github.io](https://johngrib.github.io/wiki/spring/boot/starter/)
-[10] [https://taemham.github.io](https://taemham.github.io/posts/SpringBoot_AboutSB/)
