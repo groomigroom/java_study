@@ -18,15 +18,8 @@ https://docs.spring.io/spring-boot/reference/features/external-config.html
 
 @TestPropertySource
 
- 고려됩니다.
 
-JAR 파일( application.properties및 YAML 형식) 에 포함된 애플리케이션 속성입니다 .
-
-프로필별 애플리케이션 속성이 JAR 파일( application-{profile}.properties및 YAML 형식)에 포함되어 있습니다.
-
-패키지된 JAR 파일 외부에 있는 애플리케이션 속성application.properties ( 및 YAML 변형).
-
-패키지된 JAR 파일 외부에 있는 프로필별 애플리케이션 속성application-{profile}.properties ( 및 YAML 변형).
+  
 
 애플리케이션 전체에 걸쳐 하나의 형식을 사용하는 것이 좋습니다. .properties동일한 위치에 YAML 형식과 C# 형식의 설정 파일이 모두 있는 경우, C# .properties형식이 우선 적용됩니다.
 
