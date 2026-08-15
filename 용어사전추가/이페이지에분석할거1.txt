@@ -16,22 +16,9 @@ https://docs.spring.io/spring-boot/reference/features/external-config.html
 
 
 
-설정 데이터(파일 등 application.properties).
 
-RandomValuePropertySource에만 속성을 random.*갖는 A.
 
-운영체제 환경 변수.
-
-Java 시스템 속성( System.getProperties()).
-
-JNDI 속성은 다음과 같습니다 java:comp/env.
-
-ServletContext초기 매개변수.
-
-ServletConfig초기 매개변수.
-
-SPRING_APPLICATION_JSON(환경 변수 또는 시스템 속성에 포함된 인라인 JSON 에서 가져온) 속성입니다 .
-
+ 
 명령줄 인수.
 
 properties테스트에 속성을 추가할 수 있습니다. @SpringBootTest이 속성 은 애플리케이션의 특정 부분을 테스트하기 위한 테스트 어노테이션 과 함께 사용할 수 있습니다 .
