@@ -23,7 +23,8 @@ public class MyBean {
 	// ...
 
 }
-애플리케이션 클래스패스(예: JAR 파일 내부)에 application.properties`property` 속성에 대한 적절한 기본 값을 제공하는 파일을 둘 수 있습니다 name. 새로운 환경에서 실행할 때는 application.propertiesJAR 파일 외부에 `property` 속성을 재정의하는 파일을 제공할 수 있습니다 name. 일회성 테스트의 경우 특정 명령줄 스위치(예: `property` java -jar app.jar --name="Spring")를 사용하여 실행할 수 있습니다.
+
+name. 새로운 환경에서 실행할 때는 application.propertiesJAR 파일 외부에 `property` 속성을 재정의하는 파일을 제공할 수 있습니다 name. 일회성 테스트의 경우 특정 명령줄 스위치(예: `property` java -jar app.jar --name="Spring")를 사용하여 실행할 수 있습니다.
 
 및 엔드포인트는 속성이 특정 값을 갖는 이유를 파악하는 데 유용할 수 있습니다. 이 두 엔드포인트를 사용하여 예상치 못한 속성 값을 진단할 수 있습니다. env자세한 내용은 프로덕션 준비 기능 섹션을 참조하십시오.configprops
 명령줄 속성에 액세스하기
