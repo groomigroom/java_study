@@ -23,63 +23,7 @@ public class MyBean {
 	// ...
 
 }
-
-
-현재 디렉토리에서
-
-현재 디렉토리
-
-config/현재 디렉터리의 하위 디렉터리
-
-config/하위 디렉터리의 바로 아래 하위 디렉터리
-
-목록은 우선순위에 따라 정렬됩니다(아래 항목의 값이 앞 항목의 값을 덮어씁니다). 로드된 파일의 문서는 PropertySourceSpring에 인스턴스 로 추가됩니다 Environment.
-
-application설정 파일 이름이 마음에 들지 않으면 환경 변수를 지정하여 다른 파일 이름으로 변경할 수 있습니다. 예를 들어, 및 파일을 spring.config.name찾으려면 다음과 같이 애플리케이션을 실행하면 됩니다.myproject.propertiesmyproject.yaml
-
-$ java -jar myproject.jar --spring.config.name=myproject
-환경 속성을 사용하여 특정 위치를 지정할 수도 있습니다 spring.config.location. 이 속성은 확인할 하나 이상의 위치를 ​​쉼표로 구분한 목록을 허용합니다.
-
-다음 예시는 서로 다른 두 파일을 지정하는 방법을 보여줍니다.
-
-$ java -jar myproject.jar --spring.config.location=\
-	optional:classpath:/default.properties,\
-	optional:classpath:/override.properties
-optional:위치 정보가 선택 사항 이고 존재하지 않아도 괜찮은 경우 접두사를 사용하세요 .
-spring.config.name`$files` , ` spring.config.location$files`, `$files` spring.config.additional-location는 로드해야 하는 파일을 결정하는 데 매우 초기에 사용됩니다. 이러한 속성은 환경 속성(일반적으로 운영 체제 환경 변수, 시스템 속성 또는 명령줄 인수)으로 정의되어야 합니다.
-만약 spring.config.location디렉터리(파일이 아닌)가 포함되어 있다면, 디렉터리 이름은 반드시 .로 끝나야 합니다 . 런타임 시에는 로드되기 전에 /에서 생성된 이름이 디렉터리 이름 뒤에 추가됩니다 . 에 지정된 파일은 직접 가져옵니다.spring.config.namespring.config.location
-
-디렉터리 및 파일 위치 값 모두 프로필별 파일을 확인하기 위해 확장됩니다 . 예를 들어, 프로필에 가 있는 경우 spring.config.location적절한 파일도 로드되는 것을 classpath:myconfig.properties확인할 수 있습니다 .classpath:myconfig-<profile>.properties
-대부분의 경우, spring.config.location추가하는 각 항목은 단일 파일 또는 디렉터리를 참조합니다. 위치는 정의된 순서대로 처리되며, 나중에 정의된 위치가 이전에 정의된 위치를 덮어쓸 수 있습니다.
-
-위치 설정이 복잡하고 프로필별 구성 파일을 사용하는 경우, Spring Boot가 위치를 어떻게 그룹화해야 하는지 알 수 있도록 추가적인 힌트를 제공해야 할 수 있습니다. 위치 그룹은 동일한 수준으로 간주되는 위치들의 모음입니다. 예를 들어, 모든 클래스패스 위치를 그룹화한 다음 모든 외부 위치를 그룹화할 수 있습니다. 위치 그룹 내의 항목은 쉼표(,)로 구분해야 합니다 . 자세한 내용은 프로필별 파일; 섹션 의 예제를 참조하십시오 .
-
-를 사용하여 구성된 위치는 spring.config.location기본 위치를 대체합니다. 예를 들어, spring.config.location값이 로 구성된 경우 optional:classpath:/custom-config/,optional:file:./custom-config/고려되는 전체 위치 집합은 다음과 같습니다.
-
-optional:classpath:custom-config/
-
-optional:file:./custom-config/
-
-기존 위치를 교체하는 대신 추가 위치를 지정하려면 를 사용할 수 있습니다 spring.config.additional-location. 추가 위치에서 로드된 속성은 기본 위치의 속성을 재정의할 수 있습니다. 예를 들어, spring.config.additional-location값이 로 구성된 경우 optional:classpath:/custom-config/,optional:file:./custom-config/고려되는 전체 위치 집합은 다음과 같습니다.
-
-optional:classpath:/;optional:classpath:/config/
-
-optional:file:./;optional:file:./config/;optional:file:./config/*/
-
-optional:classpath:custom-config/
-
-optional:file:./custom-config/
-
-이 검색 순서 기능을 사용하면 하나의 구성 파일에서 기본값을 지정한 다음 다른 파일에서 해당 값을 선택적으로 재정의할 수 있습니다. 기본 위치 중 하나에 application.properties(또는 원하는 다른 기본 이름 spring.config.name)으로 애플리케이션의 기본값을 제공할 수 있습니다. 그런 다음 이러한 기본값은 사용자 지정 위치 중 하나에 있는 다른 파일을 사용하여 런타임에 재정의할 수 있습니다.
-
-선택 가능한 위치
-기본적으로 지정된 구성 데이터 위치가 존재하지 않으면 Spring Boot는 예외를 발생시키고 ConfigDataLocationNotFoundException애플리케이션이 시작되지 않습니다.
-
-위치를 지정하고 싶지만 해당 위치가 항상 존재하지 않아도 괜찮다면 접두사를 사용할 수 있습니다 . 이 접두사는 및 속성뿐 아니라 선언에도 optional:사용할 수 있습니다 .spring.config.locationspring.config.additional-locationspring.config.import
-
-예를 들어, spring.config.import값이 0 이면 파일이 optional:file:./myconfig.properties없더라도 애플리케이션이 시작될 수 있습니다 myconfig.properties.
-
-모든 오류를 무시하고 ConfigDataLocationNotFoundException항상 애플리케이션을 시작하려면 해당 속성을 사용할 수 있습니다 . 시스템/환경 변수를 사용 하거나 이를 통해 spring.config.on-not-found값을 설정하세요 .ignoreSpringApplication.setDefaultProperties(…​)
+다 . 시스템/환경 변수를 사용 하거나 이를 통해 spring.config.on-not-found값을 설정하세요 .ignoreSpringApplication.setDefaultProperties(…​)
 
 와일드카드 위치
 설정 파일 위치에 *마지막 경로 세그먼트에 해당하는 문자가 포함되어 있으면 와일드카드 위치로 간주됩니다. 와일드카드는 설정이 로드될 때 확장되어 바로 아래 하위 디렉터리도 검사합니다. 와일드카드 위치는 Kubernetes와 같이 설정 속성에 대한 소스가 여러 개인 환경에서 특히 유용합니다.
