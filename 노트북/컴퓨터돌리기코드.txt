@@ -1,0 +1,16 @@
+class Main {
+& public static void main(String[] args) {
+&& int[][] score = {
+&&& {22, 33, 44, 55},
+&&& {21, 55, 66, 77},
+&&& {24, 26, 66, 77}
+&& };
+&& for(int student = 0; student < score.length; student++) {
+ System.out.print((student + 1) + "번 학생의 점수");
+    for (int subject = 0; subject < score[0].length; subject++) {
+   System.out.print(score[student][subject] + " ");   
+}
+System.out.println();
+}
+& }
+}
