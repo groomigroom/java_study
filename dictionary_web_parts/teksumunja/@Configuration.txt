@@ -2,7 +2,8 @@
 과거에는 XML 파일로 작성하던 스프링 빈(Bean) 설정 및 의존성 주입(DI) 코드를, 자바 클래스 형태로 작성할 수 있게 만들어 줍니다. [3, 4] 
 핵심적인 역할과 특징은 다음과 같이 정리할 수 있습니다.
 ## 1. 스프링 빈(Bean) 수동 등록
-@Configuration이 붙은 클래스 내부에서 메서드에 @Bean 어노테이션을 붙여 스프링 컨테이너에 객체를 직접 등록할 수 있습니다. 스프링은 애플리케이션을 구동할 때 이 클래스를 읽어 메서드가 리턴하는 객체들을 빈으로 생성하고 관리합니다. [5, 6, 7] 
+@Configuration이 붙은 클래스 내부에서 메서드에 @Bean 어노테이션을 붙여 스프링 컨테이너에 객체를 직접 등록할 수 있습니다. 
+스프링은 애플리케이션을 구동할 때 이 클래스를 읽어 메서드가 리턴하는 객체들을 빈으로 생성하고 관리합니다. [5, 6, 7] 
 
 @Configurationpublic class AppConfig {
 
@@ -36,15 +37,3 @@
 | 주요 용도 | 일반적인 비즈니스 로직 클래스 자동 등록 (@Service, @Repository 등) | 애플리케이션의 인프라, 환경 설정 및 수동 빈 등록 |
 
 따라서 스프링에서 수동으로 객체들을 엮어주는 설정 클래스를 만들 때는 반드시 @Configuration을 붙여야 안전하게 싱글톤 기반의 의존성 주입을 처리할 수 있습니다. [8, 10] 
-현재 작성 중이신 설정 코드에서 특정 라이브러리를 빈으로 등록하려 하시나요? 아니면 싱글톤 멀티스레드 이슈 관련해서 찾아보시던 중인지 말씀해 주시면 상황에 맞게 더 자세히 설명해 드릴게요!
-
-[1] [https://aliencoder.tistory.com](https://aliencoder.tistory.com/177)
-[2] [https://velog.io](https://velog.io/@yerinnnn/Configuration%EB%9E%80)
-[3] [https://www.youtube.com](https://www.youtube.com/watch?v=yZzUxEp97Ho&t=180)
-[4] [https://ittrue.tistory.com](https://ittrue.tistory.com/226)
-[5] [https://blogshine.tistory.com](https://blogshine.tistory.com/551)
-[6] [https://www.quora.com](https://translate.google.com/translate?u=https://www.quora.com/What-is-configuration-in-Java&hl=ko&sl=en&tl=ko&client=sge)
-[7] [https://pabeba.tistory.com](https://pabeba.tistory.com/190)
-[8] [https://chanhan.tistory.com](https://chanhan.tistory.com/entry/Spring-Spring-Boot-Configuration%EC%9D%B4%EB%9E%80)
-[9] [https://heesutory.tistory.com](https://heesutory.tistory.com/13)
-[10] [https://devjh.tistory.com](https://devjh.tistory.com/309)
