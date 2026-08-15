@@ -3,3 +3,9 @@ https://docs.spring.io/spring-boot/reference/using/spring-beans-and-dependency-i
 
 
 https://docs.spring.io/spring-boot/reference/using/using-the-springbootapplication-annotation.html
+
+
+
+아래꺼까지 어노테이션 분석함
+
+https://docs.spring.io/spring-boot/reference/features/spring-application.html
