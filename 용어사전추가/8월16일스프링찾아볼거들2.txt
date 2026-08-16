@@ -1,0 +1,31 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties("my")
+public class MyProperties {
+
+	// fields...
+
+	final MyBean myBean;
+
+	private String name;
+
+
+	@Autowired
+	public MyProperties(MyBean myBean) {
+		this.myBean = myBean;
+	}
+
+	// getters / setters...
+
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+}
