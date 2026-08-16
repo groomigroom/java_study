@@ -133,3 +133,25 @@ public class ThirdPartyConfiguration {
 	}
 
 }
+
+
+
+-0-----------------------
+
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties("my.main-project.person")
+public class MyPersonProperties {
+
+	private String firstName;
+
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+}
