@@ -6,5 +6,8 @@
 @NoArgsConstuctor
 @AllArgsConstuctor
 public class UserEntity {
-  @Id
+  @Id @GenteratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  @Column
 }
