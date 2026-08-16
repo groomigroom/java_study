@@ -1,75 +1,7 @@
 https://docs.spring.io/spring-boot/reference/features/external-config.html
 
 
-@ConfigurationPropertiesScan
-@Configuration
 
-
-----------------------------
-
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-
-@SpringBootApplication
-@ConfigurationPropertiesScan({ "com.example.app", "com.example.another" })
-public class MyApplication {
-
-}
-
----------------------------
-
-@ConfigurationProperties
-@EnableConfigurationProperties
-@ConfigurationProperties
-@ConfigurationProperties
-@ComponentJavaBean
-@ConfigurationProperties
-
-=========================================
-
-
-import org.springframework.stereotype.Service;
-
-@Service
-public class MyService {
-
-	private final MyProperties properties;
-
-	public MyService(MyProperties properties) {
-		this.properties = properties;
-	}
-
-	public void openConnection() {
-		Server server = new Server(this.properties.getRemoteAddress());
-		server.start();
-		// ...
-	}
-
-	// ...
-
-}
--------------------
-
-
-@ConfigurationProperties
-
------------------------------------
-
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration(proxyBeanMethods = false)
-public class ThirdPartyConfiguration {
-
-	@Bean
-	@ConfigurationProperties("another")
-	public AnotherComponent anotherComponent() {
-		return new AnotherComponent();
-	}
-
-}
 접두사 로 정의된 모든 JavaBean 속성은 앞의 예제와 유사한 방식으로 another해당 빈에 매핑됩니다 .AnotherComponentSomeProperties
 
 이완 결합
