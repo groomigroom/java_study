@@ -7,6 +7,8 @@ public enum SocialProviderType {
 
   private final String description;
 
-  
+  SocialProviderType (String description) {
+    this.description = description;
+  }
   
 }
