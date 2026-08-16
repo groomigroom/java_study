@@ -18,5 +18,10 @@ public class UserEntity {
   @Column (name = "is_lock", nullable = false)
   private Boolean isLock;
 
-  @Column (name = "is_social", nullable
+  @Column (name = "is_social", nullable = false)
+  private Boolean isSocial;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "social_provider_type")
+  
 }
