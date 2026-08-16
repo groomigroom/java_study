@@ -1,5 +1,3 @@
-
- @Value
  @ConfigurationProperties
 SpringApplication.setDefaultProperties(Map)
 @PropertySource
