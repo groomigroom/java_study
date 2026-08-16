@@ -64,3 +64,72 @@ public class SomeProperties {
 
 00000000000000000000000000000000
 
+@ConfigurationPropertiesScan
+@Configuration
+
+
+----------------------------
+
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+
+@SpringBootApplication
+@ConfigurationPropertiesScan({ "com.example.app", "com.example.another" })
+public class MyApplication {
+
+}
+
+---------------------------
+
+@ConfigurationProperties
+@EnableConfigurationProperties
+@ConfigurationProperties
+@ConfigurationProperties
+@ComponentJavaBean
+@ConfigurationProperties
+
+=========================================
+
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyService {
+
+	private final MyProperties properties;
+
+	public MyService(MyProperties properties) {
+		this.properties = properties;
+	}
+
+	public void openConnection() {
+		Server server = new Server(this.properties.getRemoteAddress());
+		server.start();
+		// ...
+	}
+
+	// ...
+
+}
+-------------------
+
+
+@ConfigurationProperties
+
+-----------------------------------
+
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration(proxyBeanMethods = false)
+public class ThirdPartyConfiguration {
+
+	@Bean
+	@ConfigurationProperties("another")
+	public AnotherComponent anotherComponent() {
+		return new AnotherComponent();
+	}
+
+}
