@@ -35,5 +35,11 @@ public class UserEntity {
   @Column (name = "email)
   private String email;
 
-  
+  @CreatedDate
+  @Column (name = "created_date", updatable = false)
+  private LocalDateTime createdDate;
+
+  @LastModifiedDate
+  @Column (name = "updated_date")
+  private LocalDateTime updatedDate;
 }
