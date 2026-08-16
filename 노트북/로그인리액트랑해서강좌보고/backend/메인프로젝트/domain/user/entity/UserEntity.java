@@ -23,5 +23,11 @@ public class UserEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = "social_provider_type")
+  private SocialProviderType socialProviderType;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role_type", nullable = false)
+  private UserRoleType roleType;
+
   
 }
