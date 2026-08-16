@@ -1,1 +1,10 @@
-JpaAuditingConfig.java
+패키지 뭐라 뜨고;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@Configuration
+@EnableJpaAuditing
+public class JpaAuditingConfig {
+  
+}
