@@ -9,50 +9,10 @@ useContainer
 @Import
 @Name
 @DefaultValue 
+@ConfigurationProperties
+@Configuration
 
-
-my.service.enabled=true
-구속될 것입니다new MyProperties(true, null, null)
-
-security완전히 기본 인스턴스로 바인딩을 트리거하려면 빈 속성을 정의할 수 있습니다 Security.
-
-YAML의 경우 다음 구문을 사용할 수 있습니다.
-
-my:
-  service:
-    enabled: true
-    security: {}
-다음과 같은 Properties기능을 사용할 수 있습니다.
-
-my.service.enabled=true
-my.service.security=
-구속될 것입니다new MyProperties(true, null, new Security(null, null, List.of("USER")))
-
-속성이 누락된 경우에도 항상 null이 아닌 인스턴스를 바인딩하려면 Security빈 어노테이션을 사용할 수 있습니다 @DefaultValue.
-
-자바
-
-코틀린
-
-	public MyProperties(boolean enabled, InetAddress remoteAddress, @DefaultValue Security security) {
-		this.enabled = enabled;
-		this.remoteAddress = remoteAddress;
-		this.security = security;
-	}
-Kotlin을 사용할 때는 기본값이 없는 username`and` 매개변수를 nullable로 선언해야 합니다.password
-기본값
-구성 속성에 정의된 기본값은 반영되지 않습니다 Environment. 위 예시에서 바인딩된 enabled속성은 기본값 입니다 .MyPropertiesmy.servicefalse
-
-하지만 사용자가 해당 속성을 설정하지 않으면 해당 값은 my.service.enabled사용할 수 없습니다 . 구체적으로, 이는 명시적으로 기본값을 제공하지 않고 구성 속성에서 또는 를 자리 표시자로 사용하는 것을 방지합니다. 예를 들어 구현에서 해당 속성에 대해 를 쿼리해야 하는 경우 기본값도 함께 제공해야 합니다.Environmentfalse@Value(${"my.service.enabled"})my.service.enabledEnvironmentCondition
-
-@ConfigurationProperties 어노테이션이 적용된 타입 활성화
-Spring Boot는 타입을 바인딩 @ConfigurationProperties하고 이를 빈으로 등록하는 인프라를 제공합니다. 클래스별로 구성 속성을 활성화하거나, 컴포넌트 스캔과 유사한 방식으로 작동하는 구성 속성 스캔 기능을 활성화할 수 있습니다.
-
-때때로 `@` 어노테이션이 있는 클래스는 @ConfigurationProperties스캔에 적합하지 않을 수 있습니다. 예를 들어, 자체 자동 구성을 개발하거나 조건부로 활성화하려는 경우입니다. 이러한 경우에는 `@` 어노테이션을 사용하여 처리할 유형 목록을 지정하세요 . 다음 예제와 같이 @EnableConfigurationProperties모든 클래스에 이 작업을 수행할 수 있습니다 .@Configuration
-
-자바
-
-코틀린
+예제 중
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -62,9 +22,8 @@ import org.springframework.context.annotation.Configuration;
 public class MyConfiguration {
 
 }
-자바
 
-코틀린
+------------------------
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -72,6 +31,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class SomeProperties {
 
 }
+
+
 구성 속성 스캔을 사용하려면 @ConfigurationPropertiesScan애플리케이션에 어노테이션을 추가하세요. 일반적으로 어노테이션이 지정된 메인 애플리케이션 클래스에 추가 @SpringBootApplication하지만, 어떤 클래스에도 추가할 수 있습니다 @Configuration. 기본적으로 스캔은 어노테이션을 선언한 클래스의 패키지에서 수행됩니다. 스캔할 특정 패키지를 정의하려면 다음 예제와 같이 지정할 수 있습니다.
 
 자바
