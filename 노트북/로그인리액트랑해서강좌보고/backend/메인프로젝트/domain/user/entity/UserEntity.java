@@ -9,5 +9,8 @@ public class UserEntity {
   @Id @GenteratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
+  @Column (name = "username", unique = true, nullable = false, updatable = false)
+  private String username;
+
+  
 }
