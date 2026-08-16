@@ -1,3 +1,5 @@
+패키지 뭐라 뜨고
+
 import lombok.Getter;
 
 @Getter
