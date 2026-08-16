@@ -29,3 +29,38 @@ public class MyProperties {
 
 
 }
+
+
+@ConstructorBinding
+@EnableConfigurationPropertiesuseContainer
+useContainer
+@Component
+@Bean
+@Import
+@Name
+@DefaultValue 
+@ConfigurationProperties
+@Configuration
+
+예제 중
+
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(SomeProperties.class)
+public class MyConfiguration {
+
+}
+
+------------------------
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties("some.properties")
+public class SomeProperties {
+
+}
+
+00000000000000000000000000000000
+
