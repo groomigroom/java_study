@@ -1,0 +1,118 @@
+th:href="@{/products/{id}(id=${product.id}) 찾기
+
+
+네. 이 코드는 Thymeleaf에서 동적으로 URL을 만드는 표현식입니다.
+
+th:href="@{/products/{id}(id=${product.id})}"
+
+쉽게 말하면:
+
+> product.id 값을 /products/{id}의 {id} 자리에 넣어서 링크를 만든다.
+
+
+
+1. 각각의 의미
+
+/products/{id}
+
+여기서 {id}는 URL의 변수 자리입니다.
+
+그리고
+
+(id=${product.id})
+
+는
+
+> {id}에 product.id의 값을 넣어라
+
+
+
+라는 뜻입니다.
+
+예를 들어 product.id가 10이라면:
+
+th:href="@{/products/{id}(id=${product.id})}"
+
+→ 실제 HTML에서는 대략
+
+href="/products/10"
+
+이 됩니다.
+
+
+---
+
+2. 전체 예제
+
+상품 목록에서 상품 상세 페이지로 이동한다고 해보겠습니다.
+
+<tr th:each="product : ${products}">
+    <td th:text="${product.name}"></td>
+    <td>
+        <a th:href="@{/products/{id}(id=${product.id})}">
+            상세보기
+        </a>
+    </td>
+</tr>
+
+상품 데이터가 다음과 같다면:
+
+product.id	product.name
+
+1	아이폰
+2	갤럭시
+3	맥북
+
+
+Thymeleaf가 자동으로 다음과 같이 만들어줍니다.
+
+상세보기 → /products/1
+상세보기 → /products/2
+상세보기 → /products/3
+
+
+---
+
+3. Spring Controller에서는 이렇게 받음
+
+@GetMapping("/products/{id}")
+public String productDetail(@PathVariable Long id, Model model) {
+    
+    // id를 이용해서 상품 조회
+    
+    return "products/detail";
+}
+
+여기서 URL의
+
+/products/10
+
+의 10이
+
+@PathVariable Long id
+
+로 전달됩니다.
+
+즉 전체 흐름은:
+
+product.id = 10
+       ↓
+th:href="@{/products/{id}(id=${product.id})}"
+       ↓
+/products/10
+       ↓
+@GetMapping("/products/{id}")
+       ↓
+@PathVariable Long id = 10
+
+핵심만 기억하면
+
+@{/products/{id}(id=${product.id})}
+
+은
+
+/products/{id} URL에서 {id} 부분을 ${product.id} 값으로 바꿔서 링크를 만들어라
+
+라는 의미입니다.
+
+참고로 Thymeleaf에서는 @{...}가 URL 표현식, ${...}가 변수/값을 가져오는 표현식이라고 생각하면 이해하기 쉽습니다.
