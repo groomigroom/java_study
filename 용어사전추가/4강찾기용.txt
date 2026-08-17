@@ -21,3 +21,12 @@ public Long addUser(UserRequestDTO dto) {
 
     return userRepository.save(entity).getId();
 }
+
+
+-------------------
+
+
+ domain > user > repository > UserRepository.java : 메소드 추가
+
+Optional<UserEntity> findByUsernameAndIsLockAndIsSocial(String username, Boolean isLock, Boolean isSocial);
+​
