@@ -185,3 +185,69 @@ public Long updateUser(UserRequestDTO dto) throws AccessDeniedException {
 
 
 -----------------------------------------
+
+제공해주신 코드는 Spring Security와 Spring Data JPA를 활용하여 로그인한 본인의 회원 정보만 안전하게 수정하는 비즈니스 로직(Service 레이어)입니다.
+각 코드 라인이 가진 의미와 동작 과정을 하나씩 자세히 설명해 드리겠습니다.
+------------------------------
+## 1. @Transactional 및 메서드 선언부
+
+@Transactionalpublic Long updateUser(UserRequestDTO dto) throws AccessDeniedException {
+
+
+* @Transactional: 데이터베이스 작업을 하나의 트랜잭션으로 묶습니다. 정보 수정 중 오류가 발생하면 변경 사항을 모두 취소(Rollback)하고, 성공하면 데이터베이스에 최종 반영(Commit)합니다.
+* throws AccessDeniedException: 메서드 내부에서 권한 문제가 발생했을 때, 호출한 곳(Controller 등)으로 AccessDeniedException 예외를 던지겠다고 선언합니다.
+
+------------------------------
+## 2. 본인 검증 로직 (Spring Security 활용)
+
+// 본인만 수정 가능 검증
+String sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();if (!sessionUsername.equals(dto.getUsername())) {
+    throw new AccessDeniedException("본인 계정만 수정 가능");
+}
+
+
+* SecurityContextHolder.getContext().getAuthentication().getName():
+* 현재 시스템(Spring Security 체계)에 로그인한 사용자의 아이디(Username)를 가져오는 공식적인 방법입니다. 세션이나 토큰에 저장된 인증 정보를 기반으로 합니다.
+* if (!sessionUsername.equals(...)):
+* 로그인한 사람의 아이디(sessionUsername)와 수정을 요청한 아이디(dto.getUsername())가 일치하는지 비교합니다.
+* throw new AccessDeniedException(...):
+* 만약 다른 사람의 아이디로 수정을 시도했다면, "본인 계정만 수정 가능"이라는 메시지와 함께 접근 거부 예외를 발생시켜 실행을 즉시 중단합니다. (보안 위반 방지)
+
+------------------------------
+## 3. 회원 데이터 조회 (JPA 활용)
+
+// 조회
+UserEntity entity = userRepository.findByUsernameAndIsLockAndIsSocial(dto.getUsername(), false, false)
+        .orElseThrow(() -> new UsernameNotFoundException(dto.getUsername()));
+
+
+* userRepository.findByUsernameAndIsLockAndIsSocial(..., false, false):
+* 앞서 공부했던 쿼리 메서드입니다. 요청한 아이디(dto.getUsername())를 가지면서, 잠기지 않고(isLock=false), 소셜 계정이 아닌(isSocial=false) 일반 유저를 DB에서 찾습니다.
+* .orElseThrow(...):
+* Optional 처리 방식입니다. 조건에 맞는 유저가 DB에 존재하면 entity 변수에 값을 담고, 존재하지 않으면 괄호 안의 익명 함수(->)를 실행하여 UsernameNotFoundException 예외를 발생시킵니다.
+
+------------------------------
+## 4. 회원 정보 수정 및 저장
+
+// 회원 정보 수정
+entity.updateUser(dto);
+return userRepository.save(entity).getId();
+
+
+* entity.updateUser(dto):
+* 객체지향적인 코드 패턴(도메인 주도 설계 형태)입니다. UserEntity 클래스 내부에 정의된 updateUser 메서드를 호출하여, dto에 담긴 새로운 정보(예: 닉네임, 이메일 등)를 엔티티 객체에 덮어씌웁니다.
+* userRepository.save(entity).getId():
+* 변경된 정보가 담긴 entity를 데이터베이스에 반영(UPDATE 쿼리 실행)하고, 수정이 완료된 사용자의 고유 식별자(ID값)를 반환합니다.
+   * 참고: 영속성 컨텍스트(JPA 특성) 덕분에 @Transactional 환경에서는 사실 save()를 생략해도 메서드가 끝날 때 자동으로 수정사항이 DB에 반영(더티 체킹)되지만, 명시적으로 적어 가독성을 높인 코드입니다.
+
+------------------------------
+## 💡 이 코드의 전체 흐름 요약
+
+   1. "너 로그인한 본인 맞아?" 확인 (SecurityContextHolder)
+   2. "정상적이고 활성화된 일반 회원 맞아?" DB 조회 (findBy...)
+   3. "정보 수정할게" 데이터 변경 및 저장 (updateUser & save)
+
+------------------------------
+혹시 이 메서드와 연결되는 UserEntity 내부의 updateUser(dto) 메서드가 어떻게 구현되어 있는지 궁금하신가요? 혹은 이 서비스를 호출하는 Controller 레이어 작성법 등 다음에 필요한 내용이 있다면 편하게 말씀해 주세요!
+
+
