@@ -1,7 +1,4 @@
-아니요. 저 형태는 올바른 Thymeleaf 문법이 아닙니다.
-작성하신:
-html
-th:style="@{border: 5px solid {fix}(fix=${album.fix})}"
+thymeleaf_inline_style.txt
 
 여기서 @{...}는 URL 표현식이기 때문에 CSS 스타일을 넣을 때 사용하는 문법이 아닙니다.
 1. album.fix 값을 CSS에 넣고 싶다면
