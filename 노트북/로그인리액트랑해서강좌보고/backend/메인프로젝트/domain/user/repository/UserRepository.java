@@ -1,8 +1,7 @@
-패키지 뭐라 뜨고;
+패키지 뭐라 뜨게
 
-import org.example.backend.domain.user.entity.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+JpaRepository<UserEntity 이거 두가지 뜨게;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-  
+    Boolean existsByUsername (String username);
 }
