@@ -1,0 +1,31 @@
+@Table(name = "user_user_entity")는 자바 스프링 부트에서 특정 엔티티(클래스)를 데이터베이스의 user_user_entity라는 
+이름의 테이블과 매핑(연결)하겠다고 선언하는 JPA(Java Persistence API) 어노테이션입니다.
+자세한 의미와 필요한 의존성(Dependency)은 다음과 같습니다.
+## 주요 의미
+
+* 테이블 이름 명시: 이 어노테이션이 붙은 클래스는 DB의 user_user_entity 테이블과 데이터를 주고받습니다.
+* 기본값 재정의: 어노테이션을 생략하면 클래스 이름(예: UserUserEntity)을 테이블 이름으로 자동 사용하지만, 이를 직접 지정하고 싶을 때 사용합니다.
+* 예약어 회피: user는 SQL의 예약어(Reserved Word)인 경우가 많아, DB 오류를 피하기 위해 테이블 이름을 user_user_entity 등으로 우회할 때 자주 씁니다.
+
+## 소속 스타터 의존성 (Start Dependency)
+이 어노테이션을 사용하려면 Spring Data JPA 의존성이 필요합니다. 빌드 도구에 따라 아래 내용을 추가해야 합니다.
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+------------------------------
+추가적인 연동이나 설정을 도와드릴 수 있습니다. 필요하시다면 다음 내용을 알려주세요:
+
+* 사용 중인 데이터베이스 종류 (예: MySQL, PostgreSQL, H2 등)
+* 테이블을 생성할 때 함께 연동할 기본키(PK) 설정 방법
+* 에러가 발생하고 있다면 해당 에러 메시지
+
+어떤 부분을 더 자세히 알아볼까요?
+
