@@ -1,1 +1,47 @@
 https://jakarta.ee/specifications/annotations/3.0/apidocs/jakarta/annotation/PreDestroy.html
+
+
+@PreDestroy는 스프링 컨테이너가 관리하는 빈(Bean)이 소멸되기 직전에 호출될 메서드를 지정하는 어노테이션입니다. 이 어노테이션이 속한 기본 스타터 의존성은 spring-boot-starter입니다. [1, 2, 3, 4] 
+## @PreDestroy의 의미와 역할
+
+* 
+* 소멸 전 콜백 함수: 스프링 컨테이너가 종료되거나 해당 빈이 소멸(Destroy)되기 직전에 실행해야 하는 뒷정리 코드를 정의합니다. [2, 5] 
+* 주요 용도: 데이터베이스 연결 종료(Connection Close), 네트워크 소켓 닫기, 보유하고 있던 외부 리소스 반환 등이 있습니다. [3, 5] 
+* 표준 기술: 스프링 자체 기술이 아닌 자바 표준(JSR-250) 라이브러리이므로 스프링이 아닌 다른 컨테이너 환경에서도 동일하게 작동합니다. [6] 
+* 
+
+## 속해있는 Start Dependency
+@PreDestroy는 자바 표준 라이브러리인 jakarta.annotation-api에 포함되어 있습니다.
+스프링 부트 환경에서는 별도로 의존성을 추가할 필요가 없는데, 이는 모든 스프링 부트 스타터의 최상위 부모인 spring-boot-starter에 이미 기본 탑재(내장)되어 있기 때문입니다. [1, 7, 8, 9] 
+
+* 
+* 스프링 부트 3.x 이상: jakarta.annotation.PreDestroy 패키지를 사용합니다.
+* 스프링 부트 2.x 이하: javax.annotation.PreDestroy 패키지를 사용합니다. [10, 11] 
+* 
+
+따라서 spring-boot-starter-web이나 spring-boot-starter-data-jpa 등 어떤 스타터 라이브러리를 사용하더라도 아무런 추가 설정 없이 곧바로 사용할 수 있습니다. [4, 12] 
+
+import jakarta.annotation.PreDestroy; // 스프링 부트 3.x 기준import org.springframework.stereotype.Component;
+
+@Componentpublic class DatabaseClient {
+
+    @PreDestroy
+    public void close() {
+        System.out.println("안전하게 자원을 해제하고 연결을 종료합니다.");
+    }
+}
+
+혹시 특정 데이터베이스나 네트워크 자원을 안전하게 반환하는 코드를 짜는 데 어려움을 겪고 계신가요? 어떤 자원을 정리(Clean up)하려 하시는지 알려주시면 알맞은 소멸 로직을 제안해 드릴게요.
+
+[1] [https://mvnrepository.com](https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api/used-by)
+[2] [https://hohodu.tistory.com](https://hohodu.tistory.com/entry/SpringBoot-PostConstructd%EC%99%80-PreDestroy)
+[3] [https://wecandev.tistory.com](https://wecandev.tistory.com/105)
+[4] [https://j2su0218.tistory.com](https://j2su0218.tistory.com/1518)
+[5] [https://jindevelopetravel0919.tistory.com](https://jindevelopetravel0919.tistory.com/203)
+[6] [https://dodote10.tistory.com](https://dodote10.tistory.com/502)
+[7] [https://docs.openrewrite.org](https://docs.openrewrite.org/recipes/java/migrate/jakarta/removejakartaannotationdependencywhenmanagedbyspringboot)
+[8] [https://medium.com](https://medium.com/@grbulegoda/annotations-jakartaee-and-spring-87e6329142af)
+[9] [https://github.com](https://github.com/spring-projects/spring-boot/issues/34170)
+[10] [https://github.com](https://github.com/openrewrite/rewrite-migrate-java/issues/481)
+[11] [https://www.inflearn.com](https://www.inflearn.com/community/questions/1171198/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EB%B2%95-for-%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B6%80%ED%8A%B8-3-2-%EC%9D%B4%EC%83%81-%EC%9E%90%EB%B0%94-%EB%B2%84%EC%A0%84-17-%EC%9D%B4%EC%83%81)
+[12] [https://github.com](https://github.com/spring-projects/spring-boot/issues/49877)
