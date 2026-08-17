@@ -1,0 +1,52 @@
+자바 스프링 부트에서 .builder()는 빌더 패턴(Builder Pattern)을 구현하여 객체를 안전하고 가독성 있게 생성하는 메서드입니다.
+이 기능은 스프링 부트 자체 기능이 아니라, 개발 편의를 돕는 Lombok(롬복) 라이브러리가 제공하는 @Builder 어노테이션을 통해 자동 생성됩니다.
+## 💡 빌더 패턴(.builder())의 의미와 장점
+기존의 생성자(new User("홍길동", 20)) 방식과 달리, 각 필드에 어떤 값이 들어가는지 명확하게 지정할 수 있습니다. [1] 
+
+* 
+* 가독성 향상: User.builder().name("홍길동").age(20).build(); 형태로 작성하여 가전 필드명을 한눈에 볼 수 있습니다.
+* 순서 무관: 생성자와 달리 파라미터의 입력 순서가 바뀌어도 상관없습니다.
+* 유연성: 필요한 데이터만 골라서 세팅할 수 있으며, 누락된 필드는 기본값(null 등)으로 채워집니다.
+* 
+
+------------------------------
+## 📦 속해있는 Start Dependency (의존성 설정)
+스프링 부트 프로젝트를 생성할 때 Lombok을 추가하면 됩니다. 설정 파일에 들어가는 공식 의존성 명칭은 다음과 같습니다. [2] 
+## 1. Gradle (build.gradle)
+
+dependencies {
+    // Lombok 라이브러리 등록
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+## 2. Maven (pom.xml) [3] 
+
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <optional>true</optional>
+</dependency>
+
+------------------------------
+## 🛠️ 실제 사용 예시
+엔티티(Entity)나 DTO 클래스 위에 @Builder 어노테이션만 붙여주면 바로 .builder()를 사용할 수 있습니다.
+
+import lombok.Builder;import lombok.Getter;
+
+@Getter
+@Builder // 이 어노테이션 덕분에 .builder() 사용 가능!public class Member {
+    private String name;
+    private String email;
+}
+// 실제 사용 환경
+Member member = Member.builder()
+                      .name("이순신")
+                      .email("lee@example.com")
+                      .build();
+
+현재 작성 중인 코드에 @Builder를 붙였는데도 .builder() 메서드를 인식하지 못하는 컴파일 에러가 발생했나요? 아니면 인텔리제이(IntelliJ) 같은 IDE 설정 문제를 겪고 계신가요? 상황을 말씀해 주시면 해결 방법을 안내해 드리겠습니다.
+
+[1] [https://hjhng125.github.io](https://hjhng125.github.io/spring/@builder/)
+[2] [https://robin00q.tistory.com](https://robin00q.tistory.com/7)
+[3] [https://blog.naver.com](https://blog.naver.com/joymrk/222440791855?viewType=pc)
