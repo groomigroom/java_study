@@ -1,0 +1,107 @@
+이 코드는 스프링 시큐리티에서 기본으로 제공하는 폼 로그인 대신, JSON 형식(REST API)으로 들어오는 로그인 요청을 처리하기 위한 커스텀 인증 필터입니다.
+기본 UsernamePasswordAuthenticationFilter는 application/x-www-form-urlencoded(Form 데이터) 형식만 읽을 수 있기 때문에, React나 Vue 같은 프론트엔드에서 POST /login으로 JSON 데이터를 보낼 때 이를 파싱하여 인증을 수행하기 위해 작성된 코드입니다.
+각 부분의 역할을 상세히 나누어 설명해 드리겠습니다.
+------------------------------
+## 1. 클래스 정의 및 상속
+
+public class LoginFilter extends AbstractAuthenticationProcessingFilter {
+
+
+* AbstractAuthenticationProcessingFilter: 스프링 시큐리티에서 사용자의 인증 요청을 가로채서 처리하는 기본 추상 클래스입니다. 이를 상속받아 원하는 방식(JSON 파싱 등)의 로그인 필터를 커스텀할 수 있습니다.
+
+------------------------------
+## 2. 상수 및 필드 설정
+
+public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";public static final String SPRING_SECURITY_FORM_PASSWORD_KEY = "password";
+private static final RequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = 
+    PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.POST, "/login");
+private String usernameParameter = SPRING_SECURITY_FORM_USERNAME_KEY;private String passwordParameter = SPRING_SECURITY_FORM_PASSWORD_KEY;
+
+
+* username / password 키: JSON 데이터에서 아이디와 비밀번호를 추출할 때 사용할 Key 이름입니다. (기본값은 "username", "password")
+* DEFAULT_ANT_PATH_REQUEST_MATCHER: 이 필터가 작동할 요청을 정의합니다. POST 메서드로 들어오는 /login 주소의 요청만 이 필터가 가로채서 처리하게 됩니다.
+
+------------------------------
+## 3. 생성자 (Constructor)
+
+public LoginFilter(AuthenticationManager authenticationManager) {
+    super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
+}
+
+
+* 부모 클래스의 생성자(super(...))를 호출하면서 어떤 요청을 가로챌지(URL 매처)와 실제 인증을 처리할 핵심 객체(AuthenticationManager)를 주입합니다.
+* AuthenticationManager는 아이디/비밀번호가 맞는지 DB와 대조하는 등 실제 인증 검증을 총괄하는 컨트롤러 역할을 합니다.
+
+------------------------------
+## 4. 핵심 인증 메서드 (attemptAuthentication)
+사용자가 로그인을 시도할 때 가장 먼저 호출되어 인증을 진행하는 메서드입니다.
+## ① HTTP 메서드 검증
+
+if (!request.getMethod().equals("POST")) {
+    throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+}
+
+
+* 로그인 요청은 반드시 POST 방식이어야 합니다. GET, PUT 등 다른 방식으로 들어오면 예외(AuthenticationServiceException)를 발생시켜 차단합니다.
+
+## ② JSON 본문(Body) 파싱
+
+Map<String, String> loginMap;try {
+    ObjectMapper objectMapper = new ObjectMapper();
+    ServletInputStream inputStream = request.getInputStream();
+    String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+    
+    loginMap = objectMapper.readValue(messageBody, new TypeReference<>() { });
+} catch (IOException e) {
+    throw new RuntimeException(e);
+}
+
+
+* request.getInputStream(): HTTP 요청 바디에 담긴 원시 데이터(바이트 스트림)를 가져옵니다.
+* StreamUtils.copyToString(...): 바이트 스트림을 UTF-8 인코딩의 문자열(JSON 문자열)로 변환합니다.
+* objectMapper.readValue(...): Jackson 라이브러리의 ObjectMapper를 사용해 JSON 문자열(예: {"username": "user1", "password": "pwd"})을 자바의 Map<String, String> 구조로 변환합니다.
+
+## ③ 아이디 및 비밀번호 추출
+
+String username = loginMap.get(usernameParameter);
+username = (username != null) ? username.trim() : "";
+
+String password = loginMap.get(passwordParameter);
+password = (password != null) ? password : "";
+
+
+* Map에서 "username"과 "password"를 키로 사용해 사용자가 입력한 값을 꺼냅니다.
+* 값이 null일 경우를 대비해 예외 처리를 하고, 아이디의 경우 앞뒤 공백을 제거(trim())해 줍니다.
+
+## ④ 인증 토큰 생성 및 인증 위임
+
+UsernamePasswordAuthenticationToken authRequest = 
+    UsernamePasswordAuthenticationToken.unauthenticated(username, password);
+
+setDetails(request, authRequest);
+return this.getAuthenticationManager().authenticate(authRequest);
+
+
+* UsernamePasswordAuthenticationToken.unauthenticated(...): 입력받은 아이디와 비밀번호를 담아 아직 인증되지 않은(unauthenticated) 토큰 객체를 생성합니다.
+* setDetails(request, authRequest): 요청한 클라이언트의 IP 주소나 세션 ID 같은 부가적인 정보(WebAuthenticationDetails)를 토큰에 담아줍니다. (아래 5번 메서드 참고)
+* this.getAuthenticationManager().authenticate(authRequest): 생성한 토큰을 AuthenticationManager에게 넘겨주며 "이 정보가 맞는지 DB와 확인해줘"라고 인증을 요청합니다. 내부적으로 DB의 회원 정보와 대조한 뒤, 일치하면 인증이 완료된 토큰을 반환합니다.
+
+------------------------------
+## 5. 부가 정보 설정 메서드 (setDetails)
+
+protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
+    authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
+}
+
+
+* 로그인 요청을 보낸 사용자의 IP 주소, 원격 호스트 정보 등 서블릿 리퀘스트에서 얻을 수 있는 정보들을 인증 토큰의 details 필드에 채워 넣는 역할을 합니다. 추후 로깅이나 보안 감사 시 활용될 수 있습니다.
+
+------------------------------
+## 💡 이 필터를 사용할 때 주의점 및 향후 구현할 부분
+이 코드는 인증을 시작하고 시도하는 부분까지만 구현되어 있습니다. 실제로 완벽히 작동하려면 앞서 보신 SecurityFilterChain 설정과 연동해야 하며, 다음 두 가지 메서드를 이 클래스 내부에 추가로 오버라이딩해야 완벽한 로그인이 완성됩니다.
+
+   1. successfulAuthentication(...): 인증이 성공했을 때 실행되는 메서드입니다. 보통 여기에서 JWT 토큰을 생성하여 응답 헤더나 바디에 실어 클라이언트에게 반환합니다.
+   2. unsuccessfulAuthentication(...): 인증이 실패했을 때(비밀번호 틀림 등) 실행되는 메서드입니다. 실패 메시지나 에러 코드를 JSON 형태로 리턴하도록 구현합니다.
+
+이 필터에 성공/실패 처리 로직(successfulAuthentication)을 추가하는 방법이나, 이전 단계의 SecurityFilterChain에 이 커스텀 필터를 등록하는 방법이 필요하시면 언제든 말씀해 주세요!
+
