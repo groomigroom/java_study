@@ -1,0 +1,57 @@
+https://jakarta.ee/specifications/annotations/3.0/apidocs/jakarta/annotation/PostConstruct.html
+
+
+자바 스프링에서 @PostConstruct는 스프링 빈(Bean)이 생성되고 의존성 주입(DI)이 완료된 직후, 딱 한 번만 실행되는 초기화 메서드를 지정하는 어노테이션입니다. [1] 
+## 💡 핵심 요약
+
+* 
+* 실행 시점: 빈 객체 생성 ➡️ @Autowired 등으로 의존성 주입 완료 ➡️ @PostConstruct 메서드 실행 (초기화 콜백).
+* 주요 목적: 주입받은 외부 빈이나 설정값(@Value)을 활용하여 안전하게 초기 데이터 세팅, 연결 테스트, 기본값 할당 등의 로직을 처리할 때 사용합니다.
+* 기술적 기반: 스프링 전용 기술이 아닌 자바 표준 기술(JSR-250)이므로 스프링 외의 자바 환경에서도 호환됩니다. [2, 3, 4, 5, 6] 
+* 
+
+------------------------------
+## ❓ 일반 생성자(Constructor)와 다른 점 (왜 사용할까?)
+일반 생성자 시점에는 스프링이 의존성을 주입하기 전이므로, 다른 객체나 @Value로 가져오는 설정값이 모두 null 상태입니다. 
+반면 @PostConstruct 시점에는 모든 의존성이 완벽하게 주입된 상태이므로 주입받은 객체를 안전하게 호출할 수 있습니다. [1, 7, 8, 9] 
+
+@Componentpublic class DataService {
+
+    @Autowired
+    private UserRepository userRepository; // 의존성 주입 대상
+
+    @Value("${api.timeout}")
+    private int timeout; // 설정값 주입 대상
+
+    // 1. 일반 생성자: 이 시점에는 userRepository와 timeout이 모두 null 또는 0입니다.
+    public DataService() {
+        // 여기서 userRepository.findAll()을 호출하면 NullPointerException이 발생합니다!
+    }
+
+    // 2. @PostConstruct: 의존성 주입이 끝난 후 스프링이 자동으로 딱 한 번 호출합니다.
+    @PostConstruct
+    public void init() {
+        System.out.println("주입된 타임아웃: " + timeout); // 정상 출력
+        long userCount = userRepository.count();       // 안전하게 사용 가능
+        System.out.println("현재 유저 수: " + userCount);
+    }
+}
+
+------------------------------
+## ⚠️ 사용 시 주의사항
+
+* 
+* 메서드 제약 조건: @PostConstruct가 붙은 메서드는 매개변수(Parameter)를 가질 수 없으며, 반환 타입은 반드시 void여야 합니다. 
+접근 제어자는 주로 public을 쓰지만 private이어도 동작합니다.
+* 서버 구동 속도 저하: @PostConstruct는 애플리케이션이 켜지는 과정(동기적)에서 실행됩니다. 이 메서드 안에서 너무 무거운 
+DB 쿼리를 날리거나 응답이 느린 외부 API를 호출하면 서버가 켜지는 데 오랜 시간이 걸리거나 
+구동에 실패할 수 있으므로 가벼운 로직 위주로 작성해야 합니다. [10] 
+* 
+
+------------------------------
+추가로 궁금한 점이 있으시다면 언제든 말씀해 주세요!
+
+* 
+* @PostConstruct와 반대 역할을 하는 소멸 콜백 어노테이션(@PreDestroy)이 궁금하신가요?
+* 최신 스프링에서 권장하는 생성자 주입 방식(Constructor Injection)과의 연계 사용법을 알고 싶으신가요? [2, 3, 6] 
+* 
