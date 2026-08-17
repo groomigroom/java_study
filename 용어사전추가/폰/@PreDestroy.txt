@@ -1,0 +1,1 @@
+https://jakarta.ee/specifications/annotations/3.0/apidocs/jakarta/annotation/PreDestroy.html
