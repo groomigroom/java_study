@@ -1,0 +1,83 @@
+제시해주신 인터페이스는 서블릿 시절의 구조나 타임리프(Thymeleaf)를 수동으로 렌더링할 때 사용하는 전형적인 레거시 스타일의 코드입니다.
+이를 최신 스프링 부트(Spring Boot) 스타일로 완전히 바꾸고, 이를 활용한 타임리프 작업 예시까지 한 번에 정리해 드리겠습니다.
+------------------------------
+## 1. 스프링 부트 스타일로 코드 전환하기
+스프링 부트(Spring MVC)에서는 IWebExchange, ITemplateEngine, Writer를 파라미터로 직접 제어하지 않습니다. 대신 Model 객체에 데이터를 담고, HTML 뷰(View)의 이름을 문자열(String)로 반환하면 스프링이 알아서 타임리프 엔진을 돌려 화면을 그립니다.
+## 🛠️ 기존 코드 (레거시 / 수동 제어 방식)
+
+public interface IGTVGController {
+    public void process(
+            final IWebExchange webExchange, 
+            final ITemplateEngine templateEngine,
+            final Writer writer) throws Exception;
+}
+
+## ✨ 변경된 스프링 부트 스타일 코드
+
+import org.springframework.ui.Model;
+public interface IGTVGController {
+    // 뷰(HTML 파일명)의 이름을 반환하는 스프링 MVC의 표준 방식입니다.
+    String process(Model model) throws Exception;
+}
+
+------------------------------
+## 2. 위 코드를 이용한 타임리프 구현 예시
+스프링 부트 환경에서 인터페이스를 구현하고, 사용자의 요청을 받아 타임리프 화면을 보여주는 전체 흐름입니다.
+## ① 컨트롤러 클래스 구현 (IGTVGController 상속)
+@Controller 어노테이션을 붙여 스프링 빈으로 등록하고, URL 매핑을 처리합니다.
+
+import org.springframework.stereotype.Controller;import org.springframework.ui.Model;import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller // 1. 스프링 MVC 컨트롤러로 지정public class ProductController implements IGTVGController {
+
+    @GetMapping("/products") // 2. http://localhost:8080/products 요청을 처리
+    @Override
+    public String process(Model model) throws Exception {
+        
+        // 3. 화면(타임리프)에 전달할 데이터 담기 (Key, Value)
+        model.addAttribute("welcomeMessage", "안녕하세요! GTVG 쇼핑몰에 오신 것을 환영합니다.");
+        model.addAttribute("productName", "친환경 텀블러");
+        model.addAttribute("price", 15000);
+        
+        // 4. 리턴값은 렌더링할 타임리프 파일명 (확장자 .html 제외)
+        // templates/product-info.html 파일을 찾아가게 됩니다.
+        return "product-info"; 
+    }
+}
+
+## ② 타임리프 템플릿 파일 생성
+스프링 부트 프로젝트의 src/main/resources/templates/ 폴더 안에 product-info.html 파일을 생성합니다.
+
+<!DOCTYPE html><!-- 타임리프 문법을 쓰기 위한 네임스페이스 선언 -->
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 정보</title>
+</head>
+<body>
+
+    <!-- 컨트롤러에서 model에 담은 'welcomeMessage' 출력 -->
+    <h1 th:text="${welcomeMessage}">기본 환영 메시지 (오류시 출력)</h1>
+    
+    <hr>
+    
+    <h3>현재 상영/판매 중인 상품</h3>
+    <ul>
+        <!-- 'productName'과 'price' 출력 -->
+        <li>상품명: <span th:text="${productName}">상품이름</span></li>
+        <li>가격: <span th:text="${#numbers.formatInteger(price, 3, 'COMMA')} + '원'">0원</span></li>
+    </ul>
+
+</body>
+</html>
+
+------------------------------
+## 💡 왜 이렇게 바꾸나요? (스프링 부트의 장점)
+
+   1. 자동 의존성 주입: ITemplateEngine을 개발자가 직접 가져와서 호출할 필요가 없습니다. 스프링 부트가 내장된 타임리프 엔진을 자동으로 실행합니다.
+   2. 스트림 관리 생략: Writer를 직접 열고 닫거나 예외 처리를 하지 않아도 스프링이 웹 응답(Response) 스트림을 안전하게 제어합니다.
+   3. 가독성 향상: 비즈니스 로직과 웹 기술(HTTP 변수 제어 등)이 분리되어 코드가 훨씬 간결해집니다.
+
+------------------------------
+혹시 기존 코드처럼 Writer나 ITemplateEngine을 무조건 직접 써야 하는 특수한 상황(예: 웹 화면이 아니라 이메일 발송용 HTML을 코드로 직접 생성해야 하는 경우)이신가요? 상황을 말씀해 주시면 그에 맞는 수동 렌더링 예시도 안내해 드리겠습니다.
+
