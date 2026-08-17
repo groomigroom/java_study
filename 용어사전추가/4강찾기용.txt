@@ -30,3 +30,30 @@ public Long addUser(UserRequestDTO dto) {
 
 Optional<UserEntity> findByUsernameAndIsLockAndIsSocial(String username, Boolean isLock, Boolean isSocial);
 ​
+
+-------------------------------
+
+ domain > user > service > UserService.java : 메소드 추가
+
+@Transactional
+public Long updateUser(UserRequestDTO dto) throws AccessDeniedException {
+
+    // 본인만 수정 가능 검증
+    String sessionUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+    if (!sessionUsername.equals(dto.getUsername())) {
+        throw new AccessDeniedException("본인 계정만 수정 가능");
+    }
+
+    // 조회
+    UserEntity entity = userRepository.findByUsernameAndIsLockAndIsSocial(dto.getUsername(), false, false)
+            .orElseThrow(() -> new UsernameNotFoundException(dto.getUsername()));
+
+    // 회원 정보 수정
+    entity.updateUser(dto);
+
+    return userRepository.save(entity).getId();
+}
+
+
+
+-----------------------------------------
