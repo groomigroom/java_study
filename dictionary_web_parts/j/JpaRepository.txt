@@ -1,0 +1,40 @@
+JpaRepository는 스프링 부트에서 데이터베이스의 데이터를 쉽게 관리(C.R.U.D)할 수 있도록 도와주는 핵심 인터페이스입니다.
+이 인터페이스는 spring-boot-starter-data-jpa 의존성(Dependency)에 속해 있습니다. [1] 
+## 핵심 요약
+
+* 역할: SQL 쿼리문 작성 없이 데이터 저장, 조회, 수정, 삭제 가능.
+* 소속: Spring Data JPA 라이브러리.
+* 기반 기술: ORM(Object-Relational Mapping) 기술인 JPA와 Hibernate. [2, 3, 4, 5, 6] 
+
+------------------------------
+## 1. JpaRepository의 의미와 특징
+JpaRepository를 상속받은 인터페이스를 선언하면, 스프링이 실행 시점에 구체적인 구현 객체를 자동으로 생성해 줍니다. [7] 
+
+* 기본 CRUD 자동 제공: save(), findById(), findAll(), deleteById() 등의 메서드를 바로 사용할 수 있습니다.
+* 쿼리 메서드 기능: 메서드 이름만 규칙에 맞게 지으면 엔티티의 필드명을 바탕으로 SQL 쿼리를 자동으로 생성합니다 (예: findByEmail(String email)).
+* 페이징 및 정렬: 대량의 데이터를 나누어 가져오는 Pagination과 Sorting 기능을 기본으로 포함합니다.
+
+## 2. 소속 스타터 의존성 (Starter Dependency)
+JpaRepository를 사용하려면 build.gradle 또는 pom.xml에 다음 스타터 의존성을 추가해야 합니다. [8] 
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+## 3. 스타터(Starter) 내부 구성 요소
+spring-boot-starter-data-jpa를 설치하면 내부적으로 다음 라이브러리들이 함께 자동 빌드됩니다. [9] 
+
+* Spring Data JPA: JpaRepository 인터페이스가 들어있는 핵심 라이브러리.
+* Hibernate: JPA의 실제 기능을 구현한 가장 대표적인 ORM 프레임워크.
+* HikariCP: 데이터베이스 연결을 효율적으로 관리하는 기본 Connection Pool.
+* Spring JDBC: 데이터베이스와의 저수준 연결 및 트랜잭션 관리를 지원. [10, 11] 
+
+------------------------------
+추가로 데이터베이스 연동을 완료하려면 H2, MySQL, PostgreSQL 같은 실제 DB 드라이버 의존성도 빌드 파일에 함께 넣어주어야 합니다.
+현재 준비 중이신 프로젝트의 특정 데이터베이스(예: MySQL, Oracle 등)가 정해지셨나요? 알려주시면 해당 DB에 맞는 의존성 설정과 application.properties 환경 설정 예시를 제공해 드릴 수 있습니다.
