@@ -50,3 +50,34 @@ Member member = Member.builder()
 [1] [https://hjhng125.github.io](https://hjhng125.github.io/spring/@builder/)
 [2] [https://robin00q.tistory.com](https://robin00q.tistory.com/7)
 [3] [https://blog.naver.com](https://blog.naver.com/joymrk/222440791855?viewType=pc)
+
+
+.build();
+
+네, 무조건 작성해야 합니다.
+.build()를 생략하면 최종 객체가 생성되지 않으며, 문법 오류(컴파일 에러)가 발생하여 코드가 실행되지 않습니다.
+------------------------------
+## 💡 .build()를 반드시 써야 하는 이유
+롬복(Lombok)의 @Builder가 만들어내는 빌더 패턴은 크게 두 단계로 작동하기 때문입니다.
+
+   1. .builder() 단계: 실제 객체를 만들기 전, 값을 임시로 담아둘 ‘상자(Builder 내부 클래스)’를 생성하는 단계입니다.
+   2. .build() 단계: 상자에 담긴 값들을 꺼내어, 우리가 진짜 사용하고자 하는 최종 객체(Entity 또는 DTO)로 조립하여 반환하는 단계입니다.
+
+------------------------------
+## 🔍 코드로 보는 차이점
+만약 .build()를 빼먹으면 다음과 같은 문제가 생깁니다.
+
+// ❌ 잘못된 코드 (컴파일 에러 발생!)// 왼쪽은 Member 타입인데, 오른쪽은 MemberBuilder 타입이 반환되므로 타입이 맞지 않습니다.
+Member member = Member.builder()
+                      .name("홍길동")
+                      .email("hong@test.com"); 
+//  올바른 코드// 마지막에 .build()를 호출해야만 비로소 'Member' 객체가 완성되어 변수에 할당됩니다.
+Member member = Member.builder()
+                      .name("홍길동")
+                      .email("hong@test.com")
+                      .build(); 
+
+쉽게 비유하자면, .builder().name("홍길동")은 조립 설명서와 부품을 나열해 둔 상태이고, .build()를 누르는 순간 공장 조립 라인이 가동되어 완제품이 튀어나오는 것과 같습니다.
+혹시 지금 작성 중인 빌더 코드에서 특정한 컴파일 에러나 원치 않는 null 값 전달 문제를 겪고 계시나요? 빌더를 적용하려는 클래스 구조(Entity나 DTO)를 보여주시면 알맞게 교정해 드리겠습니다.
+
+
