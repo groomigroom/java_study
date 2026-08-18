@@ -34,12 +34,34 @@ Maven (pom.xml)
 * 회원가입 직후 자동으로 로그인 처리를 하거나, 테스트 코드에서 가짜 인증 객체를 주입하려는 상황인가요?
 * 비동기 처리(@Async)나 멀티스레드 환경에서 사용자 정보가 무시되는 문제를 겪고 계시나요?
 
+------------------------------
 
-[1] [https://memodayoungee.tistory.com](https://memodayoungee.tistory.com/135)
+SecurityContextHolder.getContext().getAuthentication().getName()은 스프링 시큐리티에서 "현재 시스템을 사용 중인(로그인한) 사용자의 식별자(보통 아이디 또는 이메일)를 가져오는 가장 표준적인 방법"입니다. [1] 
+각 메서드가 체인처럼 연결되어 작동하며, 의미는 다음과 같습니다.
+## 1. 단계별 상세 의미
+
+* SecurityContextHolder: 보안 정보의 전체 저장소입니다.
+* .getContext(): 현재 스레드에 할당된 보안 컨텍스트(SecurityContext)를 가져옵니다.
+* .getAuthentication(): 컨텍이션 내부에서 사용자의 "인증 객체"(Authentication)를 꺼냅니다. 사용자가 누구인지, 인증은 성공했는지에 대한 정보가 들어있습니다.
+* .getName(): 인증 객체에서 사용자를 고유하게 식별할 수 있는 이름(아이디)을 문자열(String)로 반환합니다. [2, 3, 4, 5, 6] 
+
+## 2. 구체적인 동작 방식
+스프링 시큐리티에서 로그인(인증)이 완료되면 사용자의 정보(UserDetails)를 기반으로 인증 객체가 생성됩니다. 이때 UserDetails 인터페이스의 getUsername()으로 반환되는 값이 결국 .getName()의 결과물이 됩니다.
+
+* 일반적인 로그인 시스템: user123, hong@email.com 같은 로그인 ID
+* OAuth2(소셜 로그인) 시스템: 구글이나 카카오에서 제공하는 사용자 고유 일련번호(ID)
+
+------------------------------
+이 코드를 어디에 활용할 계획이신가요? 상황에 맞는 가장 편리한 구현 방법을 추천해 드릴 수 있습니다.
+
+* 컨트롤러(Controller)에서 로그인한 사용자의 ID가 필요하다면, 이 긴 코드 대신 @AuthenticationPrincipal 어노테이션을 파라미터에 써서 더 깔끔하게 가져오는 법을 알려드릴까요?
+* 게시글 등록이나 수정 시 작성자 검증 로직에 이 코드를 적용하는 구체적인 예시가 필요하신가요?
+* 로그인하지 않은 사용자가 접근했을 때 이 코드에서 NullPointerException이 발생하는 예외 처리 방식이 궁금하신가요?
+
+
+[1] [https://blog.naver.com](https://blog.naver.com/tmondev/220310743818)
 [2] [https://www.igloo.co.kr](https://www.igloo.co.kr/security-information/spring-security-part1-%EC%9D%B8%EC%A6%9D%EA%B3%BC-%EC%9D%B8%EA%B0%80-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%EC%8B%A4%EC%A0%84-%ED%99%9C%EC%9A%A9/)
-[3] [https://alstn113.tistory.com](https://alstn113.tistory.com/49)
-[4] [https://back-stead.tistory.com](https://back-stead.tistory.com/32)
-[5] [https://sjh836.tistory.com](https://sjh836.tistory.com/165)
-[6] [https://gregor77.github.io](https://gregor77.github.io/2021/04/19/spring-security-01/)
-[7] [https://miintto.github.io](https://miintto.github.io/docs/spring-security)
-[8] [https://ones1kk.tistory.com](https://ones1kk.tistory.com/entry/Spring-Spring-Security1)
+[3] [https://catsbi.oopy.io](https://catsbi.oopy.io/f9b0d83c-4775-47da-9c81-2261851fe0d0)
+[4] [https://ttasjwi.tistory.com](https://ttasjwi.tistory.com/172)
+[5] [https://trypassit.com](https://trypassit.com/questions/java-spring/12)
+[6] [https://pupupee9.tistory.com](https://pupupee9.tistory.com/103)
