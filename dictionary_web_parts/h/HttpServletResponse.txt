@@ -1,0 +1,35 @@
+HttpServletResponse는 서버가 클라이언트(브라우저)에게 보낼 HTTP 응답 정보를 생성하고 제어하는 객체입니다. [1]
+이 객체 역시 Spring Web 스타터 의존성에 포함되어 있습니다.
+------------------------------
+## 1. HttpServletResponse의 의미와 역할
+자바 표준 웹 기술(Servlet API)의 일부로, HTTP 응답의 헤더, 바디, 상태 코드를 직접 제어할 수 있는 인터페이스입니다. [1] 스프링 부트 컨트롤러에서 파라미터로 주입받아 사용합니다.
+
+* 상태 코드 설정: 200(OK), 404(Not Found), 500(Error) 등을 직접 지정합니다.
+* 헤더 및 쿠키 조작: 응답 헤더에 값을 추가하거나 브라우저에 쿠키를 구워 보냅니다.
+* 리다이렉트 처리: 특정 URL로 페이지를 강제 이동시킵니다.
+* 바디 데이터 직접 출력: 파일 다운로드나 파일 스트리밍 시 데이터를 응답 바디에 직접 씁니다.
+
+@GetMapping("/download")public void downloadFile(HttpServletResponse response) throws IOException {
+    response.setStatus(HttpServletResponse.SC_OK); // 200 상태 코드
+    response.setHeader("Content-Disposition", "attachment; filename=file.txt");
+    response.getWriter().write("Hello World"); // 바디 데이터 출력
+}
+
+------------------------------
+## 2. 속해있는 Start Dependency (의존성)
+앞서 보신 HttpServletRequest와 마찬가지로 Spring Web 스타터에 함께 묶여 있습니다.
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+Spring Web 의존성이 내부적으로 가져오는 서블릿 API 표준 라이브러리(jakarta.servlet-api) 안에 Request와 Response 객체가 모두 포함되어 있습니다.
+------------------------------
+HttpServletResponse를 사용해 쿠키 생성, 파일 다운로드, 리다이렉트 중 어떤 기능을 구현하려고 하시나요? 구현 목적을 알려주시면 ResponseEntity 등 스프링 부트 환경에 최적화된 더 편리한 코드를 안내해 드리겠습니다.
+
