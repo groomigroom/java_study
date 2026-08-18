@@ -1,0 +1,8 @@
+:: (메서드 참조 연산자)
+개념: 자바 8에서 도입된 문법으로, 람다식을 더 간결하게 표현하는 메서드 참조(Method Reference) 기호입니다.
+
+http.csrf(AbstractHttpConfigurer::disable)
+위 예시에서는
+
+역할: (csrf) -> csrf.disable()이라는 람다식 코드를 축약한 것입니다. 
+AbstractHttpConfigurer 클래스 안에 정의된 disable 메서드를 직접 가리켜 실행하겠다는 의미를 가집니다.
