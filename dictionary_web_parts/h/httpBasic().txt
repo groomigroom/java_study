@@ -1,0 +1,21 @@
+http.httpBasic()은 스프링 시큐리티에서 "HTTP 기본 인증(HTTP Basic Authentication)" 방식을 활성화하고 설정하는 메서드입니다.
+## 1. httpBasic()의 의미
+
+* 브라우저 기본 팝업: 이 설정을 켜면 인증이 필요한 페이지에 접근할 때, 브라우저 자체에서 제공하는 별도의 아이디/비밀번호 입력 팝업창이 뜹니다. 별도의 로그인 HTML 화면을 만들 필요가 없습니다.
+* 단순한 인증 구조: 로그인 요청 시 아이디와 비밀번호를 아이디:비밀번호 형태로 결합한 뒤, 이를 Base64 방식으로 인코딩하여 HTTP 요청 헤더(Authorization: Basic Base64인코딩문자열)에 실어 보냅니다.
+* 보안 취약점: 인코딩된 문자열은 쉽게 복호화(디코딩)가 가능하므로, 암호화되지 않은 HTTP 환경에서는 아이디와 비밀번호가 그대로 노출됩니다. 따라서 반드시 HTTPS 프로토콜과 함께 사용해야 하며, 대규모 서비스보다는 내부 시스템이나 단순한 테스트 환경에서 주로 사용됩니다.
+
+## 2. 속해 있는 스타터 의존성 (Dependency)
+httpBasic() 또한 앞선 보안 기능들과 마찬가지로 Spring Security 핵심 라이브러리에 속해 있습니다. 아래 의존성만 추가하면 즉시 활성화할 수 있습니다.
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+------------------------------
