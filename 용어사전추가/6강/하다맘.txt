@@ -1,17 +1,9 @@
-getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm()) 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
+ 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
 
 55번줄
 
 
-.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
-
-accessTokenExpiresIn = 3600L * 1000; // 1시간
-refreshTokenExpiresIn = 604800L * 1000; // 7일
-}
-
-// JWT 클레임 username 파싱
-public static String getUsername(String token) {
-return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", String.class);
+Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", String.class);
 }
 
 // JWT 클레임 role 파싱
