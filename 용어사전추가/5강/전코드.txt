@@ -64,7 +64,14 @@ authenticationEntryPoint ((request, response, authException) -> {
 
     return http.build();
 }
+
+
+##### 찾기
+sessionManagement
 ​
+#####
+
+
 
  기본 로그인 필터인 UsernamePasswordAuthenticationFilter는 multipart-form 기반이며, formLogin 활성화시 VIEW 페이지까지 활성화 되기 때문에 disable 후 직접 LoginFilter를 등록하도록 하겠습니다.
 
