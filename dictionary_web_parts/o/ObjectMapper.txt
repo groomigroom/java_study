@@ -39,3 +39,30 @@ Spring Web 의존성을 추가하면 내부적으로 JSON 처리를 위한 sprin
 ------------------------------
 현재 컨트롤러 내부에서 HTTP 응답을 수동으로 JSON 문자열로 만들어서 내보내야 하는 상황인가요? 아니면 외부 API(예: 카카오, 공공데이터 등)로부터 받은 JSON 응답을 객체로 파싱하려고 하시나요? 구현 목적을 말씀해주시면 더 알맞은 JSON 처리 팁을 안내해 드리겠습니다.
 
+
+
+
+-----------------------
+
+
+.readValue(messageBody, new TypeReference<>() {})
+는 JSON 형식의 문자열(messageBody)을 List나 Map 같은 복잡한 제네릭(Generic) 자바 객체로 정밀하게 변환(역직렬화)할 때 사용하는 코드입니다. [1]
+## 1. 코드의 상세 의미
+앞서 설명해 드린 ObjectMapper의 readValue() 메서드 중 하나입니다. [1] 자바의 제네릭은 컴파일 이후 타입 정보가 사라지는 특성(Type Erasure)이 있습니다. 이 한계를 극복하기 위해 TypeReference를 사용합니다.
+
+* 단순 변환과의 차이점:
+* readValue(json, User.class) ➡️ User 같은 단일 객체로 바꿀 때 사용 [1]
+   * readValue(json, new TypeReference<List<User>>(){}) ➡️ List<User>나 Map<String, Object> 같은 중첩/제네릭 컬렉션 구조로 정확하게 바꿀 때 사용
+* 익명 클래스({})의 이유: TypeReference 뒤에 붙은 {}는 익명 클래스를 만드는 문법입니다. 이 구조를 통해 자바가 런타임(실행 중)에도 List<User>라는 상세한 타입 정보를 유지하여 Jackson 라이브러리가 올바르게 매핑할 수 있도록 돕습니다.
+
+## 2. 속해있는 스타터 의존성 (Start Dependency)
+이 코드 역시 ObjectMapper와 동일하게 Jackson 라이브러리의 핵심 기능입니다. [1]
+
+* 소속 패키지: com.fasterxml.jackson.core.type.TypeReference
+* 핵심 스타터: spring-boot-starter-web (또는 JSON 처리가 포함된 spring-boot-starter-json)
+* 결론: 스프링 부트 웹 프로젝트라면 별도의 의존성을 추가할 필요가 없습니다. ObjectMapper 객체를 사용해 이 메서드를 바로 호출하면 됩니다. [1]
+
+------------------------------
+이 코드는 주로 MQ(Message Queue)의 메시지를 소비하거나, 외부 API로부터 배열 구조의 JSON 응답을 받아와 파싱할 때 자주 쓰입니다. 혹시 어떤 타입(예: List 또는 Map)으로 변환하려고 하시는지 알려주시면, 상황에 맞는 정확한 완성형 코드 예시를 작성해 드릴 수 있습니다. 어떻게 도와드릴까요?
+
+
