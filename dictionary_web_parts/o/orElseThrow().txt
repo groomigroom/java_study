@@ -1,0 +1,39 @@
+orElseThrow()는 스프링 부트 전용 기능이 아니라, 자바 8(Java 8)부터 언어 자체에 기본 탑재된 Optional 클래스의 표준 메서드입니다.
+"데이터를 조회했을 때 값이 비어있다면(null), 내가 지정한 예외(Exception)를 던져라"라는 의미를 가집니다.
+------------------------------
+## 1. 자바 / 스프링 부트에서의 의미
+스프링 부트 개발(특히 JPA 데이터베이스 조회)에서 데이터가 없을 때의 예외 처리를 한 줄로 깔끔하게 해결하기 위해 필수적으로 사용됩니다.
+
+* 기존 방식 (Null 체크 필요):
+
+User user = userRepository.findById(id);if (user == null) {
+    throw new IllegalArgumentException("사용자가 없습니다.");
+}
+
+* orElseThrow() 사용 방식 (가독성 향상):
+
+User user = userRepository.findById(id)
+    .orElseThrow(() -> new IllegalArgumentException("사용자가 없습니다."));
+
+
+------------------------------
+## 2. 포함되어 있는 스타터 의존성 (Start Dependency)
+
+* 별도의 스타터 의존성이 필요 없습니다.
+* 자바 표준 라이브러리(java.util.Optional)에 포함되어 있으므로, 자바가 설치된 환경이라면 프로젝트 생성 직후부터 언제든 사용할 수 있습니다.
+
+------------------------------
+## 3. 주요 활용 처 (스프링 부트 환경)
+스프링 부트에서는 주로 데이터베이스를 조회하는 Spring Data JPA와 조합하여 사용합니다. JPA의 findById() 메서드가 기본적으로 Optional을 반환하기 때문입니다.
+
+* 패키지 경로: java.util.Optional
+* 자바 10 이상 꿀팁: 자바 10부터는 매개변수를 비워두면(orElseThrow()) 값이 없을 때 자동으로 NoSuchElementException을 던져줍니다.
+
+------------------------------
+현재 이 메서드를 활용하여 데이터베이스 조회 후 예외 처리를 구현 중이신가요? 다음 단계로 진행하기 위해 상황을 공유해 주세요.
+
+* orElseThrow()로 던진 예외를 클라이언트에게 예쁜 JSON 형태로 내려주는 @RestControllerAdvice 전역 예외 처리 방식을 알아볼까요?
+* JPA의 findById 조회 로직에 이것을 적용하는 완전한 서비스 레이어 코드가 필요하신가요?
+* 상황에 맞는 커스텀 예외(Custom Exception) 클래스를 만드는 방법이 궁금하신가요?
+
+
