@@ -1,9 +1,14 @@
- 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
+Jwts 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
 
 55번줄
 
 
-Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", String.class);
+
+
+
+.parser()
+
+.verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", String.class);
 }
 
 // JWT 클레임 role 파싱
