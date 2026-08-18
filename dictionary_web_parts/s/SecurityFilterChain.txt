@@ -1,0 +1,28 @@
+SecurityFilterChain은 스프링 부트에서 웹 보안(인증 및 인가)을 처리하는 핵심 필터들의 집합을 의미합니다.
+## 1. SecurityFilterChain의 의미
+
+* 보안 창구: 들어오는 모든 HTTP 요청은 이 필터 체인을 거쳐야만 컨트롤러에 도달합니다.
+* 역할 분담: 각 필터는 인증(로그인), 인가(권한 체크), CSRF 방어, 로그아웃 등 고유의 보안 작업을 수행합니다.
+* 컴포넌트 등록: 스프링 부트 3.x 버전부터는 @Bean으로 SecurityFilterChain을 직접 등록하여 보안 규칙(URL별 접근 권한 등)을 설정합니다. [1, 2, 3] 
+
+## 2. 속해 있는 스타터 의존성 (Dependency)
+SecurityFilterChain을 사용하려면 Spring Security 라이브러리가 필요합니다. build.gradle 또는 pom.xml에 아래의 의존성을 추가해야 합니다. [4, 5] 
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+------------------------------
+현재 개발 중인 프로젝트에서 특정 URL의 접근을 제한하거나 JWT 토큰 인증을 구현하셔야 하나요? 구현하려는 보안 기능의 종류나 로그인 방식(Form, OAuth2, JWT 등)을 알려주시면 맞춤형 설정 코드를 안내해 드리겠습니다.
+
+[1] [https://bes99.tistory.com](https://bes99.tistory.com/55)
+[2] [https://bes99.tistory.com](https://bes99.tistory.com/55)
+[3] [https://gilssang97.tistory.com](https://gilssang97.tistory.com/50)
+[4] [https://dailyheumsi.tistory.com](https://dailyheumsi.tistory.com/166)
+[5] [https://devlemon.tistory.com](https://devlemon.tistory.com/2)
