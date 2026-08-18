@@ -1,0 +1,46 @@
+setDetails(request, authRequest)는 자바 스프링 시큐리티(Spring Security)에서 인증 요청의 세부 정보(IP 주소, 세션 ID 등)를 인증 객체에 저장하는 역할을 합니다. [1, 2]
+이 코드가 포함된 스타터 의존성(Starter Dependency)은 spring-boot-starter-security입니다. [1] 
+## 🔍 상세 의미 분석## 1. 역할과 기능
+
+* 세부 정보 주입: 웹 요청(HttpServletRequest)에서 클라이언트의 IP 주소나 현재 세션 ID 같은 추가적인 웹 정보를 추출합니다. [1]
+* 인증 객체 연결: 추출한 정보를 UsernamePasswordAuthenticationToken과 같은 인증 객체(authRequest)의 details 필드에 저장합니다. [2]
+
+## 2. 실제 내부 동작 예시
+스프링 시큐리티의 기본 필터인 UsernamePasswordAuthenticationFilter를 커스텀할 때 보통 다음과 같이 사용됩니다.
+
+// 유저가 입력한 아이디와 비밀번호로 인증 토큰 생성
+UsernamePasswordAuthenticationToken authRequest = 
+    new UsernamePasswordAuthenticationToken(username, password);
+// 웹 요청 정보를 인증 토큰에 세팅 (IP, 세션 ID 등 자동 추출)
+setDetails(request, authRequest);
+// AuthenticationManager를 통해 실제 인증 처리 수행return this.getAuthenticationManager().authenticate(authRequest);
+
+이 작업을 거치면 나중에 시스템 어디서나 SecurityContextHolder를 통해 로그인한 유저의 IP 주소를 추적할 수 있어 보안 로깅에 유용합니다.
+------------------------------
+## 📦 포함된 스타터 의존성
+이 메서드를 사용하기 위해 프로젝트에 추가해야 하는 의존성은 다음과 같습니다.
+## 빌드 도구별 설정
+
+* Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+* Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+[2] 
+
+------------------------------
+현재 스프링 시큐리티를 활용해 커스텀 로그인 필터나 JWT 인증 필터를 구현하고 계신가요?
+구현 중이신 인증 방식(Form Login, JWT, OAuth2 등)을 알려주시면 상황에 맞는 정확한 구현 가이드나 예제 코드를 제공해 드릴 수 있습니다.
+
+[1] [https://ttasjwi.tistory.com](https://ttasjwi.tistory.com/172)
+[2] [https://dev-allday.tistory.com](https://dev-allday.tistory.com/74)
+
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
