@@ -1,8 +1,11 @@
-
-182번줄
-
-setDetails(request, authRequest);
-
 183번줄
 
 return this.getAuthenticationManager().authenticate(authRequest);
+
+186번줄
+
+protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
+
+187번줄
+
+authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
