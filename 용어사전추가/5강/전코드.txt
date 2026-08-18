@@ -27,16 +27,27 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .authorizeHttpRequests(auth -> auth
                     .anyRequest().permitAll());
 
-#####이거부
-
-
     // 예외 처리
-
-
-
+    http
+            .exceptionHandling(e -> e
+                    .authenticationEntryPoint((request, response, authException) -> {
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED); // 401 응답
+                    })
                     .accessDeniedHandler((request, response, authException) -> {
+                        response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403 응답
                     })
             );
+
+    // 세션 필터 설정 (STATELESS)
+    http
+            .sessionManagement(session -> session
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+    return http.build();
+}
+
+
+------------------------------------------
 
 #####
 exceptionHandling 찾기
