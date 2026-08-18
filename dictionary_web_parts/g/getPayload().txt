@@ -1,0 +1,37 @@
+자바 스프링 부트 환경에서 .getPayload()는 검증이 완료된 JWT(JSON Web Token) 내부에서 실제 유저 정보와 권한 등이 담긴 데이터 영역(Payload)을 가져오는 메서드입니다.
+이 메서드 또한 앞선 질문들과 동일하게 오픈소스 라이브러리인 JJWT(Java JWT)에 속해 있습니다.
+## 🔑 소속 의존성 (Starter Dependency)
+스프링 부트 자체 기능이 아니므로 아래의 JJWT 라이브러리 의존성이 필요합니다. (build.gradle 기준)
+
+* implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+* runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+* runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+## 📝 메서드와 매개변수의 의미
+이 메서드는 토큰 검증 단계(parseSignedClaims)를 무사히 통과한 후, 실제 비즈니스 로직에 필요한 유저 데이터를 꺼내기 위해 사용합니다.
+
+* .getPayload(): JWT의 3가지 구성 요소(Header, Payload, Signature) 중 Payload(내용) 객체를 반환하는 메서드입니다.
+* 매개변수: 이 메서드는 입력받는 매개변수가 없습니다 (비어있음). 앞선 단계에서 이미 분석이 끝난 토큰 객체(Jws<Claims>) 인스턴스 뒤에 바로 호출합니다.
+* 반환값: 유저의 ID, 이메일, 권한 등이 Key-Value 형태로 들어있는 Claims 객체를 반환합니다.
+
+⚠️ 주의 (버전 변경점): JJWT 라이브러리 0.12.0 버전 이상부터 기존의 .getBody() 메서드가 데프리케이트(Deprecated)되고 .getPayload()로 이름이 변경되었습니다.
+
+## 💻 흐름 이해를 위한 예시 코드
+
+// 1. 토큰 검증 및 파싱 수행
+Jws<Claims> jwsClaims = Jwts.parser()
+    .verifyWith(secretKey)
+    .build()
+    .parseSignedClaims(token);
+// 2. getPayload() 호출 (매개변수 없음)하여 Claims 객체 획득
+Claims claims = jwsClaims.getPayload();
+// 3. Claims에서 원하는 정보 추출
+String userId = claims.getSubject(); // 유저 식별자 꺼내기
+String role = claims.get("role", String.class); // 커스텀 클레임(권한) 꺼내기
+
+JWT 검증 및 데이터 추출의 전체적인 흐름이 완성되었습니다. 혹시 다음 단계로 넘어가시겠습니까?
+
+* 추출한 유저 정보를 스프링 시큐리티(Spring Security)의 Authentication 객체에 등록하는 방법이 필요하신가요?
+* JWT의 핵심 구성 요소인 Header, Payload, Signature의 구조적 차이를 알고 싶으신가요?
+
+
