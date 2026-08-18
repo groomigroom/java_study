@@ -35,7 +35,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 
 
                     .accessDeniedHandler((request, response, authException) -> {
-                        response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403 응답
                     })
             );
 
