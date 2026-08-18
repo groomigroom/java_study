@@ -48,6 +48,14 @@ implementation 'org.springframework.boot:spring-boot-starter-security'
 
 #####
 exceptionHandling 찾기
+authenticationEntryPoint ((request, response, authException) -> {
+    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+})
+.accessDeniedHandler((request, response, authException) -> {
+                        response.sendError(HttpServletResponse.SC_FORBIDDEN); // 403 응답
+                    })
+
+#####
 
     // 세션 필터 설정 (STATELESS)
     http
