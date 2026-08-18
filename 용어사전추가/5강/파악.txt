@@ -1,8 +1,6 @@
 
 168 169번줗
-loginMap 
 
-objectMapper
 
 .readValue(messageBody, new TypeReference<>() {
 });
