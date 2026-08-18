@@ -1,0 +1,39 @@
+.getMethod()는 자바 스프링 부트에서 클라이언트가 보낸 HTTP 메서드(GET, POST, PUT, DELETE 등)를 문자열(String)로 반환하는 메서드입니다.
+이 메서드는 앞서 살펴본 HttpServletRequest 인터페이스에 정의되어 있으므로, Spring Web 스타터 의존성에 속해 있습니다.
+------------------------------
+## 1. .getMethod()의 의미와 역할
+클라이언트의 요청이 어떤 HTTP HTTP 메서드로 들어왔는지 식별할 때 사용합니다. 대문자 문자열("GET", "POST", "PUT" 등)을 반환합니다.
+
+* 요청 메서드 확인: 컨트롤러나 필터(Filter), 인터셉터(Interceptor) 단에서 특정 HTTP 메서드만 허용하거나 차단하는 로직을 짤 때 사용합니다.
+* 공통 로직 분기: 하나의 엔드포인트에서 GET과 POST를 동시에 처리하며 다른 비즈니스 로직을 실행해야 할 때 활용합니다.
+
+@RequestMapping("/api/data")public String handleRequest(HttpServletRequest request) {
+    String method = request.getMethod(); // 예: "GET" 또는 "POST" 반환
+    
+    if ("POST".equals(method)) {
+        return "데이터를 생성합니다.";
+    } else if ("GET".equals(method)) {
+        return "데이터를 조회합니다.";
+    }
+    return "지원하지 않는 메서드입니다.";
+}
+
+------------------------------
+## 2. 속해있는 Start Dependency (의존성)
+HttpServletRequest 객체의 메서드이기 때문에 동일하게 Spring Web 스타터에 포함되어 있습니다.
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+서블릿 API 표준 라이브러리(jakarta.servlet-api)의 HttpServletRequest 인터페이스 안에 내장된 기본 API입니다.
+------------------------------
+보통 스프링 부트 컨트롤러에서는 .getMethod()를 직접 쓰기보다 @GetMapping, @PostMapping 같은 어노테이션으로 메서드를 미리 분리하여 매핑합니다.
+현재 컨트롤러 내부에서 HTTP 메서드를 직접 판별해야 하는 특수한 상황(예: 필터, 인터셉터 구현 또는 공통 로그 출력)이 있으신가요? 어떤 기능을 구현 중이신지 공유해주시면 상황에 맞는 가장 깔끔한 구현 방식을 제안해 드리겠습니다.
+
