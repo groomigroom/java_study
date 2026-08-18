@@ -1,8 +1,8 @@
-SecretKey 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
+SecretKeySpec 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
 
 55번줄
 
-SecretKeySpec
+
 
 .getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
 
