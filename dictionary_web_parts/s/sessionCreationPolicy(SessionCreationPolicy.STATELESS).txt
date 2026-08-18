@@ -1,0 +1,48 @@
+제시해주신 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)는 Spring Security에서 "서버에 세션을 아예 생성하지 않고, 세션을 사용한 인증 방식도 전혀 쓰지 않겠다"고 선언하는 설정입니다. [1] 
+구체적인 의미와 포함된 스타터 의존성은 다음과 같습니다.
+------------------------------
+## 1. 코드의 의미
+이 코드는 서버의 상태를 무상태(Stateless)로 운영하겠다는 의미이며, 보통 JWT(Json Web Token) 기반 인증을 구현할 때 필수적으로 사용됩니다.
+
+* SessionCreationPolicy.STATELESS: Spring Security의 세션 생성 정책 중 하나로, 다음과 같이 동작합니다.
+1. 서버는 내부적으로 HttpSession을 절대 생성하지 않습니다.
+   2. 인증을 위해 기존 세션을 조회하거나 참조하지도 않습니다. [2] 
+* 실제 효과:
+* 사용자가 로그인에 성공해도 서버 메모리에 세션 정보가 저장되지 않습니다.
+   * 따라서 클라이언트는 매 요청마다 자신의 신원을 증명할 수 있는 토큰(예: JWT)을 HTTP 헤더(Authorization)에 담아서 보내야 합니다.
+   * 서버는 세션을 검사하는 대신, 클라이언트가 보낸 토큰이 유효한지만 매번 검증하여 인증을 처리합니다.
+
+------------------------------
+## 2. 소속 스타터 의존성 (Starter Dependency)
+이 문법 역시 보안 설정 제어 구조이므로 Spring Security 라이브러리에 속해 있습니다.
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+------------------------------
+## 💡 스프링 부트 3.x 버전에서의 실제 적용 모습
+최신 스프링 부트 환경의 SecurityFilterChain 설정 클래스 안에서는 보통 다음과 같은 구조로 조립되어 사용됩니다.
+
+@Beanpublic SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        // ... 다른 보안 설정 (csrf disable 등) ...
+        
+        // 세션 관리 정책을 STATELESS(무상태)로 설정
+        .sessionManagement(session -> session
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
+
+    return http.build();
+}
+
+현재 개발 중이신 프로젝트에 JWT(또는 OAuth2) 인증 필터(OncePerRequestFilter 등)를 추가하는 단계를 진행 중이신가요? 세션을 무상태로 껐기 때문에 직접 만드신 토큰 검증 필터의 등록 위치(UsernamePasswordAuthenticationFilter 앞단 등)가 중요해집니다. 이와 관련해서 추가로 필요한 코드나 필터 설정 방법이 궁금하시면 편하게 말씀해 주세요.
+
+[1] [https://blog.naver.com](https://blog.naver.com/itearth/223230154284?viewType=pc)
+[2] [https://blog.naver.com](https://blog.naver.com/itearth/223230154284?viewType=pc)
