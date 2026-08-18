@@ -1,0 +1,24 @@
+http.formLogin()은 스프링 시큐리티에서 "전형적인 아이디/비밀번호 입력 창"을 통한 로그인 방식을 활성화하고 설정하는 메서드입니다.
+## 1. formLogin()의 의미
+
+* 기본 로그인 폼 제공: 이 메서드를 호출하면 스프링 시큐리티가 기본으로 제공하는 HTML 로그인 페이지(/login)가 활성화됩니다.
+* 사용자 인증 처리: 사용자가 폼에 ID와 비밀번호를 입력하고 제출하면, 스프링 시큐리티 내부의 필터(UsernamePasswordAuthenticationFilter)가 작동하여 인증 절차를 자동으로 처리합니다.
+* 커스텀 가능: 개발자가 직접 만든 별도의 로그인 페이지 주소를 지정하거나(loginPage("/my-login")), 로그인 성공/실패 후 이동할 URL을 커스텀할 수 있습니다.
+
+## 2. 속해 있는 스타터 의존성 (Dependency)
+formLogin() 역시 이전 질문들의 기능과 마찬가지로 Spring Security 라이브러리에 완전히 내장되어 있습니다. 아래 의존성 하나만 추가하면 바로 사용할 수 있습니다.
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+------------------------------
+현재 만들고 계신 프로젝트가 스프링 자체에서 화면을 보여주는 방식(Thymeleaf, JSP 등)인가요? 만약 리액트나 뷰 같은 프론트엔드 프레임워크와 API로 통신하는 구조라면 formLogin() 대신 JWT나 세션 기반의 커스텀 인증 필터를 구현하는 경우가 많습니다. 어떤 화면 아키텍처를 준비 중이신지 알려주시면 알맞은 로그인 설정 방향을 제안해 드리겠습니다. [1] 
+
+[1] [https://yonsodev.tistory.com](https://yonsodev.tistory.com/194)
