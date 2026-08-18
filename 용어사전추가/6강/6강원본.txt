@@ -1,0 +1,180 @@
+ 이전글 다음글목록
+시리즈 Docs 
+스프링 + 리액트 로그인 > 6. 백엔드 : JWT Util 클래스 등록
+프로필 사진인기멤버
+xxxjjhhh
+1:1 채팅
+2025.08.05. 17:54조회 654
+ 댓글 3URL 복사
+스프링 + 리액트 로그인 > 6. 백엔드 : JWT Util 클래스 등록
+
+JWT 영역
+
+​
+
+ 아직 User 도메인과 로그인 시스템에 대한 구현이 완료되지 않았지만, 로그인 이후의 JWT 발급이 필요하기 때문에 일시적으로 JWT 도메인 구현을 수행하겠습니다.
+
+​
+
+JWTUtil
+
+​
+
+ JWT 영역에서는 JWT 관리도 중요하지만, 발급과 검증이 요구됩니다. 따라서 JWT를 발급하고 검증할 수 있는 Util 클래스를 먼저 등록하겠습니다.
+
+​
+
+ 그 전에 JWT를 자바 환경에서 생성하고 관리하는 의존성을 추가해야 합니다.
+
+​
+
+https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+
+​
+
+- build.gradle > dependencies
+
+implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
+implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+​
+
+- util > JWTUtil
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+
+public class JWTUtil {
+
+    private static final SecretKey secretKey;
+    private static final Long accessTokenExpiresIn;
+    private static final Long refreshTokenExpiresIn;
+
+    static  {
+        String secretKeyString = "himynameiskimjihunmyyoutubechann";
+        secretKey = new SecretKeySpec(secretKeyString.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+
+        accessTokenExpiresIn = 3600L * 1000; // 1시간
+        refreshTokenExpiresIn = 604800L * 1000; // 7일
+    }
+
+    // JWT 클레임 username 파싱
+    public static String getUsername(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("sub", String.class);
+    }
+
+    // JWT 클레임 role 파싱
+    public static String getRole(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
+    }
+
+    // JWT 유효 여부 (위조, 시간, Access/Refresh 여부)
+    public static Boolean isValid(String token, Boolean isAccess) {
+        try {
+            Claims claims = Jwts.parser()
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+            String type = claims.get("type", String.class);
+            if (type == null) return false;
+
+            if (isAccess && !type.equals("access")) return false;
+            if (!isAccess && !type.equals("refresh")) return false;
+
+            return true;
+
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    // JWT(Access/Refresh) 생성
+    public static String createJWT(String username, String role, Boolean isAccess) {
+
+        long now = System.currentTimeMillis();
+        long expiry = isAccess ? accessTokenExpiresIn : refreshTokenExpiresIn;
+        String type = isAccess ? "access" : "refresh";
+
+        return Jwts.builder()
+                .claim("sub", username)
+                .claim("role", role)
+                .claim("type", type)
+                .issuedAt(new Date(now))
+                .expiration(new Date(now + expiry))
+                .signWith(secretKey)
+                .compact();
+    }
+
+}
+​
+
+이전 : 5. 백엔드 : 자체 로그인 설정
+
+다음 : 7. 백엔드 : Jwt 도메인용 Entity
+
+https://youtu.be/H7OvMOGXRS0
+
+
+​
+
+프로필 사진xxxjjhhh 님의 게시글 더보기 
+좋아요1이 글을 '좋아요'한 멤버 리스트
+ 댓글 3
+ 공유
+신고
+댓글
+등록순
+최신순
+새로고침
+클린봇 이 악성 댓글을 감지합니다.
+클린봇
+프로필 사진
+은비비
+해당 클래스의 메서드를 클래스 메서드가 아니라 인스턴스 메서드로 설정해도 되나요? secretKey, accessTokenExpiresIn, refreshTokenExpiresIn 값을 바로 넣는게 아니라 값을 설정 클래스에서 가져오려고 하는데, 메서드를 static 으로 설정하니까 오류가 발생해서요.
+
+2025.08.20. 08:51
+1
+프로필 사진
+xxxjjhhh
+안녕하세요!
+
+@Value 로 불러오실려면, static 해제하고, 일반 메소드로 변경 후 @Component 선언하셔도 됩니다.
+
+다만 사용하는 곳에서는 의존성 주입으로 사용하셔야 합니다.
+
+행복한 하루 보내세요~
+
+2025.08.20. 10:44
+1
+프로필 사진
+dev
+xxxjjhhh 친절한 답변 감사합니다!
+
+2025.08.20. 17:54
+1
+지금 가입하고 댓글에 참여해보세요! 
+목록 TOP
+
+전체글
+스프링 + 리액트 로그인 > 7. 백엔드 : Jwt 도메인용 Entity	xxxjjhhh	2025.08.06.
+OpenAI gpt oss vLLM 서빙댓글[1]	xxxjjhhh	2025.08.06.
+스프링 + 리액트 로그인 > 6. 백엔드 : JWT Util 클래스 등록댓글[3]	xxxjjhhh	2025.08.05.
+엘라스틱서치 플러그인 개발 > 2. 초성 토큰 필터	xxxjjhhh	2025.08.05.
+안녕하세요 AI 개발자 굴비입니다.댓글[2]	금송떡	2025.08.05.
+페이징 이동123
+전체보기
+
+개발자 유미
+개발자 유미 공식 커뮤니티 사이트 : 웹 백엔드 코딩
+
+멤버 331 명
+카페 가입하기
+레이어 닫기
