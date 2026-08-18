@@ -29,3 +29,48 @@ Maven (pom.xml)
 [4] [https://zorba91.tistory.com](https://zorba91.tistory.com/311)
 
 
+람다식 내부의 세 가지 매개변수는 "누가, 어떤 상태로, 왜 인증에 실패했는가"에 대한 모든 정보를 담고 있는 자바 객체들입니다.
+Spring Security는 인증 실패 시 이 정보들을 람다식(또는 구현체)에 자동으로 넘겨줍니다. 각 매개변수의 구체적인 역할은 다음과 같습니다.
+## 1. request (HttpServletRequest)
+
+* 의미: 클라이언트가 서버로 보낸 HTTP 요청 정보 전체를 담고 있는 객체입니다.
+* 주요 용도: 인증이 실패했을 때 사용자가 어떤 행동을 하려 했는지 파악할 때 사용합니다.
+* 활용 예시:
+* request.getRequestURI()를 사용해 사용자가 접근하려 했던 주소(URL) 확인
+   * request.getHeader("Authorization")를 사용해 어떤 토큰을 보냈는지 확인
+
+## 2. response (HttpServletResponse)
+
+* 의미: 서버가 클라이언트에게 보낼 HTTP 응답 정보 전체를 제어하는 객체입니다.
+* 주요 용도: 인증 실패 시 클라이언트에게 에러 코드나 메시지를 직접 반환할 때 사용합니다.
+* 활용 예시:
+* response.setStatus(HttpServletResponse.SC_UNAUTHORIZED)로 401 에러 코드 설정
+   * response.setContentType("application/json")으로 응답 형태를 JSON으로 지정
+   * response.getWriter().write("{ \"error\": \"Unauthorized\" }")로 에러 메시지 출력
+
+## 3. authException (AuthenticationException)
+
+* 의미: Spring Security가 던진 구체적인 인증 예외(오류) 객체입니다.
+* 주요 용도: 왜 인증에 실패했는지 구체적인 원인을 파악할 때 사용합니다.
+* 활용 예시:
+* authException.getMessage()로 에러 원인 메시지 확인
+   * instanceof 연산자로 예외 종류를 식별 (예: 자격 증명이 틀린 BadCredentialsException, 계정이 잠긴 LockedException 등)
+
+------------------------------
+## 💡 실무에서는 어떻게 쓰이나요?
+질문하신 코드처럼 {}로 비워두면 이 매개변수들을 전혀 쓰지 않는 것입니다. 보통 REST API 서버에서는 이 매개변수들을 활용해 아래와 같이 401 에러와 JSON 메시지를 리턴하도록 구현합니다.
+
+.authenticationEntryPoint((request, response, authException) -> {
+    // 1. 응답 타입을 JSON, 상태코드를 401로 설정
+    response.setContentType("application/json;charset=UTF-8");
+    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+    // 2. 실패 원인(authException)을 응답 본문에 작성
+    response.getWriter().write(String.format(
+        "{\"error\": \"Unauthorized\", \"message\": \"%s\"}", 
+        authException.getMessage()
+    ));
+})
+
+현재 개발 중인 서버가 React나 Vue 같은 프론트엔드와 통신하는 REST API 서버인가요, 아니면 타임리프(Thymeleaf) 등을 쓰는 웹 페이지 서버인가요? 알려주시면 환경에 맞는 로그 출력 방식이나 클라이언트 응답 처리 예시를 더 자세히 추천해 드리겠습니다.
+
