@@ -3,7 +3,6 @@ SecretKeySpec 자바 스프링 부트에서 의미하는 것과 이게 속해있
 55번줄
 
 
-
 .getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
 
 accessTokenExpiresIn = 3600L * 1000; // 1시간
