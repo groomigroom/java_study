@@ -1,0 +1,26 @@
+RuntimeException(e)는 앞서 발생한 예외(e)를 감싸서, 컴파일러가 강제하지 않는 런타임 예외(Unchecked Exception)로 변환하여 다시 던질(throw) 때 사용하는 자바 코드입니다.
+## 1. 코드의 상세 의미
+자바에서는 IOException이나 SQLException 같은 체크 예외(Checked Exception)가 발생하면 반드시 try-catch로 잡거나 메서드에 throws를 선언해야 합니다. 하지만 스프링 부트 환경에서는 이 방식이 코드를 복잡하게 만듭니다. 이를 해결하기 위해 이 코드를 사용합니다. [1] 
+
+예시로는 ----------------
+
+* 동작 방식 (throw new RuntimeException(e);):
+* try-catch 블록 안에서 IOException e가 발생합니다.
+   * 이를 catch로 잡은 뒤, RuntimeException의 생성자에 e를 인자로 넣어 새 예외를 만듭니다.
+   * 이때 기존 에러의 상세 원인(Stack Trace)이 유실되지 않고 내부 원인(Cause)으로 보존됩니다.
+* 스프링 부트에서의 핵심 의미 (트랜잭션 롤백):
+* 스프링의 @Transactional 어노테이션은 기본적으로 RuntimeException이 발생했을 때만 데이터베이스 작업을 자동으로 롤백(Rollback)합니다.
+   * 따라서 IOException 같은 체크 예외가 발생했을 때 데이터 관리를 안전하게 되돌리기 위해, 이 코드를 사용해 RuntimeException으로 전환하여 던지는 패턴이 자주 쓰입니다.
+
+## 2. 속해있는 스타터 의존성 (Start Dependency)
+RuntimeException 역시 앞서 설명해 드린 IOException과 마찬가지로 스프링 부트 스타터 의존성과 아무런 관련이 없습니다.
+
+* 소속 패키지: java.lang.RuntimeException
+* 포함 관계: 자바 언어의 가장 핵심이 되는 기본 패키지(java.lang)에 내장되어 있습니다.
+* 결론: 순수 자바 JDK 표준 라이브러리이므로 별도의 외부 라이브러리나 스프링 스타터를 추가하지 않아도 어디서나 즉시 사용 가능합니다.
+
+------------------------------
+보통 ObjectMapper나 StreamUtils를 쓸 때 발생하는 IOException을 다루기 귀찮거나 스프링의 롤백 정책을 맞추기 위해 catch(IOException e) { throw new RuntimeException(e); } 형태로 많이 묶어서 씁니다.
+혹시 이 예외 처리를 코드 내에서 직접 하시는 대신, 스프링 부트가 제공하는 전역 예외 처리기(@RestControllerAdvice)를 통해 에러 응답을 깔끔하게 통일하는 방법이 궁금하신가요?
+
+[1] [https://inpa.tistory.com](https://inpa.tistory.com/entry/JAVA-%E2%98%95-%EC%97%90%EB%9F%ACError-%EC%99%80-%EC%98%88%EC%99%B8-%ED%81%B4%EB%9E%98%EC%8A%A4Exception-%F0%9F%92%AF-%EC%B4%9D%EC%A0%95%EB%A6%AC)
