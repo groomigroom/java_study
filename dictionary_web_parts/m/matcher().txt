@@ -1,0 +1,57 @@
+제시해주신 matcher(HttpMethod.POST, "/login")는 Spring Security에서 "HTTP 메서드가 POST이면서, 요청 주소가 /login인 웹 요청만 콕 집어서 매칭(식별)하겠다"라는 세부 조건 정의 메서드입니다. [1] 
+앞선 질문에서 등장한 PathPatternRequestMatcher.withDefaults() 바로 뒤에 체이닝(Chaining) 형태로 연결되어 최종적인 요청 매처(RequestMatcher) 객체를 완성하는 조립 단계입니다. [2, 3] 
+------------------------------
+## 1. 코드의 의미
+이 코드는 가로챌 요청의 HTTP 메서드와 URL 경로를 동시에 제약하는 역할을 합니다. [1, 4] 
+
+* 
+* HttpMethod.POST: 웹 클라이언트가 데이터를 서버로 제출(Submit)할 때 사용하는 HTTP 요청 메서드 타입입니다. 보안상 아이디와 비밀번호 같은 민감한 정보는 GET이 아닌 POST 방식을 사용하는 것이 표준입니다. [2, 5] 
+* "/login": 클라이언트가 요청하는 정확한 엔드포인트(URL 주소)입니다. [2] 
+* 전체적인 효과: 클라이언트가 주소창에 /login을 쳐서 들어오는 GET 요청은 무시하고, 로그인 폼에서 [로그인] 버튼을 눌러 계정 정보를 전송하는 POST /login 요청만 정확히 타겟팅하여 잡아내게 됩니다. [2] 
+* 
+
+## 💡 실무에서 조립되어 사용되는 실제 모습
+주로 앞서 언급된 AbstractAuthenticationProcessingFilter(커스텀 로그인 필터)를 커스터마이징하여 생성할 때, "이 로그인 필터가 어떤 주소에서 동작하게 만들 것인가?"를 지정하는 생성자나 설정 부에서 아래와 같이 사용됩니다. [2, 6] 
+
+public class MyJsonLoginFilter extends AbstractAuthenticationProcessingFilter {
+
+    public MyJsonLoginFilter() {
+        // "오직 POST /login 요청이 들어왔을 때만 이 로그인 필터를 가동하겠다"는 의미
+        super(PathPatternRequestMatcher.withDefaults()
+                                       .matcher(HttpMethod.POST, "/login")); 
+    }
+    // ... 실제 로그인 처리 로직 ...
+}
+
+------------------------------
+## 2. 소속 스타터 의존성 (Starter Dependency)
+이 코드를 사용하려면 두 가지 클래스 패스가 필요하지만, 모두 Spring Security 스타터 하나에 기본으로 포함되어 있습니다. [2] 
+
+* 
+* HttpMethod: 스프링 프레임워크 코어 라이브러리 소속 (org.springframework.http.HttpMethod)
+* matcher(...): 스프링 시큐리티 최신 패치 빌더 소속 (org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher.Builder) [1, 7] 
+* 
+
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+------------------------------
+지금까지 질문해 주신 개념들을 종합해 보면, "최신 스프링 부트(Spring Security 6.5~7.0 버전 이상) 환경에서 JWT나 JSON 기반의 커스텀 로그인 필터 기능을 마이그레이션하거나 새로 구축"하고 계신 것으로 보입니다. [2, 3] 
+혹시 커스텀 로그인 필터 안에서 클라이언트가 보낸 JSON 데이터를 가로채기 위해 ObjectMapper를 연동하는 부분이나, 완성된 필터를 SecurityFilterChain에 순서를 지정해 등록하는 과정(addFilterAt 등)에서 막히는 부분이 있으신가요? 필요하신 단계를 말씀해 주시면 이어지는 구현 코드를 상세히 공유해 드리겠습니다. [2, 8] 
+
+[1] [https://docs.spring.io](http://docs.spring.io/spring-security/reference/api/java/org/springframework/security/web/servlet/util/matcher/PathPatternRequestMatcher.Builder.html)
+[2] [https://hbb-devlog.tistory.com](https://hbb-devlog.tistory.com/entry/Spring-JSON-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%98%84%EA%B3%BC-Spring-Security-%EB%82%B4%EB%B6%80-%ED%9D%90%EB%A6%84-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)
+[3] [https://velog.io](https://velog.io/@hjy648012/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85-Spring-Boot-4.0-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-AntPathRequestMatcher-%EC%A0%9C%EA%B1%B0-%EB%8C%80%EC%9D%91-%EB%B0%8F-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-7.0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
+[4] [https://docs.spring.io](https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html)
+[5] [https://stackoverflow.com](https://stackoverflow.com/questions/74447778/spring-security-in-spring-boot-3)
+[6] [https://gitofjy.tistory.com](https://gitofjy.tistory.com/281)
+[7] [https://docs.moderne.io](https://docs.moderne.io/user-documentation/recipes/recipe-catalog/java/spring/security6/migrateantpathrequestmatcher/)
+[8] [https://hbb-devlog.tistory.com](https://hbb-devlog.tistory.com/m/entry/Spring-JSON-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%98%84%EA%B3%BC-Spring-Security-%EB%82%B4%EB%B6%80-%ED%9D%90%EB%A6%84-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)
