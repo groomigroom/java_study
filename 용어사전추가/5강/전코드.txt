@@ -67,7 +67,12 @@ authenticationEntryPoint ((request, response, authException) -> {
 
 
 ##### 찾기
-sessionManagement
+sessionManagement(session -> session
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+여기서 http는 HttpSecurity임
+
+http.build()
 ​
 #####
 
