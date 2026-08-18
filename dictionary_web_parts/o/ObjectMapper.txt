@@ -1,0 +1,41 @@
+ObjectMapper는 자바 스프링 부트에서 자바 객체와 JSON 데이터 간의 상호 변환(직렬화 및 역직렬화)을 담당하는 핵심 클래스입니다.
+이 객체는 Spring Web 스타터 의존성에 포함되어 있습니다.
+------------------------------
+## 1. ObjectMapper의 의미와 역할
+Jackson 라이브러리의 핵심 클래스로, 스프링 부트에서 JSON 데이터를 처리할 때 가장 많이 사용됩니다.
+
+* 직렬화 (Serialization): 자바 객체를 JSON 문자열로 변환합니다. (Java Object → JSON)
+* 역직렬화 (Deserialization): JSON 문자열을 자바 객체로 변환합니다. (JSON → Java Object)
+
+스프링 부트 컨트롤러에서 @ResponseBody를 쓰거나 @RestController를 사용할 때, 리턴하는 객체가 자동으로 JSON으로 변환되는 것도 스프링이 내부적으로 이 ObjectMapper를 사용하기 때문입니다. 만약 개발자가 직접 수동으로 변환하고 싶다면 아래와 같이 코드를 작성할 수 있습니다.
+
+@Autowiredprivate ObjectMapper objectMapper;
+public void jsonExample() throws Exception {
+    User user = new User("홍길동", 25);
+    
+    // 1. 객체 -> JSON 문자열 (직렬화)
+    String jsonString = objectMapper.writeValueAsString(user); 
+    System.out.println(jsonString); // {"name":"홍길동","age":25}
+    
+    // 2. JSON 문자열 -> 객체 (역직렬화)
+    User convertedUser = objectMapper.readValue(jsonString, User.class);
+}
+
+------------------------------
+## 2. 속해있는 Start Dependency (의존성)
+스프링 부트에서 외부 API를 호출하거나 웹 환경을 만들 때 쓰는 Spring Web 스타터에 기본으로 묶여서 제공됩니다.
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+Spring Web 의존성을 추가하면 내부적으로 JSON 처리를 위한 spring-boot-starter-json이 함께 설치되며, 그 안에 Jackson 라이브러리의 ObjectMapper가 포함됩니다. 따라서 추가 설정 없이 바로 @Autowired로 주입받아 사용할 수 있습니다.
+------------------------------
+현재 컨트롤러 내부에서 HTTP 응답을 수동으로 JSON 문자열로 만들어서 내보내야 하는 상황인가요? 아니면 외부 API(예: 카카오, 공공데이터 등)로부터 받은 JSON 응답을 객체로 파싱하려고 하시나요? 구현 목적을 말씀해주시면 더 알맞은 JSON 처리 팁을 안내해 드리겠습니다.
+
