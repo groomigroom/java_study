@@ -1,0 +1,35 @@
+AccessDeniedException은 자바 스프링 부트(Spring Boot)에서 "인증은 되었으나, 해당 리소스에 접근할 수 있는 권한(Role/Authority)이 부족할 때" 발생하는 예외입니다. [1] 
+## 1. 스프링 부트에서의 의미
+
+* 개념: 로그인(인증)에는 성공했지만, 특정 페이지나 API를 호출할 수 있는 권한이 없을 때 발생하는 403 Forbidden 에러와 연결됩니다.
+* 구분: 아이디/비밀번호가 틀렸을 때 발생하는 예외(AuthenticationException, 401 Unauthorized)와는 다릅니다. 로그인(인증)은 된 상태입니다. [2] 
+
+## 2. 포함되어 있는 스타터 의존성 (Start Dependency)
+이 예외는 Spring Security 라이브러리에 포함되어 있습니다. 스프링 부트 프로젝트에서 사용하려면 pom.xml 또는 build.gradle에 아래 의존성을 추가해야 합니다. [3] 
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+## 3. 패키지 경로
+코드에서 이 예외를 직접 다루거나 커스텀 예외 처리를 할 때는 다음 패키지를 임포트(Import)합니다.
+
+* org.springframework.security.access.AccessDeniedException
+
+------------------------------
+현재 개발 중인 서버에서 이 에러가 발생하여 문제를 해결하는 중이신가요? 상황을 더 자세히 공유해 주시면 다음 단계를 도와드릴 수 있습니다.
+
+* 에러가 발생한 특정 기능이나 API 경로가 어디인가요?
+* 현재 프로젝트에서 권한을 관리하기 위해 JWT, OAuth2, 세션 중 어떤 방식을 사용하고 계시나요?
+* 권한 설정 코드(SecurityFilterChain 또는 @PreAuthorize 어노테이션)를 보여주시면 직접 코드 수정을 도와드릴 수 있습니다.
+
+
+[1] [https://gilssang97.tistory.com](https://gilssang97.tistory.com/50)
+[2] [https://adjh54.tistory.com](https://adjh54.tistory.com/576)
+[3] [https://khdscor.tistory.com](https://khdscor.tistory.com/35)
