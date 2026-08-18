@@ -1,8 +1,6 @@
 
 171 172번줗
 
-} catch (IOException e) {
-
 RuntimeException(e);
 
 175번줄
