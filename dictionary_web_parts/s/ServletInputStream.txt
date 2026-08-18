@@ -1,0 +1,37 @@
+ServletInputStream은 자바 스프링 부트에서 클라이언트가 보낸 HTTP 요청 바디(Body)의 원시 데이터(Raw Data)를 바이트 스트림으로 읽어오는 객체입니다.
+이 객체는 Spring Web 스타터 의존성에 포함되어 있습니다.
+------------------------------
+## 1. ServletInputStream의 의미와 역할
+자바 표준 웹 기술(Servlet API)의 일부로, HTTP POST나 PUT 요청 시 본문에 담겨오는 데이터(JSON, XML, 일반 텍스트, 바이너리 파일 등)를 로우 레벨(Low-level)에서 직접 읽을 때 사용합니다. HttpServletRequest.getInputStream() 메서드를 통해 얻을 수 있습니다.
+
+* 원시 데이터 직접 제어: 스프링이 제공하는 @RequestBody 등의 편리한 어노테이션을 거치지 않고, 클라이언트가 보낸 데이터 본문을 바이트 단위나 문자열로 직접 파싱하고 싶을 때 사용합니다.
+* 스트리밍 처리: 크기가 큰 파일이나 대용량 데이터를 메모리 낭비 없이 차례대로 읽어 들여 처리할 때 유용합니다.
+
+@PostMapping("/raw-data")public void readRawData(HttpServletRequest request) throws IOException {
+    // HTTP 요청 바디를 읽기 위한 스트림 추출
+    ServletInputStream inputStream = request.getInputStream();
+    
+    // 바이트 데이터를 문자열로 변환 (Spring이 제공하는 StreamUtils 활용 예시)
+    String body = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+    System.out.println("요청 바디 내용: " + body);
+}
+
+⚠️ 주의점: ServletInputStream은 톰캣 내부 구조상 단 한 번만 읽을 수 있습니다(One-time read). 인터셉터나 필터에서 로그 출력을 위해 이 스트림을 한 번 읽어버리면, 정작 컨트롤러(@RequestBody)에서는 바디 데이터가 비어 있어서 에러가 발생합니다. 이를 해결하려면 요청을 감싸는 복사본(ContentCachingRequestWrapper)을 사용해야 합니다.
+------------------------------
+## 2. 속해있는 Start Dependency (의존성)
+HttpServletRequest와 마찬가지로 Spring Web 스타터에 포함되어 있습니다.
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+서블릿 API 표준 라이브러리(jakarta.servlet-api)에 포함된 기본 추상 클래스이므로, 웹 환경을 구성하면 별도 설정 없이 바로 사용할 수 있습니다.
+------------------------------
+현재 ServletInputStream을 직접 꺼내 쓰시려는 이유가 모든 API 요청의 바디(Body)를 로깅(Logging)하는 필터나 인터셉터를 구현하기 위해서인가요? 아니면 특수한 형태의 파일/데이터 파싱이 필요해서인가요? 구현하려는 목적을 알려주시면, 앞서 언급한 '스트림 재사용 문제'를 피할 수 있는 안전하고 올바른 스프링 구현 패턴을 안내해 드리겠습니다.
+
