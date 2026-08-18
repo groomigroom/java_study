@@ -1,0 +1,45 @@
+SecurityContextHolder는 스프링 시큐리티에서 "현재 로그인한 사용자의 보안 컨텍스트(인증 정보)를 저장하고 관리하는 가장 핵심적인 저장소"입니다. [1] 
+## 1. 스프링 부트에서의 의미
+
+* 역할: 애플리케이션 안에서 "지금 이 요청을 보낸 사람이 누구인지" 전역적으로 확인할 수 있게 해줍니다.
+* 보관 내용: 내부적으로 SecurityContext를 담고 있으며, 그 안에는 인증된 사용자의 정보, 권한(Role), 인증 상태를 담은 Authentication 객체가 들어있습니다.
+* 작동 원리: 기본적으로 ThreadLocal 방식을 사용하여, 하나의 요청을 처리하는 같은 스레드 내에서는 어디서든 로그인한 사용자 정보에 접근할 수 있습니다. [2, 3, 4, 5, 6] 
+
+[코드 예시: 현재 로그인한 사용자명 가져오기]
+
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String username = auth.getName(); // 현재 사용자 아이디
+
+## 2. 포함되어 있는 스타터 의존성 (Start Dependency)
+앞서 설명해 드린 AccessDeniedException과 마찬가지로 Spring Security 핵심 기능입니다. 프로젝트에 아래 의존성을 추가해야 사용할 수 있습니다. [7] 
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+## 3. 패키지 경로
+
+* org.springframework.security.core.context.SecurityContextHolder [8] 
+
+------------------------------
+이 클래스를 활용하여 어떤 기능을 구현하려고 하시나요? 관련된 상황을 알려주시면 구체적인 가이드를 드릴 수 있습니다.
+
+* 현재 로그인한 사용자의 아이디(PK)나 권한 목록을 컨트롤러/서비스에서 꺼내 쓰고 싶으신가요?
+* 회원가입 직후 자동으로 로그인 처리를 하거나, 테스트 코드에서 가짜 인증 객체를 주입하려는 상황인가요?
+* 비동기 처리(@Async)나 멀티스레드 환경에서 사용자 정보가 무시되는 문제를 겪고 계시나요?
+
+
+[1] [https://memodayoungee.tistory.com](https://memodayoungee.tistory.com/135)
+[2] [https://www.igloo.co.kr](https://www.igloo.co.kr/security-information/spring-security-part1-%EC%9D%B8%EC%A6%9D%EA%B3%BC-%EC%9D%B8%EA%B0%80-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%EC%8B%A4%EC%A0%84-%ED%99%9C%EC%9A%A9/)
+[3] [https://alstn113.tistory.com](https://alstn113.tistory.com/49)
+[4] [https://back-stead.tistory.com](https://back-stead.tistory.com/32)
+[5] [https://sjh836.tistory.com](https://sjh836.tistory.com/165)
+[6] [https://gregor77.github.io](https://gregor77.github.io/2021/04/19/spring-security-01/)
+[7] [https://miintto.github.io](https://miintto.github.io/docs/spring-security)
+[8] [https://ones1kk.tistory.com](https://ones1kk.tistory.com/entry/Spring-Spring-Security1)
