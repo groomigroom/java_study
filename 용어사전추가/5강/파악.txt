@@ -2,8 +2,6 @@
 
 180번줄
 
-UsernamePasswordAuthenticationToken
-
 .unauthenticated(username, password);
 
 182번줄
