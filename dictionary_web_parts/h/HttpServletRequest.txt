@@ -1,0 +1,35 @@
+HttpServletRequest는 클라이언트(브라우저)가 서버로 보낸 HTTP 요청 정보를 담고 있는 객체입니다. [1] 
+스프링 부트에서는 Spring Web 스타터 의존성에 포함되어 있습니다.
+------------------------------
+## 1. HttpServletRequest의 의미와 역할
+자바 표준 웹 기술(Servlet API)의 일부로, HTTP 요청의 모든 데이터를 읽을 수 있는 인터페이스입니다. 스프링 부트 컨트롤러에서 파라미터로 주입받아 사용할 수 있습니다.
+
+* 요청 데이터 추출: URL, HTTP 메서드(GET/POST), 헤더, 쿠키를 가져옵니다.
+* 클라이언트 정보 확인: 요청한 사용자 IP 주소나 세션 정보를 확인합니다.
+* 입력 스트림 읽기: HTTP 바디(Body)에 담긴 원시 데이터를 직접 읽습니다.
+
+@GetMapping("/info")public String getInfo(HttpServletRequest request) {
+    String userIp = request.getRemoteAddr(); // IP 주소 확인
+    String userAgent = request.getHeader("User-Agent"); // 브라우저 정보 확인
+    return "IP: " + userIp;
+}
+
+------------------------------
+## 2. 속해있는 Start Dependency (의존성)
+스프링 부트 프로젝트를 생성할 때 Spring Web 스타터를 추가하면 자동으로 포함됩니다.
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+Spring Web 의존성을 추가하면 내장 톰캣(Tomcat) 서블릿 컨테이너가 함께 다운로드되며, 그 과정에서 HttpServletRequest가 포함된 서블릿 API 라이브러리(jakarta.servlet-api)가 자동으로 프로젝트에 주입됩니다.
+------------------------------
+추가로 HttpServletRequest를 활용해 어떤 기능을 구현하고 싶으신가요? 구현하려는 목적을 말씀해주시면 스프링 스타일에 맞는 더 간결한 대안(예: @RequestParam, @RequestHeader 등)이나 구체적인 구현 코드를 제안해 드릴 수 있습니다.
+
+[1] [https://mundol-colynn.tistory.com](https://mundol-colynn.tistory.com/74)
