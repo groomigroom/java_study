@@ -1,10 +1,4 @@
 
-168 169번줗
-
-
-.readValue(messageBody, new TypeReference<>() {
-});
-
 171 172번줗
 
 } catch (IOException e) {
