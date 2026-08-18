@@ -1,0 +1,26 @@
+HttpSecurity는 스프링 시큐리티에서 웹 기반 보안 설정을 구성하는 핵심 빌더 클래스입니다. [1] 
+## 1. HttpSecurity의 의미
+
+* 보안 컨트롤러: 특정 HTTP 요청에 대해 어떤 보안 규칙(인증/인가)을 적용할지 세부적으로 설정합니다.
+* 메서드 체이닝: URL별 접근 권한 설정, 로그인/로그아웃 페이지 지정, CSRF 보호 활성화 등을 직관적인 메서드로 연결하여 구성합니다.
+* 체인 생성기: 앞서 질문하신 SecurityFilterChain을 최종적으로 빌드(http.build())하여 반환하는 역할을 합니다. [2] 
+
+## 2. 속해 있는 스타터 의존성 (Dependency)
+HttpSecurity 역시 SecurityFilterChain과 동일하게 Spring Security 라이브러리에 포함되어 있습니다.
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+------------------------------
+혹시 HttpSecurity를 활용해 특정 URL의 권한을 제어하거나, 세션 방식을 끄고 JWT 설정을 적용하는 구체적인 예제 코드가 필요하신가요? 구현하려는 인증 방식(Form 로그인, JWT, OAuth2 등)을 말씀해 주시면 바로 사용 가능한 설정 코드를 작성해 드리겠습니다. [3] 
+
+[1] [https://ttasjwi.tistory.com](https://ttasjwi.tistory.com/172)
+[2] [https://loopstudy.tistory.com](https://loopstudy.tistory.com/515)
+[3] [https://codecrafting.tistory.com](https://codecrafting.tistory.com/8)
