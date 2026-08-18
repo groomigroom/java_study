@@ -1,0 +1,51 @@
+제시해주신 PathPatternRequestMatcher는 Spring Security(스프링 시큐리티) 최신 버전(6.5 이상)에서 새롭게 도입된 표준 URL 매칭 클래스로, 기존에 널리 쓰이던 AntPathRequestMatcher를 대체하는 차세대 핵심 매치 제어기입니다. [1, 2, 3] 
+구체적인 의미와 포함된 스타터 의존성은 다음과 같습니다.
+------------------------------
+## 1. 코드의 의미
+이 클래스는 클라이언트가 보낸 HTTP 요청 URL이 특정 패턴에 일치하는지 판별하는 RequestMatcher 인터페이스의 최신 구현체입니다. [4] 
+
+* 
+* 기존 방식과의 차이: 과거 스프링 시큐리티는 전통적인 문자열 매칭 방식인 AntPathRequestMatcher를 사용했습니다. 하지만 최신 스프링은 더욱 빠르고 효율적이며 정교한 URL 분석이 가능한 PathPattern 엔진을 기본으로 사용하도록 패러다임을 전환했습니다. [2, 5] 
+* 최신 보안 사양 (Spring Security 7 대비): 스프링 시큐리티 7 버전부터는 기존 AntPathRequestMatcher와 MvcRequestMatcher가 더 이상 지원되지 않고 완전히 제거됩니다. 그 자리를 기본(Default) 매칭 전략으로 채우게 되는 핵심 클래스가 바로 이 PathPatternRequestMatcher입니다. [5, 6, 7] 
+* 
+
+## 💡 사용 방법의 변화 (직접 생성 차단) [5] 
+과거 AntPathRequestMatcher는 new AntPathRequestMatcher("/api/**")처럼 개발자가 자바 코드로 직접 객체를 찍어내서 사용할 수 있었습니다.
+하지만 PathPatternRequestMatcher는 의도적으로 내부 생성자가 private으로 감싸져 있어 new 키워드로 만들 수 없으며, 제공되는 전용 빌더(Builder) 또는 내장 메서드를 통해 우회하여 사용해야 합니다. [8, 9, 10] 
+최신 마이그레이션 예시 코드: [1] 
+
+// 과거 (Spring Security 6.4 이하 방식)
+req.requestMatchers(AntPathRequestMatcher.antMatcher("/images/**")).permitAll();
+// 현재 및 미래 (Spring Security 6.5 이상 차세대 방식)
+req.requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/images/**")).permitAll();
+
+------------------------------
+## 2. 소속 스타터 의존성 (Starter Dependency)
+이 클래스는 최신 스프링 보안 아키텍처의 핵심 구성 요소이므로 Spring Security 라이브러리에 속해 있습니다. [4] 
+패키지 경로: org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher [1] 
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+------------------------------
+현재 개발 환경의 스프링 부트 버전(예: 3.x의 최신 패치 버전 등)을 올리시면서 기존 AntPathRequestMatcher 코드에 빨간 줄(경고 또는 에러)이 생겨 이 클래스를 찾아보게 되셨나요? [2, 6] 
+만약 커스텀 필터나 보안 설정 파일(SecurityConfig)에서 기존 경로 매칭 코드를 최신 스펙인 PathPatternRequestMatcher로 마이그레이션하는 데 어려움을 겪고 계신다면, 바꾸고자 하는 기존 코드를 보여주세요. 최신 사양에 맞는 정확한 빌더 전환 코드를 작성해 드리겠습니다. [8, 11] 
+
+[1] [https://docs.moderne.io](https://docs.moderne.io/user-documentation/recipes/recipe-catalog/java/spring/security6/migrateantpathrequestmatcher/)
+[2] [https://fastcampus.co.kr](https://fastcampus.co.kr/community/101683)
+[3] [https://www.technetexperts.com](https://www.technetexperts.com/pathpattern-resolve/)
+[4] [https://docs.spring.io](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servlet/util/matcher/PathPatternRequestMatcher.html)
+[5] [https://docs.spring.io](https://docs.spring.io/spring-security/reference/6.5-SNAPSHOT/migration-7/web.html)
+[6] [https://velog.io](https://velog.io/@hjy648012/%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85-Spring-Boot-4.0-%EC%97%85%EB%8D%B0%EC%9D%B4%ED%8A%B8-AntPathRequestMatcher-%EC%A0%9C%EA%B1%B0-%EB%8C%80%EC%9D%91-%EB%B0%8F-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-7.0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98)
+[7] [https://docs.moderne.io](https://docs.moderne.io/user-documentation/recipes/recipe-catalog/java/spring/security6/migrateantpathrequestmatcher/)
+[8] [https://docs.spring.io](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/servlet/util/matcher/PathPatternRequestMatcher.Builder.html)
+[9] [https://velog.io](https://velog.io/@qkrqhdtn3/Spring-Boot-4.0.0-and-Spring-Security-6.0.0-%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%EC%B2%98%EB%A6%AC-%EB%B0%A9%EB%B2%95-AntPathRequestMatcher-%EB%8C%80%EC%B2%B4)
+[10] [https://okimaru.tistory.com](https://okimaru.tistory.com/entry/Spring-Security-RequestMatcher-%EC%99%80-CustomFilter-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%ED%8A%B9%EC%A0%95-URL-%EC%B2%B4%ED%81%AC%ED%95%98%EA%B8%B0)
+[11] [https://stackoverflow.com](https://stackoverflow.com/questions/79762868/migrate-antpathrequestmatcher-to-pathpatternrequestmatcher)
