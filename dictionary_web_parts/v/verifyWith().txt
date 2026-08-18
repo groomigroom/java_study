@@ -1,0 +1,31 @@
+자바 스프링 부트 환경에서 .verifyWith(secretKey)는 주로 JWT(JSON Web Token)를 검증하고 파싱하기 위해 비밀키(Secret Key)를 설정하는 메서드입니다.
+주로 오픈소스 JWT 라이브러리인 JJWT(Java JWT)에서 사용됩니다.
+## 🔑 소속 의존성 (Starter Dependency)
+이 메서드는 스프링 부트 자체 내장 기능이 아닌 외부 라이브러리인 JJWT에 속해 있습니다. build.gradle에 다음과 같은 의존성을 추가하여 사용합니다.
+
+* implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+* runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+* runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+## 📝 메서드와 매개변수의 의미
+이 코드는 토큰의 위변조를 막는 안전장치 역할을 합니다.
+
+* .verifyWith(): 전달받은 JWT의 서명(Signature)을 검증할 때 사용할 키를 지정하는 메서드입니다.
+* secretKey (매개변수): 서버가 가지고 있는 고유한 비밀키 개체(java.security.Key)입니다.
+* 동작 원리: 클라이언트가 보낸 토큰의 서명을 이 secretKey로 복호화하거나 재연산하여 토큰이 변조되지 않았는지 확인합니다.
+
+## 💻 실제 사용 예시 코드
+
+import io.jsonwebtoken.Jwts;import javax.crypto.SecretKey;
+// 1. JWT 파서 빌더 생성// 2. verifyWith로 비밀키 설정// 3. 토큰 파싱 및 검증
+Jwts.parser()
+    .verifyWith(secretKey) 
+    .build()
+    .parseSignedClaims(jwtToken);
+
+추가로 궁금한 점이 있으시다면 말씀해 주세요.
+
+* 혹시 JWT 토큰을 생성하는 과정과 검증하는 과정 전체 코드가 필요하신가요?
+* 사용 중인 JJWT 라이브러리의 버전(0.11 미만 또는 0.12 이상)을 알려주시면 버전에 맞는 정확한 코드를 안내해 드릴 수 있습니다.
+
+
