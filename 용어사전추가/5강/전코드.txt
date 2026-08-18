@@ -32,7 +32,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 
     // 예외 처리
 
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED); // 401 응답
 
 
                     .accessDeniedHandler((request, response, authException) -> {
