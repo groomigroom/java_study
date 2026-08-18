@@ -1,4 +1,4 @@
-.build() 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
+.parseSignedClaims(token) 자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
 
 55번줄
 
