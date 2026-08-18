@@ -5,3 +5,8 @@
 역할: 스프링 시큐리티는 이 공격을 막기 위해 기본적으로 CSRF 토큰 검증 메커니즘을 켭니다. 
 하지만 서버가 세션을 쓰지 않고 상태를 유지하지 않는(Stateless) JWT 
 기반의 REST API를 제공할 때는 이 보호 기능을 보통 비활성화(disable)합니다.
+
+
+Spring Security 라이브러리에 내장되어 있습니다. 
+
+Gradle (build.gradle)groovyimplementation 'org.springframework.boot:spring-boot-starter-security'
