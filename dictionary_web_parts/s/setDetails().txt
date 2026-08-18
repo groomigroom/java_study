@@ -44,3 +44,27 @@ implementation 'org.springframework.boot:spring-boot-starter-security'
 
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+setDetails(request, authRequest) 메서드에 들어가는 두 매개변수는 "어디서 정보를 추출해서(소스)", "어디에 저장할 것인가(대상)"를 의미합니다.
+## 1. request (소스)
+
+* 타입: HttpServletRequest
+* 의미: 클라이언트가 보낸 실제 웹 요청 정보입니다.
+* 역할: 이 객체로부터 사용자의 IP 주소(Remote Address)와 세션 ID(Session ID) 같은 네트워크/웹 관련 보안 정보를 추출합니다.
+
+## 2. authRequest (대상)
+
+* 타입: UsernamePasswordAuthenticationToken (또는 AbstractAuthenticationToken을 상속받은 인증 객체)
+* 의미: 사용자가 입력한 아이디/비밀번호가 담긴 인증 전 토큰 객체입니다.
+* 역할: request에서 추출한 웹 세부 정보를 이 객체의 details 필드에 주입하여 저장합니다.
+
+------------------------------
+## 💡 요약 구조도
+
+[HttpServletRequest (request)]  ── IP, 세션 ID 추출 ──>  [AuthenticationToken (authRequest)]
+  (클라이언트의 웹 요청)                                     (인증 객체의 details 필드에 저장)
+
+이 메서드가 실행되면 내부적으로 new WebAuthenticationDetails(request)가 호출되면서 IP와 세션 ID가 담긴 객체가 생성되고, 그것이 authRequest.setDetails(...)를 통해 인증 토큰에 쏙 들어가게 됩니다.
+------------------------------
+현재 작성 중이신 필터 코드에서 이 두 매개변수를 넘긴 후, AuthenticationManager로 인증을 진행하는 단계인가요? 아니면 JWT 토큰 검증 필터를 만들고 계신가요? 진행 중인 구체적인 인증 흐름을 알려주시면 알맞은 다음 단계를 안내해 드리겠습니다.
+
