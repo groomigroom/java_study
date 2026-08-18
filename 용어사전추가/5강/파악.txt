@@ -1,4 +1,3 @@
-StreamUtils
 
 .copyToString(inputStream, StandardCharsets.UTF_8);
 
