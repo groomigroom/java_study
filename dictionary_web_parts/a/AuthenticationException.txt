@@ -1,0 +1,33 @@
+AuthenticationException은 스프링 시큐리티에서 사용자 인증(로그인)에 실패했을 때 발생하는 최상위 예외 객체입니다. [1] 
+이 객체는 Spring Security 스타터 의존성에 포함되어 있습니다.
+------------------------------
+## 1. AuthenticationException의 의미와 역할
+사용자가 입력한 자격 증명(ID/비밀번호, 토큰 등)이 올바르지 않거나, 계정에 문제가 있어 인증을 통과하지 못할 때 예외를 발생시키고 이를 처리하는 역할을 합니다.
+이 클래스는 구체적인 실패 원인에 따라 다음과 같은 하위 클래스(자식 예외)들을 가집니다.
+
+* BadCredentialsException: 비밀번호가 틀렸을 때 발생합니다.
+* UsernameNotFoundException: 존재하지 않는 ID로 로그인을 시도할 때 발생합니다.
+* LockedException / DisabledException: 계정이 잠기거나 비활성화 상태일 때 발생합니다.
+* ExpiredCredentialsException: 비밀번호 만료 등 자격 증명이 유효하지 않을 때 발생합니다. [2] 
+
+스프링 부트에서는 보통 AuthenticationFailureHandler를 구현하여 이 예외가 발생했을 때 클라이언트에게 "아이디 또는 비밀번호가 틀렸습니다"와 같은 에러 메시지를 응답하도록 처리합니다.
+------------------------------
+## 2. 속해있는 Start Dependency (의존성)
+프로젝트 생성 시 Spring Security 스타터를 추가하면 포함됩니다.
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+이 의존성을 추가하면 핵심 보안 기능을 담당하는 spring-security-core 라이브러리가 함께 내려받아지며, 그 안에서 AuthenticationException을 사용할 수 있게 됩니다.
+------------------------------
+현재 로그인 실패 시 커스텀 에러 페이지로 이동시키거나, JSON 형태의 에러 응답(API)을 반환하는 기능을 구현 중이신가요? 구현하고 싶으신 로그인 실패 처리 방식을 알려주시면 알맞은 핸들러 코드를 작성해 드리겠습니다.
+
+[1] [https://colabear754.tistory.com](https://colabear754.tistory.com/182)
+[2] [https://shinsunyoung.tistory.com](https://shinsunyoung.tistory.com/79)
