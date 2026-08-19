@@ -1,0 +1,23 @@
+Claims(클레임)는 자바 스프링 부트 생태계에서 주로 JWT(JSON Web Token)에 담기는 사용자 정보나 자격 증명 데이터를 의미합니다. 토큰을 발급받은 주체(사용자)의 ID, 이름, 권한(Role), 토큰 만료 시간 등의 속성 정보가 각각 하나의 'Claim'이 됩니다.
+스프링 부트 프로젝트에서 Claims를 다루기 위해 포함해야 하는 대표적인 스타터 의존성(Starter Dependency)과 라이브러리는 다음과 같습니다.
+## 1. Spring Boot Starter Security
+스프링 부트에서 인증과 인가를 처리하는 기본 핵심 스타터입니다.
+
+* Maven: spring-boot-starter-security
+* 역할: API 접근 제어, 로그인 인증, 권한 검증 등 보안의 전반적인 아키텍처를 제공합니다.
+
+## 2. Spring Boot Starter OAuth2 Resource Server
+JWT 형식의 토큰을 받아 Claims를 해석하고 인가 처리를 할 때 가장 많이 사용하는 표준 스타터입니다.
+
+* Maven: spring-boot-starter-oauth2-resource-server
+* 역할: 내장된 Nimbus JOSE+JWT 라이브러리를 통해 JWT 내부의 Claims를 자동으로 파싱하고, SecurityContext에 인증 객체로 등록해 줍니다.
+
+## 3. jjwt (Java JWT) — 오픈소스 라이브러리
+스프링 공식 스타터는 아니지만, 개발자가 직접 JWT를 발급하고 Claims를 수동으로 제어할 때 가장 흔하게 조합해서 사용하는 라이브러리입니다.
+
+* 의존성: io.jsonwebtoken:jjwt-api, jjwt-impl, jjwt-jackson
+* 역할: Jwts.claims() 객체를 생성하여 커스텀 데이터를 넣고 토큰을 빌드하거나 파싱할 때 씁니다.
+
+------------------------------
+현재 개발 중이신 시스템이 자체적으로 JWT를 생성·발급해야 하는 단계인가요, 아니면 외부 토큰을 받아 검증하고 Claims를 읽는 단계인가요? 구현 목적을 알려주시면 알맞은 의존성 설정 코드와 Claims 추출 예시를 지원해 드리겠습니다.
+
