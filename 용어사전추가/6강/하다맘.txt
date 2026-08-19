@@ -23,16 +23,18 @@ accessTokenExpiresIn
 refreshTokenExpiresIn
 
 
-String type = isAccess ? "access" : "refresh";
 
-return Jwts.builder()
+
 .claim("sub", username)
-.claim("role", role)
-.claim("type", type)
-.issuedAt(new Date(now))
-.expiration(new Date(now + expiry))
-.signWith(secretKey)
-.compact();
-}
 
-}
+.claim("role", role)
+
+.claim("type", type)
+
+.issuedAt(new Date(now))
+
+.expiration(new Date(now + expiry))
+
+.signWith(secretKey)
+
+.compact();
