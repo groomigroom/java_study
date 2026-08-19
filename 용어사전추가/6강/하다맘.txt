@@ -3,8 +3,6 @@
 55번줄
 
 
-
-// JWT 유효 여부 (위조, 시간, Access/Refresh 여부)
 public static Boolean isValid(String token, Boolean isAccess) {
 try {
 Claims claims = Jwts.parser()
