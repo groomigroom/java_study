@@ -1,0 +1,33 @@
+JwtException은 자바 스프링 부트에서 JWT(JSON Web Token) 처리 중 문제가 발생했을 때 던져지는 예외들의 최상위 부모 클래스를 의미합니다. 토큰의 만료, 위조, 형식이 깨진 경우 등 JWT와 관련된 모든 에러를 잡아내는 역할을 합니다.
+이 예외는 스프링 부트 공식 스타터에 직접 포함되어 있기보다는, 스프링 보안 라이브러리나 외부 JWT 라이브러리에 속해 있습니다. 개발 방식에 따라 크게 두 가지 의존성 중 하나를 사용하게 됩니다.
+## 1. Spring Boot Starter OAuth2 Resource Server (스프링 공식)
+스프링 부트가 제공하는 표준 방식으로 JWT를 검증할 때 사용하는 스타터입니다.
+
+* 속해 있는 패키지: org.springframework.security.oauth2.jwt.JwtException
+* 스타터 의존성 (Maven/Gradle):
+* spring-boot-starter-oauth2-resource-server
+* 설명: 스프링 시큐리티 프레임워크와 완전히 통합되어 있으며, 토큰 검증 실패 시 내부적으로 이 예외를 발생시켜 인가(Authorization)를 거부합니다.
+
+## 2. JJWT (가장 많이 쓰는 외부 라이브러리)
+스프링 시큐리티 없이 독립적으로 JWT를 생성·파싱하거나, 커스텀 필터를 구현할 때 가장 많이 쓰는 라이브러리입니다.
+
+* 속해 있는 패키지: io.jsonwebtoken.JwtException [1] 
+* 의존성 명칭:
+* io.jsonwebtoken:jjwt-api (및 jjwt-impl, jjwt-jackson)
+* 설명: 개발자가 직접 try-catch문으로 만료된 토큰(ExpiredJwtException), 위조된 토큰(SignatureException) 등을 세부적으로 제어할 때 사용합니다.
+
+------------------------------
+## 주요 하위 예외 항목 (JJWT 기준 예시)
+
+* ExpiredJwtException: 토큰의 유효 기간(Expiration)이 지났을 때 발생
+* UnsupportedJwtException: 구조가 JWT 체계와 맞지 않을 때 발생
+* MalformedJwtException: 토큰이 손상되었거나 올바르게 구성되지 않았을 때 발생
+* SignatureException: 서명 검증에 실패했을 때(위변조 가능성) 발생 [2, 3, 4] 
+
+------------------------------
+현재 프로젝트에서 JwtException이 발생하여 글로벌 예외 처리(Exception Handler)를 구현 중이신가요, 아니면 필터(Filter) 단에서 토큰을 검증하는 코드를 작성 중이신가요? 진행 중인 에러 처리 방식을 알려주시면 상황에 맞는 예외 처리 코드를 안내해 드리겠습니다.
+
+[1] [https://learngoeson.tistory.com](https://learngoeson.tistory.com/28)
+[2] [https://medium.com](https://medium.com/@OutOfBedlam/jwt-%EC%9E%90%EB%B0%94-%EA%B0%80%EC%9D%B4%EB%93%9C-53ccd7b2ba10)
+[3] [https://medium.com](https://medium.com/@OutOfBedlam/jwt-%EC%9E%90%EB%B0%94-%EA%B0%80%EC%9D%B4%EB%93%9C-53ccd7b2ba10)
+[4] [https://shinsunyoung.tistory.com](https://shinsunyoung.tistory.com/110)
