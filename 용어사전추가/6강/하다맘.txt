@@ -2,7 +2,7 @@
 
 55번줄
 
-parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
+.build().parseSignedClaims(token).getPayload().get("role", String.class);
 }
 
 // JWT 유효 여부 (위조, 시간, Access/Refresh 여부)
