@@ -3,7 +3,7 @@ start dependency
 Lombok
 Spring Web
 Spring Security
-OAuth Clience
+OAuth2 Client
 JDBC API
 Spring Data JPA
 MySQL Driver
