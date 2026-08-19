@@ -1,1 +1,76 @@
+스프링 + 리액트 로그인 > 7. 백엔드 : Jwt 도메인용 Entity
 
+모식도
+
+​
+
+
+​
+
+Jwt 도메인 데이터 저장
+
+​
+
+ 설계할 Jwt 도메인의 행위 요소들을 나열하면, "Refresh 토큰 발급시 저장", "Refresh 토큰 화이트 리스트 조회", 등이 존재합니다.
+
+ Refresh 토큰의 경우 생명주기가 길기 때문에 백엔드측에서 토큰들을 리스트화 시켜두고 Access 재발급시 검증하거나 로그아웃시 무효 처리를 진행하고 있습니다.
+
+​
+
+ 이 행위를 하기 위해선 결국 저장소가 필요합니다. 따라서 RefreshEntity를 생성하겠습니다.
+
+​
+
+RefreshEntity
+
+​
+
+- domain > jwt > entity > RefreshEntity.java
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "jwt_refresh_entity")
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class RefreshEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "username", nullable = false)
+    private String username;
+
+    @Column(name = "refresh", nullable = false, length = 512)
+    private String refresh;
+
+    @CreatedDate
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createdDate;
+
+}
+​
+
+RefreshRepository
+
+​
+
+- domain > jwt > repository > RefreshRepository.java
+
+import org.example.backend.domain.jwt.entity.RefreshEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RefreshRepository extends JpaRepository<RefreshEntity, Long> {
+}
