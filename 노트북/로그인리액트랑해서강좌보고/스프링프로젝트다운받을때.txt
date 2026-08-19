@@ -7,3 +7,4 @@ OAuth Clience
 JDBC API
 Spring Data JPA
 MySQL Driver
+thymeleaf
