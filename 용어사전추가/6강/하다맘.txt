@@ -2,7 +2,7 @@
 
 55번줄
 
-.getPayload().get("role", String.class);
+.get("role", String.class);
 }
 
 // JWT 유효 여부 (위조, 시간, Access/Refresh 여부)
