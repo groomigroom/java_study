@@ -15,11 +15,14 @@ IllegalArgumentException
 
 
 
-// JWT(Access/Refresh) 생성
-public static String createJWT(String username, String role, Boolean isAccess) {
-
 long now = System.currentTimeMillis();
-long expiry = isAccess ? accessTokenExpiresIn : refreshTokenExpiresIn;
+
+
+accessTokenExpiresIn
+
+refreshTokenExpiresIn
+
+
 String type = isAccess ? "access" : "refresh";
 
 return Jwts.builder()
