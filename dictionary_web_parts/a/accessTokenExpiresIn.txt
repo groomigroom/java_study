@@ -1,0 +1,29 @@
+accessTokenExpiresIn은 자바 스프링 부트 애플리케이션에서 만료 예정인 엑세스 토큰(Access Token)의 남은 유효 기간(초 또는 밀리초 단위)을 의미하는 변수명 또는 속성값입니다. 주로 카카오, 네이버 등 외부 OAuth 2.0 API와 연동하여 소셜 로그인을 구현할 때, 플랫폼이 제공하는 토큰 정보를 담는 DTO(데이터 전달 객체)의 필드로 가장 많이 활용됩니다.
+이 명칭은 개발자가 직접 정하는 변수명이거나 연동 API의 규격이기 때문에 특정 스타터에 고정되어 있지 않지만, 이를 처리하기 위해 주로 사용하는 스타터 의존성은 다음과 같습니다.
+## 1. 속해 있는 스타터 의존성 (Start Dependency)
+구현 방식에 따라 주로 아래 두 가지 스타터 중 하나를 사용해 이 값을 다루게 됩니다.
+
+* Spring Boot Starter OAuth2 Client (추천)
+* 의존성 (Maven/Gradle): spring-boot-starter-oauth2-client
+   * 설명: 네이버, 카카오, 구글 등 외부 인가 서버와 연동할 때 필수적인 스타터입니다. 내부적으로 OAuth2AccessTokenResponse 같은 객체를 통해 토큰의 만료 시간 정보를 파싱하고 관리합니다.
+* Spring Boot Starter Web
+* 의존성 (Maven/Gradle): spring-boot-starter-web
+   * 설명: 직접 RestTemplate이나 WebClient를 사용해 카카오/네이버 토큰 API를 호출하고 응답(JSON)을 받을 때 사용합니다. 개발자가 직접 DTO 클래스를 만들어 accessTokenExpiresIn 또는 expires_in이라는 이름으로 필드를 선언하게 됩니다.
+
+------------------------------
+## 💡 실제 활용 예시 (DTO 구조)
+네이버나 카카오 로그인의 토큰 발급 API 응답을 자바 객체로 매핑할 때 보통 다음과 같이 정의하여 사용합니다.
+
+public class TokenResponseDto {
+    private String accessToken;
+    
+    // 카카오/네이버 등에서 "expires_in"이라는 이름으로 주는 만료 시간(초)을 매핑
+    @JsonProperty("expires_in")
+    private long accessTokenExpiresIn; 
+    
+    private String refreshToken;
+}
+
+현재 개발 중이신 기능이 카카오나 네이버 같은 외부 소셜 로그인 연동인가요, 아니면 자체 서비스의 로그인 토큰 발급인가요? 연동 중인 플랫폼을 알려주시면 해당 플랫폼의 규격에 딱 맞는 토큰 응답 처리(DTO) 및 만료 시간 계산 코드를 작성해 드리겠습니다.
+
+
