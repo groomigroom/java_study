@@ -2,7 +2,6 @@
 
 55번줄
 
-Claims
 
 .verifyWith(secretKey)
 
