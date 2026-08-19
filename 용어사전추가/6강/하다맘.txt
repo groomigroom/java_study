@@ -3,7 +3,6 @@
 55번줄
 
 
-.verifyWith(secretKey)
 
 .parseSignedClaims(token)
 
