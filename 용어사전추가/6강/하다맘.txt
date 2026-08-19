@@ -1,11 +1,8 @@
-.get("sub", String.class)  자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
+  자바 스프링 부트에서 의미하는 것과 이게 속해있는 start dependency? 
 
 55번줄
 
-
-// JWT 클레임 role 파싱
-public static String getRole(String token) {
-return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
+parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
 }
 
 // JWT 유효 여부 (위조, 시간, Access/Refresh 여부)
