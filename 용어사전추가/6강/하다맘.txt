@@ -7,7 +7,7 @@
 
 
 
-long now = System.currentTimeMillis();
+
 
 
 accessTokenExpiresIn
