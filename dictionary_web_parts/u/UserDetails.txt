@@ -1,0 +1,45 @@
+자바 스프링 부트에서 UserDetails는 Spring Security가 사용자의 핵심 정보를 담기 위해 제공하는 핵심 인터페이스(Interface)입니다. [1, 2] 
+개발자가 이 인터페이스를 구현하면(implements), Spring Security가 로그인 인증 과정에서 비밀번호를 검증하고 사용자의 권한(Role)을 확인하는 용도로 사용합니다.
+이와 관련된 상세한 의미와 필수 스타터 의존성은 다음과 같습니다.
+------------------------------
+## 1. UserDetails의 핵심 의미
+UserDetails 인터페이스를 구현한 클래스는 Spring Security가 이해할 수 있는 "회원 객체"가 됩니다. Spring Security는 자체적인 보안 메커니즘을 동작시키기 위해, 우리가 DB에 저장한 회원 엔티티(예: User, Member)의 정보를 UserDetails 형태로 변환하여 넘겨받기를 원합니다. [3, 4] 
+이 인터페이스를 구현할 때 필수적으로 오버라이딩(재정의)해야 하는 주요 메서드는 다음과 같습니다.
+
+* getAuthorities(): 사용자가 가진 권한 목록(Role)을 반환합니다.
+* getPassword(): 인증에 필요한 암호화된 비밀번호를 반환합니다.
+* getUsername(): 사용자를 식별할 수 있는 아이디(또는 이메일)를 반환합니다.
+* isAccountNonExpired(), isAccountNonLocked(), isCredentialsNonExpired(), isEnabled(): 계정의 만료, 잠금, 비밀번호 만료, 활성화 여부를 각각 boolean 값으로 반환합니다. [5, 6, 7, 8, 9] 
+
+------------------------------
+## 2. 이게 속해있는 Start Dependency (스타터 의존성)
+UserDetails 인터페이스는 스프링 부트 기본 라이브러리가 아닌 Spring Security 모듈에 속해 있습니다. 따라서 프로젝트에서 이를 사용하려면 반드시 아래의 스타터 의존성을 추가해야 합니다.
+
+* Gradle (build.gradle):
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+* Maven (pom.xml):
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+
+이 의존성을 추가하는 순간, 패키지 상단에 import org.springframework.security.core.userdetails.UserDetails;를 선언하여 사용할 수 있게 됩니다. [10] 
+------------------------------
+## 💡 UserDetails를 실제 프로젝트에서 사용하는 방식
+보통은 기존에 존재하던 회원 DB 엔티티 클래스(예: User)에 UserDetails를 직접 구현하거나, 혹은 CustomUserDetails라는 별도의 DTO 클래스를 만들어 UserDetails를 구현한 뒤 내부에 회원 엔티티를 포함시키는 방식을 사용합니다.
+현재 UserDetails를 기존 회원 엔티티에 직접 구현하시려 하나요, 아니면 별도의 DTO로 분리해서 구현하시려 하나요? 상황에 맞는 구체적인 클래스 구현 코드 예시나 이를 조회하는 UserDetailsService 구현 방법이 필요하시면 말씀해 주세요!
+
+[1] [https://gregor77.github.io](https://gregor77.github.io/2021/04/21/spring-security-02/)
+[2] [https://baek-dev.tistory.com](https://baek-dev.tistory.com/101)
+[3] [https://jaeseo0519.tistory.com](https://jaeseo0519.tistory.com/129)
+[4] [https://2damlee.github.io](https://2damlee.github.io/springboot/SpringSecurity/)
+[5] [https://hipopatamus.tistory.com](https://hipopatamus.tistory.com/72)
+[6] [https://ttasjwi.tistory.com](https://ttasjwi.tistory.com/172)
+[7] [https://back-stead.tistory.com](https://back-stead.tistory.com/16)
+[8] [https://shinsunyoung.tistory.com](https://shinsunyoung.tistory.com/78)
+[9] [https://shinsunyoung.tistory.com](https://shinsunyoung.tistory.com/78)
+[10] [https://www.igloo.co.kr](https://www.igloo.co.kr/security-information/spring-security-part1-%EC%9D%B8%EC%A6%9D%EA%B3%BC-%EC%9D%B8%EA%B0%80-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%EC%8B%A4%EC%A0%84-%ED%99%9C%EC%9A%A9/)
