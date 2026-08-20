@@ -9,13 +9,6 @@ Spring Security. Contribute to spring-projects/spring-security development by cr
 github.com
 
 ​
-
-- 요청 JSON Body 예상
-
-{
-    "username": "xxxjjhhh",
-    "password": "1234"
-}
 ​
 
 - filter > LoginFilter.java
