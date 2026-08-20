@@ -1,0 +1,41 @@
+자바 스프링 부트에서 .readValue()는 JSON 형식의 문자열 데이터를 자바 객체(Object)로 변환(역직렬화, Deserialization)할 때 사용하는 잭슨(Jackson) 라이브러리의 핵심 메서드입니다. [1] 
+스프링 부트 프레임워크 자체의 메서드가 아니라, 내부적으로 탑재되어 있는 Jackson 라이브러리의 ObjectMapper 클래스가 제공하는 메서드입니다. 외부 API와 데이터를 주고받거나, JWT 토큰 내부의 JSON 데이터를 파싱할 때 자주 사용됩니다.
+이와 관련된 상세한 의미와 필수 스타터 의존성은 다음과 같습니다.
+------------------------------
+## 1. .readValue()의 핵심 의미
+컴퓨터가 이해하는 JSON 문자열(텍스트)을 자바 코드가 다룰 수 있는 객체로 변환해 주는 역할을 합니다. 가장 보편적인 사용 형태는 다음과 같습니다.
+
+ObjectMapper objectMapper = new ObjectMapper();
+String jsonString = "{\"name\":\"홍길동\", \"age\":25}";
+// 💡 JSON 문자열을 UserDto 자바 객체로 변환
+UserDto user = objectMapper.readValue(jsonString, UserDto.class);
+
+
+* 동작 방식: JSON의 Key 이름("name", "age")과 자바 객체의 필드명(name, age)을 매핑하여 값을 자동으로 주입해 줍니다.
+* 다양한 입력 지원: 문자열(String)뿐만 아니라 파일(File), 바이트 배열(byte[]), URL 등 다양한 형태의 JSON 데이터를 읽어와 자바 객체로 만들 수 있습니다.
+
+------------------------------
+## 2. 이게 속해있는 Start Dependency (스타터 의존성)
+.readValue()를 사용하기 위한 Jackson 라이브러리는 스프링 부트에서 가장 널리 쓰이는 핵심 모듈 중 하나입니다. 따라서 별도의 Jackson 라이브러리를 찾아 추가할 필요 없이, 웹 애플리케이션 구축을 위한 기본 스타터만 포함하면 자동으로 가져옵니다.
+## 1) 웹 MVC 환경 (가장 보편적)
+스프링 부트로 일반적인 웹 API(REST API)를 만들 때 사용하는 Spring Web 스타터에 기본 포함되어 있습니다.
+
+* Gradle: implementation 'org.springframework.boot:spring-boot-starter-web'
+* Maven: <artifactId>spring-boot-starter-web</artifactId>
+
+## 2) 비동기/리액티브 웹 환경
+리액티브 스택인 WebFlux를 구성할 때도 자동으로 포함됩니다.
+
+* Gradle: implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+## 3) 만약 웹 기능 없이 Jackson만 독립적으로 쓰고 싶을 때
+화면이나 HTTP 통신 기능 없이 순수하게 JSON 파싱 기능만 빌려 쓰고 싶다면 아래 스타터를 추가합니다.
+
+* Gradle: implementation 'org.springframework.boot:spring-boot-starter-json'
+
+------------------------------
+## 💡 실무 사용 시 주의할 점
+.readValue() 메서드는 내부적으로 파싱 오류가 날 가능성이 항상 존재하기 때문에, 코드를 작성할 때 반드시 IOException 계열의 예외 처리(try-catch 문 또는 throws)를 강제합니다.
+현재 .readValue()를 사용하다가 예외 처리(체크 예외) 때문에 에러 코드가 나타났나요? 아니면 특정 JSON 구조를 자바 객체(List나 Map 등)로 변환하는 데 어려움을 겪고 계신가요? 변환하고자 하는 JSON 데이터 구조를 보여주시면 알맞은 자바 DTO 설계와 파싱 코드를 안내해 드리겠습니다!
+
+[1] [https://adjh54.tistory.com](https://adjh54.tistory.com/375)
