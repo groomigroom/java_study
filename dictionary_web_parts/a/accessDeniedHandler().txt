@@ -1,38 +1,64 @@
-제시해주신 코드는 Spring Security에서 "인증은 되었으나, 해당 리소스에 접근할 권한(Role)이 없는 사용자"가 접근했을 때 발생하는 예외를 처리하는 설정입니다.
-앞서 질문하신 authenticationEntryPoint와 구조는 똑같지만, '권한 부족(403 Forbidden)' 상황을 처리한다는 점이 다릅니다. [1] 
+질문하신 코드는 Spring Security에서 권한이 없는 사용자가 보호된 리소스에 접근하려 할 때(403 Forbidden 오류) 처리할 행동을 정의하는 코드입니다. [1, 2] 
+각 질문에 대한 상세한 답변을 정리해 드립니다.
 ------------------------------
 ## 1. 코드의 의미
-이 코드는 "권한이 없는 사용자가 접근했을 때 아무런 작업도 하지 않고 요청을 무시하겠다"는 의미입니다.
 
-* .accessDeniedHandler(...): 인가(Authorization) 실패, 즉 권한 거부 예외가 발생했을 때 동작할 커스텀 처리기를 등록하는 메서드입니다.
-* (request, response, authException) -> {}: 람다 바디를 비워둔 상태{}이므로, 권한 거부 시 클라이언트에게 아무런 응답도 보내지 않고 빈 화면이나 기본 브라우저 에러를 보게 만듭니다.
+accessDeniedHandler((request, response, authException) -> {})
 
-------------------------------
-## 2. 소속 스타터 의존성 (Starter Dependency)
-이 문법 역시 Spring Security 라이브러리가 필요합니다.
-Gradle (build.gradle)
+
+* 
+* 의미: 로그인(인증)은 성공했으나, 해당 페이지나 API를 호출할 권한(Role/Authority)이 부족할 때 동작하는 커스텀 핸들러를 등록하는 것입니다. [1, 3] 
+* 동작: 람다식 내부({})가 비어 있으므로, 현재 상태로는 권한 부족 예외가 발생하더라도 아무런 처리를 하지 않고 흰 화면이나 무응답 상태가 됩니다. 보통 이 안에서 "권한이 없습니다"라는 JSON 메시지를 보내거나 특정 에러 페이지로 리다이렉트하는 코드를 작성합니다. [3, 4] 
+* 
+
+## 2. 소속 Starter Dependency (의존성)
+이 기능은 Spring Boot의 spring-boot-starter-security 라이브러리에 속해 있습니다.
+
+* 
+* Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+* Gradle (build.gradle)
 
 implementation 'org.springframework.boot:spring-boot-starter-security'
 
-------------------------------
-## 3. 매개변수들의 의미 (request, response, authException)
-Spring Security가 권한 거부 시점에 필요한 모든 컨텍스트 정보를 자동으로 넘겨줍니다.
-
-* request (HttpServletRequest): 사용자가 권한 없이 어떤 주소(URL)에 접근하려고 했는지, 어떤 요청 메서드(GET/POST)를 썼는지 등의 HTTP 요청 정보를 담고 있습니다.
-* response (HttpServletResponse): 권한이 없는 사용자에게 403 상태 코드를 전송하거나, "권한이 없습니다"라는 커스텀 JSON 메시지를 담아 보낼 때 사용하는 HTTP 응답 객체입니다.
-* authException (정확히는 AccessDeniedException):
-* 제시해주신 변수명은 authException이지만, 이 메서드가 실제로 넘겨주는 객체 타입은 AccessDeniedException입니다. (자바 람다식 규칙상 변수명은 개발자가 자유롭게 지을 수 있어 authException으로 명명된 상태입니다.)
-   * 의미: "왜 이 사용자의 접근이 거부되었는지"에 대한 상세한 예외 원인 정보를 담고 있습니다.
+[5] 
+* 
 
 ------------------------------
-## 💡 실무용 올바른 구현 예시
-실제 개발할 때는 람다 바디를 비워두지 않고, 직전에 질문하신 SC_FORBIDDEN을 활용해 클라이언트에게 명확히 권한 부족을 알려주어야 합니다.
+## 3. 각 매개변수(Parameter) 3개의 역할
+AccessDeniedHandler 인터페이스의 handle 메서드가 가진 3개의 파라미터입니다. (질문 내용의 authException은 통상적으로 accessDeniedException으로 명시하지만 역할은 같습니다.) [6, 7, 8] 
+
+| 매개변수 | 타입 | 역할 |
+|---|---|---|
+| request | HttpServletRequest | 클라이언트가 보낸 HTTP 요청 정보를 담고 있습니다. 사용자가 어떤 URL(request.getRequestURI())을 요청하다가 거부당했는지 파악하거나, 세션 정보를 확인할 때 사용합니다. |
+| response | HttpServletResponse | 클라이언트에게 보낼 HTTP 응답 정보를 제어합니다. 상태 코드를 403으로 지정하거나(setStatus(403)), JSON 에러 메시지를 본문에 쓰거나(getWriter().write()), 다른 페이지로 리다이렉트(sendRedirect()) 시킬 때 사용합니다. |
+| authException (또는 accessDeniedException) | AccessDeniedException | 권한 부족으로 인해 발생한 구체적인 예외(에러) 정보를 담고 있습니다. 왜 접근이 거부되었는지 로그를 남기거나(e.getMessage()), 에러의 세부 원인을 분석할 때 참조합니다. |
+
+------------------------------
+## 💡 실무 활용 예시 (JSON 응답 반환)
+실제 백엔드 API 서버를 개발할 때는 대개 아래와 같이 response 객체를 이용해 클라이언트에게 에러 코드를 던져주는 방식으로 채웁니다. [9, 10] 
 
 .accessDeniedHandler((request, response, accessDeniedException) -> {
-    // 권한이 없는 사용자에게 403 Forbidden 에러를 전송함
-    response.sendError(HttpServletResponse.SC_FORBIDDEN);
+    response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403 지정
+    response.setContentType("application/json;charset=UTF-8");
+    response.getWriter().write("{\"error\": \"접근 권한이 없습니다.\"}");
 })
 
-현재 프로젝트의 Spring Security 설정 클래스(SecurityConfig) 전체 구조를 맞추고 계신가요? 전체적인 보안 설정 코드(filterChain 메서드 등)에서 막히는 부분이나 추가로 궁금한 설정 항목이 있다면 말씀해 주세요.
+인가(Authorization) 실패 외에 로그인 자체를 하지 않은 사용자(401 UnAuthorized)에 대한 실패 처리도 필요하신가요? 그렇다면 AuthenticationEntryPoint 설정 방법을 추가로 안내해 드릴 수 있습니다. [2, 11] 
 
-[1] [https://apidog.com](https://apidog.com/kr/blog/status-code-403-forbidden/)
+[1] [https://yoo-dev.tistory.com](https://yoo-dev.tistory.com/28)
+[2] [https://rvbear7.tistory.com](https://rvbear7.tistory.com/51)
+[3] [https://nijy.tistory.com](https://nijy.tistory.com/98)
+[4] [https://ws-pace.tistory.com](https://ws-pace.tistory.com/85)
+[5] [https://dev-allday.tistory.com](https://dev-allday.tistory.com/74)
+[6] [https://docs.spring.io](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/web/access/AccessDeniedHandler.html)
+[7] [https://stackoverflow.com](https://stackoverflow.com/questions/76967494/access-denied-exception-handling-in-spring-security)
+[8] [https://bezzang2.tistory.com](https://bezzang2.tistory.com/173)
+[9] [https://yoo-dev.tistory.com](https://yoo-dev.tistory.com/28)
+[10] [https://sas-study.tistory.com](https://sas-study.tistory.com/362)
+[11] [https://chb2005.tistory.com](https://chb2005.tistory.com/177)
