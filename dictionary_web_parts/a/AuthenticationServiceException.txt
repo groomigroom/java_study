@@ -1,0 +1,48 @@
+자바 스프링 부트에서 AuthenticationServiceException은 스프링 시큐리티(Spring Security) 인증 과정 중, 데이터베이스 장애나 외부 API 통신 실패 등 "시스템적인 내부 오류"로 인해 인증을 처리할 수 없을 때 발생하는 예외(Exception) 클래스입니다.
+사용자가 아이디/비밀번호를 틀렸을 때 발생하는 예외(예: BadCredentialsException)와 달리, "인증 서비스 자체의 문제"가 발생했음을 알리는 역할을 합니다.
+이와 관련된 상세한 의미와 필수 스타터 의존성은 다음과 같습니다.
+------------------------------
+## 1. AuthenticationServiceException의 핵심 의미
+이 예외는 스프링 시큐리티의 예외 계층 구조에서 AuthenticationException(인증 예외)의 하위 클래스입니다.
+주로 다음과 같은 인프라 및 시스템 예외 상황에서 스프링 시큐리티 내부, 혹은 개발자가 직접 구현한 인증 로직(UserDetailsService 등)에서 던져집니다. [1] 
+
+* DB 연동 실패: 인증을 위해 UserRepository로 회원 정보를 조회하려는데, 데이터베이스가 다운되었거나 네트워크 연결이 끊긴 경우
+* 외부 인증 서버 장애: OAuth2나 외부 API를 통해 2차 인증을 수행하는 과정에서 외부 서버가 응답하지 않는 경우
+* 잘못된 요청 형식: Spring Security가 지원하지 않는 방식(예: HTTP POST가 아닌 GET 요청)으로 로그인 주소에 접근했을 때 기본 필터(UsernamePasswordAuthenticationFilter)가 이 예외를 발생시킴
+
+------------------------------
+## 2. 이게 속해있는 Start Dependency (스타터 의존성)
+AuthenticationServiceException은 스프링 시큐리티의 코어 라이브러리에 속해 있습니다. 따라서 프로젝트에서 이 예외를 다루거나 처리하려면 Spring Security 스타터 의존성이 반드시 필요합니다.
+
+* Gradle (build.gradle):
+
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+* Maven (pom.xml):
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+
+이 의존성이 추가되어 있으면 패키지 상단에 import org.springframework.security.authentication.AuthenticationServiceException;을 선언하여 직접 예외를 던지거나(throw) 잡아낼(catch) 수 있습니다.
+------------------------------
+## 💡 실무에서의 주요 활용 및 처리 방식
+로그인 실패 시 사용자에게 너무 구체적인 시스템 오류를 보여주면 보안상 위험할 수 있습니다. 그래서 보통 AuthenticationFailureHandler나 @RestControllerAdvice를 활용해 이 예외를 가로챈 뒤, 사용자에게는 적절한 안내 문구를 보여주고 서버 로그에는 정확한 에러 원인을 남기는 방식을 사용합니다.
+
+// UserDetailsService 구현체 예시
+@Overridepublic UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    try {
+        return userRepository.findByUsername(username)
+                .map(CustomUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+    } catch (DataAccessException e) {
+        // DB 장애 발생 시 인증 서비스 예외로 래핑하여 던짐
+        throw new AuthenticationServiceException("인증 서버 시스템 내부 오류가 발생했습니다.", e);
+    }
+}
+
+현재 작성 중이신 로그인/인증 로직에서 이 예외가 갑자기 발생하여 해결 방법을 찾고 계신가요? 아니면 커스텀 예외 처리기(FailureHandler)를 구현하는 과정이신가요? 상황을 말씀해 주시면 에러 디버깅이나 커스텀 처리 코드 작성을 도와드리겠습니다!
+
+[1] [https://www.igloo.co.kr](https://www.igloo.co.kr/security-information/spring-security-part1-%EC%9D%B8%EC%A6%9D%EA%B3%BC-%EC%9D%B8%EA%B0%80-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EC%9D%98-%EC%9D%B4%ED%95%B4%EC%99%80-%EC%8B%A4%EC%A0%84-%ED%99%9C%EC%9A%A9/)
