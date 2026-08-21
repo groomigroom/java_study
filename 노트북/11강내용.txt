@@ -30,6 +30,8 @@ public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2Authentic
         email = attributes.get("email").toString();
         nickname = attributes.get("nickname").toString();
 
+//여기부터 #####
+
     } else if (registrationId.equals(SocialProviderType.GOOGLE.name())) {
 
         attributes = (Map<String, Object>) oAuth2User.getAttributes();
