@@ -57,6 +57,8 @@ public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2Authentic
 
         userRepository.save(entity.get());
     } else {
+
+여기부터 #####
         // 신규 유저 추가
         UserEntity newUserEntity = UserEntity.builder()
                 .username(username)
