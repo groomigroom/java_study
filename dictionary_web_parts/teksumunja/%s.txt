@@ -1,0 +1,51 @@
+자바에서 "Hello, %s!"는 문자열 안에 값을 끼워 넣기 위한 형식(format) 문자열입니다.
+
+예를 들어:
+
+String name = "지원";
+
+String result = String.format("Hello, %s!", name);
+
+System.out.println(result);
+
+결과:
+
+Hello, 지원!
+
+%s가 의미하는 것
+
+%s는 문자열(String)을 넣을 자리를 의미합니다.
+
+String.format("Hello, %s!", "Java");
+
+→
+
+Hello, Java!
+
+여러 개도 가능합니다.
+
+String.format("%s님, %s에 오신 것을 환영합니다.", "지원", "Spring");
+
+→
+
+지원님, Spring에 오신 것을 환영합니다.
+
+스프링부트에서 보였다면
+
+스프링부트 자체의 특별한 문법이라기보다는 자바의 String.format()에서 사용하는 형식 지정자라고 보면 됩니다.
+
+참고로 자주 쓰이는 것은:
+
+형식	의미	예시
+
+%s	문자열	"Java"
+%d	정수	100
+%f	실수	3.14
+%b	boolean	true
+
+
+즉,
+
+"Hello, %s!"
+
+자체는 **"Hello, [여기에 문자열을 넣어라]!"**라는 의미이고, String.format() 같은 곳에서 실제 값이 들어갑니다.
