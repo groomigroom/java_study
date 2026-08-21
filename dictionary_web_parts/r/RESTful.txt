@@ -1,0 +1,40 @@
+RESTful 웹 서버 개발이란 웹의 기존 HTTP 프로토콜을 그대로 활용하여, 화면(HTML) 대신 순수한 '데이터(JSON/XML)'만 주고받는 효율적인 서버를 구축하는 것을 의미합니다. 과거의 웹 서버가 사용자의 브라우저에 보여줄 완성된 화면(HTML)을 직접 만들어 보냈다면, RESTful 웹 서버는 자원(Resource) 중심으로 데이터를 처리하여 프론트엔드와 백엔드를 완전히 분리해 줍니다. [1, 2, 3, 4] 
+------------------------------
+## 💡 핵심 개발 원칙 (어떻게 만드나요?)
+RESTful하게 서버를 설계하려면 보통 다음 3가지 규칙을 철저히 따릅니다. [2, 4, 5] 
+
+* 
+* URI는 명사(자원)로만 구성: 주소창에 .../getUsers 같은 행위(동사)를 적지 않고, .../users 처럼 대상이 되는 자원(명사)만 지정합니다. [5, 6] 
+* HTTP 메서드로 행위 표현: 데이터에 대한 제어는 HTTP 표준 메서드를 활용합니다.
+* GET : 데이터 조회 (Read)
+   * POST : 데이터 등록 (Create)
+   * PUT / PATCH : 데이터 수정 (Update)
+   * DELETE : 데이터 삭제 (Delete) [2, 4, 7, 8, 9] 
+* 상태 비저장(Stateless): 서버는 클라이언트의 과거 상태(세션 등)를 기억하지 않으며, 들어오는 각각의 요청을 독립적인 하나의 트랜잭션으로만 처리합니다. [3, 10] 
+* 
+
+------------------------------
+## 🛠️ 실제 개발에서의 의미와 장점
+
+* 
+* 클라이언트와 서버의 완벽한 분리: 서버는 데이터만 던져줄 뿐입니다. 덕분에 동일한 RESTful 서버 하나로 PC 웹, 아이폰 앱, 안드로이드 앱에 모두 데이터를 공급할 수 있습니다. [1] 
+* 높은 가독성과 유지보수성: 주소(URI)와 HTTP 메서드만 보고도 이 요청이 무엇을 하려는지 단번에 파악할 수 있어, 협업과 디버깅이 매우 쉬워집니다. [11] 
+* 확장성과 표준화: 별도의 특수한 프로토콜을 배울 필요 없이, 전 세계 표준인 HTTP 프로토콜을 그대로 확장하여 사용하므로 시스템 구축 비용이 낮아집니다. [3, 12, 13] 
+* 
+
+------------------------------
+현재 구상 중이거나 개발하려는 서비스의 종류(예: 커뮤니티, 쇼핑몰 등)를 말씀해 주시면, 그에 맞는 RESTful API 주소(URL) 설계 예시를 더 구체적으로 만들어 드릴 수 있습니다. 어떤 서비스를 준비 중이신가요?
+
+[1] [https://aws.amazon.com](https://aws.amazon.com/ko/what-is/restful-api/)
+[2] [https://goldenrabbit.co.kr](https://goldenrabbit.co.kr/articles/Q3p1FTr33Cu2fx7aX2EV)
+[3] [https://docs.netapp.com](https://docs.netapp.com/ko-kr/ontap-automation/get-started/learn-about-rest.html)
+[4] [https://devpro.kr](https://devpro.kr/posts/rest-restful-api/)
+[5] [https://velog.io](https://velog.io/@huhon/%EC%9B%B9-%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%9D%BC%EB%A9%B4-%EC%95%8C%EC%95%84%EC%95%BC-%ED%95%A0-%EC%84%9C%EB%B2%84-%EA%B0%9C%EB%85%90-%EC%B4%9D%EC%A0%95%EB%A6%AC-%EC%9B%B9%EC%84%9C%EB%B2%84%EB%B6%80%ED%84%B0-RESTful%EA%B9%8C%EC%A7%80)
+[6] [https://mundol-colynn.tistory.com](https://mundol-colynn.tistory.com/170)
+[7] [https://rnfltpgus.github.io](https://rnfltpgus.github.io/knowledge/http-method/)
+[8] [https://www.ibm.com](https://www.ibm.com/kr-ko/think/topics/rest-apis)
+[9] [https://kr.linkedin.com](https://kr.linkedin.com/pulse/interview-23-explain-difference-between-http-methods-7kwbc?tl=ko)
+[10] [https://kr.linkedin.com](https://kr.linkedin.com/pulse/exploring-foundations-restful-web-services-principles-yusuf-acar-uahfc?tl=ko)
+[11] [https://www.youtube.com](https://www.youtube.com/watch?v=ZuJUk9c2Ujs&t=4)
+[12] [https://www.ibm.com](https://www.ibm.com/kr-ko/think/topics/rest-apis)
+[13] [https://babbab2.tistory.com](https://babbab2.tistory.com/70)
