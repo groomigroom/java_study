@@ -1,0 +1,23 @@
+.body(Quote.class)는 서버로부터 받은 HTTP 응답 본문(JSON 등)을 Quote라는 자바 클래스(객체) 형태로 변환하여 가져오겠다는 의미입니다.
+## 1. .body(Quote.class)의 의미
+
+* 역직렬화(Deserialization): 서버가 보낸 JSON이나 XML 데이터를 자바 객체로 파싱합니다.
+* 최종 데이터 반환: 앞서 빌드한 HTTP 요청 체인의 가장 마지막에 위치하며, 변환된 Quote 객체를 최종적으로 반환(Return)합니다.
+* 자동 매핑: JSON의 키(Key) 이름과 Quote 클래스의 필드(Field) 이름을 스프링이 자동으로 매칭하여 값을 넣어줍니다.
+
+## 2. 속해있는 시작 의존성 (Starter Dependency)
+이 메서드는 HTTP 클라이언트 기능과 JSON 변환 기능이 결합되어 동작하므로 다음 두 의존성이 관여합니다.
+
+* RestClient를 사용하는 경우 (동기)
+* 스타터: spring-boot-starter-web
+   * 소속 인터페이스: org.springframework.web.client.RestClient.ResponseSpec
+* WebClient를 사용하는 경우 (비동기/리액티브)
+* 스타터: spring-boot-starter-webflux
+   * 소속 인터페이스: org.springframework.web.reactive.function.client.WebClient.ResponseSpec
+
+참고 (내부 메커니즘): 실제 JSON을 자바 객체로 바꾸는 변환 작업은 spring-boot-starter-web 내부에 기본 포함된 Jackson 라이브러리(ObjectMapper)가 수행합니다.
+
+------------------------------
+지금까지 질문하신 내용(Builder, baseUrl, uri, retrieve, body)을 모두 합치면 하나의 완벽한 HTTP 요청 코드가 완성됩니다!
+이 조각들이 합쳐진 전체 API 호출 서비스 클래스 코드를 확인해 보시겠어요? 아니면 매핑할 Quote 클래스(DTO)를 선언하는 방법(Record 활용법 등)이 궁금하신지 말씀해 주세요!
+
