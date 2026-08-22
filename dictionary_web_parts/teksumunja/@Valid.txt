@@ -1,0 +1,26 @@
+자바 스프링 부트에서 @Valid는 데이터 유효성 검증(Validation)을 자동으로 수행하라는 지시어입니다.
+## 1. @Valid가 의미하는 것
+
+* 자동 검증: 클라이언트가 보낸 데이터(DTO 등)가 서버에 들어올 때, 지정된 규칙에 맞는지 자동으로 검사합니다.
+* 제약 조건 확인: 클래스 필드에 선언된 @NotNull, @Min, @Email 등의 제약 조건을 검증합니다.
+* 에러 처리: 검증에 실패하면 MethodArgumentNotValidException 예외를 발생시키거나, BindingResult 객체에 에러 내용을 담아줍니다.
+
+## 2. 속해있는 의존성 (Dependency)
+@Valid는 자바 표준 스펙(Jakarta Bean Validation)에 속해 있습니다. 스프링 부트에서 이를 사용하려면 다음 의존성을 추가해야 합니다.
+
+* 의존성 이름: Spring Boot Starter Validation
+* Gradle 추가 코드:
+
+implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+* Maven 추가 코드:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+
+------------------------------
+구현하시려는 검증 규칙(예: 필수값 확인, 이메일 형식 등)을 알려주시면, 이에 맞는 DTO 작성법과 컨트롤러 적용 코드를 예시로 만들어 드릴 수 있습니다. 어떤 검증이 필요하신가요?
+
