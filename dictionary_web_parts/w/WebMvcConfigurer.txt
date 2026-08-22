@@ -1,0 +1,45 @@
+자바 스프링 부트(Spring Boot)에서 WebMvcConfigurer 인터페이스의 의미와 이것이 포함된 스타터 의존성(Starter Dependency)에 대한 핵심 요약입니다.
+------------------------------
+## 1. WebMvcConfigurer란 무엇인가요?
+WebMvcConfigurer는 스프링 부트가 제공하는 자동 설정(Auto Configuration)을 그대로 유지하면서, 개발자가 원하는 웹 MVC 설정을 커스텀(추가 및 확장)할 때 사용하는 인터페이스입니다.
+
+* 인터페이스 구현: 클래스에 implements WebMvcConfigurer를 선언한 뒤, 필요한 메서드만 오버라이딩(재정의)하여 사용합니다.
+* 주요 용도:
+* CORS 설정: 다른 도메인(클래스)의 프론트엔드 서버에서 API를 호출할 수 있도록 허용 (addCorsMappings)
+   * 인터셉터(Interceptor) 등록: 로그인 체크나 권한 검사 등을 위한 인터셉터 추가 (addInterceptors)
+   * 정적 리소스 매핑: 이미지, CSS, JS 파일 등의 경로를 커스텀 매핑 (addResourceHandlers)
+   * 포매터/컨버터 추가: 날짜나 특정 데이터 타입을 변환하는 규칙 등록 (addFormatters)
+
+@Configurationpublic class WebConfig implements WebMvcConfigurer {
+
+    // CORS 설정을 커스텀하는 예시
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:3000"); // 프론트엔드 주소 허용
+    }
+}
+
+------------------------------
+## 2. WebMvcConfigurer는 어떤 Start Dependency에 속해있나요?
+WebMvcConfigurer는 스프링의 웹 MVC 프레임워크의 핵심 인터페이스이므로, 웹 기능을 담당하는 웹 스타터에 포함되어 있습니다.
+
+* 실제 패키지 경로: org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+* 추가해야 할 스타터 의존성: spring-boot-starter-web
+
+## 🛠️ 의존성 설정 방법
+스프링 부트로 웹 애플리케이션이나 REST API를 개발할 때 추가하는 표준 스타터입니다.
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+------------------------------
+현재 프론트엔드 서버(React, Vue 등)와의 통신을 위한 CORS 문제를 해결 중이신가요? 아니면 요청을 가로채서 처리하는 인터셉터(Interceptor)를 구현 중이신가요? 구현하고자 하는 구체적인 웹 설정 기능을 말씀해 주시면 정확한 구현 코드를 작성해 드리겠습니다.
+
