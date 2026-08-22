@@ -1,0 +1,45 @@
+자바 스프링 부트(Spring Boot)에서 @Min 어노테이션의 의미와 이것이 포함된 스타터 의존성(Starter Dependency)에 대한 핵심 요약입니다.
+------------------------------
+## 1. @Min이란 무엇인가요?
+@Min은 지정한 숫자 값이 설정한 최솟값보다 크거나 같은지 검증할 때 사용하는 어노테이션입니다.
+
+* 검증 대상: 주로 정수(int, long), 실수(float, double), 또는 BigDecimal, BigInteger 같은 수치형(숫자) 데이터에 사용합니다.
+* 속성 설정: value 속성을 통해 허용할 최솟값을 지정합니다.
+* null 허용: @Size와 마찬가지로 값이 null인 경우는 유효성 검사를 통과시킵니다. 따라서 필수 값 검증이 필요하다면 @NotNull을 반드시 함께 선언해야 합니다.
+
+public class ProductRequest {
+    @NotNull
+    @Min(value = 1000, message = "상품 가격은 최소 1,000원 이상이어야 합니다.")
+    private Integer price;
+
+    @Min(value = 1, message = "주문 수량은 최소 1개 이상이어야 합니다.")
+    private int quantity;
+}
+
+## 💡 @Size(min=...)과의 확실한 차이점
+
+* @Min(10): 숫자 값이 10 이상인지 검사합니다. (예: 연령, 가격, 수량 등)
+* @Size(min=10): 문자열의 길이가 10글자 이상이거나, 리스트의 요소 개수가 10개 이상인지 검사합니다.
+
+------------------------------
+## 2. @Min은 어떤 Start Dependency에 속해있나요?
+@Min 역시 앞서 설명해 드린 @NotNull, @Size와 한 가족으로, 자바 표준 유효성 검증(Bean Validation) 스펙에 속해 있습니다.
+
+* 실제 패키지 경로: jakarta.validation.constraints.Min
+* 추가해야 할 스타터 의존성: spring-boot-starter-validation
+
+## 🛠️ 의존성 설정 방법
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+------------------------------
+현재 숫자를 검증하는 로직을 작성 중이신가요? 혹시 금액이나 소수점이 포함된 정밀한 숫자 데이터를 검증하고 계신다면, @Min 외에도 @DecimalMin이나 @Positive 같은 더 알맞은 어노테이션들이 있습니다. 필요하시다면 상황에 맞는 검증 어노테이션을 추천해 드릴까요?
+
