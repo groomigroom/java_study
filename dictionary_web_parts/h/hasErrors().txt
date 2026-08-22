@@ -1,0 +1,40 @@
+자바 스프링 부트에서 hasErrors()는 데이터 검증(Validation)이나 바인딩 과정에서 오류가 발생했는지 확인하는 메서드입니다.
+## 1. hasErrors()가 의미하는 것
+
+* 오류 여부 확인: 앞서 설명한 BindingResult나 Errors 객체에 검증 실패(에러) 기록이 하나라도 남아있는지 확인합니다.
+* 조건문 활용: 보통 컨트롤러에서 if (bindingResult.hasErrors()) 형태로 사용하며, 에러가 있을 때와 없을 때의 실행 흐름을 분기하는 역할을 합니다.
+* 반환 타입: 에러가 있으면 true, 없으면 false를 반환하는 boolean 타입 메서드입니다.
+
+## 2. 속해있는 의존성 (Dependency)
+hasErrors()는 BindingResult 인터페이스의 상위 인터페이스인 org.springframework.validation.Errors에 정의되어 있습니다. 따라서 이 역시 스프링 부트 웹 프로젝트의 기본 의존성에 포함되어 있습니다.
+
+* 의존성 이름: Spring Boot Starter Web
+* Gradle 추가 코드:
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+* Maven 추가 코드:
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+* 참고: 데이터에 실제 에러를 발생시키려면 @Valid 기능을 써야 하므로, 실제 구현 시에는 spring-boot-starter-validation도 함께 사용하게 됩니다.
+
+------------------------------
+## 💡 한눈에 보는 활용 코드 예시
+
+@PostMapping("/register")public String registerUser(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult) {
+    
+    // 검증 오류가 하나라도 있다면 true를 반환
+    if (bindingResult.hasErrors()) {
+        return "register-form"; // 에러 메시지와 함께 가입 화면으로 돌아감
+    }
+
+    userService.save(userDto);
+    return "redirect:/home";
+}
+
+현재 작성 중이신 컨트롤러에서 에러가 발생했을 때 클라이언트에게 어떤 방식으로 에러 메시지(예: JSON 에러 응답 또는 HTML 화면에 메시지 표시)를 전달하고 싶으신가요? 목적을 말씀해 주시면 알맞은 처리 로직을 안내해 드리겠습니다.
+
