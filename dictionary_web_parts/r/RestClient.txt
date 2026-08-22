@@ -1,0 +1,21 @@
+RestClient는 스프링 프레임워크 6.1(스프링 부트 3.2)부터 도입된 동기식(Synchronous) HTTP 요청을 보내는 최신 HTTP 클라이언트입니다.
+## 1. RestClient와 RestClient.Builder의 의미
+
+* RestClient (본체):
+* 기존에 사용하던 RestTemplate의 현대적 대체재입니다.
+   * WebClient처럼 흐르듯 코드를 작성하는 유연한 플루언트 API(Fluent API) 스타일을 지원합니다.
+   * 동기식(블로킹) 방식을 사용하여 직관적이고 가독성이 높은 HTTP 요청 코드를 작성할 수 있습니다.
+* RestClient.Builder (빌더):
+* RestClient 인스턴스를 안전하고 유연하게 생성하기 위한 빌더 패턴 클래스입니다.
+   * HTTP 요청의 기본 URL(Base URL), 공통 헤더, 타임아웃, 메시지 컨버터, 인터셉터 등을 미리 설정(커스텀)하여 RestClient를 조립해 냅니다.
+
+## 2. 속해있는 시작 의존성 (Starter Dependency)
+이 기능 역시 스프링 부트의 기본 핵심 웹 기능에 내장되어 있습니다.
+
+* 패키지 위치: org.springframework.web.client.RestClient
+* 필수 의존성: spring-boot-starter-web
+* 웹 MVC 애플리케이션을 만들 때 무조건 추가하는 기본 웹 스타터에 포함되어 있으므로, 별도의 외부 라이브러리를 추가할 필요가 없습니다.
+
+------------------------------
+다음 단계로 기존 RestTemplate 코드를 RestClient로 전환하는 예시를 보고 싶으시거나, 외부 API 호출을 위한 타임아웃 설정 방법이 궁금하신가요? 원하시는 방향을 말씀해 주시면 맞춤 코드를 준비해 드리겠습니다.
+
