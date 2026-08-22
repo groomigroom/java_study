@@ -1,0 +1,54 @@
+자바 스프링 부트(Spring Boot)에서 @GetMapping과 @PostMapping의 의미, 소속 스타터 의존성(Starter Dependency), 그리고 두 어노테이션의 차이점에 대한 핵심 요약입니다.
+------------------------------
+## 1. @GetMapping과 @PostMapping이란 무엇인가요?
+두 어노테이션은 클라이언트(브라우저, 앱 등)가 보낸 HTTP 요청을 컨트롤러의 특정 메서드와 매핑(연결)해 주는 어노테이션입니다.
+
+* @GetMapping: 서버의 데이터를 조회(Read)하는 HTTP GET 요청을 처리합니다.
+* @PostMapping: 서버에 데이터를 등록/생성(Create)하는 HTTP POST 요청을 처리합니다.
+* 기본 특징: 스프링 4.3 이전에는 @RequestMapping(method = RequestMethod.GET) 형태로 길게 쓰던 코드를 직관적으로 축약한 버전입니다.
+
+@RestController
+@RequestMapping("/api/users")public class UserController {
+
+    // 1. 회원 정보 조회 (GET /api/users/1)
+    @GetMapping("/{id}")
+    public UserResponse getUser(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+
+    // 2. 새로운 회원 등록 (POST /api/users)
+    @PostMapping
+    public UserResponse createUser(@RequestBody UserRequest request) {
+        return userService.save(request);
+    }
+}
+
+------------------------------
+## 2. 어떤 Start Dependency에 속해있나요?
+두 어노테이션 모두 스프링 MVC의 핵심 HTTP 요청 매핑 기능이므로, 웹 기능을 담당하는 웹 스타터에 포함되어 있습니다.
+
+* 실제 패키지 경로:
+* org.springframework.web.bind.annotation.GetMapping
+   * org.springframework.web.bind.annotation.PostMapping
+* 추가해야 할 스타터 의존성: spring-boot-starter-web
+
+## 🛠️ 의존성 설정 방법
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+------------------------------
+## 3. @GetMapping과 @PostMapping의 핵심 차이점
+
+| 구분 | @GetMapping (GET) | @PostMapping (POST) |
+|---|---|---|
+| 주요 목적 | 데이터 조회 및 가져오기 (Read) | 데이터 생성, 등록, 처리 (Create) |
+| 데이터 전달 방식 | URL 뒤의 쿼리 스트링에 포함 (예: /search?query=apple) | HTTP Body(본문)에 데이터를 숨겨서 전달 (예: JSON, Form 데이터) |
+| 데이터 크기 제한 | URL 길이에 제한이 있어 대용량 전송 불가 | 제한이 없어 대용량 데이터나 파일 전송 가능 |
+| 보안성 | 비밀번호 등 민감 데이터가 URL 브라우저 기록에 노출됨 | 데이터가 Body에 담겨 URL에 노출되지 않음 (상대적 안전) |
+| 멱등성 (Idempotent) | 있음 (동일 요청을 여러 번 보내도 결과가 같음) | 없음 (동일 요청을 반복하면 데이터가 계속 추가됨) |
+| 브라우저 캐싱 | 결과 데이터가 캐싱되어 다음 조회 시 빨라짐 | 캐싱되지 않음 |
+
+------------------------------
+현재 REST API를 설계하면서 어떤 메서드를 선택해야 할지 고민 중이신가요? 데이터 수정용인 @PutMapping, 삭제용인 @DeleteMapping 같은 다른 HTTP 메서드의 활용법이나, DTO를 통해 데이터를 받는 방식(@RequestParam vs @RequestBody)의 차이가 궁금하시다면 언제든 말씀해 주세요!
+
