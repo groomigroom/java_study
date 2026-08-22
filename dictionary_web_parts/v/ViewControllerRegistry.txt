@@ -1,0 +1,43 @@
+자바 스프링 부트(Spring Boot)에서 ViewControllerRegistry 클래스의 의미와 이것이 포함된 스타터 의존성(Starter Dependency)에 대한 핵심 요약입니다.
+------------------------------
+## 1. ViewControllerRegistry란 무엇인가요?
+ViewControllerRegistry는 컨트롤러 클래스를 직접 만들지 않고도, 특정 URL 요청을 특정 뷰(HTML, JSP 등) 화면으로 바로 연결해 주는 간단한 매핑 설정을 등록할 때 사용하는 클래스입니다.
+
+* 비즈니스 로직이 없는 화면 이동: 데이터 조회나 가공 없이, 단순히 "이 주소로 들어오면 이 화면을 보여줘"라고 지정할 때 유용합니다. (예: 메인 페이지, 소개 페이지, 로그인 폼 화면 등)
+* 컨트롤러 코드 절약: @Controller 클래스를 새로 만들고 메서드를 선언하는 번거로운 과정을 한 줄의 코드로 대체할 수 있습니다.
+* 사용 방법: 앞서 배운 WebMvcConfigurer 인터페이스의 addViewControllers 메서드를 오버라이딩하여 인자로 전달받아 사용합니다.
+
+@Configurationpublic class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        // "/login"으로 접속하면 자동으로 "login.html" 뷰 템플릿을 보여줍니다.
+        registry.addViewController("/login").setViewName("login");
+        
+        // "/" (메인)으로 접속하면 "home" 뷰 템플릿을 보여줍니다.
+        registry.addViewController("/").setViewName("home");
+    }
+}
+
+------------------------------
+## 2. ViewControllerRegistry는 어떤 Start Dependency에 속해있나요?
+ViewControllerRegistry 역시 스프링 MVC의 핵심 설정 클래스이므로, 웹 기능을 담당하는 웹 스타터에 포함되어 있습니다.
+
+* 실제 패키지 경로: org.springframework.web.servlet.config.annotation.ViewControllerRegistry
+* 추가해야 할 스타터 의존성: spring-boot-starter-web
+
+## 🛠️ 의존성 설정 방법
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+------------------------------
+현재 로그인 페이지나 단순 안내 페이지로 이동하는 라우팅 기능을 구현 중이신가요? 혹시 타임리프(Thymeleaf)나 프리마커(FreeMarker) 같은 뷰 템플릿 엔진 의존성도 함께 연동하고 계신지 궁금합니다. 화면이 정상적으로 뜨지 않거나 뷰 이름을 매핑하는 과정에서 문제가 있다면 구체적인 상황을 공유해 주세요!
+
