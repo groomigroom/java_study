@@ -1,0 +1,60 @@
+오타나 자동 완성으로 인해 잘못 입력하신 것으로 보입니다. 스프링 부트에는 .seeViewName이라는 문법은 없으며, 정확한 명칭은 .setViewName()입니다. [1] 
+자바 스프링 부트(Spring Boot)에서 setViewName() 메서드의 의미와 이것이 속한 스타터 의존성(Starter Dependency)에 대한 핵심 요약입니다.
+------------------------------
+## 1. setViewName()이란 무엇인가요?
+setViewName()은 사용자의 요청을 처리한 후, 어떤 화면(HTML, JSP 등의 View 템플릿)을 브라우저에 보여줄지 그 파일의 이름을 지정하는 메서드입니다. [1, 2] 
+
+* 
+* 기능: 앞서 질문하신 addViewController() 뒤에 체이닝(Chaining) 형태로 붙어 뷰 이름을 지정하거나, 컨트롤러에서 데이터를 함께 담아 보낼 때 쓰는 ModelAndView 객체에서 호출합니다. [3, 4] 
+* 동작 방식: 개발자가 setViewName("home")과 같이 파일명을 지정하면, 스프링의 ViewResolver가 설정된 앞 경로(Prefix)와 확장자(Suffix)를 붙여 실제 파일을 찾아 화면을 그려줍니다. (예: "home" ➡️ templates/home.html) [2] 
+* 
+
+## 🛠️ 주요 사용 예시
+① 단순 라우팅 등록 시 (ViewControllerRegistry와 연계) [3] 
+
+@Overridepublic void addViewControllers(ViewControllerRegistry registry) {
+    // "/home" 경로로 오면 "home.html" 이라는 이름의 뷰를 보여주도록 지정
+    registry.addViewController("/home").setViewName("home"); 
+}
+
+② 컨트롤러에서 데이터와 화면을 동시에 반환할 시 (ModelAndView) [5] 
+
+@GetMapping("/shop")public ModelAndView getShopPage() {
+    ModelAndView mav = new ModelAndView();
+    mav.addObject("product", "MacBook"); // 데이터 담기
+    mav.setViewName("shop-page");          // "shop-page.html" 화면 지정
+    return mav;
+}
+
+------------------------------
+## 2. setViewName()은 어떤 Start Dependency에 속해있나요?
+이 메서드는 스프링 MVC 패턴에서 뷰(화면)를 제어하는 핵심 기능이므로, 웹 기능을 담당하는 웹 스타터에 포함되어 있습니다.
+
+* 
+* 소속 클래스/인터페이스:
+* org.springframework.web.servlet.config.annotation.ViewControllerRegistration
+   * org.springframework.web.servlet.ModelAndView [1, 3] 
+* 추가해야 할 스타터 의존성: spring-boot-starter-web [6] 
+* 
+
+## 🛠️ 의존성 설정 방법
+Gradle (build.gradle) [6] 
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+------------------------------
+현재 setViewName()에 입력한 파일명을 스프링 부트가 제대로 찾지 못해서 404 에러(White-label Error Page)를 겪고 계신가요? 화면을 정상적으로 띄우려면 타임리프(Thymeleaf) 같은 뷰 엔진과 파일 경로가 정확히 맞아야 합니다. 혹시 어떤 에러가 발생하고 있는지나 파일 배치 구조를 말씀해 주시면 해결 방법을 안내해 드리겠습니다.
+
+[1] [https://docs.spring.io](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/ModelAndView.html)
+[2] [https://stackoverflow.com](https://stackoverflow.com/questions/29320913/model-setviewname-in-spring)
+[3] [https://docs.spring.io](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-config/view-controller.html)
+[4] [https://backendcode.tistory.com](https://backendcode.tistory.com/253)
+[5] [https://lifere.tistory.com](https://lifere.tistory.com/entry/Spring-Boot-Thymeleaf-Model-ModelAndView%EC%99%80-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84Thymeleaf)
+[6] [https://spring.io](https://spring.io/guides/gs/securing-web/)
