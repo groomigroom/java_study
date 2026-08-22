@@ -1,0 +1,33 @@
+@JsonIgnoreProperties(ignoreUnknown = true)는 스프링 부트에서 REST API 통신을 할 때 아주 자주 사용하는 중요한 어노테이션입니다.
+## 1. 무슨 의미인가요?
+"JSON 데이터에는 있지만, 내가 만든 자바 객체(DTO)에는 없는 필드가 있어도 에러를 내지 말고 무시해라"라는 뜻입니다.
+
+* 기본 동작: 스프링은 JSON 데이터를 자바 객체로 바꿀 때, JSON의 키(Key)와 자바의 변수명이 하나라도 맞지 않으면 UnrecognizedPropertyException 에러를 발생시킵니다.
+* 어노테이션 적용 후: JSON에 자바 클래스 필드 외의 다른 데이터가 추가로 들어와도 에러 없이 정의된 필드만 매핑하고 나머지는 그냥 넘어갑니다.
+* 사용 목적: 외부 API가 보내주는 데이터 중 내가 필요한 데이터만 골라서 받고 싶을 때 주로 사용합니다. API 변경으로 필드가 새로 추가되어도 내 시스템이 멈추지 않게 방어해 줍니다.
+
+------------------------------
+## 2. 어떤 의존성(Dependency)에 속해 있나요?
+이 어노테이션은 Jackson 라이브러리의 일부입니다. 스프링 부트에서는 다음 의존성에 기본으로 포함되어 있습니다.
+
+* 속한 라이브러리: com.fasterxml.jackson.core:jackson-annotations
+* 포함된 스프링 부트 스타터: spring-boot-starter-web (또는 spring-boot-starter-json)
+
+스프링 부트로 웹 프로젝트를 만들 때 가장 먼저 추가하는 웹 스타터에 이미 들어있기 때문에, 별도의 추가 의존성 설치 없이 바로 사용할 수 있습니다.
+## 빌드 관리 도구별 예시 (spring-boot-starter-web에 내장됨)
+
+* Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+* Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+
+------------------------------
+현재 연동하려는 외부 API의 특정 JSON 구조가 있거나, 변환 과정에서 발생한 에러 메시지가 있다면 알려주세요. 자바 DTO 클래스 코드를 어떻게 작성해야 하는지 더 자세히 안내해 드리겠습니다.
+
