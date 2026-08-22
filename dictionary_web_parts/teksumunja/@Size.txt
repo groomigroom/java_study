@@ -1,0 +1,45 @@
+자바 스프링 부트(Spring Boot)에서 @Size 어노테이션의 의미와 이것이 포함된 스타터 의존성(Starter Dependency)에 대한 핵심 요약입니다.
+------------------------------
+## 1. @Size란 무엇인가요?
+@Size는 문자열, 배열, 컬렉션(List, Set 등), Map의 길이나 크기가 지정한 범위 내에 있는지 검증할 때 사용하는 어노테이션입니다.
+
+* 검증 대상: 주로 문자열의 길이나 리스트의 요소 개수를 제한할 때 사용합니다.
+* 속성 설정: 최소 크기를 지정하는 min과 최대 크기를 지정하는 max 속성을 가집니다.
+* null 허용: 주의할 점은 값이 null인 경우는 유효성 검사를 통과시킵니다. 즉, 필수가 아닌 필수 조건(선택 입력이지만 입력할 땐 글자수 제한)에 적합합니다. null까지 막으려면 @NotNull과 함께 써야 합니다.
+
+public class RegisterRequest {
+    @NotNull
+    @Size(min = 2, max = 10, message = "이름은 2자 이상, 10자 이하로 입력해주세요.")
+    private String name;
+
+    @Size(min = 1, max = 5, message = "취미는 최소 1개, 최대 5개까지 선택 가능합니다.")
+    private List<String> hobbies;
+}
+
+## 💡 수치형(숫자) 검증과의 차이점
+
+* @Size: 문자열의 길이나 컬렉션의 요소 개수를 검사합니다.
+* @Min / @Max: 정수나 실수 같은 숫자의 크기(값 자체)를 검사합니다. (예: int price가 1000원 이상인지 검사)
+
+------------------------------
+## 2. @Size는 어떤 Start Dependency에 속해있나요?
+@Size 역시 앞서 보신 @NotNull과 마찬가지로 자바 표준 밸리데이션 스펙에 포함되어 있으며, 유효성 검증 전용 스타터에 속해 있습니다.
+
+* 실제 패키지 경로: jakarta.validation.constraints.Size
+* 추가해야 할 스타터 의존성: spring-boot-starter-validation
+
+## 🛠️ 의존성 설정 방법
+Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+------------------------------
+문자열 길이나 리스트 크기를 제한하는 과정에서 @Size와 숫자 검증용 어노테이션 구분이 모호하시거나, 글자 수가 초과했을 때 예외 처리(Exception Handling)를 자동화하는 방법이 궁금하신가요? 구체적인 상황을 말씀해 주시면 맞춤 코드로 안내해 드리겠습니다.
+
