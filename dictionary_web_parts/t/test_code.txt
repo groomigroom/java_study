@@ -1,0 +1,108 @@
+자바 스프링 부트(Spring Boot)에서는 자바 표준 테스트 프레임워크인 JUnit 5와 단정문 라이브러리인 AssertJ를 사용하여 테스트 코드를 작성합니다. [1, 2] 
+스프링 부트 프로젝트 생성 시 spring-boot-starter-test 의존성이 기본적으로 포함되어 있어, 즉시 테스트 코드를 작성할 수 있습니다.
+------------------------------
+## 1. 테스트 코드 기본 구조 (Given-When-Then)
+테스트 코드는 주로 src/test/java 디렉터리 내에 작성하며, 가독성을 위해 Given(준비) - When(실행) - Then(검증) 패턴을 사용합니다. [3] 
+
+import org.junit.jupiter.api.DisplayName;import org.junit.jupiter.api.Test;import static org.assertj.core.api.Assertions.assertThat;
+class CalculatorTest {
+
+    @Test
+    @DisplayName("두 수를 더하면 올바른 합이 반환된다") // 테스트 이름 지정
+    void addNumbers() {
+        // 1. Given (준비: 테스트를 위한 상황 설정)
+        int a = 10;
+        int b = 20;
+
+        // 2. When (실행: 테스트하고자 하는 로직 수행)
+        int result = a + b;
+
+        // 3. Then (검증: 결과가 기대치와 맞는지 확인)
+        assertThat(result).isEqualTo(30); // AssertJ 단정문 사용
+    }
+}
+
+------------------------------
+## 2. 스프링 부트 주요 테스트 방식
+스프링 부트에서는 테스트하려는 범위에 따라 통합 테스트와 단위 테스트로 나누어 진행합니다.
+## ① 통합 테스트 (@SpringBootTest)
+실제 애플리케이션과 동일하게 스프링 컨테이너(모든 빈)를 구동하여 전반적인 로직을 테스트합니다. [3, 4, 5] 
+
+* 
+* 사용 레이어: 주로 서비스(Service) 레이어나 리포지토리(Repository) 연동 테스트
+* 특징: 무겁고 속도가 느리지만 실제 환경과 가장 유사함.
+* 데이터 관리: @Transactional을 붙여 테스트 후 데이터를 자동 롤백시킵니다. [2, 3, 5, 6, 7] 
+* 
+
+@SpringBootTest
+@Transactional // 테스트가 끝나면 DB 데이터를 자동으로 롤백class UserServiceTest {
+
+    @Autowired
+    private UserService userService;
+
+    @Test
+    void 회원가입_성공() {
+        // Given
+        UserDto userDto = new UserDto("testUser", "password");
+
+        // When
+        Long savedId = userService.signUp(userDto);
+
+        // Then
+        assertThat(savedId).isNotNull();
+    }
+}
+
+## ② 슬라이스 테스트 (@WebMvcTest)
+스프링 컨테이너를 전부 띄우지 않고, 웹 레이어(Controller) 관련 빈들만 띄워 빠르게 테스트합니다. [7] 
+
+* 
+* 사용 레이어: 컨트롤러(Controller) API 테스트
+* 특징: 외부 서비스나 데이터베이스를 가짜 객체(Mock)로 대체하여 독립적인 테스트가 가능합니다. [2, 7] 
+* 
+
+@WebMvcTest(UserController.class) // UserController 관련 빈만 로드class UserControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc; // API 요청을 모킹하는 객체
+
+    @MockBean
+    private UserService userService; // 서비스 레이어는 가짜 객체로 주입
+
+    @Test
+    void 회원조회_API_테스트() throws Exception {
+        // Given (Mock 객체의 행동 정의)
+        BDDMockito.given(userService.getUser(1L))
+                  .willReturn(new UserResponse("testUser"));
+
+        // When & Then (API 호출 및 검증)
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/1"))
+               .andExpect(MockMvcResultMatchers.status().isOk())
+               .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("testUser"));
+    }
+}
+
+------------------------------
+## 3. JUnit 5 핵심 애너테이션
+테스트 작성 시 주로 사용하는 애너테이션은 다음과 같습니다. [2, 3] 
+
+* 
+* @Test: 테스트 메서드임을 지정
+* @DisplayName: 테스트 결과창에 표시될 이름 설정
+* @BeforeEach / @AfterEach: 각각의 테스트 메서드 실행 전/후로 공통 로직(초기화/정리) 수행
+* @Disabled: 테스트 실행 건너뛰기
+* 
+
+## 4. IntelliJ 테스트 자동 생성
+IntelliJ에서 Ctrl + Shift + T (Windows) 또는 Cmd + Shift + T (Mac)를 누르면 src/test/java에 테스트 클래스를 자동으로 생성할 수 있어 편리합니다. [3, 8, 9] 
+이외에 구체적으로 어떤 레이어(Service, Repository 등)의 테스트 코드 작성을 원하시는지 알려주시면 추가로 도움을 드릴 수 있습니다.
+
+[1] [https://middlefitting.tistory.com](https://middlefitting.tistory.com/102)
+[2] [https://velog.io](https://velog.io/@ogu1208/SpringBoot-JUnit%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BD%94%EB%93%9C-%EC%9E%91%EC%84%B1)
+[3] [https://sjh9708.tistory.com](https://sjh9708.tistory.com/195)
+[4] [https://wikidocs.net](https://wikidocs.net/237206)
+[5] [https://www.youtube.com](https://www.youtube.com/watch?v=YxaYMEAUfDg)
+[6] [https://www.youtube.com](https://www.youtube.com/watch?v=ZQoyetek7tg&t=135)
+[7] [https://catsbi.oopy.io](https://catsbi.oopy.io/e2fa9884-eb59-4f79-8732-6e3e14e456fd)
+[8] [https://hyungjun-950912.tistory.com](https://hyungjun-950912.tistory.com/102)
+[9] [https://jhzlo.tistory.com](https://jhzlo.tistory.com/28)
