@@ -1,0 +1,21 @@
+.retrieve()는 HTTP 요청을 서버로 실제로 전송하고, 서버로부터 돌아온 응답(Response)을 받아오겠다고 선언하는 메서드입니다.
+## 1. .retrieve()의 의미
+
+* 요청 실행 트리거: 앞서 설정한 HTTP 메서드(GET, POST 등), URL, 헤더 등을 기반으로 실제 HTTP 네트워크 요청을 보냅니다.
+* 간편한 응답 처리: 응답 본문(Body)을 자바 객체로 변환하거나 상태 코드를 확인할 수 있는 다음 단계(ResponseSpec)로 진입하게 해줍니다.
+* 자동 예외 처리: 서버가 4xx(클라이언트 에러)나 5xx(서버 에러) 상태 코드를 반환하면, 기본적으로 예외(RestClientResponseException 등)를 발생시켜 줍니다.
+
+## 2. 속해있는 시작 의존성 (Starter Dependency)
+이 메서드 역시 사용하는 HTTP 클라이언트 라이브러리에 따라 아래 스타터에 포함됩니다.
+
+* RestClient를 사용하는 경우 (동기 방식)
+* 스타터: spring-boot-starter-web
+   * 소속 인터페이스: org.springframework.web.client.RestClient.RequestHeadersSpec
+* WebClient를 사용하는 경우 (비동기/리액티브 방식)
+* 스타터: spring-boot-starter-webflux
+   * 소속 인터페이스: org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec
+
+------------------------------
+.retrieve()를 호출한 뒤에는 보통 응답 데이터를 가져오기 위해 .body(Class)나 .toEntity(Class) 같은 메서드를 이어서 사용합니다.
+이후에 이어지는 응답 데이터 변환 과정(예: JSON을 자바 객체로 받기)을 코드로 확인해 보시겠어요? 아니면 에러 발생 시 커스텀하게 처리하는 방법(onStatus)이 궁금하신지 말씀해 주세요!
+
