@@ -1,0 +1,39 @@
+PagingAndSortingRepository는 데이터베이스의 대량 데이터를 페이지 단위로 나누어 조회(페이징)하거나, 특정 기준에 따라 정렬(소팅)하는 기능을 기본으로 제공하는 인터페이스입니다.
+이 기능은 Spring Data Commons(실제로는 이를 포함하는 Spring Data JPA 등) 라이브러리에 속해 있습니다.
+------------------------------
+## 1. PagingAndSortingRepository의 핵심 의미
+이 인터페이스를 상속받으면, 개발자가 SQL 쿼리를 직접 짜지 않아도 대량의 데이터를 안전하고 효율적으로 가져올 수 있습니다.
+
+* 정렬(Sorting): 특정 필드를 기준으로 오름차순(ASC) 또는 내림차순(DESC) 정렬된 결과를 가져옵니다. (Sort 파라미터 사용)
+* 페이징(Paging): 원하는 페이지 번호와 한 페이지에 보여줄 데이터 개수를 지정해 잘라서 가져옵니다. (Pageable 파라미터 사용)
+* 성능 최적화: 대량 데이터를 한 번에 조회할 때 발생하는 서버 메모리 부하와 네트워크 지연을 방지합니다.
+
+------------------------------
+## 2. 필요한 스타터 의존성 (Starter Dependency)
+PagingAndSortingRepository는 사용하는 데이터베이스 기술에 맞는 Spring Data 스타터를 추가하면 자동으로 포함됩니다. 가장 흔히 쓰이는 관계형 데이터베이스(RDB) 환경을 기준으로 합니다.
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+(만약 NoSQL을 쓰신다면 spring-boot-starter-data-mongodb나 spring-boot-starter-data-redis 등을 사용해도 그 안에 포함되어 있습니다.)
+------------------------------
+## 3. 코드 인터페이스 계층 구조 구조
+Spring Data JPA를 쓸 때 흔히 보는 인터페이스들의 상속 구조는 다음과 같습니다.
+
+   1. Repository (마커 인터페이스)
+   2. CrudRepository (기본적인 등록, 수정, 삭제, 단건 조회 기능 제공)
+   3. PagingAndSortingRepository (페이징 및 정렬 기능 추가)
+   4. JpaRepository (상위 기능들을 모두 포함하고, JPA 특화 기능인 배치 삭제, 플러시 등을 추가 제공)
+
+💡 최신 스프링 부트 팁: 과거 버전과 달리 최신 Spring Data 버전에서는 JpaRepository가 PagingAndSortingRepository를 이미 상속받고 있습니다. 따라서 실무에서는 그냥 JpaRepository를 상속받아 사용하면 페이징과 정렬 기능을 모두 곧바로 쓸 수 있습니다.
+
+------------------------------
+현재 구현하려는 페이징 기능에서 정렬 조건(예: 최신순, 이름순)이나 한 페이지당 데이터 개수를 어떻게 설정하는지 실제 코드 예시가 필요하신가요? 아니면 앞서 질문하신 @RepositoryRestResource와 연동하여 REST API에서 페이징 처리하는 방법이 궁금하신지 알려주시면 상세히 설명해 드리겠습니다.
+
