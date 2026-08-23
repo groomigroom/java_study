@@ -1,0 +1,42 @@
+@Param("name")은 레포지토리 인터페이스에서 작성한 커스텀 쿼리(JPQL 또는 SQL)의 바인딩 파라미터(:name)에 메서드의 인자 값을 매핑해 주는 어노테이션입니다.
+이 기능은 Spring Data Commons(실제로는 이를 포함하는 Spring Data JPA 등) 라이브러리에 속해 있습니다.
+------------------------------
+## 1. @Param("name")의 핵심 의미
+데이터베이스에서 데이터를 조회할 때 조건(Where절)에 동적인 값을 넣기 위해 사용합니다.
+
+* 파라미터 매핑: 쿼리문 안에 적은 :name이라는 변수 자리에, 메서드 파라미터로 들어온 String name 값을 안전하게 대입(바인딩)합니다.
+* SQL 인젝션 방지: 값을 직접 문자열로 더하지 않고 파라미터 바인딩 방식을 사용하므로 보안상 안전합니다.
+
+## 💡 사용 코드 예시
+
+public interface PersonRepository extends JpaRepository<Person, Long> {
+
+    // :name 위치에 @Param("name") 뒤에 오는 인자 값이 대입됩니다.
+    @Query("SELECT p FROM Person p WHERE p.name = :name")
+    List<Person> findByNameCustom(@Param("name") String name);
+}
+
+------------------------------
+## 2. 필요한 스타터 의존성 (Starter Dependency)
+@Param 어노테이션은 Spring Data 프로젝트의 공통 모듈에 들어있으므로, 데이터베이스 종류에 맞는 Spring Data 스타터를 추가하면 바로 쓸 수 있습니다.
+## Gradle (build.gradle)
+
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+## Maven (pom.xml)
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+(패키지 경로는 org.springframework.data.repository.query.Param입니다.)
+------------------------------
+## 3. 꼭 알아두어야 할 최신 자바 버전 팁
+
+* 생략 가능 (Java 8 이상): 컴파일할 때 -parameters 옵션이 켜져 있으면, 어노테이션의 이름과 메서드 매개변수 이름이 같을 때(둘 다 name) @Param("name")을 통째로 생략해도 스프링이 알아서 매핑해 줍니다.
+* 스프링 부트 3.x 이상: 최신 스프링 부트 프로젝트에서는 기본적으로 이 컴파일 옵션이 켜져 있어서 생략 가능한 경우가 많지만, 빌드 환경에 따라 오류가 날 수 있어 명시적으로 적어주는 것이 가장 안전합니다.
+
+------------------------------
+만약 이 어노테이션을 앞서 질문하신 @RepositoryRestResource와 함께 사용하여 REST API 검색 기능(/people/search/findByName?name=홍길동)을 구현하려는 중이신가요? 원하신다면 이 둘을 조합한 전체 레포지토리 코드와 API 호출 주소 예시를 보여드릴 수 있습니다. 어떻게 진행할까요?
+
