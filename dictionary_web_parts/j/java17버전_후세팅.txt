@@ -71,3 +71,7 @@ implementation 'org.springframework.boot:spring-boot-starter-web'
 [3] [https://m.blog.naver.com](https://m.blog.naver.com/pareko/222552099935)
 [4] [https://devje.tistory.com](https://devje.tistory.com/292)
 [5] [https://www.inflearn.com](https://www.inflearn.com/community/questions/1478848/org-springframework-boot-spring-boot-starter-aop-%ED%8F%B4%EB%8D%94%EA%B0%80-%EC%97%86%EB%8A%94-%EB%AC%B8%EC%A0%9C)
+
+
+
+https://spring.io/guides 에 맞춰서 공부해 보려고 하는데, https://start.spring.io/에서 파일을 다운로드 받아서 하면 버전이 
