@@ -1,0 +1,28 @@
+자바 스프링 부트에서 @EnableNeo4jRepositories 어노테이션의 의미와 이를 사용하기 위해 추가해야 하는 스타터 의존성(Dependency)은 다음과 같습니다.
+------------------------------
+## 1. @EnableNeo4jRepositories의 의미
+이 어노테이션은 스프링 부트 애플리케이션에게 "Neo4j(그래프 데이터베이스)를 사용하는 리포지토리(Repository) 인터페이스들을 찾아서 자동으로 스프링 빈(Bean)으로 등록해라"고 지시하는 활성화 마크입니다.
+
+* 자동 스캔: 기본적으로 이 어노테이션이 붙은 클래스의 패키지와 그 하위 패키지를 샅샅이 뒤져서 Neo4jRepository를 상속받은 인터페이스를 찾아냅니다.
+* 기능 활성화: Neo4j 데이터베이스와 소통할 수 있는 데이터 액세스 계층(Data Access Layer)을 사용할 준비를 마칩니다.
+* 스프링 부트에서의 특징: 사실 스프링 부트 환경에서는 이 어노테이션을 생략해도 자동으로 동작합니다. 스프링 부트가 클래스패스에 Neo4j 라이브러리가 있는 것을 보면 자동으로 리포지토리를 활성화하기 때문입니다. 하지만 패키지 구조가 특이하여 특정 위치만 강제로 스캔하고 싶을 때 basePackages 속성과 함께 명시적으로 사용합니다. (예: @EnableNeo4jRepositories(basePackages = "com.example.repository"))
+
+------------------------------
+## 2. 추가해야 하는 Starter Dependency (의존성)
+이 기능을 프로젝트에 가져오려면 build.gradle 또는 pom.xml 파일에 Spring Data Neo4j 스타터 라이브러리를 추가해야 합니다.
+## 1) Gradle 기반 프로젝트 (build.gradle)
+dependencies { ... } 블록 내부에 아래 코드를 추가하고 우측 Gradle 새로고침(Sync)을 누릅니다.
+
+implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+
+## 2) Maven 기반 프로젝트 (pom.xml)
+<dependencies> 태그 내부에 아래 코드를 추가하고 프로젝트를 리로드합니다.
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-neo4j</artifactId>
+</dependency>
+
+------------------------------
+혹시 지금 프로젝트에 Neo4j 그래프 데이터베이스를 새로 연동하려고 준비 중이신가요? 리포지토리 코드를 작성하다가 막히는 부분이 있거나 연동 에러가 발생하면 언제든 편하게 질문해 주세요!
+
