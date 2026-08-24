@@ -75,3 +75,58 @@ implementation 'org.springframework.boot:spring-boot-starter-web'
 
 
 https://spring.io/guides 에 맞춰서 공부해 보려고 하는데, https://start.spring.io/에서 파일을 다운로드 받아서 하면 버전이 
+
+
+[Spring Guides](https://spring.io/guides)의 공식 예제 코드는 대다수가 안정된 3.x 버전을 표준으로 작성되어 있어, [Spring Initializr](https://start.spring.io/)에서 제공하는 최신 4.x 버전으로 진행하면 패키지 경로(import)나 어노테이션 이름이 달라 빨간 줄(에러)이 무조건 터지게 됩니다. [1, 2] 
+버전이 맞지 않을 때 발생하는 에러를 차단하고 가이드 문서를 매끄럽게 학습하기 위한 핵심 조치 순서는 다음과 같습니다.
+## 1단계: 플러그인(Plugin)과 부트 버전 싱크 맞추기
+4.x 프로젝트로 다운로드했다면 가장 먼저 build.gradle 파일을 열어 버전을 예제 가이드 표준인 3.4.x대로 내려줍니다. 이때 부트 버전만 낮추면 동기화 플러그인과 싸움이 나므로 두 줄을 한 세트로 낮춰야 합니다. [3] 
+
+* 수정 전 (4.x 최신 상태):
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+* 수정 후 (가이드 최적화 상태):
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.3' // ◀ 버전을 3.4.3으로 하향
+    id 'io.spring.dependency-management' version '1.1.7' 
+}
+
+
+## 2단계: 자바 버전(Java Toolchain) 낮추기
+스프링 부트 3.4.x는 자바 17 또는 21 환경에서 가장 에러 없이 깨끗하게 돌아갑니다. 만약 build.gradle 내부의 자바 버전이 상위 버전(예: 25)으로 유지되어 있다면 빌드 중 에러가 날 수 있으므로 함께 맞춰줍니다. [4] 
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17) // ◀ 17 또는 21로 수정
+	}
+}
+
+(수정 후 인텔리제이 우측 상단 코끼리 모양의 Gradle Refresh(새로고침) 아이콘을 꼭 눌러 변경 내용을 시스템에 적용해 주세요.) [2, 3] 
+## 3단계: 가이드 문서의 변경된 테스트 패키지 인지하기
+버전을 3.4.3으로 낮춘 상태에서 예제의 테스트 코드(...Tests.java)를 작성할 때 인텔리제이가 특정 클래스를 찾지 못하는 경우가 생깁니다. 가이드의 최신 글과 3.4.3 버전 간에 패키지 위치가 달라 생기는 현상이므로, 코드 상단의 import 구문을 직접 수정해 줍니다. [2] 
+
+* 가이드용 최신 코드 주소 (에러 발생 시):
+
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;import org.springframework.test.context.bean.override.mockito.MockitoBean;
+
+* 3.4.3 환경용 실제 코드 주소 (교체 적용):
+
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;import org.springframework.boot.test.mock.mockito.MockBean; // ◀ @MockitoBean 대신 @MockBean 사용
+
+
+------------------------------
+이렇게 프로젝트의 기초 베이스라인을 스프링 부트 3.4.3 + 자바 17로 다져놓고 시작하면, Spring Guides에 수록된 파일 업로드, REST API 구현 등의 예제를 복사-붙여넣기 해도 충돌 없이 온전히 실습 코드 동작에만 집중할 수 있습니다.
+세팅을 변경하고 프로젝트를 다시 동기화했을 때 인텔리제이 하단 빌드창에 통과 표시가 뜨는지, 혹은 다른 라인에서 빨간 줄이 걸리는지 알려주시면 바로 봐드릴게요!
+
+[1] [https://www.youtube.com](https://www.youtube.com/watch?v=ZAc2rOhW3Ko)
+[2] [https://khdscor.tistory.com](https://khdscor.tistory.com/111)
+[3] [https://devje.tistory.com](https://devje.tistory.com/292)
+[4] [https://endoflife.date](https://endoflife.date/spring-boot)
+
