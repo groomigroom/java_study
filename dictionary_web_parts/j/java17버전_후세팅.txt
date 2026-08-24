@@ -39,3 +39,35 @@
   ------------------------------------------
 
 
+이 오류는 build.gradle 파일의 dependencies 항목에 존재하지 않는 잘못된 라이브러리 이름을 명시했기 때문에 발생합니다. [1] 
+스프링 부트에서 웹 개발에 사용하는 공식 라이브러리 이름은 spring-boot-starter-webmvc가 아니라 spring-boot-starter-web입니다. 존재하지 않는 엉뚱한 이름을 적어두었기 때문에 빌드 관리 도구(Gradle)가 라이브러리를 찾지 못해 다운로드에 실패한 상태입니다. [2, 3] 
+아래의 조치법을 적용하시면 즉시 해결됩니다.
+------------------------------
+## 해결 방법: 라이브러리 이름 수정하기
+
+   1. 왼쪽 파일 탐색기에서 build.gradle 파일을 찾아서 엽니다.
+   2. dependencies { ... } 블록 내부에서 문제가 발생한 spring-boot-starter-webmvc 줄을 찾습니다.
+   3. 해당 줄을 아래와 같이 정확한 이름으로 수정합니다. [1, 3, 4] 
+
+
+* 기존 잘못된 코드 (삭제):
+
+implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+
+* 올바른 수정 코드 (교체):
+
+implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+
+   1. 코드를 수정한 뒤 저장(Ctrl + S)합니다.
+   2. 인텔리제이 우측 최상단 끄트머리에 있는 코끼리 모양의 Gradle 탭을 누른 뒤, 상단의 Refresh 아이콘(둥근 화살표 모양, 새로고침)을 반드시 클릭합니다. [5] 
+
+------------------------------
+수정 후 새로고침(Sync) 게이지바가 모두 채워지면 Could not find... 에러가 말끔히 사라지고 정상 빌드가 가능해질 것입니다. 진행해 보시고 또 다른 에러가 잡힌다면 편하게 코드를 올려주세요! [2, 5] 
+
+[1] [https://kotlinworld.com](https://kotlinworld.com/m/561)
+[2] [https://stackoverflow.com](https://stackoverflow.com/questions/72084625/could-not-find-org-springframework-bootspring-boot-starter-web-required-by-p)
+[3] [https://m.blog.naver.com](https://m.blog.naver.com/pareko/222552099935)
+[4] [https://devje.tistory.com](https://devje.tistory.com/292)
+[5] [https://www.inflearn.com](https://www.inflearn.com/community/questions/1478848/org-springframework-boot-spring-boot-starter-aop-%ED%8F%B4%EB%8D%94%EA%B0%80-%EC%97%86%EB%8A%94-%EB%AC%B8%EC%A0%9C)
