@@ -1,0 +1,6 @@
+int day = 3;
+switch (day) {
+    case 1, 2, 3 -> System.out.println("평균");
+    case 4, 5 -> System.out.println("우수");
+    default -> System.out.println("기타");
+}
