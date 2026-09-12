@@ -8,3 +8,10 @@ layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿, 여기서�
     </table>
 </div>
 </html>
+
+
+layout.html에는 다음과 같은 내용이 있다.
+
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<th:block layout:fragment="content"></th:block>
+<!-- 기본 템플릿 안에 삽입될 내용 End -->
