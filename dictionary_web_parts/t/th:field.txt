@@ -1,1 +1,46 @@
-d
+스프링 부트(Spring Boot)와 타임리프(Thymeleaf) 환경에서 th:field는 HTML Form 요소(input, select, textarea 등)를 백엔드의 Java 객체(Model)와 대칭되도록 연결해 주는 속성입니다. [1, 2] 
+가장 핵심적인 역할은 개발자가 id, name, value 속성을 일일이 적지 않아도 타임리프가 이 3가지 속성을 HTML 렌더링 시 자동으로 만들어 준다는 점입니다. [1, 3] 
+------------------------------
+## 💡 핵심 기능 3가지
+
+   1. HTML 속성 자동 생성 (id, name, value)
+   * th:field="*{title}"이라고 작성하면 렌더링될 때 id="title", name="title"이 자동으로 붙습니다. [1, 3] 
+   2. 데이터 바인딩 (수정/조회 시 값 세팅)
+   * 서버에서 넘어온 객체에 값이 들어있다면(예: 데이터 수정 화면), value="기존값" 속성까지 자동으로 채워줍니다. [1] 
+   3. 체크박스/라디오 버튼 편의 기능
+   * 스프링에서 체크박스를 해제했을 때 전송되지 않는 문제를 해결하기 위해 히든 필드(_itemName)를 생성하는 등의 스프링 연동 처리를 자동으로 지원합니다. [4, 5] 
+   
+------------------------------
+## 💻 코드 예시로 보기
+보통 폼 전체의 기준이 되는 객체를 지정하는 th:object와 함께 자주 사용됩니다. [1] 
+## 1. 타임리프 코드 (HTML)
+
+<!-- 서버에서 'boardForm'이라는 이름으로 객체를 넘겨주었다고 가정 -->
+<form th:object="${boardForm}" method="post">
+    <!-- *{title}은 boardForm.title을 의미합니다 -->
+    <input type="text" th:field="*{title}" />
+</form>
+
+## 2. 실제 브라우저에 렌더링된 결과 (HTML)
+만약 서버에서 넘어온 boardForm 객체의 title 값이 "안녕하세요"였다면, 웹 브라우저에는 아래와 같이 변환되어 나타납니다.
+
+<form method="post">
+    <input type="text" id="title" name="title" value="안녕하세요" />
+</form>
+
+------------------------------
+## 🧐 요약하자면
+
+* 
+* 원래대로라면 <input type="text" id="title" name="title" th:value="${boardForm.title}"> 처럼 길게 써야 할 코드를 th:field="*{title}" 단 한 줄로 줄여주는 고마운 기능입니다.
+* 백엔드 컨트롤러로 폼 데이터를 전송(submit)할 때, 스프링이 어떤 필드에 값을 담아야 할지(name 속성을 기반으로) 정확히 매핑할 수 있도록 돕습니다. [1, 2, 3, 6] 
+* 
+
+혹시 현재 체크박스나 라디오 버튼에 th:field를 적용하다가 막히신 부분이 있나요, 아니면 검증 오류(BindingResult)와 함께 사용하는 방법이 궁금하신가요? 구체적인 상황을 알려주시면 알맞은 코드를 안내해 드릴게요!
+
+[1] [https://hwang-dev.tistory.com](https://hwang-dev.tistory.com/18)
+[2] [https://whitepro.tistory.com](https://whitepro.tistory.com/364)
+[3] [https://ohju.tistory.com](https://ohju.tistory.com/486)
+[4] [https://bright-landscape.tistory.com](https://bright-landscape.tistory.com/111)
+[5] [https://velog.io](https://velog.io/@cjy/3-Thymeleaf-e2t4m4ug)
+[6] [https://chb2005.tistory.com](https://chb2005.tistory.com/82)
