@@ -1,3 +1,8 @@
 의존성 작성은
 build.gradle
 
+dependencies {
+    (... 생략 ...)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+}
