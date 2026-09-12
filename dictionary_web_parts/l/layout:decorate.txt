@@ -1,4 +1,5 @@
-layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿, 여기서는 layout.html)으로 사용할 템플릿을 설정한다. 속성값인 ~{layout}이 바로 layout.html 파일을 의미한다.
+layout:decorate 속성은 템플릿의 레이아웃(부모 템플릿, 여기서는 layout.html)으로 사용할 템플릿을 설정합니다. 
+속성값인 ~{layout}이 바로 layout.html 파일을 의미한다.
 
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
