@@ -21,6 +21,25 @@
         --> localhost:8080 일 때,
         @RequestMapping("/bye")
 
+
+        @RequestMapping("/question")
+        @RequiredArgsConstructor
+        @Controller
+        public class QuestionController {
+        
+            private final QuestionService questionService;
+        
+            @GetMapping("/list")
+            public String list(Model model) {
+                (... 생략 ...)
+            }
+        
+            @GetMapping(value = "/detail/{id}")
+            public String detail(Model model, @PathVariable("id") Integer id) {
+                (... 생략 ...)
+            }
+        }
+
     </pre>
 </body>
 
