@@ -1,5 +1,69 @@
 import org.springframework.web.bind.annotation.PathVariable;
 
+스프링 부트(Spring Boot)에서 @PathVariable은 URL 경로(Path)에 포함된 동적인 값을 자바 메서드의 매개변수(파라미터)로 추출할 때 사용하는 어노테이션입니다. [1] 
+RESTful API를 설계할 때 특정 리소스를 식별하기 위한 식별자(ID 등)를 URL에 자연스럽게 녹여내기 위해 자주 사용됩니다. [2, 3] 
+------------------------------
+## 💡 기본 동작 방식 (예시)
+만약 사용자 ID가 123인 회원의 정보를 조회하는 API를 만든다면 다음과 같이 작성합니다. [1] 
+
+@RestController
+@RequestMapping("/api/users")public class UserController {
+
+    // URL 경로에 중괄호 {userId}를 사용하여 변수임을 명시합니다.
+    @GetMapping("/{userId}")
+    public String getUserProfile(@PathVariable Long userId) {
+        return "조회된 유저 ID: " + userId;
+    }
+}
+
+
+* 
+* 요청 URL: http://localhost:8080/api/users/123
+* 동작: URL의 마지막에 있는 123이라는 값이 @PathVariable Long userId로 매핑되어, userId 변수에 123이 자동으로 저장됩니다. [1, 3] 
+* 
+
+------------------------------
+## 📌 핵심 특징과 주의할 점
+
+   1. 변수 이름 매치하기
+   * URL 경로에 지정한 이름{userId}과 메서드 파라미터명(userId)이 같으면 @PathVariable만 써도 알아서 매핑됩니다.
+      * 만약 이름이 다르다면 아래처럼 괄호 안에 URL 변수명을 직접 지정해 주어야 합니다.
+      
+      @GetMapping("/{userId}")public String getUserProfile(@PathVariable("userId") Long id) { ... }
+      
+      [4] 
+   2. 기본적으로 '필수(Required)' 값임
+   * @PathVariable로 지정된 변수 자리에 값이 비어있으면(예: /api/users/로 요청 시) 스프링은 경로를 찾지 못하고 404 Not Found 에러를 던집니다. [3, 5] 
+   3. 여러 개 사용 가능
+   * 한 URL 경로 안에 여러 개의 변수를 두고 각각 추출할 수 있습니다.
+      * 예: @GetMapping("/categories/{catId}/products/{prodId}")
+   
+------------------------------
+## 🆚 @RequestParam과의 차이점
+데이터를 가져온다는 점에서 @RequestParam과 헷갈릴 수 있는데, URL 구조와 용도가 완전히 다릅니다. [5, 6] 
+
+| 구분 | @PathVariable (경로 변수) | @RequestParam (쿼리 파라미터) |
+|---|---|---|
+| URL 형태 | /api/users/123 | /api/users?id=123 |
+| 주요 용도 | 특정 리소스를 식별할 때 (주로 단건 조회, 수정, 삭제) | 데이터를 정렬, 필터링, 검색할 때 |
+
+
+* 
+* @PathVariable 권장: "123번 유저의 정보를 보여줘" ➡️ /users/123
+* @RequestParam 권장: "유저 목록 중에서 이름이 '홍길동'이고 20살인 사람들을 검색해줘" ➡️ /users?name=홍길동&age=20 [6] 
+* 
+
+------------------------------
+혹시 지금 작성 중이신 API URL 구조나 코드 예시가 있나요? 어떤 상황에 어떤 어노테이션을 써야 할지 헷갈리신다면 구체적인 예시와 함께 물어봐 주세요! 정답을 찾아드리겠습니다.
+
+[1] [https://blue-bull.tistory.com](https://blue-bull.tistory.com/240)
+[2] [https://www.inflearn.com](https://www.inflearn.com/community/questions/977297/pathvariable-%EC%82%AC%EC%9A%A9%EC%9D%B4%EC%9C%A0-updatememberv2%EB%A9%94%EC%86%8C%EB%93%9C-%EC%A7%88%EB%AC%B8%EC%9E%85%EB%8B%88%EB%8B%A4)
+[3] [https://woogienote.tistory.com](https://woogienote.tistory.com/104)
+[4] [https://velog.io](https://velog.io/@boricat/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-PathVariable)
+[5] [https://sujinisacat.tistory.com](https://sujinisacat.tistory.com/46)
+[6] [https://www.youtube.com](https://www.youtube.com/watch?v=vt8Marh7Y8M)
+
+
 예시
 @GetMapping(value = "/question/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id) {
