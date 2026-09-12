@@ -1,1 +1,56 @@
-d
+스프링 부트와 타임리프 환경에서 th:object는 HTML Form 태그 안에서 사용할 '기준 객체(Model Object)'를 지정하는 속성입니다.
+서버(Controller)에서 뷰(HTML)로 보낸 특정 자바 객체를 이 Form 전체에서 중심적으로 사용하겠다고 선언하는 역할을 합니다.
+------------------------------
+## 💡 핵심 기능 2가지
+
+   1. 선택 변수 식별자(*{...})의 기준점 역할
+   * th:object="${boardForm}"으로 객체를 한 번 지정해 두면, 그 하위 태그에서는 ${boardForm.title} 대신 *{title}처럼 객체명을 생략한 짧은 문법을 사용할 수 있습니다.
+   2. 스프링 MVC와의 데이터 연동 (커맨드 객체)
+   * 폼 데이터의 입력, 수정, 그리고 검증 오류(Validation) 처리를 해당 객체와 직접 연계하여 안전하게 처리할 수 있도록 돕습니다.
+   
+------------------------------
+## 💻 코드 예시로 보기
+컨트롤러에서 board라는 이름의 객체를 모델에 담아 보냈다고 가정해 보겠습니다.
+## 1. 타임리프 코드 (HTML)
+
+<!-- 1. form 태그에서 th:object로 기준 객체를 'board'로 지정합니다. -->
+<form th:action="@{/board/write}" th:object="${board}" method="post">
+    
+    <!-- 2. 하위 태그에서는 ${board.title} 대신 *{title}을 사용합니다. -->
+    <label for="title">제목</label>
+    <input type="text" th:field="*{title}" />
+
+    <label for="content">내용</label>
+    <textarea th:field="*{content}"></textarea>
+    
+</form>
+
+## 2. 만약 th:object를 쓰지 않는다면?
+매번 객체 이름을 반복해서 적어야 하므로 코드가 길어지고 가독성이 떨어집니다.
+
+<form action="/board/write" method="post">
+    <input type="text" id="title" name="title" th:value="${board.title}" />
+    <textarea id="content" name="content" th:text="${board.content}"></textarea>
+</form>
+
+------------------------------
+## ⚠️ 주의할 점 (자주 발생하는 에러)
+th:object가 정상적으로 동작하려면, 컨트롤러에서 반드시 해당 객체를 빈 값으로라도 생성해서 모델에 넘겨주어야 합니다.
+예를 들어, 값을 처음 입력하는 '등록 폼'으로 이동할 때도 아래처럼 빈 객체를 넘겨야 th:object에서 에러(An error happened during template parsing)가 나지 않습니다.
+
+@getMapping("/board/write")public String writeForm(Model model) {
+    // 빈 객체라도 넣어주어야 타임리프의 th:object="${board}"가 인식할 수 있습니다.
+    model.addAttribute("board", new BoardForm()); 
+    return "board/write";
+}
+
+------------------------------
+## 🔄 th:object와 th:field 한눈에 비교
+
+| 속성 | 역할 | 주로 사용하는 태그 |
+|---|---|---|
+| th:object | 폼에서 사용할 Form 객체 자체를 지정 (부모 역할) | <form> |
+| th:field | 지정된 객체 내부의 개별 필드(변수)를 매핑 (자식 역할) | <input>, <select>, <textarea> 등 |
+
+현재 작성 중이신 화면이 데이터를 새로 저장하는 '등록 폼'인가요, 아니면 기존 데이터를 수정하는 '수정 폼'인가요? 컨트롤러(Controller) 코드나 오류 메시지를 함께 보여주시면 상황에 맞는 구현 방법을 더 자세히 짚어드릴 수 있습니다.
+
