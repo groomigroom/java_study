@@ -1,1 +1,4 @@
-d
+JUnit을 이용해서 Repository만 개별적으로 실행해서 테스트해 보는게 가능하다.
+
+
+build.gradle에 아래와 같이 추가하기.
