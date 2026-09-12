@@ -1,1 +1,45 @@
-d
+String.format()은 지정한 양식(포맷)에 맞춰 문자열을 동적으로 생성하는 자바의 표준 메서드입니다.
+스프링 부트 전용 기술은 아니지만, 스프링 부트 애플리케이션을 개발할 때 로그(Log) 출력, 에러 메시지 생성, URL 경로 조립 등 다양한 곳에서 문자열을 깔끔하게 결합하기 위해 자주 사용됩니다.
+------------------------------
+## 💡 기본 동작 방식 (예시)
+문자열 중간에 변수 값을 넣고 싶을 때, 더하기(+) 연산자를 쓰는 대신 %s, %d 같은 형식 지정자(Format Specifier)를 자리에 두고 뒤에서 값을 채워 넣는 방식입니다.
+
+String name = "홍길동";int age = 25;
+// 1. 더하기(+) 연산자 사용 (코드가 지저분해짐)
+String str1 = "이름은 " + name + "이고, 나이는 " + age + "살입니다.";
+// 2. String.format() 사용 (가독성이 좋아짐)
+String str2 = String.format("이름은 %s이고, 나이는 %d살입니다.", name, age);
+
+## 🔍 자주 쓰는 형식 지정자
+
+* %s : 문자열 (String)
+* %d : 정수형 숫자 (int, long 등)
+* %f : 실수형 숫자 (float, double 등)
+
+------------------------------
+## 🛠️ 스프링 부트 개발에서의 실제 활용 예시
+이전에 작성하셨던 예외 처리 코드(DataNotFoundException)와 결합하면 다음과 같이 에러 메시지를 동적으로 만들 때 아주 유용합니다.
+
+@GetMapping("/users/{id}")public User getUser(@PathVariable Long id) {
+    return userRepository.findById(id)
+        .orElseThrow(() -> new DataNotFoundException(
+            String.format("%d번 유저를 찾을 수 없습니다.", id) // ➡️ "123번 유저를 찾을 수 없습니다."
+        ));
+}
+
+------------------------------
+## ⚠️ 스프링 부트에서 로그(Log)를 찍을 때는 주의하세요!
+스프링 부트에서 log.info()나 log.error() 같은 로깅 라이브러리(SLF4J / Logback)를 쓸 때는 String.format()을 사용하지 않는 것이 좋습니다.
+로그 라이브러리 자체에 이미 더 효율적인 문자열 포맷팅 기능이 내장되어 있기 때문입니다.
+
+// ❌ 비추천 (로그 레벨이 비활성화되어 있어도 String.format 연산이 먼저 수행되어 메모리 낭비)
+log.info(String.format("User %s logged in", username));
+// ⭕ 추천 (슬롯 {} 방식을 쓰면 연산 최적화가 이루어짐)
+log.info("User {} logged in", username);
+
+------------------------------
+## 📌 한 줄 요약
+String.format()은 문자열 더하기(+) 연산자 없이 복잡한 문자열 구조를 가독성 좋고 깔끔하게 만들어주는 자바의 문자열 조립 도구입니다.
+------------------------------
+현재 만들고 계신 DataNotFoundException 예외 메시지에 어떤 데이터(예: ID나 이름 등)를 담아서 클라이언트에게 보여주고 싶으신가요? 상황을 알려주시면 String.format()을 활용한 가장 자연스러운 메시지 구성 방법을 제안해 드릴게요!
+
