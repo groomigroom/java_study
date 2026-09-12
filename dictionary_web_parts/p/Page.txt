@@ -1,3 +1,6 @@
 org.springframework.data.domain.Page
 
 페이징을 위한 클래스이다.
+
+Page 객체인 paging으로 예시를 들면 아래와 같은 속성들이 있다.
+
