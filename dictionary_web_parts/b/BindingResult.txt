@@ -25,3 +25,6 @@ implementation 'org.springframework.boot:spring-boot-starter-web'
 ------------------------------
 현재 개발 중이신 화면이 API 형태(JSON 리턴)인가요, 아니면 타임리프(Thymeleaf) 등을 쓰는 HTML 화면인가요? 환경을 말씀해 주시면 상황에 맞는 BindingResult 활용 코드 예시를 보여드리겠습니다.
 
+
+bindingResult.hasErrors()
+는 오류가 있는 경우인지 검증하는거
