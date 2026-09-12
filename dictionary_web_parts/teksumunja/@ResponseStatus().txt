@@ -1,3 +1,9 @@
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "entity not found")
+
+
+
 스프링 부트에서 @ResponseStatus는 HTTP 요청이 성공하거나 실패했을 때 클라이언트에게 보낼 HTTP 응답 상태 코드(Status Code)를 직접 지정하는 어노테이션입니다.
 이 어노테이션을 사용하면 스프링이 기본으로 제공하는 상태 코드(성공 시 200 OK, 서버 에러 시 500 Internal Server Error 등) 대신, 비즈니스 로직에 맞는 정확한 HTTP 상태 코드를 제어할 수 있습니다.
 ------------------------------
