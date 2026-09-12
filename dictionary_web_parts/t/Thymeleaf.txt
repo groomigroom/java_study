@@ -1,0 +1,3 @@
+의존성 작성은
+build.gradle
+
