@@ -1,0 +1,7 @@
+프로토콜	서비스 내용	포트
+HTTP	웹 서비스	80
+HTTPS	SSL을 적용한 웹 서비스	443
+FTP	파일 전송 서비스	21
+SSH, SFTP	보안이 강화된 TELNET(텔넷), FTP 서비스	22
+TELNET	원격 서버 접속 서비스	23
+SMTP	메일 전송 서비스	25
