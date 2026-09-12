@@ -1,1 +1,4 @@
-d
+thymeleaf html에서
+th:if="${#fields.hasAnyErrors()}
+이런식으로 사용가능함.
+에러가 있는 경우인지 판단
