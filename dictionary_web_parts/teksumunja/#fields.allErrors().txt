@@ -1,3 +1,5 @@
 thymeleaf html에서 에러의 내용
 
-th:each="err : ${#fields.allErrors()}"
+예시
+
+th:each="err : ${#fields.allErrors()}" th:text="${err}"
