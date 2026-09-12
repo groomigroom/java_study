@@ -4,3 +4,11 @@ org.springframework.data.domain.Page
 
 Page 객체인 paging으로 예시를 들면 아래와 같은 속성들이 있다.
 
+속성	설명
+paging.isEmpty	페이지 존재 여부를 의미한다(게시물이 있으면 false, 없으면 true).
+paging.totalElements	전체 게시물 개수를 의미한다.
+paging.totalPages	전체 페이지 개수를 의미한다.
+paging.size	페이지당 보여 줄 게시물 개수를 의미한다.
+paging.number	현재 페이지 번호를 의미한다.
+paging.hasPrevious	이전 페이지의 존재 여부를 의미한다.
+paging.hasNext	다음 페이지의 존재 여부를 의미한다.
