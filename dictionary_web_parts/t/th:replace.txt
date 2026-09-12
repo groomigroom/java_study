@@ -1,1 +1,79 @@
-d
+스프링 부트와 타임리프 환경에서 th:replace는 웹 페이지의 공통 레이아웃(헤더, 푸터, 네비게이션 바 등)을 재사용하기 위해 특정 태그를 미리 만들어둔 템플릿(조각)으로 '통째로 교체'하는 속성입니다.
+웹 사이트를 만들 때 모든 페이지마다 똑같은 헤더(⭐)나 푸터 코드 코드를 복사·붙여넣기 하지 않고, 한 곳에 모아둔 뒤 불러와서 쓸 때 핵심적으로 사용됩니다.
+------------------------------
+## 💡 핵심 특징 2가지
+
+   1. 태그 자체를 완전히 대체 (Replace)
+   * th:replace가 선언된 HTML 태그는 렌더링될 때 사라지고, 가져온 조각(Fragment)의 태그가 그 자리를 완전히 차지합니다.
+      * (참고: 이와 비슷하지만 태그 내부에 내용만 끼워 넣는 th:insert도 있습니다.)
+   2. 개발 생산성 및 유지보수 향상
+   * 헤더의 메뉴 이름 하나를 바꿀 때 모든 HTML 파일을 수정할 필요 없이, 공통 조각 파일 하나만 수정하면 전체 페이지에 반영됩니다.
+   
+------------------------------
+## 💻 코드 예시로 보기
+공통으로 쓸 헤더 파일(header.html)을 만들어 두고, 메인 화면(main.html)에서 불러오는 구조입니다.
+## 1. 공통 조각 파일 생성 (src/main/resources/templates/fragments/header.html)
+가져다 쓸 부분에 th:fragment="이름"을 지정해 줍니다.
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"><!-- th:fragment로 이 div 영역의 이름을 'commonHeader'로 지정합니다 -->
+<div th:fragment="commonHeader">
+    <header>
+        <h1>로고 및 네비게이션 바</h1>
+    </header>
+</div>
+</html>
+
+## 2. 메인 화면 파일에서 불러오기 (src/main/resources/templates/main.html)
+~{파일경로 :: fragment이름} 문법을 사용하여 불러옵니다.
+
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head><title>메인 페이지</title></head>
+<body>
+
+    <!-- fragments 폴더 안의 header.html 파일에서 commonHeader라는 조각을 가져와 교체합니다 -->
+    <div th:replace="~{fragments/header :: commonHeader}">
+        이곳의 원래 내용은 렌더링 시 사라지고 공통 헤더로 교체됩니다.
+    </div>
+
+    <main>
+        <h3>여기는 메인 콘텐츠 영역입니다.</h3>
+    </main>
+
+</body>
+</html>
+
+## 3. 실제 브라우저에 렌더링된 결과 (HTML)
+th:replace가 붙어있던 메인 화면의 <div> 태그는 사라지고, header.html에 있던 조각 내용이 그 자리를 채웁니다.
+
+<!DOCTYPE html>
+<html>
+<head><title>메인 페이지</title></head>
+<body>
+
+    <!-- 원래 있던 div는 사라지고, th:fragment가 정의된 div가 통째로 들어옴 -->
+    <div>
+        <header>
+            <h1>로고 및 네비게이션 바</h1>
+        </header>
+    </div>
+
+    <main>
+        <h3>여기는 메인 콘텐츠 영역입니다.</h3>
+    </main>
+
+</body>
+</html>
+
+------------------------------
+## 🔄 헷갈리기 쉬운 유사 속성 한눈에 비교
+
+| 속성 | 동작 방식 | 예시 결과 (원래 태그 <div> 기준) |
+|---|---|---|
+| th:replace | 원래 태그를 조각 태그로 완전히 대체합니다. | <div>조각 내용</div> (원래 div 삭제됨) |
+| th:insert | 원래 태그 내부에 조각 태그를 삽입합니다. | <div><div>조각 내용</div></div> (중첩됨) |
+
+보통 웹 디자인을 할 때는 태그 구조가 깨지지 않도록 깔끔하게 치환해 주는 th:replace를 가장 많이 선언합니다.
+현재 전체적인 레이아웃(틀)을 하나 만들어두고 본문 내용만 바꾸는 구조를 고민 중이신가요, 아니면 단순히 상하단 조각만 붙여넣는 방식을 구현 중이신가요? 상황에 따라 더 효율적인 레이아웃 구성 팁을 드릴 수 있습니다!
+
