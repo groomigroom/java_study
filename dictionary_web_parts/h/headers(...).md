@@ -1,1 +1,5 @@
-HttpSecurity에 .headers()로 붙어
+HttpSecurity에 .headers()로 붙어서
+------
+
+* .headers(...)역할: HTTP 응답 헤더(Response Headers)와 관련된 보안 설정을 시작하는 메서드입니다.
+* 설명: 브라우저에게 "이 사이트는 안전하니 특정 보안 규칙을 지켜줘"라고 명령하는 여러 가지 보안 헤더(예: XSS 방지, 캐시 제어, HSTS 등)를 추가하거나 수정할 수 있는 진입점입니다.
