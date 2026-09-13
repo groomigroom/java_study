@@ -1,3 +1,5 @@
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 UsernameNotFoundException은 스프링 시큐리티에서 "로그인을 시도할 때, 사용자가 입력한 아이디(Username)에 해당하는 유저를 데이터베이스나 시스템에서 찾을 수 없을 때" 발생하는 예외입니다.
 ## 1. 스프링 부트에서의 의미
 
