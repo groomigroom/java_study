@@ -1,3 +1,5 @@
+import org.springframework.security.core.userdetails.UserDetails;
+
 자바 스프링 부트에서 UserDetails는 Spring Security가 사용자의 핵심 정보를 담기 위해 제공하는 핵심 인터페이스(Interface)입니다. [1, 2] 
 개발자가 이 인터페이스를 구현하면(implements), Spring Security가 로그인 인증 과정에서 비밀번호를 검증하고 사용자의 권한(Role)을 확인하는 용도로 사용합니다.
 이와 관련된 상세한 의미와 필수 스타터 의존성은 다음과 같습니다.
