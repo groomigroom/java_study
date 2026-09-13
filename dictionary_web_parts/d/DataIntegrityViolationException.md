@@ -1,3 +1,5 @@
+* import org.springframework.dao.DataIntegrityViolationException;
+
 스프링 부트(Spring Boot)에서 DataIntegrityViolationException은 "데이터 무결성 제약 조건(Data Integrity Constraint)을 위반했다"는 것을 의미합니다.
 쉽게 말해, 데이터베이스(DB)에 값을 저장하거나 수정하려고 할 때, DB가 세워둔 규칙(제약 조건)을 깨뜨려서 발생한 에러입니다.
 가장 자주 발생하는 원인들과 해결법을 그룹별로 정리해 드립니다.
