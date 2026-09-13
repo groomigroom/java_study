@@ -1,3 +1,5 @@
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
 HttpSecurity는 스프링 시큐리티에서 웹 기반 보안 설정을 구성하는 핵심 빌더 클래스입니다. [1] 
 ## 1. HttpSecurity의 의미
 
