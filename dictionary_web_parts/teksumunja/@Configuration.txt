@@ -1,6 +1,6 @@
 import org.springframework.context.annotation.Configuration;
 
-
+@Configuration은 이 파일이 스프링부트의 환경 설정 파일임을 의미하는 애너테이션이다.
 
 자바 스프링(Spring)에서 @Configuration은 해당 클래스가 "스프링의 설정(Configuration) 정보"를 담고 있는 클래스임을 나타내는 어노테이션입니다. [1, 2] 
 과거에는 XML 파일로 작성하던 스프링 빈(Bean) 설정 및 의존성 주입(DI) 코드를, 자바 클래스 형태로 작성할 수 있게 만들어 줍니다. [3, 4] 
