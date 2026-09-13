@@ -25,3 +25,9 @@ implementation 'org.springframework.boot:spring-boot-starter-security'
 ##  .formLogin()
 
 * .formLogin 메서드는 스프링 시큐리티의 로그인 설정을 담당하는 부분
+
+* 예시
+ .formLogin((formLogin) -> formLogin
+                .loginPage("/user/login")
+                .defaultSuccessUrl("/"))
+        ;
