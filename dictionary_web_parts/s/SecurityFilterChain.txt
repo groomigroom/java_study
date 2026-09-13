@@ -1,3 +1,5 @@
+import org.springframework.security.web.SecurityFilterChain;
+
 SecurityFilterChain은 스프링 부트에서 웹 보안(인증 및 인가)을 처리하는 핵심 필터들의 집합을 의미합니다.
 ## 1. SecurityFilterChain의 의미
 
