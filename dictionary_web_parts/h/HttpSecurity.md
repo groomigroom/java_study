@@ -46,8 +46,8 @@ implementation 'org.springframework.boot:spring-boot-starter-security'
                 .invalidateHttpSession(true))
 
 
-//.logout(...)역할: 스프링 시큐리티가 제공하는 로그아웃 관련 보안 설정을 시작하는 메서드입니다.
-//.logoutRequestMatcher(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/user/logout"))역할: 로그아웃을 실행할 특정 URL 주소와 HTTP 메서드를 지정합니다.
-//PathPatternRequestMatcher.pathPattern(...): 스프링 부트에서 경로를 매칭할 때 쓰는 고성능 경로 매칭 방식입니다.
-//HttpMethod.GET: 로그아웃 요청을 GET 방식으로 받겠다고 명시합니다.
-//.logoutSuccessUrl("/")역할: 로그아웃이 성공적으로 완료된 후 사용자를 이동시킬(리다이렉트) URL 주소를 지정합니다.
+* .logout(...)역할: 스프링 시큐리티가 제공하는 로그아웃 관련 보안 설정을 시작하는 메서드입니다.
+* .logoutRequestMatcher(PathPatternRequestMatcher.pathPattern(HttpMethod.GET, "/user/logout"))역할: 로그아웃을 실행할 특정 URL 주소와 HTTP 메서드를 지정합니다.
+* PathPatternRequestMatcher.pathPattern(...): 스프링 부트에서 경로를 매칭할 때 쓰는 고성능 경로 매칭 방식입니다.
+* HttpMethod.GET: 로그아웃 요청을 GET 방식으로 받겠다고 명시합니다.
+* .logoutSuccessUrl("/")역할: 로그아웃이 성공적으로 완료된 후 사용자를 이동시킬(리다이렉트) URL 주소를 지정합니다.
