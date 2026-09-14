@@ -14,3 +14,8 @@ A.symmetricDifference(B) -> 반환 타입 -> Set<br>
 (A∖B)∪(B∖A)<br>
 A와 B의 대칭차 집합은 두 원 중 어느 한 원이 포함하지만 둘 다 포함하지 않는 영역입니다.<br>
 <br>
+A.union(B) -> 반환 타입 -> Set<br>
+A∪B<br>
+A와 B의 대칭 차이는 두 원 중 하나 또는 두 원이 포함하는 영역입니다.<br>
+<br>
+
