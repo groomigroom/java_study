@@ -6,3 +6,7 @@ A.difference(B) -> 반환 타입 -> Set<br>
 A∖B 느낌<br>
 A와 B의 차집합은 A에서 B와 겹치지 않는 부분입니다.<br>
 <br>
+A.intersection(B) -> 반환 타입 -> Set<br>
+A∩B<br>
+A와 B의 교집합은 두 원이 겹치는 부분입니다.<br>
+<br>
