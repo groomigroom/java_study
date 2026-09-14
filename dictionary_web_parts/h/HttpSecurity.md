@@ -35,3 +35,8 @@ implementation 'org.springframework.boot:spring-boot-starter-security'
 * 로그인 페이지의 URL은 /user/login이고
 * 로그인 성공 시에 이동할 페이지는 루트 URL(/)임을 의미한다
 
+
+------------------------
+
+##  .logout()
+
