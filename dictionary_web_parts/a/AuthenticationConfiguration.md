@@ -1,3 +1,5 @@
+org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+
 스프링 부트(스프링 시큐리티)에서 AuthenticationConfiguration은 "스프링 시큐리티의 인증 프로세스를 총괄하는 핵심 관리자(AuthenticationManager)를 쉽게 생성하고 가져올 수 있도록 도와주는 설정 클래스"입니다. [1, 2]
 쉽게 말해, "로그인 인증 처리를 담당하는 핵심 부품을 만들어주는 공장(Factory)"이라고 이해하시면 됩니다.
 ------------------------------
