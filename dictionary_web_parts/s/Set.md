@@ -22,3 +22,10 @@ A.isDisjointFrom(B) -> 반환 타입 -> Boolean<br>
 A∩B = ∅<br>	
  원이 겹치는 영역이 없기 때문에 A와 B는 분리소 집합입니다.<br>	
 <br>	
+A.isSubsetOf(B) -> 반환 타입 -> Boolean	<br>
+A⊆B<br>
+A는 B에 완전히 포함되므로 A는 B의 부분 집합입니다.<br>
+<br>
+A.isSupersetOf(B) -> 반환 타입 -> Boolean	<br>
+A⊇B<br>
+위에꺼랑 비슷한 방식임.
