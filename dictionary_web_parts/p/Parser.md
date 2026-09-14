@@ -1,3 +1,5 @@
+import org.commonmark.parser.Parser;
+
 자바 스프링 부트에서 import org.commonmark.parser.Parser;는 오픈소스 마크다운(Markdown) 처리 라이브러리인 commonmark-java가 제공하는 구문 분석기(Parser) 클래스를 가져오겠다는 의미입니다. [1, 2] 
 게시판의 글이나 댓글을 작성할 때 쓰는 마크다운 텍스트를 HTML 태그 문서로 변환하기 위한 첫 번째 단계를 수행하는 역할을 합니다. [1, 3] 
 이 클래스의 구체적인 핵심 역할과 작동 방식은 다음과 같습니다.
