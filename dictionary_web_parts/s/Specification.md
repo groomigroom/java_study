@@ -1,3 +1,5 @@
+import jakarta.persistence.criteria.CriteriaBuilder;
+
 자바 스프링 부트(Spring Data JPA)에서 import org.springframework.data.jpa.domain.Specification;의 Specification은 데이터베이스의 데이터를 조회할 때, 복잡한 검색 조건(쿼리 조건)을 자바 코드로 안전하고 유연하게 조립할 수 있도록 도와주는 인터페이스입니다.
 쉽게 말해, SQL 문법의 WHERE 절에 들어갈 조건문들을 부품처럼 쪼개어 만든 뒤, 상황에 따라 자유롭게 결합(AND, OR)할 수 있게 해주는 기능입니다.
 ------------------------------
