@@ -1,3 +1,5 @@
+import jakarta.persistence.criteria.Predicate;
+
 자바 스프링 부트(정확히는 JPA 표준 스펙인 Criteria API)에서 import jakarta.persistence.criteria.Predicate;의 Predicate는 데이터베이스 조회 시 적용할 "참(True) 또는 거짓(False)을 판별하는 조건문 식"을 의미하는 객체입니다.
 쉽게 비유하자면 SQL의 WHERE 절에 들어가는 id = 5, subject LIKE '%스프링%' 같은 단 하나의 개별 조건식 조각을 자바 코드로 구조화한 것입니다.
 ------------------------------
