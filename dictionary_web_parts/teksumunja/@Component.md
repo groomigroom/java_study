@@ -1,5 +1,7 @@
 @Component.txt
 
+import org.springframework.stereotype.Component;
+
 @Component는 개발자가 작성한 클래스를 스프링 컨테이너에 빈(Bean)으로 자동 등록하라고 알려주는 자바 애노테이션입니다. 
 이 애노테이션은 별도의 의존성을 추가할 필요 없이, 스프링의 가장 핵심이 되는 라이브러리인 spring-context 모듈에 기본적으로 포함되어 있습니다.
 ------------------------------
