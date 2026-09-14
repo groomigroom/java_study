@@ -1,3 +1,5 @@
+import org.springframework.security.access.prepost.PreAuthorize;
+
 스프링 부트(Spring Boot)에서 @PreAuthorize("isAuthenticated()")는 "이 메서드(또는 컨트롤러)는 로그인한(인증된) 사용자만 호출할 수 있게 하라"는 의미입니다. 스프링 시큐리티(Spring Security)가 제공하는 권한 제어 기능 중 하나입니다. [1, 2] 
 핵심 내용을 요약하면 다음과 같습니다.
 ## 1. 주요 기능
