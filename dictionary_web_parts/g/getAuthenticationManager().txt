@@ -1,3 +1,6 @@
+AuthenticationConfiguration 에서 쓰는 매서드
+
+
 스프링 부트에서 .getAuthenticationManager()는 사용자의 인증(Authentication) 처리를 총괄하는 핵심 인터페이스인 AuthenticationManager를 가져오는 메서드이며, 이는 spring-boot-starter-security 의존성에 속해 있습니다.
 ## 핵심 요약
 
