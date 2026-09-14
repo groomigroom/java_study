@@ -18,4 +18,7 @@ A.union(B) -> 반환 타입 -> Set<br>
 A∪B<br>
 A와 B의 대칭 차이는 두 원 중 하나 또는 두 원이 포함하는 영역입니다.<br>
 <br>
-
+A.isDisjointFrom(B) -> 반환 타입 -> Boolean<br>	
+A∩B = ∅<br>	
+ 원이 겹치는 영역이 없기 때문에 A와 B는 분리소 집합입니다.<br>	
+<br>	
