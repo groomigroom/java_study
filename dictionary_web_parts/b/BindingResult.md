@@ -128,3 +128,74 @@ bindingResult.rejectValue()에서 rejectValue라는 메서드 이름 자체의 �
 혹시 단어 뜻 외에 스프링 내부 동작 원리나 특정 파라미터가 왜 필요한지 더 궁금한 부분이 있으신가요?
 
 # bindingResult.rejectValue(필드명, 오류 코드, 오류 메시지)
+
+# bindingResult.reject()
+
+------------------
+
+자바 스프링 부트(Spring Boot)에서 bindingResult.reject()는 특정 필드(아이디, 비밀번호 등)의 오류가 아니라, 객체(Form 전체 또는 복합 조건) 전체에 대한 글로벌 오류(Global Error 또는 Object Error)를 직접 등록할 때 사용하는 메서드입니다. [1, 2] 
+예를 들어 로그인 실패(아이디/비밀번호 불일치)나 "총 금액이 만 원을 넘어야 한다" 같은 여러 필드가 조합된 조건의 검증 실패를 처리할 때 사용합니다. [2] 
+------------------------------
+## 1. reject() vs rejectValue() 차이점
+BindingResult가 제공하는 검증 오류 등록 메서드는 크게 두 가지로 나뉩니다.
+
+| 메서드 | 대상 | 설명 | 예시 |
+|---|---|---|---|
+| reject() | 글로벌 오류 (Object Error) | 특정 필드를 지정하지 않고, 객체 전체의 유효성이 깨졌을 때 사용합니다. | 로그인 실패, 최소 주문 금액 미달 |
+| rejectValue() | 필드 오류 (Field Error) | 특정 필드에 값이 잘못 들어왔을 때 사용합니다. | 이메일 형식 오류, 비밀번호 글자 수 미달 |
+
+## 2. 주요 파라미터 구조
+
+void reject(String errorCode, @Nullable Object[] errorArgs, @Nullable String defaultMessage);
+
+
+* 
+* errorCode: 에러 메시지를 찾기 위한 핵심 키워드입니다 (예: "loginFail"). 스프링의 MessageCodesResolver가 이 코드를 바탕으로 메시지 파일(errors.properties)에서 적절한 에러 문구를 찾아냅니다.
+* errorArgs: 에러 메시지 내에 동적으로 값을 채워 넣을 때 사용할 인자 배열입니다. (없으면 null)
+* defaultMessage: 메시지 파일에서 errorCode를 찾지 못했을 때 화면에 보여줄 기본 기본 메시지입니다. [1, 2, 3, 4] 
+* 
+
+## 3. 실제 사용 예시 코드
+사용자가 입력한 상품 가격과 수량의 곱이 10,000원 이하일 때 전체 오류를 발생시키는 비즈니스 룰 예시입니다. [5] 
+
+@PostMapping("/add")public String addItem(@ModelAttribute Item item, BindingResult bindingResult) {
+    
+    // 특정 필드가 아닌, 여러 필드가 조합된 복합 룰 검증
+    if (item.getPrice() != null && item.getQuantity() != null) {
+        int totalResult = item.getPrice() * item.getQuantity();
+        if (totalResult < 10000) {
+            // 글로벌 오류 등록!
+            bindingResult.reject("totalPriceMin", new Object[]{10000, totalResult}, "총합은 최소 10,000원 이상이어야 합니다.");
+        }
+    }
+
+    // 에러가 있다면 다시 입력 폼으로 이동
+    if (bindingResult.hasErrors()) {
+        return "item-form";
+    }
+
+    // 성공 로직...
+    return "redirect:/items";
+}
+
+## 4. 메시지 파일과의 연동 (errors.properties)
+reject("totalPriceMin", ...)을 호출하면 스프링은 자동으로 totalPriceMin.<오브젝트명> 형태의 에러 코드를 생성해 내부적으로 매핑해 줍니다. errors.properties 파일에 아래와 같이 등록해 관리할 수 있습니다. [1, 4] 
+
+# {0}은 10000, {1}은 현재 totalResult 값이 대입됨
+totalPriceMin=총 가격의 합은 {0}원 이상이어야 합니다. 현재 가격: {1}원
+
+타임리프(Thymeleaf) 같은 뷰 템플릿 엔진에서는 다음과 같이 화면에 글로벌 에러를 출력할 수 있습니다.
+
+<div th:if="${#fields.hasGlobalErrors()}">
+    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+</div>
+
+reject() 메서드를 활용해서 구현하고자 하는 구체적인 검증 조건(예: 로그인, 회원가입, 금액 비교 등)이 있으신가요? 상황을 말씀해 주시면 알맞은 errors.properties 설정 파일 구조나 타임리프 화면 출력 코드를 작성해 드릴 수 있습니다.
+
+[1] [https://rebugs.tistory.com](https://rebugs.tistory.com/628)
+[2] [https://dingdingmin-back-end-developer.tistory.com](https://dingdingmin-back-end-developer.tistory.com/entry/Springboot-MVC-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B010-Validation-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%A6%9D)
+[3] [https://amenable.tistory.com](https://amenable.tistory.com/100)
+[4] [https://nomoreft.tistory.com](https://nomoreft.tistory.com/66)
+[5] [https://jaehee1007.tistory.com](https://jaehee1007.tistory.com/8)
+
+
