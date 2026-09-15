@@ -1,3 +1,5 @@
+import org.springframework.validation.BindingResult;
+
 자바 스프링 부트에서 BindingResult는 데이터 검증(Validation) 및 바인딩의 결과를 담는 인터페이스입니다.
 ## 1. BindingResult가 의미하는 것
 
