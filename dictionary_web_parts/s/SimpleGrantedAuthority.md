@@ -1,3 +1,5 @@
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 스프링 부트(Spring Security)에서 SimpleGrantedAuthority는 "사용자에게 부여된 권한(Authority)을 문자열 형태로 단순하게 표현하는 클래스"입니다.
 이전 답변에서 살펴보았던 "ROLE_USER", "ROLE_ADMIN" 같은 권한 텍스트를 스프링 시큐리티가 읽을 수 있는 진짜 '권한 객체'로 포장해 주는 상자라고 이해하시면 됩니다.
 ------------------------------
