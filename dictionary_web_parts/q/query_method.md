@@ -31,3 +31,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 * 메서드 이름이 너무 길어질 때 대안으로 사용하는 @Query 어노테이션 작성법
 
 
+*  [SpringBoot] JPA 쿼리 메서드 키워드 정리 및 예제 https://share.google/sZw19oLQtEhg9g2IH
+
