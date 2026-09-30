@@ -41,6 +41,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 ## 엔티티
 
+```java
 @Entity
 @Data
 @Builder
@@ -67,7 +68,7 @@ public class Users {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
-
+```
 
 ------------------------------------------------------
 
