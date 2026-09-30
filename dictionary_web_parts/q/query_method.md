@@ -39,3 +39,36 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 # 예시 22
 
+## 엔티티
+
+@Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Users {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 50)
+    private String name;
+
+    @Column(length = 50)
+    private String email;
+
+    @Column(length = 20)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Column(length = 50)
+    private String likeColor;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+
+
+------------------------------------------------------
+
+
