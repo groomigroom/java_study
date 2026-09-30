@@ -39,7 +39,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 # 예시 22
 
-## 엔티티
+## entity
 
 ```java
 @Entity
@@ -72,4 +72,23 @@ public class Users {
 
 ------------------------------------------------------
 
+## repository
 
+```java
+@Repository
+public interface UsersRepository extends JpaRepository<Users, Long> {
+    // 이름으로 검색하는 기능
+    List<Users> findByName(String name);
+
+    // 색상 값을 받아서 그 중 처음으로 발견되는 3개의 데이터를 출력
+    List<Users> findTop3ByLikeColor(String color);
+
+    // 남자이면서 색상이 Yellow
+    List<Users> findByGenderAndLikeColor(Gender gender, String color);
+
+    // 범위 검색
+    // 최근 7일 이내 자료를 읽어오고 싶을 때(오늘 빼고)
+    List<Users> findByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
+}
+
+```
