@@ -92,3 +92,9 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
 }
 
 ```
+
+```sql
+SELECT * FROM users WHERE name = ?
+SELECT * FROM users WHERE like_color = ? LIMIT 3
+SELECT * FROM users WHERE gender = ? AND like_color = ?
+```
