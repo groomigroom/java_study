@@ -33,3 +33,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
 *  [SpringBoot] JPA 쿼리 메서드 키워드 정리 및 예제 https://share.google/sZw19oLQtEhg9g2IH
 
+
+
+-----------------------------------------------------------
+
+# 예시 22
+
