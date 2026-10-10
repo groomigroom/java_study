@@ -41,3 +41,5 @@ dependencies 블록 안에 아래 코드를 넣고 동기화합니다.
 * Mac: Cmd + F9 (또는 Cmd + Shift + F9)
 
 설정을 따라 하시는 과정에서 Compiler나 Advanced Settings 메뉴를 찾기 어려우시거나, 코드를 고쳐도 여전히 새로고침이 안 된다면 어떤 부분이 막히는지 말씀해 주세요! 다시 안내해 드리겠습니다.
+
+* 위에 build -> build project 눌러도 됨
