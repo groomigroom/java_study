@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 |---|---|---|---|
 | 200 | HttpStatus.OK | 성공 | 데이터 조회, 수정 등이 정상 처리됨 |
 | 201 | HttpStatus.CREATED | 생성됨 | 회원가입, 글쓰기 등 새로운 데이터 생성 성공 |
+| 204 | HttpStatus.NO_CONTENT | 생성은 됨 | 하지만 클라이언트에게 돌려줄 데이터가 없다. |
 | 400 | HttpStatus.BAD_REQUEST | 잘못된 요청 | 파라미터 누락, 입력값 형식 오류 |
 | 401 | HttpStatus.UNAUTHORIZED | 인증 자격 없음 | 로그인이 필요한 서비스에 비로그인 접근 |
 | 403 | HttpStatus.FORBIDDEN | 권한 거부 | 로그인했으나 접근 권한이 없음 (예: 일반 회원이 관리자 페이지 접근) |
