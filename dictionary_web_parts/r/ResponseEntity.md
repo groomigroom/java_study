@@ -1,3 +1,5 @@
+import org.springframework.http.ResponseEntity;
+
 자바 스프링 부트(Spring Boot)에서 ResponseEntity는 HTTP 요청(Request)에 대한 응답(Response) 데이터와 HTTP 상태 코드를 직접 제어할 수 있게 해주는 클래스입니다.
 스프링 MVC에서 REST API를 개발할 때, 클라이언트에게 데이터만 보내는 것이 아니라 "성공했다(200 OK)", "찾을 수 없다(404 Not Found)", "서버 에러다(500 Internal Server Error)" 같은 HTTP 상태 코드와 헤더 정보를 세밀하게 설정하여 반환하기 위해 사용합니다.
 
