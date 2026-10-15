@@ -1,0 +1,7 @@
+
+
+//빈에 대한 AspectJ 지원을 활성화합니다 . 
+간단히 말해, AspectJ는 `@Pointcut` 과 같은 편리한 어노테이션을 통해 
+Spring AOP를 더 쉽게 사용할 수 있도록 만들어진 라이브러리입니다 .
+//Spring AOP는 핵심 비즈니스 로직과 반복되는 공통 부가 기능을 분리하여 
+모듈화하는 관점 지향 프로그래밍(Aspect-Oriented Programming) 기술입니다.
