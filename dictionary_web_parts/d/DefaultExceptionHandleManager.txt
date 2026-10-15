@@ -26,3 +26,34 @@
 4. 설정 파일에 정의된 ExceptionHandler 구현체들이 동작하여 후속 작업 수행 
 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling)
 전자정부프레임워크의 예외 처리 설정 파일(XML/Annotation) 구성이나 특정 에러 로그를 커스텀 처리하는 법에 대해 더 알고 싶으시면 말씀해 주세요.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+전자정부 표준프레임워크(eGovFrame)에서 제공하는 DefaultExceptionHandleManager는 애플리케이션 실행 중 발생한 예외(Exception)를 어떤 예외 처리기(ExceptionHandler)가 담당할지 결정하고 연결해 주는 예외 매핑 관리자입니다.
+작성하신 3줄의 코드는 "특정 패턴의 클래스에서 예외가 발생했을 때, 내가 지정한 예외 처리기를 실행하겠다"라는 규칙을 설정하는 부분입니다. 각 라인의 구체적인 의미는 다음과 같습니다.
+
+1. defaultExceptionHandleManager.setReqExpMatcher(antPathMatcher);
+
+• 의미: 패턴을 비교할 때 사용할 주소/경로 매칭 알고리즘(Matcher)을 설정합니다.
+• 상세 설명: 여기서는 스프링 프레임워크에서 널리 쓰이는 AntPathMatcher를 지정했습니다. AntPathMatcher는 빌드 도구인 Ant 스타일의 경로 표기법(*, **, ? 등)을 사용하여 문자열 패턴이 일치하는지 판별하는 역할을 합니다.
+
+2. defaultExceptionHandleManager.setPatterns(new String[]{"**service.impl.*"});
+
+• 의미: 예외 처리를 적용할 대상 클래스(패키지 경로) 패턴을 지정합니다.
+• 상세 설명: AntPathMatcher 규칙에 따라 다음과 같이 해석됩니다.
+	• **: 하위 패키지가 몇 단계가 있든 상관없이 매칭합니다.
+	• service.impl: 패키지 경로에 service.impl이 반드시 포함되어야 합니다.
+	• *: service.impl. 바로 다음에 오는 클래스 이름 또는 하위 패키지 하나를 의미합니다.
+	• 종합하면: 비즈니스 로직을 수행하는 Service 구현체 클래스들(*service.impl.*) 안에서 예외가 발생했을 때만 이 매니저가 개입하겠다는 뜻입니다.
+
+3. defaultExceptionHandleManager.setHandlers(new ExceptionHandler[]{egovHandler});
+
+• 의미: 위의 패턴과 일치하는 곳에서 예외가 발생했을 때 실제로 예외를 처리할 실행기(Handler)들을 등록합니다.
+• 상세 설명: egovHandler라는 이름으로 정의된 예외 처리기 객체를 배열 형태로 주입하고 있습니다. 패턴에 걸려든 예외는 이 egovHandler 내부의 occur 메서드로 전달되어 로그 기록, 알림 발송, 에러 페이지 전환 등의 후속 조치를 받게 됩니다.
+
+💡 한 줄 요약
+
+"앞으로 *service.impl.* 패턴을 가진 서비스 클래스 안에서 예외가 발생하면(setPatterns), AntPathMatcher 규칙에 따라 매칭 여부를 확인하고(setReqExpMatcher), 조건이 맞으면 egovHandler를 호출하여 예외를 처리하겠다(setHandlers)."는 의미입니다.
+이 설정은 주로 context-common.xml 같은 Spring 설정 파일이나 Java Config 클래스에서 전자정부 표준프레임워크의 AOP 기반 예외 처리를 구현할 때 사용됩니다.
+현재 이 코드를 XML 설정에서 Java 코드로 이관 중이신가요, 아니면 egovHandler 내부에서 구체적으로 어떤 예외 처리 로직을 구현해야 하는지 궁금하신가요? 구체적인 상황을 알려주시면 필요한 코드를 더 상세히 안내해 드리겠습니다.
