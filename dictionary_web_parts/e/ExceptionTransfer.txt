@@ -1,5 +1,12 @@
-org.egovframe.rte.fdl.cmmn.aspect.ExceptionTransfer는 전자정부 표준프레임워크(eGovFrame)에서 비즈니스 로직 실행 중 예외(Exception)가 발생했을 때, 이를 가로채서 앞서 설정했던 예외 처리 매니저들에게 전달해 주는 ‘중간 전달자(배달원)’ 역할의 클래스입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
-이름 그대로 Exception(예외)을 후처리 서비스로 Transfer(전송/이송)하는 핵심 장치입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide)
+org.egovframe.rte.fdl.cmmn.aspect.ExceptionTransfer는 
+전자정부 표준프레임워크(eGovFrame)에서 비즈니스 로직 실행 중 
+예외(Exception)가 발생했을 때, 이를 가로채서 앞서 설정했던 
+예외 처리 매니저들에게 전달해 주는 ‘중간 전달자(배달원)’ 역할의 클래스입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
+이름 그대로 Exception(예외)을 후처리 서비스로 Transfer(전송/이송)하는 핵심 장치입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide)
 이전 질문에서 확인하신 DefaultExceptionHandleManager와 ExceptionHandler가 실제 일하는 일꾼이라면, ExceptionTransfer는 그 일꾼들에게 에러를 전달하는 통로 역할을 합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling), [2] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:exception_handling)
 
 1. 작동 방식 (AOP 기반의 후처리)
