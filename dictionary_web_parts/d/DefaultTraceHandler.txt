@@ -1,0 +1,39 @@
+org.egovframe.rte.fdl.cmmn.trace.handler.DefaultTraceHandler는 전자정부 표준프레임워크(eGovFrame)에서 비즈니스 로직(Service)의 실행 과정을 추적(Trace)하고, 정상적인 흐름이나 특정 시점에 표준화된 로그를 남기기 위해 사용하는 기본 트레이스 핸들러 클래스입니다.
+앞서 질문하셨던 ExceptionHandler가 "에러(Exception)가 터졌을 때" 동작하는 소방수라면, DefaultTraceHandler는 "프로그램이 정상적으로 돌고 있거나 특정 이벤트를 통과할 때" 발자국을 남기는 기록원(CCTV) 역할을 합니다.
+
+1. 주요 역할과 의미
+
+• 표준화된 추적 로그 출력: 시스템 개발 시 로그를 남길 때 개발자마다 스타일(System.out.println, log.info, log.debug 등)이 다르면 유지보수가 어렵습니다. 이 클래스는 전자정부 프레임워크 표준 가이드에 맞게 일관된 포맷으로 로깅을 수행합니다.
+• 비즈니스 흐름 모니터링: 특정 서비스 메서드가 언제 시작되었고 언제 끝났는지, 혹은 어떤 중요 단계(Trace)를 거쳐 가고 있는지 기록하여 시스템 모니터링 및 디버깅을 돕습니다.
+
+2. 핵심 메서드: todo
+
+이 클래스는 TraceHandler 인터페이스를 구현하고 있으며, 가장 중요한 메서드는 todo입니다.
+java
+public class DefaultTraceHandler implements TraceHandler {
+    @Override
+    public void todo(Class<?> clazz, String message) {
+        // 전자정부 표준 포맷으로 로그를 출력하는 내부 로직
+        // 예: [TRACE] 클래스명 - 메시지 내용
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+• clazz: 현재 추적 중인 비즈니스 클래스의 정보가 전달됩니다.
+• message: 로그에 남길 추적 메시지 내용이 전달됩니다.
+
+3. 예외 처리(Exception) 구조와의 유사성
+
+전자정부 프레임워크의 트레이스(Trace) 구조는 이전에 질문하신 예외 처리 구조와 자매품처럼 똑같은 데칼코마니 구조를 가지고 있습니다.
+
+역할	예외 처리 (Exception) 시스템	서비스 추적 (Trace) 시스템
+AOP 가로채기	ExceptionTransfer	LeaveaTrace
+패턴 매핑 매니저	DefaultExceptionHandleManager	DefaultTraceHandleManager
+최종 실행기	EgovHandler (ExceptionHandler 구현체)	DefaultTraceHandler (TraceHandler 구현체)
+
+비즈니스 로직 중간에 LeaveaTrace라는 장치를 통해 무언가 기록을 남기면, DefaultTraceHandleManager가 패턴을 검사한 뒤 최종적으로 이 DefaultTraceHandler를 실행시켜 로그를 기록하게 됩니다.
+
+💡 한 줄 요약
+
+"전자정부 프레임워크 표준 규칙에 따라 서비스의 실행 과정이나 중요 이벤트를 추적하고, 이를 일관된 포맷의 로그로 남겨주는 기본 모니터링 핸들러"입니다.
+이 클래스는 보통 context-common.xml이나 스프링 부트의 Trace 관련 Bean 설정에서 DefaultTraceHandleManager에 주입되는 형태로 사용됩니다.
+현재 예외 처리 설정에 이어 트레이스(Trace) 및 로깅 관련 설정도 자바 설정(@Configuration)으로 함께 마이그레이션하고 계신가요? 전체적인 LeaveaTrace 연동 코드가 필요하시다면 말씀해 주세요!
