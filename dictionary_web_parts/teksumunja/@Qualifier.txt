@@ -1,0 +1,51 @@
+org.springframework.beans.factory.annotation.Qualifier는 스프링(및 스프링 부트) 컨테이너에서 동일한 타입의 빈(Bean)이 2개 이상 존재할 때, 어떤 빈을 주입(DI)해야 할지 정확하게 지정해 주는 이름표(식별자) 역할을 하는 어노테이션입니다.
+스프링 부트는 기본적으로 타입(Type)을 기반으로 필요한 객체를 알아서 찾아 주입해 줍니다(@Autowired). 하지만 같은 종류의 객체가 여러 개 등록되어 있으면 스프링은 "누구를 넣어줘야 할지 모르겠다"며 NoUniqueBeanDefinitionException 에러를 발생시킵니다. 이때 @Qualifier로 명확하게 이름을 지정해 주면 에러가 해결됩니다.
+
+💡 가장 쉬운 비유
+
+어떤 교실에 "홍길동"이라는 동명이인이 2명 있습니다.
+선생님이 단순히 "길동아, 앞으로 나와"라고 부르면(타입 주입) 둘 다 멈칫하며 에러가 납니다.
+이때 선생님이 "축구부 홍길동 앞으로 나와"라고 명확한 특징(Qualifier)을 지정해 주는 것과 같습니다.
+
+💻 실제 코드로 보는 예시
+
+앞서 질문하신 전자정부 프레임워크의 예외 처리(Handler) 상황을 예로 들어보겠습니다. 만약 시스템에 예외 처리기(ExceptionHandler)가 일반 오류용, VIP 회원 오류용으로 2개가 등록되어 있다고 가정해 보겠습니다.
+
+1. 동일한 타입의 빈이 2개 존재할 때
+
+java
+@Component("normalHandler")
+public class NormalExceptionHandler implements ExceptionHandler { ... }
+
+@Component("vipHandler")
+public class VipExceptionHandler implements ExceptionHandler { ... }
+코드를 사용할 때는 주의가 필요합니다.
+
+2. @Qualifier를 사용하지 않으면? (에러 발생 ❌)
+
+java
+@Service
+public class ExceptionService {
+    @Autowired
+    private ExceptionHandler exceptionHandler; 
+    // 🚨 에러 발생! 스프링 부트: "normalHandler와 vipHandler 중 누굴 넣어야 하죠?"
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+3. @Qualifier로 교통정리 해결! (정상 작동 ⭕)
+
+java
+@Service
+public class ExceptionService {
+    @Autowired
+    @Qualifier("vipHandler") // 👈 "vipHandler"라는 이름표를 가진 빈을 주입해라!
+    private ExceptionHandler exceptionHandler; 
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+🛠️ 주로 언제 사용하나요?
+
+1. 인터페이스 하나를 여러 클래스가 상속(구현)받고 있을 때 (가장 흔함)
+2. 동일한 데이터베이스 연결 정보(DataSource)가 여러 개일 때 (예: 주 데이터베이스용, 백업용)
+3. RestTemplate이나 WebClient 등 동일한 오픈소스 객체를 서로 다른 설정으로 여러 개 등록해 쓸 때
+혹시 현재 작성 중이신 예외 처리 매니저 설정 코드에서 여러 개의 핸들러(egovHandler 등) 중 특정 핸들러를 골라서 주입하기 위해 @Qualifier를 살펴보고 계신가요? 주입하려고 하는 대상 클래스 구조나 발생한 에러 메시지를 공유해 주시면 올바른 작성법을 바로 제안해 드리겠습니다.
