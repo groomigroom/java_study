@@ -1,0 +1,51 @@
+org.springframework.context.support.ReloadableResourceBundleMessageSource는 스프링 및 스프링 부트에서 애플리케이션의 텍스트 메시지(알림창 문구, 에러 메시지, 라벨 등)를 외부 파일(.properties)로 분리하여 관리하고, 서버를 재시작하지 않아도 실시간으로 수정 내용을 반영해 주는 메시지 관리 클래스입니다.
+다국어 처리(국제화, i18n)를 구현하거나 시스템에서 공통으로 사용할 에러 메시지를 한곳에 모아서 관리할 때 필수적으로 전역 빈(Bean)으로 등록해 사용하는 클래스입니다.
+
+🔑 핵심 특징과 장점
+
+1. 실시간 반영 (Reloadable):
+	• 일반 자바의 ResourceBundleMessageSource는 메시지 파일(.properties)을 수정하면 서버를 껐다 켜야 적용됩니다.
+	• 반면 이 클래스는 특정 주기(캐시 시간)마다 파일의 변경 사항을 감지하여 서버 재시작 없이 실시간으로 수정된 텍스트를 반영합니다.
+2. 다국어 지원 (Internationalization):
+	• 사용자의 브라우저 언어 설정(Locale)에 따라 한국어(messages_ko.properties), 영어(messages_en.properties) 등 알맞은 언어의 메시지 파일을 자동으로 선택해 출력해 줍니다.
+
+💻 스프링 부트 자바 설정 예시
+
+보통 @Configuration 클래스 내부에서 다음과 같이 빈으로 등록하여 사용합니다.
+java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+
+@Configuration
+public class MessageConfig {
+
+    @Bean
+    public ReloadableResourceBundleMessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        
+        // 1. 메시지 파일의 경로 및 기본 이름 설정 (classpath:/egovframework/message/com/message-common 등을 지정)
+        messageSource.setBasenames("classpath:/messages/message-common"); 
+        
+        // 2. 인코딩 설정 (한글 깨짐 방지)
+        messageSource.setDefaultEncoding("UTF-8");
+        
+        // 3. 다시 읽어올 캐시 주기 설정 (초 단위, -1은 캐시 영구 유지)
+        messageSource.setCacheSeconds(60); 
+        
+        return messageSource;
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+💡 전자정부 프레임워크 예외 처리와의 연계 의미
+
+지금까지 질문하신 예외 처리 흐름과도 깊은 연관이 있습니다.
+• 에러가 발생했을 때 하드코딩된 문구(예: "데이터를 찾을 수 없습니다.")를 내보내는 대신, 이 MessageSource를 이용해 messageSource.getMessage("fail.common.msg", null, locale) 형태로 호출합니다.
+• 이렇게 하면 message-common.properties 파일에 등록된 표준화된 에러 메시지를 다국어에 맞게 깔끔하게 가져와 사용자나 로그에 보여줄 수 있습니다.
+
+💡 한 줄 요약
+
+"웹사이트의 모든 알림 문구나 에러 메시지를 외부 파일로 빼내어 관리하고, 서버를 켜둔 채로 문구를 수정해도 즉시 반영되게 해주는 스프링의 다국어/메시지 관리 유틸리티"입니다.
+스프링 부트(Spring Boot)에서는 이 클래스를 빈으로 직접 등록하지 않아도 application.properties에 spring.messages.basename 설정만 적어주면 내부적으로 자동 처리가 지원됩니다.
+현재 전자정부 프레임워크의 레거시 XML(context-message.xml) 설정을 스프링 부트 스타일의 Java Config나 application.yml 설정으로 이전하고 계신가요? 메시지 파일 경로 지정 방식 등 막히는 부분이 있다면 언제든 공유해 주세요!
