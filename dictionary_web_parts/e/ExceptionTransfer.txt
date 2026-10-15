@@ -7,19 +7,28 @@ org.egovframe.rte.fdl.cmmn.aspect.ExceptionTransfer는
 이름 그대로 Exception(예외)을 후처리 서비스로 Transfer(전송/이송)하는 핵심 장치입니다. 
 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), 
 [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide)
-이전 질문에서 확인하신 DefaultExceptionHandleManager와 ExceptionHandler가 실제 일하는 일꾼이라면, ExceptionTransfer는 그 일꾼들에게 에러를 전달하는 통로 역할을 합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling), [2] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:exception_handling)
+이전 질문에서 확인하신 DefaultExceptionHandleManager와 ExceptionHandler가 실제 일하는 일꾼이라면, 
+ExceptionTransfer는 그 일꾼들에게 에러를 전달하는 통로 역할을 합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling), 
+[2] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:exception_handling)
 
 1. 작동 방식 (AOP 기반의 후처리)
 
-전자정부 프레임워크는 개발자가 소스코드마다 try-catch를 도배하지 않도록 AOP(관점 지향 프로그래밍) 기술을 사용합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
-• 주로 context-aspect.xml 설정 파일 등에서 Service 구현체(*Impl 클래스)에서 에러가 터졌을 때(@AfterThrowing) ExceptionTransfer의 transfer 메서드를 실행해라라고 지정해 둡니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide)
+전자정부 프레임워크는 개발자가 소스코드마다 try-catch를 도배하지 않도록 AOP(관점 지향 프로그래밍) 
+기술을 사용합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
+• 주로 context-aspect.xml 설정 파일 등에서 Service 구현체(*Impl 클래스)에서 에러가 터졌을 
+때(@AfterThrowing) ExceptionTransfer의 transfer 메서드를 실행해라라고 지정해 둡니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide)
 
 2. 구체적인 내부 프로세스
 
 서비스 실행 중 에러가 발생하면 다음 순서로 흐릅니다: [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
 1. 에러 발생: **service.impl.* 클래스 안의 메서드에서 예외 발생.
 2. 가로채기 (ExceptionTransfer): AOP 설정에 의해 ExceptionTransfer가 이 예외를 낚아챕니다.
-3. 매니저 탐색: ExceptionTransfer 내부에는 개발자가 등록한 exceptionHandlerService 리스트(예: DefaultExceptionHandleManager)가 들어있습니다.
+3. 매니저 탐색: ExceptionTransfer 내부에는 개발자가 등록한 exceptionHandlerService 
+리스트(예: DefaultExceptionHandleManager)가 들어있습니다.
 4. 전달: 예외가 발생한 패키지 경로를 확인하고, 규칙에 맞는 매니저에게 예외 객체를 넘겨줍니다.
 5. 실제 처리: 최종적으로 매니저가 가지고 있던 egovHandler의 occur() 메서드가 실행되면서 에러 처리가 완료됩니다. [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:exception_handling), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide), [3] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), [4] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
 
