@@ -1,9 +1,18 @@
-egovframework.hyb.exception.EgovAopExceptionTransfer는 전자정부 표준프레임워크의 하이브리드 모바일(Hybrid Mobile) 컴포넌트 환경에서 사용하는 AOP 기반 예외 처리 전달자 클래스입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide), [2] (https://www.youtube.com/watch?v=82S3iDXOsxA)
-이전에 질문하신 org.egovframe.rte.fdl.cmmn.aspect.ExceptionTransfer와 역할 및 메커니즘은 거의 동일하지만, 적용되는 대상 시스템의 아키텍처(모바일 하이브리드 앱 환경)에 특화되거나 패키지 구조상 분리되어 제공되는 형태입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide), [2] (https://www.youtube.com/watch?v=82S3iDXOsxA)
+egovframework.hyb.exception.EgovAopExceptionTransfer는 
+전자정부 표준프레임워크의 하이브리드 모바일(Hybrid Mobile) 
+컴포넌트 환경에서 사용하는 AOP 기반 예외 처리 전달자 클래스입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide), 
+[2] (https://www.youtube.com/watch?v=82S3iDXOsxA)
+이전에 질문하신 org.egovframe.rte.fdl.cmmn.aspect.ExceptionTransfer와 
+역할 및 메커니즘은 거의 동일하지만, 적용되는 대상 시스템의 아키텍처
+(모바일 하이브리드 앱 환경)에 특화되거나 패키지 구조상 분리되어 제공되는 형태입니다.
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide), 
+[2] (https://www.youtube.com/watch?v=82S3iDXOsxA)
 
 1. 주요 역할과 특징
 
-• 모바일 컴포넌트 특화: 패키지 경로의 hyb는 하이브리드(Hybrid) 모바일 앱 환경을 의미합니다. 모바일 디바이스 연동 API나 디바이스 API 실행 중 발생하는 특수한 예외 흐름을 관리하기 위해 별도로 분리되어 정의된 경우가 많습니다.
+• 모바일 컴포넌트 특화: 패키지 경로의 hyb는 하이브리드(Hybrid) 모바일 앱 환경을 의미합니다. 
+모바일 디바이스 연동 API나 디바이스 API 실행 중 발생하는 특수한 예외 흐름을 관리하기 위해 별도로 분리되어 정의된 경우가 많습니다.
 • AOP를 통한 공통 예외 인터셉트: 클래스명에 Aop가 명시되어 있듯이, 하이브리드 서비스 로직(*Impl) 수행 중 에러가 던져지면(@AfterThrowing) AOP 설정에 의해 이 클래스의 특정 메서드(예: transfer)가 실행됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide)
 • 예외 전달자(Transfer): 감지된 예외를 분석하여 연동된 예외 처리 핸들러 매니저(DefaultExceptionHandleManager 등)로 안전하게 에러를 Toss(배달)해 주는 본연의 역할을 수행합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:aop:egovrteaopguide)
 
