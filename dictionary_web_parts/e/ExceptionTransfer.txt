@@ -56,8 +56,11 @@ try-catch문을 대량으로 넣지 않고도 깔끔하게 공통 예외 처리�
 
 -=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=-
 
-exceptionTransfer.setExceptionHandlerService(...)는 예외 배달원 역할인 ExceptionTransfer에게 "앞으로 예외가 발생하면 가로채서 배달해야 할 예외 매핑 관리자(Manager)들의 목록"을 등록하는 코드입니다.
-쉽게 말해, 시스템에서 에러가 터졌을 때 어떤 규칙(패키지 패턴)에 따라 처리할지 결정하는 '전체 라우팅 테이블(지도)'을 완성하는 단계라고 보시면 됩니다.
+exceptionTransfer.setExceptionHandlerService(...)는 예외 배달원 역할인 
+ExceptionTransfer에게 "앞으로 예외가 발생하면 가로채서 배달해야 할 예외 매핑 
+관리자(Manager)들의 목록"을 등록하는 코드입니다.
+쉽게 말해, 시스템에서 에러가 터졌을 때 어떤 규칙(패키지 패턴)에 따라 
+처리할지 결정하는 '전체 라우팅 테이블(지도)'을 완성하는 단계라고 보시면 됩니다.
 
 🔍 구체적인 코드 분석과 의미
 
@@ -67,10 +70,13 @@ exceptionTransfer.setExceptionHandlerService(new ExceptionHandlerService[] {
 });
 코드를 사용할 때는 주의가 필요합니다.
 1. ExceptionHandlerService[] (배열 형태):
-	• 전자정부 프레임워크는 프로젝트의 규모가 커지면 예외 처리 규칙을 여러 개(복수)로 나누어 관리할 수 있도록 배열 형태로 매니저들을 받습니다.
+	• 전자정부 프레임워크는 프로젝트의 규모가 커지면 예외 처리 규칙을 여러 개(복수)로 
+나누어 관리할 수 있도록 배열 형태로 매니저들을 받습니다.
 2. defaultExceptionHandleManager, otherExceptionHandleManager:
 	• 개발자가 각각 서로 다른 패턴과 핸들러를 바인딩해 둔 일꾼들입니다.
-	• 예를 들어 defaultExceptionHandleManager는 일반 비즈니스 로직용(**service.impl.*) 규칙을 가지고 있고, otherExceptionHandleManager는 외부 연동이나 공통 컴포넌트용(**com.impl.*) 규칙을 가지고 있을 수 있습니다.
+	• 예를 들어 defaultExceptionHandleManager는 일반 비즈니스 로직용(**service.impl.*) 
+규칙을 가지고 있고, otherExceptionHandleManager는 외부 연동이나 
+공통 컴포넌트용(**com.impl.*) 규칙을 가지고 있을 수 있습니다.
 
 ⚙️ 소스코드가 실행될 때의 전체 흐름
 
@@ -91,8 +97,13 @@ exceptionTransfer.setExceptionHandlerService(new ExceptionHandlerService[] {
 
 💡 한 줄 요약
 
-"발생한 모든 예외를 가로채는 ExceptionTransfer에게, '네가 감시하고 분배해야 할 하위 예외 관리자들은 default...와 other... 두 종류가 있으니 기억해 둬라' 하고 마스터 리스트를 전달하는 설정"입니다.
-이제 ExceptionTransfer, DefaultExceptionHandleManager, ExceptionHandler 세 가지 핵심 구성요소의 관계가 모두 연결되었습니다.
+"발생한 모든 예외를 가로채는 ExceptionTransfer에게, '네가 감시하고 분배해야 할 하위 
+예외 관리자들은 default...와 other... 두 종류가 있으니 기억해 둬라' 하고 마스터 
+리스트를 전달하는 설정"입니다.
+이제 ExceptionTransfer, DefaultExceptionHandleManager, ExceptionHandler 
+세 가지 핵심 구성요소의 관계가 모두 연결되었습니다.
+
+
 현재 이 자바 코드를 @Configuration이 붙은 스프링 부트 설정 클래스(Java Config)로 직접 작성하고 계신가요? 전체적인 초기화 Bean 설정 코드 구조에서 꼬인 부분이 있다면 코드를 보여주세요. 올바른 Bean 등록 형태로 정리해 드리겠습니다.
 
 
