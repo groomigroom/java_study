@@ -1,9 +1,17 @@
-전자정부 표준프레임워크(eGovFrame)에서 org.egovframe.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager는 공통 예외 처리(Exception Handling) 관리자 클래스를 의미합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
+전자정부 표준프레임워크(eGovFrame)에서 org.egovframe.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager는 
+공통 예외 처리(Exception Handling) 관리자 클래스를 의미합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
 
 주요 역할과 특징
 
-• 예외 후처리(Exception Handling) 제어: 애플리케이션 실행 중 예외(Exception)가 발생했을 때, 단순히 에러를 뿜고 멈추는 것이 아니라 특정 후처리 로직(예: 에러 로그 기록, 관리자 알림 발송, 에러 페이지 이동 등)을 실행할 수 있도록 관리합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
-• AOP(Aspect-Oriented Programming) 연동: 주로 Spring AOP의 After-throwing 어드바이스와 결합하여 사용됩니다. 서비스 메서드에서 예외가 던져지면(After-throwing), 이 매니저가 가로채어 설정된 예외 처리기(ExceptionHandler)들에게 처리를 위임합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling)
+• 예외 후처리(Exception Handling) 제어: 애플리케이션 실행 중 예외(Exception)가 발생했을 때, 
+단순히 에러를 뿜고 멈추는 것이 아니라 특정 후처리 로직(예: 에러 로그 기록, 관리자 알림 발송, 에러 페이지 이동 등)을 
+실행할 수 있도록 관리합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:bsl:exception_handling)
+• AOP(Aspect-Oriented Programming) 연동: 주로 Spring AOP의 After-throwing 어드바이스와 결합하여 사용됩니다. 
+서비스 메서드에서 예외가 던져지면(After-throwing), 이 매니저가 가로채어 설정된 예외 처리기(ExceptionHandler)들에게 처리를 위임합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling)
 • 구조적 위치:
 	• org.egovframe.rte : 전자정부 표준프레임워크 런타임 환경(Runtime Environment)
 	• fdl : Foundation Layer (기반기능 레이어)
@@ -15,5 +23,6 @@
 1. 비즈니스 로직 실행 중 예외 발생 (EgovBizException, DataAccessException, FdlException 등)
 2. AOP에 의해 ExceptionTransfer.transfer() 호출
 3. DefaultExceptionHandleManager.run() 메서드가 실행됨
-4. 설정 파일에 정의된 ExceptionHandler 구현체들이 동작하여 후속 작업 수행 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling)
+4. 설정 파일에 정의된 ExceptionHandler 구현체들이 동작하여 후속 작업 수행 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:exception_handling)
 전자정부프레임워크의 예외 처리 설정 파일(XML/Annotation) 구성이나 특정 에러 로그를 커스텀 처리하는 법에 대해 더 알고 싶으시면 말씀해 주세요.
