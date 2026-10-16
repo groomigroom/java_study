@@ -57,21 +57,29 @@ BindingResult 객체에 차곡차곡 담아주는 역할을 수행합니다.
 
 -----------------------------------------------------
 
-LocalValidatorFactoryBean의 setValidationMessageSource 메서드는 유효성 검증(Validation) 실패 시 보여줄 에러 메시지를 스프링의 MessageSource와 연동하도록 설정하는 메서드입니다.
-이 메서드를 사용하면 자바 표준 검증 메시지 파일(ValidationMessages.properties) 대신, 스프링이 관리하는 메시지 파일(messages.properties)을 통해 에러 메시지를 일원화하여 관리할 수 있습니다.
+LocalValidatorFactoryBean의 setValidationMessageSource 메서드는 
+유효성 검증(Validation) 실패 시 보여줄 에러 메시지를 스프링의 
+MessageSource와 연동하도록 설정하는 메서드입니다.
+이 메서드를 사용하면 자바 표준 검증 메시지 파일(ValidationMessages.properties) 대신, 
+스프링이 관리하는 메시지 파일(messages.properties)을 통해 에러 메시지를 일원화하여 관리할 수 있습니다.
 
 💡 왜 사용하나요? (핵심 의미)
 
 
 1. 에러 메시지 관리의 일원화 (Spring 통합)
 
-원래 Bean Validation 표준은 src/main/resources/ValidationMessages.properties 파일에서 메시지를 찾습니다.
+원래 Bean Validation 표준은 src/main/resources/ValidationMessages.properties 
+파일에서 메시지를 찾습니다.
 반면 스프링은 일반적인 안내 문구나 일반 오류 메시지를 messages.properties에서 관리합니다.
-setValidationMessageSource를 사용하면 검증 오류 메시지도 스프링의 messages.properties 한 곳에서 한꺼번에 관리할 수 있게 됩니다.
+setValidationMessageSource를 사용하면 검증 오류 메시지도 스프링의 messages.properties 
+한 곳에서 한꺼번에 관리할 수 있게 됩니다.
 
 2. 다국어 지원(i18n) 및 스프링 기능 활용
 
-스프링의 MessageSource는 사용자의 브라우저 언어 설정(Locale)에 따라 messages_en.properties, messages_ko.properties 등을 자동으로 선택해 주는 강력한 다국어 기능을 제공합니다. 이 메서드를 통해 검증기(Validator)가 스프링의 다국어 지원 시스템을 그대로 이용할 수 있게 됩니다.
+스프링의 MessageSource는 사용자의 브라우저 언어 설정(Locale)에 따라 
+messages_en.properties, messages_ko.properties 등을 자동으로 선택해 
+주는 강력한 다국어 기능을 제공합니다. 이 메서드를 통해 검증기(Validator)가 
+스프링의 다국어 지원 시스템을 그대로 이용할 수 있게 됩니다.
 
 3. 프로퍼티 플레이스홀더 사용
 
@@ -101,4 +109,6 @@ public class UserDto {
     private String name;
 }
 코드를 사용할 때는 주의가 필요합니다.
+
+
 현재 프로젝트에서 다국어(영어/한국어 등) 에러 메시지 처리가 필요하신 상황인가요? 아니면 특정 메시지 파일 이름으로 변경하고 싶으신 것인지 말씀해 주시면 정확한 파일 설정 방법을 안내해 드리겠습니다.
