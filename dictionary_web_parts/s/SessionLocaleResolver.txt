@@ -1,0 +1,28 @@
+SessionLocaleResolver는 스프링 부트에서 사용자의 다국어(Locale) 정보를 세션(Session)에 저장하고 관리하는 언어 결정자(LocaleResolver)입니다.
+웹 애플리케이션에서 사용자가 한국어, 영어, 일본어 등 원하는 언어를 선택했을 때, 로그아웃하거나 브라우저를 닫기 전(세션이 유지되는 동안)까지 사용자가 선택한 언어 설정을 서버에 기억해두고, 그에 맞는 다국어 텍스트(messages.properties)를 보여주는 역할을 합니다.
+스프링 부트에서 다국어를 처리할 때 이 클래스가 가지는 핵심 의미와 작동 방식은 다음과 같습니다.
+
+💡 핵심 특징
+
+• 세션 기반 유지: 사용자가 언어를 한 번 변경하면, 다른 페이지로 이동하더라도 세션에 그 정보가 남아있기 때문에 지속적으로 선택한 언어로 웹사이트가 표시됩니다.
+• 기본값(Fallback) 제공: 사용자가 언어를 명시적으로 선택하지 않아(세션에 언어 정보가 없어) 세션이 비어있을 때는, 서버 환경의 기본 Locale이나 브라우저가 보낸 Accept-Language 헤더를 기반으로 기본 언어를 결정합니다.
+
+⚙️ 동작 과정 예시
+
+1. 언어 변경 요청: 사용자가 웹사이트에서 "English" 버튼을 클릭합니다.
+2. 세션에 저장: 보통 함께 사용하는 LocaleChangeInterceptor가 이 요청을 가로채서 사용자가 'en'을 원한다는 것을 인식하고, SessionLocaleResolver를 통해 사용자의 세션 객체에 Locale 정보를 저장합니다.
+3. 다국어 적용: 이후 사용자가 새로운 페이지를 요청할 때마다 SessionLocaleResolver가 세션에서 Locale을 꺼내와 화면에 영어 텍스트를 출력합니다.
+
+🛠️ 스프링 부트 설정 예시
+
+보통 다음과 같이 @Configuration 클래스에 빈(Bean)으로 등록하여 사용합니다.
+java
+@Bean
+public LocaleResolver localeResolver() {
+    SessionLocaleResolver slr = new SessionLocaleResolver();
+    // 세션에 값이 없을 때 기본적으로 보여줄 언어를 한국어(ko)로 설정
+    slr.setDefaultLocale(Locale.KOREA); 
+    return slr;
+}
+코드를 사용할 때는 주의가 필요합니다.
+스프링에는 세션 외에도 쿠키(CookieLocaleResolver)나 브라우저 헤더(AcceptHeaderLocaleResolver)를 사용하는 방식이 있습니다. 현재 프로젝트에서 사용자가 직접 언어를 변경하는 기능을 구현 중이신가요, 아니면 자동으로 국가를 인식하게 만들고 싶으신가요?
