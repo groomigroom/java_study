@@ -51,24 +51,36 @@ ROLLBACK을 실행하는 '일꾼(구현체)'이라면, 이 TransactionIntercepto
 ------------------------------------------------------------
 
 
-보여주신 코드는 지금까지 준비한 트랜잭션 규칙 지도(txAttributeSource)와 실제 DB 일꾼(txManager)을 총감독(TransactionInterceptor)에게 쥐어주며 임무를 부여하는 최종 조립 단계입니다.
+보여주신 코드는 지금까지 준비한 트랜잭션 규칙 지도(txAttributeSource)와 
+실제 DB 일꾼(txManager)을 총감독(TransactionInterceptor)에게 쥐어주며 
+임무를 부여하는 최종 조립 단계입니다.
 질문하신 두 메서드의 구체적인 의미는 다음과 같습니다.
 
 1. txAdvice.setTransactionAttributeSource(txAttributeSource);
 
 💡 한 줄 요약: "총감독에게 '메서드 이름별 트랜잭션 규칙 지도'를 전달한다."
-• 의미: txAttributeSource는 바로 앞 단계에서 .setNameMap(txMethods)을 통해 "insert*는 롤백 규칙 적용, get*은 읽기 전용 적용"과 같은 규칙을 저장해 둔 매핑 지도입니다.
-• 역할: 이 메서드를 통해 TransactionInterceptor는 "아, 내가 어떤 메서드를 가로챘을 때 이 지도를 열어보고 어떤 트랜잭션 규칙을 적용해야 하는구나!" 라는 판단 기준을 가지게 됩니다. 만약 이 설정이 없으면 인터셉터는 메서드를 가로채도 어떤 규칙을 적용해야 할지 몰라 동작하지 못합니다.
+• 의미: txAttributeSource는 바로 앞 단계에서 .setNameMap(txMethods)을 
+통해 "insert*는 롤백 규칙 적용, get*은 읽기 전용 적용"과 같은 규칙을 저장해 둔 매핑 지도입니다.
+• 역할: 이 메서드를 통해 TransactionInterceptor는 "아, 내가 어떤 메서드를 가로챘을 때 
+이 지도를 열어보고 어떤 트랜잭션 규칙을 적용해야 하는구나!" 라는 판단 기준을 가지게 됩니다. 
+만약 이 설정이 없으면 인터셉터는 메서드를 가로채도 어떤 규칙을 적용해야 할지 몰라 
+동작하지 못합니다.
 
 2. txAdvice.setTransactionManager(txManager);
 
-💡 한 줄 요약: "총감독에게 트랜잭션을 실제로 켜고 끌 '데이터베이스 일꾼(플랫폼 트랜잭션 매니저)'을 지정한다."
-• 의미: txManager는 첫 질문에서 등장했던 DataSourceTransactionManager와 같이, 데이터베이스 커넥션을 열고 실제로 COMMIT이나 ROLLBACK 명령을 내리는 실무자 객체입니다.
-• 역할: TransactionInterceptor는 지도를 보고 트랜잭션을 열 타이밍을 잡는 '감독'일 뿐, 본인이 직접 DB에 커밋을 때리지는 못합니다. 따라서 이 메서드를 통해 "트랜잭션 시작과 종료는 내가 지정해 주는 이 txManager 너가 직접 대리 수행해라" 하고 실제 일꾼을 연결해 주는 것입니다.
+💡 한 줄 요약: "총감독에게 트랜잭션을 실제로 켜고 끌 '데이터베이스 
+일꾼(플랫폼 트랜잭션 매니저)'을 지정한다."
+• 의미: txManager는 첫 질문에서 등장했던 DataSourceTransactionManager와 같이, 
+데이터베이스 커넥션을 열고 실제로 COMMIT이나 ROLLBACK 명령을 내리는 실무자 객체입니다.
+• 역할: TransactionInterceptor는 지도를 보고 트랜잭션을 열 타이밍을 잡는 
+'감독'일 뿐, 본인이 직접 DB에 커밋을 때리지는 못합니다. 따라서 이 메서드를 
+통해 "트랜잭션 시작과 종료는 내가 지정해 주는 이 txManager 너가 직접 대리 
+수행해라" 하고 실제 일꾼을 연결해 주는 것입니다.
 
 🛠️ 이 코드 블록의 전체 흐름 요약
 
-이 세 줄의 코드가 실행 완료되면 txAdvice라는 완벽한 트랜잭션 커스텀 인터셉터(Advice)가 탄생합니다.
+이 세 줄의 코드가 실행 완료되면 txAdvice라는 완벽한 트랜잭션 커스텀 
+인터셉터(Advice)가 탄생합니다.
 java
 TransactionInterceptor txAdvice = new TransactionInterceptor();
 
@@ -78,5 +90,8 @@ txAdvice.setTransactionAttributeSource(txAttributeSource);
 // 2. "실제로 DB 커밋/롤백을 수행할" 일꾼을 붙여줌
 txAdvice.setTransactionManager(txManager);
 코드를 사용할 때는 주의가 필요합니다.
-이제 이 txAdvice는 "내가 어떤 메서드를 가로채면(Source 참조), 지정된 규칙대로 내 조수(Manager)를 시켜서 트랜잭션을 켜고 끄겠다"는 완벽한 준비 태세를 갖추게 된 것입니다.
+이제 이 txAdvice는 "내가 어떤 메서드를 가로채면(Source 참조), 지정된 규칙대로 
+내 조수(Manager)를 시켜서 트랜잭션을 켜고 끄겠다"는 완벽한 준비 태세를 갖추게 된 것입니다.
+
+
 이제 총감독(TransactionInterceptor)의 조립까지 끝났습니다! 이 다음 단계는 보통 이 txAdvice를 어떤 패키지나 클래스(예: com.example.service..*Impl.*)에 적용할지 범위를 지정하는 Pointcut과 Advisor 설정 코드가 나오게 됩니다. 그 부분의 코드도 함께 분석 중이신가요?
