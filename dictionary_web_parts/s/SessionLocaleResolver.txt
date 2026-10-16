@@ -1,3 +1,5 @@
+org.springframework.web.servlet.i18n.SessionLocaleResolver
+
 SessionLocaleResolver는 스프링 부트에서 
 사용자의 다국어(Locale) 정보를 세션(Session)에 
 저장하고 관리하는 언어 결정자(LocaleResolver)입니다.
