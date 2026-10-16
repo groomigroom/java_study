@@ -1,0 +1,41 @@
+org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver는 타임리프(Thymeleaf) 템플릿 엔진이 HTML 파일(템플릿)을 어디서, 어떻게 읽어올지 결정하는 파일 탐색기이자 로더(Loader) 역할을 합니다.
+스프링 부트 3.x 버전(스프링 프레임워크 6 기반)에서 타임리프를 사용할 때, "HTML 파일은 templates/ 폴더에 있고 확장자는 .html이야"라는 규칙을 정해두고 파일 시스템에서 해당 파일을 찾아내는 실무자 객체입니다.
+
+💡 핵심 역할과 의미
+
+
+1. 스프링 리소스 시스템(ApplicationContext)과의 완벽한 통합
+
+이 클래스 이름 앞에 SpringResource가 붙은 이유가 바로 앞서 질문하신 ApplicationContext 때문입니다.
+이 클래스는 스프링 컨테이너의 리소스 로딩 메커니즘을 그대로 활용합니다. 덕분에 클래스패스(classpath:), 파일 시스템(file:), 웹 URL 등 스프링이 지원하는 모든 경로 접두사를 인식하여 HTML 템플릿 파일을 유연하게 긁어올 수 있습니다.
+
+2. 뷰 리졸버(View Resolver)와의 협업
+
+컨트롤러가 "home"이라는 문자열을 반환하면, 뷰 리졸버가 이 이름을 넘겨받아 화면을 그릴 준비를 합니다. 이때 SpringResourceTemplateResolver가 등판하여 규칙에 따라 실제 파일 경로를 완성합니다.
+• 예: "home" ➡️ classpath:/templates/home.html
+
+3. 템플릿 최적화 설정 관리 (캐시 등)
+
+HTML 파일을 읽어올 때 성능과 개발 편의성을 위한 설정을 도맡아 처리합니다.
+• 캐시 설정 (setCacheable): 운영 환경에서는 매번 파일을 읽으면 느리므로 메모리에 캐싱(True)하고, 개발 환경(local)에서는 코드를 수정하면 바로 반영되도록 캐시를 끕니다(False).
+• 인코딩 설정 (setCharacterEncoding): HTML 파일이 깨지지 않도록 UTF-8 등으로 인코딩을 지정합니다.
+
+🛠️ 스프링 부트에서의 자동 설정 (Auto Configuration)
+
+스프링 부트 프로젝트의 build.gradle에 spring-boot-starter-thymeleaf 의존성을 넣으면, 스프링 부트가 이 SpringResourceTemplateResolver를 개발자 대신 알아서 생성하고 등록해 줍니다.
+이때 스프링 부트가 설정하는 기본값은 우리가 흔히 아는 타임리프의 기본 규칙과 일치합니다.
+• Prefix (접두사): classpath:/templates/
+• Suffix (접미사): .html
+• Template Mode: HTML
+만약 이 기본 경로를 바꾸고 싶다면 자바 코드를 짤 필요 없이 application.properties에 아래와 같이 적어주면 됩니다. 이 설정값들이 내부적으로 SpringResourceTemplateResolver에게 전달되어 작동합니다.
+properties
+# html 파일 위치를 다른 곳으로 바꾸고 싶을 때
+spring.thymeleaf.prefix=classpath:/views/
+# 개발 중에는 html 수정 사항이 바로 반영되도록 캐시 해제
+spring.thymeleaf.cache=false
+코드를 사용할 때는 주의가 필요합니다.
+
+🧑‍💻 요약하자면
+
+앞서 질문하셨던 거대한 컨테이너인 ApplicationContext가 이 SpringResourceTemplateResolver에게 파일 읽기 능력을 부여하고, 이 Resolver는 컨트롤러가 던진 문자열을 바탕으로 하드디스크의 HTML 파일을 찾아 타임리프 엔진에 배달해 주는 유기적인 톱니바퀴 관계입니다.
+혹시 템플릿 파일을 기본 templates/ 폴더가 아닌 외부 경로나 특정 dynamic 폴더에서 읽어오도록 커스텀 설정을 구상 중이신가요? 상황을 말씀해 주시면 이 Resolver를 직접 자바 코드로 커스터마이징하는 방법을 안내해 드리겠습니다.
