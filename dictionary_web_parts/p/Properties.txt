@@ -14,16 +14,23 @@ java
 Properties prop = new Properties();
 prop.setProperty("org.springframework.dao.DataAccessException", "error");
 코드를 사용할 때는 주의가 필요합니다.
-이 코드는 메모리 상에 새로운 설정 장부(Properties)를 만들고, 특정 예외가 발생했을 때 이동할 뷰(View)의 이름을 매핑하는 설정을 담는 과정입니다. 각 줄의 의미는 다음과 같습니다.
+이 코드는 메모리 상에 새로운 설정 장부(Properties)를 만들고, 특정 
+예외가 발생했을 때 이동할 뷰(View)의 이름을 매핑하는 설정을 담는 과정입니다. 
+각 줄의 의미는 다음과 같습니다.
 1. new Properties(): 빈 설정 장부(키-값 쌍을 담을 객체)를 생성합니다.
 2. prop.setProperty("키", "값"): 장부에 데이터를 하나 저장합니다.
-	• Key (왼쪽): "org.springframework.dao.DataAccessException" ➡️ 스프링에서 데이터베이스 작업 중 에러가 났을 때 발생하는 대표적인 예외 클래스의 풀 네임(Full Name)입니다.
-	• Value (오른쪽): "error" ➡️ 위 예외가 발생했을 때 사용자에게 보여줄 에러 페이지(뷰)의 이름입니다. (예: error.html 또는 error.jsp)
+	• Key (왼쪽): "org.springframework.dao.DataAccessException" 
+➡️ 스프링에서 데이터베이스 작업 중 에러가 났을 때 발생하는 대표적인 예외 클래스의 풀 네임(Full Name)입니다.
+	• Value (오른쪽): "error" 
+➡️ 위 예외가 발생했을 때 사용자에게 보여줄 에러 페이지(뷰)의 이름입니다. 
+(예: error.html 또는 error.jsp)
 
 🗺️ 맥락으로 보는 이 코드의 진짜 목적
 
-이 코드는 바로 이전 질문에서 다루었던 HandlerExceptionResolver를 설정할 때 주로 사용되는 방식입니다.
-과거 스프링(혹은 구버전 스타일)에서는 예외 처리 해결사인 SimpleMappingExceptionResolver라는 클래스를 사용할 때 다음과 같이 설정을 넘겨주었습니다.
+이 코드는 바로 이전 질문에서 다루었던 HandlerExceptionResolver를 설정할 때 주로 사용되는 
+방식입니다.
+과거 스프링(혹은 구버전 스타일)에서는 예외 처리 해결사인 SimpleMappingExceptionResolver라는 
+클래스를 사용할 때 다음과 같이 설정을 넘겨주었습니다.
 java
 SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
 
@@ -33,5 +40,9 @@ prop.setProperty("java.lang.NullPointerException", "null-error");      // 널 �
 
 resolver.setExceptionMappings(prop); // 설정 적용
 코드를 사용할 때는 주의가 필요합니다.
-즉, 작성하신 메서드는 "데이터베이스 관련 에러(DataAccessException)가 터지면, 개발자가 미리 만들어 둔 error라는 이름의 화면(HTML/JSP)을 사용자에게 띄워줘라"라는 맵핑 설정을 준비하는 행위입니다.
+즉, 작성하신 메서드는 "데이터베이스 관련 에러(DataAccessException)가 터지면, 
+개발자가 미리 만들어 둔 error라는 이름의 화면(HTML/JSP)을 사용자에게 띄워줘라"라는 
+맵핑 설정을 준비하는 행위입니다.
+
+
 스프링 부트 환경에서는 이러한 예외-화면 매핑을 자바 코드로 직접 Properties에 적기보다는, @ExceptionHandler 어노테이션을 쓰거나 /templates/error/ 디렉토리에 파일만 두면 자동으로 매핑해주는 편리한 기능을 제공합니다. 이 스프링 부트 표준 에러 페이지 자동 매핑 방식에 대해 알아보고 싶으신가요?
