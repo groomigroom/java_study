@@ -1,0 +1,38 @@
+org.thymeleaf.spring6.view.ThymeleafViewResolver는 스프링 MVC의 컨트롤러가 반환한 뷰 이름(문자열)을 받아, 실제 타임리프 템플릿(HTML) 파일로 연결하고 최종 화면을 생성(렌더링)하도록 지시하는 인터페이스 요원입니다.
+웹 애플리케이션의 요청-응답 흐름에서 컨트롤러와 타임리프 엔진(SpringTemplateEngine) 사이를 이어주는 다리(Bridge) 역할을 합니다.
+스프링 부트에서 이 클래스가 가지는 의미와 핵심 기능은 다음과 같습니다.
+
+1. 스프링 MVC와 타임리프의 '최종 연결고리'
+
+스프링 MVC 구조에서 컨트롤러는 비즈니스 로직을 처리한 후 보통 "index"나 "user/profile" 같은 단순히 텍스트로 된 뷰 이름을 반환합니다.
+• 이때 ThymeleafViewResolver가 등장하여 "어, 뷰 이름이 "index"네? 그러면 내가 관리하는 타임리프 엔진(SpringTemplateEngine)한테 렌더링하라고 해야겠다!" 하고 중간에서 중재합니다.
+• 요청을 전달받은 엔진이 앞서 정의된 리졸버 규칙(Prefix/Suffix 등)에 따라 templates/index.html 파일을 찾아내고, 최종 완성된 HTML을 클라이언트(웹 브라우저)로 보냅니다.
+
+2. 스프링 부트의 자동 등록 대상
+
+프로젝트에 타임리프 스타터 의존성(spring-boot-starter-thymeleaf)이 포함되어 있으면, 스프링 부트는 이 ThymeleafViewResolver 역시 자동으로 생성하여 빈(Bean)으로 등록해 줍니다.
+• 개발자가 웹 화면 구성을 위해 별도의 설정을 건드리지 않아도 컨트롤러의 반환값만으로 화면이 잘 뜬 이유가 바로 이 뷰 리졸버가 내부에서 동작하고 있었기 때문입니다.
+
+3. 주요 설정 및 기능
+
+ThymeleafViewResolver 내에서 흔히 제어하는 주요 속성들은 다음과 같습니다.
+• 인코딩 설정 (setCharacterEncoding): 웹 브라우저로 보낼 HTML 컨텐츠의 인코딩(기본값 UTF-8)을 지정합니다.
+• 뷰 이름 패턴 제한 (setViewNames): 특정 문자열 패턴(예: *.html 또는 web/*)을 가진 뷰 이름만 이 타임리프 뷰 리졸버가 처리하도록 제한할 수 있습니다. (예를 들어, JSP와 타임리프를 한 프로젝트에서 같이 쓸 때 유용합니다.)
+• 우선순위 결정 (setOrder): 프로젝트 내에 여러 종류의 뷰 리졸버가 존재할 때, 타임리프 뷰 리졸버가 몇 번째 순서로 화면 탐색을 시도할지 우선순위를 정합니다.
+
+🔍 앞서 배운 세 가지 핵심 객체의 관계 한눈에 보기
+
+우리가 타임리프로 웹 화면을 띄울 때 내부에서는 이 3인조가 협력하여 작동합니다.
+[컨트롤러] ── "index" 반환 ──> [ThymeleafViewResolver] (이 문자열 처리할게!)
+                                      │
+                                  (렌더링 지시)
+                                      ▼
+                             [SpringTemplateEngine] (내가 요리해 줄게!)
+                                      │
+                                 (규칙/경로 조회)
+                                      ▼
+                           [ITemplateResolver] (templates/ 폴더에서 .html을 읽어와!)
+1. ThymeleafViewResolver: 컨트롤러의 신호를 받아 전체 렌더링 과정을 트리거하는 매니저.
+2. SpringTemplateEngine: 데이터를 조립하고 HTML을 완성하는 핵심 엔진(요리사).
+3. ITemplateResolver: 실제 물리적인 HTML 파일의 위치와 규칙을 가리키는 가이드라인(냉장고).
+스프링 부트가 제공하는 자동 설정을 넘어 이 세 가지 객체(Resolver, Engine, ViewResolver)를 모두 코드로 직접 세팅해야 하는 커스텀 상황이 있으신가요? 어떤 구조를 만들고 계신지 들려주시면 알맞은 전체 설정 예시를 지원해 드릴 수 있습니다.
