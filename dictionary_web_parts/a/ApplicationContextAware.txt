@@ -1,0 +1,50 @@
+org.springframework.context.ApplicationContextAware는 스프링 빈(Bean)이 스프링 컨테이너 자체(ApplicationContext)를 직접 참조할 수 있도록 전권을 부여하는 인터페이스입니다.
+이 인터페이스를 구현(implements)한 클래스는 스프링이 생성될 때 컨테이너 객체를 스스로 주입받게 되며, 이를 통해 컨테이너 안의 다른 빈을 동적으로 찾거나 스프링의 핵심 시스템 기능에 접근할 수 있게 됩니다.
+
+💡 왜 사용하나요? (핵심 의미와 역할)
+
+일반적으로 스프링에서는 @Autowired나 생성자 주입을 통해 필요한 빈을 선언적으로 가져옵니다. 하지만 다음과 같은 특수한 상황에서는 컨테이너(ApplicationContext) 자체를 통째로 쥐고 있어야 합니다.
+
+1. 프로그래밍 방식의 동적 빈 조회 (getBean)
+
+런타임 시점에 사용자의 입력이나 조건에 따라 서로 다른 빈을 동적으로 꺼내 써야 할 때 사용합니다.
+• 예시: 결제 요청이 들어왔을 때, applicationContext.getBean("kakaoPayService") 또는 applicationContext.getBean("naverPayService") 처럼 문자열 기반으로 원하는 빈을 런타임에 선택할 때 유용합니다.
+
+2. 스프링 핵심 인프라 기능 직접 활용
+
+ApplicationContext는 단순히 빈을 담는 바구니를 넘어 스프링의 심장 역할을 합니다. 이 인터페이스를 구현하면 컨테이너를 통해 아래와 같은 하위 시스템 기능을 직접 호출할 수 있습니다.
+• 이벤트 발행: publishEvent()를 통한 시스템 내부 이벤트 구동
+• 환경 변수 접근: getEnvironment()를 통한 프로퍼티 조회
+• 리소스 로딩: getResource()를 통한 외부 파일 및 이미지 로드
+
+3. 싱글톤 빈에서 프로토타입 빈을 매번 새로 생성할 때
+
+싱글톤(Singleton) 빈 내부에서 프로토타입(Prototype) 빈을 주입받으면 매번 같은 인스턴스가 유지되는 문제가 있습니다. 이때 ApplicationContextAware를 통해 컨테이너를 들고 있다가, 필요할 때마다 context.getBean(PrototypeBean.class)를 호출하면 매번 새로운 프로토타입 객체를 안전하게 얻을 수 있습니다.
+
+💻 코드 예시
+
+가장 흔하게 사용되는 방식은 프로젝트 어디서든 스프링 컨테이너에 접근할 수 있도록 ApplicationContext를 static 변수에 담아두는 컨텍스트 홀더(Holder) 클래스를 만드는 것입니다.
+java
+@Component
+public class SpringContextHolder implements ApplicationContextAware {
+
+    private static ApplicationContext context;
+
+    // 스프링이 빈을 생성하고 초기화할 때, 컨테이너 자체를 이 메서드로 찔러넣어 줍니다.
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        context = applicationContext;
+    }
+
+    // 어디서나 static하게 빈을 꺼낼 수 있도록 메서드 제공
+    public static <T> T getBean(Class<T> beanClass) {
+        return context.getBean(beanClass);
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+⚠️ 주의할 점 (Trade-off)
+
+• 스프링 프레임워크에 대한 강한 결합: 이 인터페이스를 구현하는 순간, 해당 클래스는 스프링 프레임워크 없이는 독립적으로 작동하거나 테스트할 수 없는 코드가 됩니다. (순수한 자바 코드가 아니게 됨)
+• 대안 기술 존재: 단순히 빈을 동적으로 조회하는 것이 목적이라면, 스프링에 너무 종속적인 ApplicationContextAware 대신 자바 표준 스펙인 javax.inject.Provider나 스프링의 ObjectProvider를 사용하는 것이 더 권장되는 설계 방향입니다.
+혹시 런타임에 특정 조건에 따라 여러 종류의 빈(Service 등)을 동적으로 선택해야 하는 로직을 구현 중이신가요? 아니면 일반적인 주입(@Autowired)이 작동하지 않는 일반 static 클래스에서 스프링 빈을 호출하고 싶으신 건지 말씀해 주시면 상황에 맞는 깔끔한 아키텍처를 추천해 드리겠습니다.
