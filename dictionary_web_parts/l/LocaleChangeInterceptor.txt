@@ -1,7 +1,11 @@
 org.springframework.web.servlet.i18n.LocaleChangeInterceptor
 
-스프링 부트에서 LocaleChangeInterceptor는 웹 요청 시 파라미터를 통해 사용자의 언어(Locale) 설정을 동적으로 변경해주는 인터셉터입니다.
-예를 들어, 다국어를 지원하는 웹사이트에서 사용자가 영어 페이지를 보기 위해 ?language=en과 같은 URL 파라미터를 전송했을 때, 이 인터셉터가 요청을 가로채서 애플리케이션의 언어 설정을 en(영어)으로 바꿔줍니다.
+스프링 부트에서 LocaleChangeInterceptor는 웹 요청 시 파라미터를 
+통해 사용자의 언어(Locale) 설정을 동적으로 변경해주는 인터셉터입니다.
+예를 들어, 다국어를 지원하는 웹사이트에서 사용자가 영어 페이지를 보기 
+위해 ?language=en과 같은 URL 파라미터를 전송했을 때, 
+이 인터셉터가 요청을 가로채서 애플리케이션의 언어 설정을 en(영어)으로 
+바꿔줍니다.
 
 💡 작성하신 메서드의 구체적인 의미
 
@@ -12,10 +16,14 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
     return interceptor; // (코드에 생략된 return 추가)
 }
 코드를 사용할 때는 주의가 필요합니다.
-이 메서드는 스프링 컨테이너에 LocaleChangeInterceptor 객체를 생성하고 설정하는 역할을 합니다. 각 줄의 의미는 다음과 같습니다.
-1. new LocaleChangeInterceptor(): 언어 변경을 감지하고 처리할 인터셉터 객체를 생성합니다.
-2. interceptor.setParamName("language"): 핵심 설정입니다. 언어 변경을 요청할 때 사용할 URL 파라미터 이름을 "language"로 지정합니다.
-	• 기본값은 "locale"입니다. 이 설정을 통해 ?locale=ko 대신 ?language=ko 형태로 요청을 보낼 수 있게 됩니다.
+이 메서드는 스프링 컨테이너에 LocaleChangeInterceptor 객체를 생성하고 
+설정하는 역할을 합니다. 각 줄의 의미는 다음과 같습니다.
+1. new LocaleChangeInterceptor(): 언어 변경을 감지하고 
+처리할 인터셉터 객체를 생성합니다.
+2. interceptor.setParamName("language"): 핵심 설정입니다. 
+언어 변경을 요청할 때 사용할 URL 파라미터 이름을 "language"로 지정합니다.
+	• 기본값은 "locale"입니다. 이 설정을 통해 ?locale=ko 대신 
+	?language=ko 형태로 요청을 보낼 수 있게 됩니다.
 
 🛠️ 실제 작동 방식 예시
 
@@ -26,6 +34,11 @@ public LocaleChangeInterceptor localeChangeInterceptor() {
 ⚠️ 주의할 점 (완전한 동작을 위한 필수 조건)
 
 이 메서드가 실제로 동작하려면 두 가지가 더 필요합니다.
-1. @Bean 어노테이션: 스프링이 이 메서드를 관리할 수 있도록 메서드 위에 @Bean을 붙여야 합니다.
-2. 인터셉터 등록: WebMvcConfigurer를 구현한 설정 클래스에서 addInterceptors 메서드를 통해 이 인터셉터를 시스템에 등록해 주어야 웹 요청을 감지할 수 있습니다.
-이 인터셉터를 실제로 동작하게 만들기 위한 전체 설정 클래스 코드(WebMvcConfigurer 등록 방법)나 다국어 메시지 파일(messages.properties) 설정 방법이 필요하신가요? 구체적으로 알고 싶으신 부분을 말씀해 주시면 코드를 작성해 드리겠습니다.
+1. @Bean 어노테이션: 스프링이 이 메서드를 관리할 수 있도록 메서드 위에 @Bean을 
+붙여야 합니다.
+2. 인터셉터 등록: WebMvcConfigurer를 구현한 설정 클래스에서 addInterceptors 
+메서드를 통해 이 인터셉터를 시스템에 등록해 주어야 웹 요청을 감지할 수 있습니다.
+
+
+이 인터셉터를 실제로 동작하게 만들기 위한 전체 설정 클래스 코드(WebMvcConfigurer 
+등록 방법)나 다국어 메시지 파일(messages.properties) 설정 방법이 필요하신가요? 구체적으로 알고 싶으신 부분을 말씀해 주시면 코드를 작성해 드리겠습니다.
