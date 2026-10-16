@@ -1,3 +1,5 @@
+org.springframework.web.servlet.config.annotation.InterceptorRegistry
+
 스프링 부트에서 InterceptorRegistry는 애플리케이션에 적용할 인터셉터(Interceptor)들을 등록하고 관리하는 저장소(Registry)입니다.
 스프링에서 인터셉터는 컨트롤러가 실행되기 전이나 후에 웹 요청을 가로채서 특정 작업(로그인 체크, 권한 검사, 다국어 처리 등)을 수행하는 역할을 합니다. InterceptorRegistry는 이러한 인터셉터들을 스프링 MVC 시스템에 등록하는 명단 장부라고 생각하시면 됩니다.
 
