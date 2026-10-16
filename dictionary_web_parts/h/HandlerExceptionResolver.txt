@@ -1,28 +1,42 @@
 org.springframework.web.servlet.HandlerExceptionResolver;
 
-스프링 부트에서 HandlerExceptionResolver는 웹 애플리케이션 안에서 컨트롤러(Handler)가 요청을 처리하다가 예외(에러)가 발생했을 때, 이를 가로채서 어떻게 처리할지 결정하는 해결사(Resolver) 인터페이스입니다.
-쉽게 말해, 프로그램 실행 중 에러가 났을 때 사용자에게 거칠고 지저분한 서버 에러 코드(예: 500 에러 화면, Stack Trace)를 그대로 보여주지 않고, 이쁘게 꾸민 에러 페이지를 보여주거나 규격화된 JSON 에러 메시지로 변환해 주는 역할을 합니다.
+스프링 부트에서 HandlerExceptionResolver는 웹 애플리케이션 안에서 컨트롤러(Handler)가 
+요청을 처리하다가 예외(에러)가 발생했을 때, 이를 가로채서 어떻게 처리할지 결정하는 
+해결사(Resolver) 인터페이스입니다.
+쉽게 말해, 프로그램 실행 중 에러가 났을 때 사용자에게 거칠고 지저분한 
+서버 에러 코드(예: 500 에러 화면, Stack Trace)를 그대로 보여주지 않고, 
+이쁘게 꾸민 에러 페이지를 보여주거나 규격화된 JSON 에러 메시지로 변환해 주는 역할을 합니다.
 
 🛠️ 주요 핵심 역할
 
 1. 에러 화면 컨트롤 (View 매핑)
-	• 예외 종류에 따라 "로그인이 필요합니다"라는 메시지가 담긴 특정 HTML 에러 페이지로 사용자를 이동시킵니다.
+	• 예외 종류에 따라 "로그인이 필요합니다"라는 메시지가 담긴 특정 HTML 에러 
+	페이지로 사용자를 이동시킵니다.
 2. REST API 에러 응답 규격화 (JSON 변환)
-	• 웹브라우저가 아닌 모바일 앱이나 프론트엔드(React, Vue 등)와의 통신 중 에러가 나면, 이에 맞는 깔끔한 JSON 형태({"code": 400, "message": "잘못된 입력입니다."})로 응답을 만들어 보냅니다.
+	• 웹브라우저가 아닌 모바일 앱이나 프론트엔드(React, Vue 등)와의 통신 중 에러가 나면, 
+	이에 맞는 깔끔한 JSON 형태({"code": 400, "message": "잘못된 입력입니다."})로 응답을 만들어 보냅니다.
 3. HTTP 상태 코드 변경
-	• 서버 내부 오류(기본 500)로 터진 에러일지라도, 클라이언트의 잘못된 요청이라면 HTTP 상태 코드를 400(Bad Request)이나 404(Not Found) 등으로 변경하여 응답할 수 있게 해줍니다.
+	• 서버 내부 오류(기본 500)로 터진 에러일지라도, 클라이언트의 잘못된 요청이라면 HTTP 
+	상태 코드를 400(Bad Request)이나 404(Not Found) 등으로 변경하여 응답할 수 있게 해줍니다.
 
 🧩 스프링 부트가 기본으로 제공하는 해결사들
 
-스프링 부트는 우리가 직접 구현하지 않아도 내부적으로 다음과 같은 HandlerExceptionResolver 구현체들을 순서대로 작동시킵니다.
+스프링 부트는 우리가 직접 구현하지 않아도 내부적으로 다음과 같은 HandlerExceptionResolver 
+구현체들을 순서대로 작동시킵니다.
 • ExceptionHandlerExceptionResolver (가장 많이 씀)
-	• 컨트롤러나 전역 클래스에 @ExceptionHandler 어노테이션이 붙은 메서드를 찾아 예외를 처리합니다. (실무에서 가장 선호하는 방식)
+	• 컨트롤러나 전역 클래스에 @ExceptionHandler 어노테이션이 붙은 메서드를 찾아 예외를 
+	처리합니다. (실무에서 가장 선호하는 방식)
 • ResponseStatusExceptionResolver
-	• 예외 클래스 위에 @ResponseStatus(HttpStatus.NOT_FOUND)처럼 지정된 코드를 보고 HTTP 상태 코드를 설정해 줍니다.
+	• 예외 클래스 위에 @ResponseStatus(HttpStatus.NOT_FOUND)처럼 지정된 코드를 보고 HTTP 
+	상태 코드를 설정해 줍니다.
 • DefaultHandlerExceptionResolver
-	• 스프링 내부에서 발생하는 기본 예외들(예: 파라미터 타입 불일치 등)을 표준 HTTP 상태 코드(예: 400 Bad Request)로 자동 변환해 줍니다.
+	• 스프링 내부에서 발생하는 기본 예외들(예: 파라미터 타입 불일치 등)을 표준 HTTP 상태 
+	코드(예: 400 Bad Request)로 자동 변환해 줍니다.
 
 💡 실무에서의 한 줄 요약
 
-앞서 질문하신 Interceptor가 요청이 들어올 때 길목을 지키는 '경비원'이라면, HandlerExceptionResolver는 컨토롤러 안에서 에러가 터졌을 때 수습하러 출동하는 '119 구조대'라고 이해하시면 됩니다.
+앞서 질문하신 Interceptor가 요청이 들어올 때 길목을 지키는 '경비원'이라면, 
+	HandlerExceptionResolver는 컨토롤러 안에서 에러가 터졌을 때 수습하러 출동하는 '119 구조대'라고 이해하시면 됩니다.
+
+
 스프링 부트 실무에서는 이 인터페이스를 직접 구현하기보다는, @RestControllerAdvice와 @ExceptionHandler 어노테이션을 사용해 예외를 처리하는 방식을 주로 사용합니다. 이 최신 예외 처리 방식의 실제 구현 예시 코드가 궁금하신가요?
