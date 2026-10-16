@@ -76,3 +76,46 @@ close() 메서드를 자동으로 실행해서 데이터베이스 연결을 안�
 
 
 현재 분석 중이신 코드가 MySQL과 Oracle 등 멀티 데이터소스(Multi DataSource)를 다중으로 연동하는 설정 클래스인가요? 만약 그렇다면 주 데이터베이스를 지정하는 @Primary나 복수 개의 데이터소스를 다루는 모범 설정 코드가 필요하신지 말씀해 주세요!
+
+
+-------------------------------------------------------------
+
+
+@Bean(destroyMethod="destroy")는 스프링 부트(Spring Boot) 애플리케이션이 종료될 때(서버가 꺼질 때), 등록된 객체 내부의 destroy()라는 메서드를 자동으로 실행하여 사용 중이던 자원을 안전하게 정리하라고 지시하는 설정입니다.
+이전에 확인하셨던 destroyMethod="close"와 완벽하게 동일한 메커니즘이며, 호출하는 메서드의 이름만 close에서 destroy로 바뀐 것입니다.
+
+🔑 왜 사용해야 하나요? (특히 전자정부 프레임워크 환경에서)
+
+방금 전 질문하신 EgovTableIdGnrServiceImpl 같은 전자정부 프레임워크의 특정 서비스들은 성능 최적화를 위해 blockSize 설정을 사용합니다. (예: DB 접근을 줄이기 위해 메모리에 번호를 10개나 50개씩 미리 당겨서 보관하는 방식)
+• 문제 상황: 만약 서버가 갑자기 꺼지거나 재시작될 때 메모리에 남아있던 번호들이나 DB 세션 정보를 제대로 정리하지 않으면 자원이 낭비되거나 번호 꼬임 현상이 발생할 수 있습니다.
+• 해결책: 스프링 컨테이너가 닫히는 시점에 해당 클래스가 가진 destroy() 메서드를 강제로 호출하여, 메모리에 떠 있던 미사용 ID 정보를 초기화하고 데이터베이스와의 연결 잔재를 깔끔하게 해제(Clean-up)하도록 만드는 것입니다.
+
+💻 코드로 보는 동작 원리
+
+java
+@Configuration
+public class IdGnrConfig {
+
+    // 1. 빈을 등록할 때 소멸 메서드로 "destroy"를 지정합니다.
+    @Bean(destroyMethod = "destroy")
+    public EgovIdGnrService egovFileIdGnrService(DataSource dataSource) {
+        EgovTableIdGnrServiceImpl idGnrService = new EgovTableIdGnrServiceImpl();
+        idGnrService.setDataSource(dataSource);
+        // ... 생략 ...
+        return idGnrService;
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+이 설정을 넣어두면, 톰캣(Tomcat) 서버가 멈추거나 애플리케이션이 종료될 때 스프링이 내부적으로 다음과 같이 동작합니다.
+java
+// 스프링 컨테이너가 종료될 때 자동으로 내부 실행되는 가상의 로직
+if (bean 설정을 보니 destroyMethod가 "destroy"로 되어있네?) {
+    egovFileIdGnrService.destroy(); // 💥 안전하게 자원을 반납하는 내부 메서드가 실행됨!
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+💡 한 줄 요약
+
+"서버가 꺼지거나 애플리케이션이 완전히 종료되는 순간, 이 객체 안에 구현되어 있는 destroy() 메서드를 스프링이 스스로 찾아서 실행하여 메모리와 네트워크 자원을 안전하게 청소하라는 명령어"입니다.
+참고로 스프링은 기본적으로 아무 설정을 하지 않아도 객체 내부에 close나 shutdown이라는 이름의 메서드가 있으면 자동으로 실행해 주는 내장 기능이 있습니다. 하지만 전자정부 프레임워크의 구식 라이브러리나 명시적인 정리를 원하는 인터페이스는 이처럼 destroy라는 이름의 메서드를 직접 지정해 주어야 안전합니다.
+현재 EgovTableIdGnrServiceImpl 빈 등록 코드 작성을 완료하셨나요? 혹시 이 설정을 적용하는 과정에서 컴파일 에러가 나거나 실행 시 빈 소멸 관련 경고 메시지가 뜨고 있다면 어떤 상황인지 공유해 주세요!
