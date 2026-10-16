@@ -1,12 +1,18 @@
-org.springframework.context.annotation.Import는 스프링에서 다른 설정 클래스(@Configuration)나 일반 클래스를 현재 자바 설정 코드 안으로 불러와(가져와) 스프링 빈(Bean)으로 등록하는 애노테이션입니다.
-자바의 import 키워드가 다른 패키지의 클래스를 코드 내로 가져오는 것처럼, 이 애노테이션은 외부에 정의된 스프링 설정이나 컴포넌트를 현재 스프링 컨테이너 안으로 가져오는 역할을 합니다.
+org.springframework.context.annotation.Import는 스프링에서 
+다른 설정 클래스(@Configuration)나 일반 클래스를 현재 자바 설정 
+코드 안으로 불러와(가져와) 스프링 빈(Bean)으로 등록하는 애노테이션입니다.
+자바의 import 키워드가 다른 패키지의 클래스를 코드 내로 가져오는 것처럼, 
+이 애노테이션은 외부에 정의된 스프링 설정이나 컴포넌트를 현재 스프링 
+컨테이너 안으로 가져오는 역할을 합니다.
 
 💡 핵심 역할과 의미
 
 
 1. 설정 클래스 분할 및 조립 (@Configuration 모듈화)
 
-프로젝트가 커지면 하나의 설정 클래스에 모든 빈(@Bean)을 등록할 수 없습니다. 이때 보안 설정, 데이터베이스 설정, 외부 API 설정 등으로 클래스를 나눈 뒤, 메인 설정 클래스에서 @Import로 묶어서 관리할 수 있습니다.
+프로젝트가 커지면 하나의 설정 클래스에 모든 빈(@Bean)을 등록할 수 없습니다. 
+이때 보안 설정, 데이터베이스 설정, 외부 API 설정 등으로 클래스를 나눈 뒤, 
+메인 설정 클래스에서 @Import로 묶어서 관리할 수 있습니다.
 java
 @Configuration
 @Import({SecurityConfig.class, DbConfig.class}) // 다른 설정들을 한 번에 흡수
@@ -17,16 +23,31 @@ public class AppConfig {
 
 2. 컴포넌트 스캔 대상이 아닌 클래스를 빈으로 등록
 
-스프링 부트는 기본적으로 메인 클래스가 있는 패키지와 그 하위 패키지만 탐색(@ComponentScan)합니다. 만약 외부 라이브러리(Jar) 내부에 있거나, 스캔 대상이 아닌 완전히 다른 패키지에 있는 @Configuration 또는 일반 클래스를 스프링 빈으로 쓰고 싶을 때 @Import를 지정하면 강제로 스프링 컨테이너에 등록됩니다.
+스프링 부트는 기본적으로 메인 클래스가 있는 패키지와 그 하위 패키지만 
+탐색(@ComponentScan)합니다. 만약 외부 라이브러리(Jar) 내부에 있거나, 
+스캔 대상이 아닌 완전히 다른 패키지에 있는 @Configuration 또는 일반 
+클래스를 스프링 빈으로 쓰고 싶을 때 @Import를 지정하면 강제로 스프링 
+컨테이너에 등록됩니다.
 
 3. 고급 빈 등록 기술 지원 (ImportSelector / ImportBeanDefinitionRegistrar)
 
-단순히 클래스를 가져오는 것을 넘어, 특정 조건에 따라 동적으로 빈을 등록하고 싶을 때 인터페이스를 함께 활용합니다.
-• ImportSelector: 조건(예: 프로퍼티 값)에 따라 어떤 설정 클래스를 로딩할지 문자열 배열로 동적 선택할 수 있게 합니다.
-• ImportBeanDefinitionRegistrar: 개발자가 코드로 직접 빈을 생성하고 이름을 지정하여 프로그래밍 방식으로 등록할 수 있게 해줍니다.
+단순히 클래스를 가져오는 것을 넘어, 특정 조건에 따라 동적으로 빈을 등록하고 
+싶을 때 인터페이스를 함께 활용합니다.
+• ImportSelector: 조건(예: 프로퍼티 값)에 따라 어떤 설정 클래스를 로딩할지 
+문자열 배열로 동적 선택할 수 있게 합니다.
+• ImportBeanDefinitionRegistrar: 개발자가 코드로 직접 빈을 생성하고 이름을 
+지정하여 프로그래밍 방식으로 등록할 수 있게 해줍니다.
 
 🛠️ 스프링 부트(Spring Boot) 핵심 기능과의 관계
 
-사실 우리가 스프링 부트를 쓸 때 가장 감탄하는 "자동 설정(Auto Configuration)" 기술의 핵심 기반이 바로 이 @Import입니다.
-스프링 부트 메인 클래스에 붙어있는 @SpringBootApplication 안을 뜯어보면 @EnableAutoConfiguration이 있고, 그 안에는 @Import(AutoConfigurationImportSelector.class)가 숨어있습니다. 이 selector가 우리가 라이브러리(starter)를 추가할 때마다 수많은 자동 설정 클래스들을 프로젝트 내부로 알아서 @Import 해왔기 때문에 별도 설정 없이 기술들이 작동했던 것입니다.
+사실 우리가 스프링 부트를 쓸 때 가장 감탄하는 "자동 설정(Auto Configuration)" 
+기술의 핵심 기반이 바로 이 @Import입니다.
+스프링 부트 메인 클래스에 붙어있는 @SpringBootApplication 안을 뜯어보면 
+@EnableAutoConfiguration이 있고, 그 안에는 
+@Import(AutoConfigurationImportSelector.class)가 숨어있습니다. 
+이 selector가 우리가 라이브러리(starter)를 추가할 때마다 수많은 자동 
+설정 클래스들을 프로젝트 내부로 알아서 @Import 해왔기 때문에 별도 설정 없이 
+기술들이 작동했던 것입니다.
+
+
 현재 특정 외부 라이브러리의 설정을 가져오기 위해 @Import를 고민 중이신가요? 아니면 프로젝트 코드를 모듈별로 분리(Multi-Module)하는 과정이신가요? 상황을 공유해 주시면 알맞은 빈 구성 전략을 추천해 드리겠습니다.
