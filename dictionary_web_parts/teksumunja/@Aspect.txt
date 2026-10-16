@@ -1,0 +1,44 @@
+org.aspectj.lang.annotation.Aspect는 스프링 부트에서 AOP(Aspect-Oriented Programming, 관점 지향 프로그래밍)를 구현할 때, 해당 클래스가 '공통 관심 사항(Cross-cutting Concern)'을 담은 클래스임을 선언하는 애너테이션입니다.
+쉽게 말해, 비즈니스 로직(핵심 기능)과는 직접적인 상관이 없지만 프로그램 전반에 걸쳐 공통적으로 필요한 로그 출력, 트랜잭션 처리, 보안 검사, 성능 측정(실행 시간) 등의 코드들을 한곳에 모아 관리하는 역할을 합니다.
+
+💡 주요 핵심 개념
+
+@Aspect가 붙은 클래스 안에는 보통 두 가지 핵심 요소가 들어갑니다.
+1. Pointcut (어디서 실행할 것인가): 공통 코드를 주입할 대상(특정 패키지, 메서드 등)을 지정합니다.
+2. Advice (무엇을 언제 실행할 것인가): 대상 메서드가 실행되기 전(@Before), 후(@After), 또는 전후 전체(@Around) 등 어느 시점에 공통 코드를 실행할지 정의합니다.
+
+💻 실제 사용 예시 (코드)
+
+메서드가 실행될 때마다 실행 시간을 자동으로 측정하여 로그를 남기는 에스펙트(Aspect) 예시입니다.
+java
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+@Aspect // 1. 이 클래스가 AOP 공통 코드 객체임을 선언
+@Component // 2. 스프링이 관리할 수 있도록 빈(Bean) 등록 필수
+public class PerformanceAspect {
+
+    // egovframework 패키지 하위의 모든 web 컨트롤러 메서드에 적용 (Pointcut)
+    @Around("execution(* egovframework..web..*.*(..))") 
+    public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        long start = System.currentTimeMillis();
+
+        try {
+            // 실제 핵심 비즈니스 로직 실행
+            return joinPoint.proceed(); 
+        } finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println(joinPoint.getSignature() + " 실행 시간: " + timeMs + "ms");
+        }
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+🔍 요약
+
+• 의미: 에스펙트(공통 관심 모듈) 역할을 하는 클래스임을 스프링에 알려주는 AOP 핵심 선언 애너테이션
+• 용도: 로그, 보안, 트랜잭션, 성능 측정 등 여러 메서드에 반복적으로 들어가는 중복 코드를 깔끔하게 한곳에 모아서 자동으로 실행시키고 싶을 때 사용
+현재 프로젝트에 로그나 권한 체크 같은 공통 기능을 일괄적으로 적용하셔야 하는 상황인가요? 어떤 기능을 AOP로 구현하고 싶으신지 말씀해 주시면 알맞은 Pointcut 표현식이나 Advice 설정법을 상세히 가이드해 드릴게요!
