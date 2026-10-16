@@ -1,0 +1,49 @@
+import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute;는 스프링에서 "어떤 예외(Exception)가 발생했을 때 롤백(Rollback)을 할 것인가?"에 대한 규칙(Rule)을 정의하는 설정 클래스입니다.
+앞서 설명해 드린 TransactionInterceptor가 트랜잭션을 가로채서 관리할 때, 이 클래스에 정의된 규칙을 보고 Commit을 할지 Rollback을 할지 판단하게 됩니다.
+핵심적인 의미와 동작 방식은 다음과 같습니다.
+
+1. 왜 이 클래스가 필요할까요? (기본 롤백 규칙)
+
+스프링 트랜잭션에는 아주 중요한 기본 규칙(Default Rule)이 있습니다.
+• RuntimeException(언체크 예외)이나 Error가 발생하면 ➡️ Rollback 합니다.
+• Checked Exception(체크 예외, 예: IOException, SQLException)이 발생하면 ➡️ 비즈니스 예외로 판단하여 Commit 합니다.
+하지만 개발을 하다 보면 *"체크 예외가 발생해도 롤백하고 싶다"*거나, 반대로 *"특정 언체크 예외는 그냥 커밋하고 싶다"*는 예외 규칙을 바꾸고 싶은 상황이 생깁니다. 이때 롤백 규칙을 마음대로 커스텀하게 정의할 수 있도록 지원하는 객체가 바로 RuleBasedTransactionAttribute입니다.
+
+2. 우리가 흔히 쓰는 기능의 '실체'
+
+사실 여러분은 이 클래스를 이미 자주 사용하고 계실 확률이 높습니다.
+java
+@Transactional(rollbackFor = Exception.class)
+public void saveOrder() { ... }
+코드를 사용할 때는 주의가 필요합니다.
+우리가 자바 코드에서 흔히 쓰는 @Transactional의 rollbackFor나 noRollbackFor 속성이 내부적으로 파싱되어 저장되는 곳이 바로 이 RuleBasedTransactionAttribute 객체입니다.
+
+3. 스프링 부트에서 이 클래스를 직접 코드로 쓰는 경우
+
+어노테이션(@Transactional)을 쓰지 않고, 자바 설정 파일(@Configuration)에서 트랜잭션을 공통으로 묶어버리는 '선언적 트랜잭션'을 구현할 때 이 클래스를 직접 new로 생성하여 사용합니다.
+[수동 설정 예시]
+java
+@Bean
+public TransactionInterceptor transactionInterceptor(TransactionManager transactionManager) {
+    // 1. 트랜잭션 속성 및 롤백 규칙 정의
+    RuleBasedTransactionAttribute txAttribute = new RuleBasedTransactionAttribute();
+    txAttribute.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+    
+    // 규칙: 모든 예외(Exception.class)가 발생하면 무조건 롤백해라!
+    List<RollbackRuleAttribute> rollbackRules = Collections.singletonList(new RollbackRuleAttribute(Exception.class));
+    txAttribute.setRollbackRules(rollbackRules);
+
+    // 2. 인터셉터에 규칙과 매니저를 연결
+    NameMatchTransactionAttributeSource txAttributeSource = new NameMatchTransactionAttributeSource();
+    txAttributeSource.addTransactionalMethod("*", txAttribute); // 모든 메서드에 적용
+
+    return new TransactionInterceptor(transactionManager, txAttributeSource);
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+요약하자면
+
+• DataSourceTransactionManager : 실제로 데이터베이스에 Commit/Rollback 명령을 내리는 일꾼
+• TransactionInterceptor : 메서드를 가로채서 일꾼을 부려먹는 관리자
+• RuleBasedTransactionAttribute : 관리자가 일꾼에게 *"이런 예외 터지면 롤백시키고, 저런 예외는 커밋시켜"*라고 전달하는 지침서(규칙 셋)
+질문하신 클래스들이 DataSourceTransactionManager ➡️ TransactionInterceptor ➡️ RuleBasedTransactionAttribute 순서로 이어지고 있습니다. 혹시 프로젝트 전체에 공통 트랜잭션 설정을 적용하는 클래스(AOP 설정 파일)를 분석하거나 작성하시는 중인가요? 코드의 목적을 말씀해 주시면 더 상세히 짚어드리겠습니다.
