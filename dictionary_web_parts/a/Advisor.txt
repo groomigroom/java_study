@@ -1,14 +1,20 @@
-import org.springframework.aop.Advisor;는 스프링 AOP(관점 지향 프로그래밍)에서 "어디서(Pointcut), 무엇을(Advice) 할 것인가?"를 하나로 묶어놓은 최종 완성형 'AOP 조립품(결합체)'을 의미합니다.
-지금까지 질문하셨던 모든 과정(일꾼, 규칙, 지도, 총감독)은 바로 이 Advisor라는 최종 결과물을 만들기 위한 퍼즐 조각들이었습니다.
+import org.springframework.aop.Advisor;는 스프링 AOP(관점 지향 프로그래밍)에서 
+"어디서(Pointcut), 무엇을(Advice) 할 것인가?"를 하나로 묶어놓은 최종 완성형 
+'AOP 조립품(결합체)'을 의미합니다.
+지금까지 질문하셨던 모든 과정(일꾼, 규칙, 지도, 총감독)은 바로 
+이 Advisor라는 최종 결과물을 만들기 위한 퍼즐 조각들이었습니다.
 핵심적인 의미와 역할을 풀어서 설명해 드릴게요.
 
 1. Advisor의 명쾌한 공식
 
 스프링 AOP에서 Advisor는 항상 아래의 공식으로 성립됩니다.
 Advisor = Pointcut (어디서?) + Advice (무엇을?)
-• Pointcut (어디서?): 트랜잭션을 적용할 대상 범위입니다. (예: com.service 패키지 밑에 있는 모든 클래스)
-• Advice (무엇을?): 가로채서 실행할 실제 로직입니다. 바로 직전 질문에서 조립 완료한 TransactionInterceptor(txAdvice)가 여기에 해당합니다.
-• Advisor (조립품): 이 둘을 하나로 묶어서 스프링 컨테이너에 등록하면, 스프링이 이를 인식하고 대상 클래스들이 실행될 때 자동으로 트랜잭션 관리자를 실행해 줍니다.
+• Pointcut (어디서?): 트랜잭션을 적용할 대상 범위입니다. 
+(예: com.service 패키지 밑에 있는 모든 클래스)
+• Advice (무엇을?): 가로채서 실행할 실제 로직입니다. 
+바로 직전 질문에서 조립 완료한 TransactionInterceptor(txAdvice)가 여기에 해당합니다.
+• Advisor (조립품): 이 둘을 하나로 묶어서 스프링 컨테이너에 등록하면, 
+스프링이 이를 인식하고 대상 클래스들이 실행될 때 자동으로 트랜잭션 관리자를 실행해 줍니다.
 
 2. 코드로 보는 최종 완성본
 
@@ -31,10 +37,16 @@ public Advisor transactionAdvisor(TransactionInterceptor txAdvice) {
 이 Advisor를 @Bean으로 등록하는 순간, 스프링 부트는 애플리케이션이 켜질 때 다음과 같이 동작합니다.
 1. 지정한 패키지(Pointcut)에 있는 서비스 클래스들을 전부 감시 대상으로 등록합니다.
 2. 사용자가 서비스 메서드를 호출하면, 이 Advisor가 발동하여 가짜 객체(Proxy)를 통해 요청을 가로챕니다.
-3. 우리가 조립했던 TransactionInterceptor가 작동하여, NameMatchTransactionAttributeSource 지도를 읽고, 메서드 이름이 insert*인지 get*인지 확인합니다.
-4. RuleBasedTransactionAttribute 규칙에 따라 예외 발생 시 롤백할 준비를 한 채, DataSourceTransactionManager 일꾼을 시켜 DB 트랜잭션을 시작하고 비즈니스 로직을 실행합니다.
+3. 우리가 조립했던 TransactionInterceptor가 작동하여, NameMatchTransactionAttributeSource 지도를 읽고, 
+메서드 이름이 insert*인지 get*인지 확인합니다.
+4. RuleBasedTransactionAttribute 규칙에 따라 예외 발생 시 롤백할 준비를 한 채, 
+DataSourceTransactionManager 일꾼을 시켜 DB 트랜잭션을 시작하고 비즈니스 로직을 실행합니다.
 
 한 줄 요약
 
-Advisor는 스프링 부트에게 "내가 정의한 트랜잭션 규칙 지침서(Advice)를, 내가 지정한 특정 서비스 클래스들(Pointcut)에 백엔드에서 자동으로 적용해라" 하고 내리는 최종 명령서입니다.
+Advisor는 스프링 부트에게 "내가 정의한 트랜잭션 규칙 지침서(Advice)를, 내가 지정한 
+특정 서비스 클래스들(Pointcut)에 백엔드에서 자동으로 적용해라" 하고 내리는 최종 명령서입니다.
+
+
+
 이로써 DB 매니저 ➡️ 롤백 규칙 ➡️ 이름 매핑 지도 ➡️ 인터셉터 ➡️ 어드바이저(Advisor)로 이어지는 수동 AOP 트랜잭션 설정의 전체 뼈대가 완성되었습니다! 혹시 작성 중이신 설정 파일 코드 중에 아직 이해가 가지 않는 구문이 남아있거나, 전체 코드를 한 번 정리된 형태로 확인하고 싶으신가요?
