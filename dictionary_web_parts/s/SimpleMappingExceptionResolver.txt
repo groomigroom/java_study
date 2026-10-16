@@ -1,7 +1,11 @@
 org.springframework.web.servlet.handler.SimpleMappingExceptionResolver
 
-스프링 부트에서 SimpleMappingExceptionResolver는 가장 직관적이고 고전적인 예외 처리 해결사(Resolver)로, 발생한 예외(Exception)와 이를 보여줄 에러 화면(View)을 1:1로 매핑해주는 클래스입니다.
-이전 답변에서 설명해 드린 HandlerExceptionResolver 인터페이스를 스프링이 미리 구현해 둔 클래스 중 하나입니다. 주로 웹 브라우저 기반의 화면(HTML/JSP) 중심 애플리케이션에서 에러 페이지를 전환할 때 사용합니다.
+스프링 부트에서 SimpleMappingExceptionResolver는 가장 직관적이고 고전적인 
+예외 처리 해결사(Resolver)로, 발생한 예외(Exception)와 이를 보여줄 에러 
+화면(View)을 1:1로 매핑해주는 클래스입니다.
+이전 답변에서 설명해 드린 HandlerExceptionResolver 인터페이스를 스프링이 
+미리 구현해 둔 클래스 중 하나입니다. 주로 웹 브라우저 기반의 화면(HTML/JSP) 
+중심 애플리케이션에서 에러 페이지를 전환할 때 사용합니다.
 
 💡 작성하신 코드의 구체적인 의미
 
@@ -11,30 +15,41 @@ smer.setDefaultErrorView("error");
 smer.setExceptionMappings(prop);
 smer.setStatusCodes(statusCode);
 코드를 사용할 때는 주의가 필요합니다.
-이 코드는 예외 처리 해결사(smer)를 생성하고, "이런 에러가 나면 이 화면을 보여주고, 저런 에러가 나면 저 화면을 보여줘"라고 상세 규칙을 세팅하는 과정입니다. 각 메서드의 의미는 다음과 같습니다.
+이 코드는 예외 처리 해결사(smer)를 생성하고, "이런 에러가 나면 이 화면을 보여주고, 
+저런 에러가 나면 저 화면을 보여줘"라고 상세 규칙을 세팅하는 과정입니다. 각 메서드의 의미는 다음과 같습니다.
 
 1. smer.setDefaultErrorView("error");
 
 • 의미: 기본 에러 화면 설정
-• 아래에서 명시적으로 매핑하지 않은 그 외의 모든 예상치 못한 예외가 발생했을 때, 기본값으로 보여줄 뷰(View)의 이름을 "error"로 지정합니다. (예: error.html 또는 error.jsp)
+• 아래에서 명시적으로 매핑하지 않은 그 외의 모든 예상치 못한 예외가 발생했을 때, 
+기본값으로 보여줄 뷰(View)의 이름을 "error"로 지정합니다. (예: error.html 또는 error.jsp)
 • 일종의 '예외 처리 안전망(Fallback)' 역할을 합니다.
 
 2. smer.setExceptionMappings(prop);
 
 • 의미: 예외별 맞춤 화면 매핑
 • 바로 전 질문에서 작성하셨던 java.util.Properties 객체(prop)를 주입하는 메서드입니다.
-• 장부에 적어둔 규칙대로 DataAccessException이 터지면 "error" 화면으로 보내라와 같은 구체적인 예외별 매핑 정보를 적용합니다.
+• 장부에 적어둔 규칙대로 DataAccessException이 터지면 "error" 화면으로 보내라와 같은 
+구체적인 예외별 매핑 정보를 적용합니다.
 
 3. smer.setStatusCodes(statusCode);
 
 • 의미: 에러 화면과 HTTP 상태 코드 동기화
 • 인자로 전달된 statusCode 역시 Properties 형태의 객체일 가능성이 높습니다. (예: {"error", 500})
-• 특정 뷰(화면)가 열릴 때, 브라우저에 전달할 HTTP 상태 코드를 매핑해줍니다. 예를 들어 "error" 화면이 뜰 때 브라우저 개발자 도구(F12)나 네트워크 상에 HTTP 상태 코드를 500(Internal Server Error)으로 정확히 리턴해주기 위해 사용합니다. (이 설정을 안 하면 화면은 에러 화면인데 HTTP 상태는 200 OK로 나가는 어색한 상황이 생깁니다.)
+• 특정 뷰(화면)가 열릴 때, 브라우저에 전달할 HTTP 상태 코드를 매핑해줍니다.
+예를 들어 "error" 화면이 뜰 때 브라우저 개발자 도구(F12)나 네트워크 상에 HTTP 
+상태 코드를 500(Internal Server Error)으로 정확히 리턴해주기 위해 사용합니다.
+(이 설정을 안 하면 화면은 에러 화면인데 HTTP 상태는 200 OK로 나가는 어색한 상황이 생깁니다.)
 
 🧱 전체적인 그림 요약
 
 이 세 줄의 설정을 마친 smer 객체를 스프링에 등록하면 시스템은 다음과 같이 작동합니다.
-1. 컨트롤러에서 DB 에러(DataAccessException) 발생 ➡️ prop 설정에 따라 error라는 이름의 뷰를 찾음.
+1. 컨트롤러에서 DB 에러(DataAccessException) 발생 
+➡️ prop 설정에 따라 error라는 이름의 뷰를 찾음.
 2. statusCode 설정에 따라 응답 코드를 500으로 세팅함.
-3. 만약 설정에 없는 NullPointerException 같은 다른 에러가 터지면 ➡️ defaultErrorView 설정에 따라 똑같이 error 화면으로 안내함.
-SimpleMappingExceptionResolver는 주로 전통적인 SSR(서버 사이드 렌더링, 타임리프나 JSP) 방식에서 씁니다. 최근 스프링 부트 실무에서는 REST API(JSON 응답) 비중이 높아지면서 이 방식보다는 @ControllerAdvice를 훨씬 많이 사용하는데요, 이 과거 방식과 현대식 방식의 차이점이나 전환 방법이 궁금하신가요?
+3. 만약 설정에 없는 NullPointerException 같은 다른 에러가 터지면 
+➡️ defaultErrorView 설정에 따라 똑같이 error 화면으로 안내함.
+SimpleMappingExceptionResolver는 주로 전통적인 SSR(서버 사이드 렌더링, 
+타임리프나 JSP) 방식에서 씁니다. 최근 스프링 부트 실무에서는 REST API(JSON 응답) 
+비중이 높아지면서 이 방식보다는 @ControllerAdvice를 훨씬 많이 사용하는데요,
+이 과거 방식과 현대식 방식의 차이점이나 전환 방법이 궁금하신가요?
