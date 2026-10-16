@@ -1,20 +1,31 @@
-import org.springframework.validation.Validator;는 스프링 프레임워크에서 "애플리케이션에 입력된 데이터(객체)가 유효한지 검증하기 위한 기준을 정의하는 인터페이스"입니다.
-지금까지 질문하셨던 내용이 데이터베이스의 안전성을 다루는 트랜잭션(AOP) 영역이었다면, 이 클래스는 사용자가 보낸 요청 데이터의 무결성을 검증하는 유효성 검사(Validation) 영역에 해당합니다.
+import org.springframework.validation.Validator;는 
+스프링 프레임워크에서 "애플리케이션에 입력된 데이터(객체)가 
+유효한지 검증하기 위한 기준을 정의하는 인터페이스"입니다.
+지금까지 질문하셨던 내용이 데이터베이스의 안전성을 다루는 
+트랜잭션(AOP) 영역이었다면, 이 클래스는 사용자가 보낸 
+요청 데이터의 무결성을 검증하는 유효성 검사(Validation) 영역에 해당합니다.
 핵심적인 의미와 동작 방식은 다음과 같습니다.
 
 1. 왜 이 인터페이스가 필요할까요?
 
-사용자가 회원가입을 하거나 글을 쓸 때, 서버는 잘못된 데이터가 들어오지 않도록 막아야 합니다.
+사용자가 회원가입을 하거나 글을 쓸 때, 서버는 잘못된 
+데이터가 들어오지 않도록 막아야 합니다.
 • "이메일 형식에 맞게 입력했는가?"
 • "비밀번호가 너무 짧지는 않은가?"
 • "필수 입력 항목이 비어있지 않은가?"
-org.springframework.validation.Validator 인터페이스는 이러한 검증 로직을 비즈니스 로직(서비스)과 분리하여 깔끔하게 독립된 클래스로 만들 수 있도록 틀을 제공합니다.
+org.springframework.validation.Validator 인터페이스는 
+이러한 검증 로직을 비즈니스 로직(서비스)과 분리하여 깔끔하게 
+독립된 클래스로 만들 수 있도록 틀을 제공합니다.
 
 2. 인터페이스의 핵심 메서드 2개
 
 이 인터페이스를 상속받아 구현할 때는 딱 2가지 메서드만 완성하면 됩니다.
-• supports(Class<?> clazz) : "내가 지금 User 객체를 검증해야 하는데, 이 검증기가 User 클래스를 검증할 수 있는 검증기인가?"를 확인하여 true/false를 반환합니다.
-• validate(Object target, Errors errors) : 실제 검증 로직을 수행하는 곳입니다. target 객체의 필드들을 검사하다가 조건에 맞지 않으면 errors 객체에 "이 필드가 잘못되었습니다"라고 에러 내용을 담아둡니다.
+• supports(Class<?> clazz) : "내가 지금 User 객체를 검증해야 하는데,
+이 검증기가 User 클래스를 검증할 수 있는 검증기인가?"를 확인하여 
+true/false를 반환합니다.
+• validate(Object target, Errors errors) : 실제 검증 로직을 수행하는 곳입니다. 
+target 객체의 필드들을 검사하다가 조건에 맞지 않으면 errors 객체에 
+"이 필드가 잘못되었습니다"라고 에러 내용을 담아둡니다.
 
 3. 코드로 보는 실제 사용 예시
 
@@ -48,7 +59,17 @@ public class UserValidator implements Validator {
 
 4. 스프링 부트(Spring Boot)에서의 특징
 
-• 컨트롤러와의 연동: 컨트롤러 메서드에서 파라미터 앞에 @Valid나 @Validated 어노테이션을 붙이고, 컨트롤러 내부에 WebDataBinder를 통해 이 Validator를 등록(binder.addValidators(new UserValidator()))해 두면, 요청이 들어올 때 스프링 부트가 알아서 데이터를 가로채 검증을 수행해 줍니다.
-• 사실 요즘은 잘 직접 구현 안 함 (중요): 이 org.springframework.validation.Validator를 직접 자바 코드로 구현하는 방식은 과거 스타일이거나 매우 복잡한 커스텀 로직이 필요할 때만 씁니다.
-• 요즘 스프링 부트에서는 이 클래스를 직접 상속받는 대신, spring-boot-starter-validation 라이브러리를 추가하고, 객체 필드 위에 어노테이션(@NotBlank, @Min, @Email 등)만 붙여서 검증하는 Hibernate Validator(Bean Validation) 방식을 훨씬 더 많이 사용합니다.
+• 컨트롤러와의 연동: 컨트롤러 메서드에서 파라미터 앞에 @Valid나 
+@Validated 어노테이션을 붙이고, 컨트롤러 내부에 WebDataBinder를 통해 
+이 Validator를 등록(binder.addValidators(new UserValidator()))해 두면, 
+요청이 들어올 때 스프링 부트가 알아서 데이터를 가로채 검증을 수행해 줍니다.
+• 사실 요즘은 잘 직접 구현 안 함 (중요): 
+이 org.springframework.validation.Validator를 직접 자바 코드로 구현하는 방식은 
+과거 스타일이거나 매우 복잡한 커스텀 로직이 필요할 때만 씁니다.
+• 요즘 스프링 부트에서는 이 클래스를 직접 상속받는 대신, 
+spring-boot-starter-validation 라이브러리를 추가하고, 객체 필드 위에 
+어노테이션(@NotBlank, @Min, @Email 등)만 붙여서 검증하는 Hibernate Validator(Bean Validation) 
+방식을 훨씬 더 많이 사용합니다.
+
+
 혹시 지금 컨트롤러에서 사용자 입력값을 검증하는 로직을 추가하시는 중인가요? 아니면 기존 레거시 코드나 전자정부프레임워크 같은 환경에서 이 인터페이스를 상속받은 커스텀 검증기 코드를 분석 중이신가요? 상황을 말씀해 주시면 어노테이션 기반 검증 방식과의 차이점이나 적용 방법을 더 자세히 안내해 드릴게요.
