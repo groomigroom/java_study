@@ -1,0 +1,62 @@
+org.springframework.context.support.MessageSourceAccessor는 스프링 및 스프링 부트에서 메시지 파일(.properties)의 텍스트를 편리하고 간결하게 가져올 수 있도록 도와주는 일종의 '메시지 전용 래퍼(Wrapper) 유틸리티 클래스'입니다.
+이전 질문에서 살펴보신 ReloadableResourceBundleMessageSource를 직접 쓰면 코드가 다소 길어지고 번거로워지는데, 이 클래스를 사용하면 훨씬 직관적이고 깔끔한 코드를 작성할 수 있습니다.
+
+🔑 왜 사용할까요? (일반 MessageSource와의 차이점)
+
+가장 큰 차이점은 Locale(국가/언어 설정)과 배열 처리를 자동으로 해준다는 점입니다.
+
+1. 일반 MessageSource를 사용해 메시지를 가져올 때
+
+MessageSource를 직접 쓰면 메시지를 가져올 때마다 매번 현재 언어 설정(Locale)을 파라미터로 넘겨주어야 합니다.
+java
+// 호출할 때마다 세 번째 인자에 Locale을 매번 넣어줘야 해서 코드가 길어집니다.
+String msg = messageSource.getMessage("fail.common.msg", null, LocaleContextHolder.getLocale());
+코드를 사용할 때는 주의가 필요합니다.
+
+2. MessageSourceAccessor를 사용할 때
+
+생성할 때 MessageSource를 한 번만 주입해 두면, Locale 설정을 내부적으로 알아서 기본값(혹은 현재 요청의 Locale)으로 처리해 줍니다.
+java
+// 훨씬 짧고 직관적입니다!
+String msg = messageSourceAccessor.getMessage("fail.common.msg");
+코드를 사용할 때는 주의가 필요합니다.
+
+💻 스프リング 부트 자바 설정 및 활용 예시
+
+보통 앞서 만든 MessageSource 빈(Bean)을 이 클래스에 주입하여 다음과 같이 사용합니다.
+
+1. 빈(Bean) 등록 설정 (@Configuration)
+
+java
+@Bean
+public MessageSourceAccessor messageSourceAccessor(ReloadableResourceBundleMessageSource messageSource) {
+    // 앞서 만든 messageSource를 쏙 넣어줍니다.
+    return new MessageSourceAccessor(messageSource);
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+2. 실제 비즈니스 로직이나 핸들러에서의 활용
+
+java
+@Service
+public class EgovSampleService {
+
+    @Autowired
+    private MessageSourceAccessor messageSourceAccessor;
+
+    public void doSomething() {
+        // 알림 메시지나 에러 메시지를 꺼내 쓸 때 매우 간결합니다.
+        String welcomeMsg = messageSourceAccessor.getMessage("success.common.login");
+        
+        // 파라미터가 있는 메시지도 가독성 있게 치환해 줍니다.
+        // 예: "fail.user.delete" = "{0}님을 삭제하는 데 실패했습니다."
+        String errorMsg = messageSourceAccessor.getMessage("fail.user.delete", new Object[]{"홍길동"});
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+💡 한 줄 요약
+
+"앞서 등록한 여러 메시지 파일(.properties)들로부터 문구를 읽어올 때, 매번 국가 설정(Locale)을 적어야 하는 번거로움을 없애고 getMessage("키값") 형태로 편하게 쓰도록 돕는 도우미 클래스"입니다.
+보통 전자정부 프레임워크 기반 프로젝트에서는 이 MessageSourceAccessor를 전역 빈으로 띄워두고 컨트롤러, 서비스, 혹은 예외 처리 핸들러에서 주입받아 사용자 알림 메시지를 화면에 던져줄 때 애용합니다.
+현재 진행 중인 마이그레이션 코드에서 이 클래스를 활용해 에러 핸들러 내부의 예외 메시지 처리를 간소화하는 중이신가요? 혹은 이 외에 추가로 분석 중인 전자정부/스프링 설정 클래스가 있다면 언제든 말씀해 주세요!
