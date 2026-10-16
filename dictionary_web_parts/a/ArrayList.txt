@@ -1,0 +1,13 @@
+ArrayList는 List 인터페이스를 구현한 동적 배열(Dynamic Array) 자료구조입니다.
+
+주요 특징
+
+• 동적 크기 조절 (Dynamic Capacity): 일반 배열과 달리 크기가 고정되어 있지 않으며, 
+데이터가 추가되면서 용량이 부족하면 자동으로 내부 배열 크기를 늘립니다.
+• 인덱스 기반의 빠른 조회 (Fast Access): 내부적으로 Object[] 같은 연속된 
+메모리 공간을 사용하기 때문에 인덱스(index)를 통한 데이터 조회 속도가 매우 빠릅니다 (O(1)).
+• 순서 유지 및 중복 허용: 데이터가 삽입된 순서를 유지하며, 
+동일한 값(중복 데이터)의 저장이 가능합니다.
+• 비동기화 (Not Thread-Safe): 여러 스레드가 동시에 ArrayList를 
+수정하면 데이터 일관성이 깨질 수 있습니다. 멀티스레드 환경에서는 
+CopyOnWriteArrayList나 Collections.synchronizedList 등을 사용해야 합니다.
