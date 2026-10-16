@@ -1,0 +1,23 @@
+스프링 부트 환경에서 io.swagger.v3.oas.models.OpenAPI는 Swagger(OpenAPI 3.0) 문서 전체를 대변하는 핵심 설정 객체를 의미합니다. [1] (https://adjh54.tistory.com/561), [2] (https://chanhan.tistory.com/entry/Spring-Swagger-Swagger-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%B0%8F-%EA%B8%B0%EB%B3%B8-%EA%B2%BD%EB%A1%9C-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0)
+스프링 부트에서 springdoc-openapi 같은 라이브러리를 사용해 API 명세서를 자동 생성할 때, 개발자가 문서의 제목, 설명, 버전, 보안 설정(JWT 등)을 전역적으로 커스텀하기 위해 @Bean으로 등록하는 자바 클래스입니다. [1] (https://adjh54.tistory.com/561), [2] (https://chanhan.tistory.com/entry/Spring-Swagger-Swagger-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%B0%8F-%EA%B8%B0%EB%B3%B8-%EA%B2%BD%EB%A1%9C-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0)
+
+주요 역할과 구성 요소
+
+이 객체는 생성될 Swagger HTML 문서의 가장 윗부분(헤더 및 공통 설정 영역)을 채우는 역할을 합니다.
+
+구성 요소	메서드 및 클래스	설명
+문서 기본 정보	.info(new Info())	API 명세서의 제목(Title), 설명(Description), 버전(Version) 설정
+보안 및 인증	.components(new Components())	JWT(Bearer), API Key, OAuth2 등 공통 보안 스키마 정의
+전역 요구사항	.addSecurityItem()	특정 API가 아닌 모든 엔드포인트에 인증 헤더를 기본 적용할 때 사용
+
+
+실제 활용 예시 코드
+
+보통 스프링 부트 애플리케이션 내의 @Configuration 설정 클래스에서 다음과 같이 @Bean으로 생성하여 반환합니다. [1] (https://chanhan.tistory.com/entry/Spring-Swagger-Swagger-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%B0%8F-%EA%B8%B0%EB%B3%B8-%EA%B2%BD%EB%A1%9C-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0)
+전체 설정 코드 예시와 상세한 구현 방법은 참조된 문서를 통해 확인하실 수 있으며, 기본 정보(Info)와 JWT 보안(Components, SecurityRequirement)을 설정하여 OpenAPI 객체를 반환하는 구조로 작성됩니다. [1] (https://chanhan.tistory.com/entry/Spring-Swagger-Swagger-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%B0%8F-%EA%B8%B0%EB%B3%B8-%EA%B2%BD%EB%A1%9C-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0)
+
+요약
+
+• 코드상의 의미: Swagger UI 화면에 뿌려질 API 명세서의 메타데이터(제목, 버전, 인증 방식 등)를 세팅하는 설정 도구입니다. [1] (https://adjh54.tistory.com/561), [2] (https://chanhan.tistory.com/entry/Spring-Swagger-Swagger-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0-%EB%B0%8F-%EA%B8%B0%EB%B3%B8-%EA%B2%BD%EB%A1%9C-%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0)
+• 동작 방식: 스프링 부트가 실행될 때 이 OpenAPI 빈(Bean)을 읽어와서, 컨트롤러들을 스캔한 내용과 합쳐 최종 /v3/api-docs(JSON 명세) 및 Swagger UI 페이지를 완성합니다. [1] (https://colabear754.tistory.com/99), [2] (https://adjh54.tistory.com/561)
+혹시 사용 중이신 스프링 부트 버전(예: 2.x 또는 3.x)과 Swagger 라이브러리 종류(springdoc 또는 springfox)를 알려주시면, 환경에 딱 맞는 설정 방법이나 에러 해결을 도와드릴 수 있습니다. 어떤 부분 설정을 진행 중이신가요?
