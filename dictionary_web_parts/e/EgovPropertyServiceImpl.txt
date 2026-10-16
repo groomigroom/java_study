@@ -1,0 +1,55 @@
+org.egovframe.rte.fdl.property.impl.EgovPropertyServiceImpl;
+
+import org.egovframe.rte.fdl.property.impl.EgovPropertyServiceImpl;는 
+전자정부프레임워크 환경에서 애플리케이션의 설정 정보(Property)를 시스템 내부에서 
+일관되게 관리하고 쉽게 꺼내 쓸 수 있도록 돕는 실질적인 기능 구현 클래스를 의미합니다.
+과거 3.x 이하 버전의 egovframework.rte.fdl.property.impl.EgovPropertyServiceImpl이 
+전자정부프레임워크 4.x(Spring Boot 기반 버전)로 업그레이드되면서 패키지명이 
+org.egovframe으로 전환된 클래스입니다.
+구체적으로 어떤 역할을 하고 왜 사용되는지 핵심 요약을 통해 설명해 드립니다.
+
+1. EgovPropertyServiceImpl의 핵심 역할
+• 프로퍼티 관리 서비스의 구현체: 전자정부프레임워크의 프로퍼티 제어 인터페이스인 
+EgovPropertyService를 실제로 구현한(impl) 클래스입니다.
+설정값의 중앙 집중 관리: 데이터베이스 연결 정보, 파일 업로드 경로, 
+외부 API 주소, 페이징 처리 단위 등 프로그램 소스 코드에 직접 하드코딩하기 
+부담스러운 설정값들을 외부 파일(.properties 또는 .xml)로 분리하여 관리합니다.
+유연한 데이터 타입 지원: 외부 파일에 문자열(String) 형태로 정의된 설정값들을 
+자바 코드 내에서 getBoolean(), getInt(), getString() 등의 메서드를 통해 
+원하는 데이터 타입으로 즉시 변환하여 안전하게 가져올 수 있습니다.
+
+2. 전자정부프레임워크에서의 활용 방식
+스프링 자체의 @Value 어노테이션이나 Environment 시스템과 유사한 목적으로 쓰이지만, 
+전자정부프레임워크 표준 프레임워크 아키텍처 아티팩트로서 컴포넌트 간 일관성을 
+유지하기 위해 공공 프로젝트에서 자주 사용됩니다.
+• 설정 파일(context-properties.xml) 등록: 보통 스프링 설정 파일에서 이 클래스를 
+빈(Bean)으로 등록하면서 어떤 프로퍼티 파일들을 읽어올지 지정합니다.
+xml
+<bean id="propertiesService" class="org.egovframe.rte.fdl.property.impl.EgovPropertyServiceImpl" destroy-method="destroy">
+  <property name="extFileName">
+    <list>
+      <value>classpath:/egovframework/egovProps/globals.properties</value>
+    </list> 
+  </property> 
+</bean>
+
+• 코드를 사용할 때는 주의가 필요합니다.
+• 비즈니스 로직(Service/Controller)에서의 활용: 자바 코드에서는 
+주로 다음과 같이 주입받아 사용합니다.
+java
+@Resource(name = "propertiesService")
+protected EgovPropertyService propertiesService;
+public void doSomething() { 
+  // globals.properties에 정의된 파일 저장 경로를 동적으로 읽어옴 
+  String uploadPath = propertiesService.getString("Globals.fileStorePath"); 
+  // 페이징 처리 시 한 페이지에 보여줄 게시글 수(기본값 10)를 읽어옴 
+  int pageUnit = propertiesService.getInt("pageUnit", 10); 
+}
+
+• 코드를 사용할 때는 주의가 필요합니다.
+결론적으로, 이 임포트문은 "소스 코드를 수정하지 않고도 시스템 환경 
+설정값들을 파일(properties) 수정을 통해 유연하게 변경할 수 있도록
+자바 컴포넌트 단에서 프로퍼티 관리 기능을 활성화하겠다"라는 의미입니다.
+
+
+현재 개발 중이신 환경이 전자정부프레임워크 4.x(스프링 부트 기반)인지, 아니면 구버전인 3.x(레거시 스프링 환경)인지 말씀해 주시면 상황에 맞는 정확한 설정 방법이나 대체 기술(@Value 등)과의 차이점을 추가로 소개해 드릴 수 있습니다. 어떤 부분에 초점을 맞춰 도와드릴까요?
