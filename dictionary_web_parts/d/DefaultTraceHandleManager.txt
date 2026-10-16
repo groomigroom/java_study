@@ -1,24 +1,36 @@
-org.egovframe.rte.fdl.cmmn.trace.manager.DefaultTraceHandleManager는 전자정부 표준프레임워크(eGovFrame)에서 비즈니스 로직 실행 중 특정 시점의 흔적(Trace)을 기록할 때, 어떤 트레이스 핸들러(TraceHandler)를 실행할지 결정하고 연결해 주는 관리자 클래스입니다.
-이전에 확인하셨던 예외 처리 시스템의 DefaultExceptionHandleManager와 완벽하게 대칭을 이루는 자매품 클래스입니다. DefaultExceptionHandleManager가 에러(Exception) 발생 시 작동한다면, DefaultTraceHandleManager는 정상적인 흐름이나 추적(Trace) 포인트가 호출되었을 때 작동합니다.
+org.egovframe.rte.fdl.cmmn.trace.manager.DefaultTraceHandleManager는 
+전자정부 표준프레임워크(eGovFrame)에서 비즈니스 로직 실행 중 특정 
+시점의 흔적(Trace)을 기록할 때, 어떤 트레이스 핸들러(TraceHandler)를 
+실행할지 결정하고 연결해 주는 관리자 클래스입니다.
+이전에 확인하셨던 예외 처리 시스템의 DefaultExceptionHandleManager와 
+완벽하게 대칭을 이루는 자매품 클래스입니다. DefaultExceptionHandleManager가 
+에러(Exception) 발생 시 작동한다면, DefaultTraceHandleManager는 정상적인 
+흐름이나 추적(Trace) 포인트가 호출되었을 때 작동합니다.
 
 1. 주요 역할과 의미
 
-• 트레이스 매핑 규칙 정의: "어떤 패키지나 클래스에서 추적 신호가 발생했을 때, 어떤 로깅/추적 핸들러를 실행하겠다"라는 룰셋을 정의합니다.
-• 유연한 추적 제어: 개발자가 소스코드 전체를 뒤지지 않고도 설정 파일(context-common.xml 또는 Java Config)에서 특정 서비스들의 실행 기록 규칙을 한곳에 모아 일괄 관리할 수 있게 해줍니다.
+• 트레이스 매핑 규칙 정의: "어떤 패키지나 클래스에서 추적 신호가 발생했을 때, 
+어떤 로깅/추적 핸들러를 실행하겠다"라는 룰셋을 정의합니다.
+• 유연한 추적 제어: 개발자가 소스코드 전체를 뒤지지 않고도 설정 파일
+(context-common.xml 또는 Java Config)에서 특정 서비스들의 실행 기록 규칙을
+한곳에 모아 일괄 관리할 수 있게 해줍니다.
 
 2. 내부 핵심 설정 메서드 (구조적 이해)
 
-이 클래스를 설정할 때는 대개 다음과 같은 세 가지 핵심 요소를 주입합니다. (구조가 DefaultExceptionHandleManager와 완전히 똑같습니다.)
+이 클래스를 설정할 때는 대개 다음과 같은 세 가지 핵심 요소를 주입합니다. 
+(구조가 DefaultExceptionHandleManager와 완전히 똑같습니다.)
 1. setReqExpMatcher(antPathMatcher):
 	• 패턴을 분석할 때 사용할 알고리즘(AntPathMatcher)을 설정합니다.
 2. setPatterns(new String[]{"**service.impl.*"}):
 	• 추적 로그를 남길 대상 패키지/클래스의 경로 패턴을 지정합니다.
 3. setHandlers(new TraceHandler[]{defaultTraceHandler}):
-	• 패턴이 일치할 때 실제로 로그를 출력하거나 모니터링 처리를 수행할 핸들러 객체(앞서 질문하신 DefaultTraceHandler)를 배열 형태로 등록합니다.
+	• 패턴이 일치할 때 실제로 로그를 출력하거나 모니터링 처리를 수행할 
+핸들러 객체(앞서 질문하신 DefaultTraceHandler)를 배열 형태로 등록합니다.
 
 ⚙️ 트레이스 시스템 전체의 데이터 흐름 요약
 
-전자정부 프레임워크에서 실행 과정을 추적할 때는 아래와 같은 3단계 파이프라인을 거치게 됩니다.
+전자정부 프레임워크에서 실행 과정을 추적할 때는 아래와 같은 3단계 
+파이프라인을 거치게 됩니다.
 [Service 클래스 실행 중 추적 신호 발생 (LeaveaTrace 호출)]
                         │
                         ▼
@@ -32,6 +44,11 @@ org.egovframe.rte.fdl.cmmn.trace.manager.DefaultTraceHandleManager는 전자정�
 
 💡 한 줄 요약
 
-"어느 서비스 클래스(setPatterns)에서 추적(Trace) 신호가 왔을 때, AntPathMatcher 규칙으로 매칭을 확인하여, 내가 지정한 DefaultTraceHandler를 호출해 로그를 남기도록 다리를 놓아주는 관리자"입니다.
-이로써 전자정부 프레임워크의 예외 처리(Exception) 라인업과 실행 추적(Trace) 라인업의 핵심 구성요소를 모두 파악하셨습니다.
+"어느 서비스 클래스(setPatterns)에서 추적(Trace) 신호가 왔을 때, 
+AntPathMatcher 규칙으로 매칭을 확인하여, 내가 지정한 DefaultTraceHandler를 
+호출해 로그를 남기도록 다리를 놓아주는 관리자"입니다.
+이로써 전자정부 프레임워크의 예외 처리(Exception) 라인업과 실행 추적(Trace) 
+라인업의 핵심 구성요소를 모두 파악하셨습니다.
+
+
 현재 이 자바 설정 클래스들을 하나의 통합된 스프링 부트 @Configuration 설정 파일로 엮어내는 작업을 하고 계신가요? 전체적인 Exception과 Trace 관련 Bean 설정의 조립 코드 예시가 필요하시다면 언제든 요청해 주세요!
