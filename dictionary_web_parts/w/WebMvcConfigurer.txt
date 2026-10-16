@@ -1,7 +1,11 @@
+org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 자바 스프링 부트(Spring Boot)에서 WebMvcConfigurer 인터페이스의 의미와 이것이 포함된 스타터 의존성(Starter Dependency)에 대한 핵심 요약입니다.
 ------------------------------
 ## 1. WebMvcConfigurer란 무엇인가요?
-WebMvcConfigurer는 스프링 부트가 제공하는 자동 설정(Auto Configuration)을 그대로 유지하면서, 개발자가 원하는 웹 MVC 설정을 커스텀(추가 및 확장)할 때 사용하는 인터페이스입니다.
+WebMvcConfigurer는 스프링 부트가 제공하는 자동 설정(Auto Configuration)을 
+그대로 유지하면서, 개발자가 원하는 웹 MVC 설정을 커스텀(추가 및 확장)할 때 
+사용하는 인터페이스입니다.
 
 * 인터페이스 구현: 클래스에 implements WebMvcConfigurer를 선언한 뒤, 필요한 메서드만 오버라이딩(재정의)하여 사용합니다.
 * 주요 용도:
