@@ -1,5 +1,9 @@
-import org.springframework.aop.support.DefaultPointcutAdvisor;는 스프링 AOP에서 가장 흔하게 사용하는 기본적이고 표준적인 Advisor(AOP 결합체) 구현체 클래스입니다.
-이전 질문에서 Advisor = Pointcut(어디서) + Advice(무엇을)의 공식으로 조립된다고 설명해 드렸는데, Advisor 자체는 개념을 정의한 인터페이스(틀)일 뿐입니다. DefaultPointcutAdvisor는 이 인터페이스를 실제로 구현하여 우리가 만든 포인트컷 객체와 어드바이스 객체를 생성자 파라미터로 넣어 묶어주는 진짜 '실체(클래스)'입니다.
+import org.springframework.aop.support.DefaultPointcutAdvisor;는 
+스프링 AOP에서 가장 흔하게 사용하는 기본적이고 표준적인 Advisor(AOP 결합체) 
+구현체 클래스입니다.
+이전 질문에서 Advisor = Pointcut(어디서) + Advice(무엇을)의 공식으로 
+조립된다고 설명해 드렸는데, Advisor 자체는 개념을 정의한 인터페이스(틀)일 뿐입니다. 
+DefaultPointcutAdvisor는 이 인터페이스를 실제로 구현하여 우리가 만든 포인트컷 객체와 어드바이스 객체를 생성자 파라미터로 넣어 묶어주는 진짜 '실체(클래스)'입니다.
 핵심적인 의미와 코드가 마무리지어지는 방식은 다음과 같습니다.
 
 1. 왜 이 클래스를 사용하나요?
