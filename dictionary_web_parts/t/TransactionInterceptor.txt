@@ -1,0 +1,24 @@
+import org.springframework.transaction.interceptor.TransactionInterceptor;는 스프링에서 @Transactional 어노테이션이 붙은 메서드를 가로채서(Intercept) 실제 트랜잭션 로직을 주입하는 핵심 AOP(선언적 트랜잭션) 인터셉터입니다.
+이전 질문에서 다룬 DataSourceTransactionManager가 실제로 COMMIT과 ROLLBACK을 실행하는 '일꾼(구현체)'이라면, 이 TransactionInterceptor는 비즈니스 로직 앞뒤로 일꾼을 부려주는 '관리자(프록시 메커니즘)' 역할을 합니다.
+핵심적인 의미와 동작 방식은 다음과 같습니다.
+
+1. 어떻게 동작하나요? (AOP의 핵심)
+
+스프링부트에서 @Transactional을 사용하면, 스프링은 해당 클래스의 가짜 객체인 프록시(Proxy)를 만듭니다. 사용자가 메서드를 호출하면 프록시가 요청을 먼저 받는데, 이때 동작하는 것이 바로 TransactionInterceptor입니다.
+1. 메서드 호출 가로채기: 개발자가 만든 비즈니스 로직(서비스 메서드)이 실행되기 직전에 요청을 가로챕니다.
+2. 트랜잭션 시작: DataSourceTransactionManager 같은 트랜잭션 매니저를 포인트컷(대상)에 맞게 찾아와 "트랜잭션을 시작해라"고 명령합니다.
+3. 실제 로직 위임: 원래 실행하려던 비즈니스 로직 코드를 호출합니다.
+4. 결과 처리:
+	• 로직이 정상 종료되면 ➡️ Commit을 지시합니다.
+	• 로직 중 예외(Exception)가 발생하면 ➡️ Rollback을 지시합니다.
+
+2. 스프링 부트(Spring Boot)에서의 특징
+
+• 보이지 않는 자동화: 스프링 부트에서는 @EnableTransactionManagement 기능이 기본적으로 자동 활성화되어 있습니다. 따라서 이 TransactionInterceptor 역시 내부적으로 자동 등록되어 백엔드에서 조용히 작동합니다.
+• 직접 다룰 일은 거의 없음: 일반적인 비즈니스 웹 애플리케이션 개발자는 이 클래스를 직접 코드로 작성하거나 다룰 일이 거의 없습니다. 99%는 @Transactional 어노테이션만 사용합니다.
+
+3. 언제 이 클래스를 직접 보게 되나요?
+
+• 커스텀 트랜잭션 설정 (설정 커스터마이징): 어노테이션 방식 대신 특정 패키지나 메서드 이름 규칙(ex: get*는 ReadOnly 등)에 따라 트랜잭션을 공통으로 묶어버리는 코드 기반 선언적 트랜잭션을 수동 설정할 때 이 인터셉터를 빈(@Bean)으로 등록합니다.
+• 에러 로그(Stack Trace): 트랜잭션 내부에서 예외가 발생해 롤백될 때 콘솔 에러 로그를 살펴보면, 이 TransactionInterceptor.invoke() 메서드가 항상 징검다리처럼 뼈대에 껴 있는 것을 볼 수 있습니다.
+현재 로그에서 TransactionInterceptor 관련 예외(오류)가 발생했나요, 아니면 공통 트랜잭션을 수동으로 묶는 설정 파일을 작성 중이신가요? 상황을 말씀해 주시면 상황에 맞는 디버깅이나 가이드를 도와드리겠습니다.
