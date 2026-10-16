@@ -24,15 +24,33 @@ ValidationAutoConfiguration이라는 자동 설정 클래스가 작동합니다.
 2. 기술 표준(API)과 실제 구현체의 다리 역할
 
 • Bean Validation(자바 표준 API): 애노테이션 인터페이스만 정의되어 있고 실제 검증 로직은 없습니다.
-• Hibernate Validator(실제 구현체): 그 애노테이션을 해석해서 실제로 값이 비었는지, 글자수가 맞는지 검증하는 라이브러리입니다. [1] (https://wannaqueen.gitbook.io/spring5/spring-5.0/3.-by-ys-sh/3.7-by-sh/3.7.2-by-sh), [2] (https://pso62.tistory.com/entry/Error-creating-bean-with-name-LocalValidatorFactoryBean0-%E2%80%94-Unable-to-create-a-Configuration-%ED%95%B4%EA%B2%B0)
-• LocalValidatorFactoryBean (연결 고리): 스프링이 위 구현체(Hibernate Validator)를 인식하여 작동할 수 있도록 초기화하고, 이를 스프링의 org.springframework.validation.Validator 인터페이스 타입으로 감싸서 제공합니다. [1] (https://wannaqueen.gitbook.io/spring5/spring-5.0/3.-by-ys-sh/3.7-by-sh/3.7.2-by-sh)
+• Hibernate Validator(실제 구현체): 그 애노테이션을 해석해서 실제로 값이 비었는지, 
+글자수가 맞는지 검증하는 라이브러리입니다. 
+[1] (https://wannaqueen.gitbook.io/spring5/spring-5.0/3.-by-ys-sh/3.7-by-sh/3.7.2-by-sh), 
+[2] (https://pso62.tistory.com/entry/Error-creating-bean-with-name-LocalValidatorFactoryBean0-%E2%80%94-Unable-to-create-a-Configuration-%ED%95%B4%EA%B2%B0)
+• LocalValidatorFactoryBean (연결 고리): 스프링이 위 구현체(Hibernate Validator)를 인식하여 작동할 수 
+있도록 초기화하고, 이를 스프링의 org.springframework.validation.Validator 인터페이스 타입으로 감싸서 제공합니다. 
+[1] (https://wannaqueen.gitbook.io/spring5/spring-5.0/3.-by-ys-sh/3.7-by-sh/3.7.2-by-sh)
 
 3. Spring MVC 및 데이터 바인딩과의 통합
 
-컨트롤러가 요청 파라미터(DTO 등)를 객체로 받아올 때, 이 LocalValidatorFactoryBean이 개입합니다. 애노테이션 기반으로 검증을 수행한 후 오류가 발견되면 FieldError나 ObjectError를 생성하여 스프링의 BindingResult 객체에 차곡차곡 담아주는 역할을 수행합니다. [1] (https://bnzn2426.tistory.com/157), [2] (https://velog.io/@jeong_woo/Spring-Bean-Validation)
+컨트롤러가 요청 파라미터(DTO 등)를 객체로 받아올 때, 이 LocalValidatorFactoryBean이 개입합니다. 
+애노테이션 기반으로 검증을 수행한 후 오류가 발견되면 FieldError나 ObjectError를 생성하여 스프링의 
+BindingResult 객체에 차곡차곡 담아주는 역할을 수행합니다. 
+[1] (https://bnzn2426.tistory.com/157), 
+[2] (https://velog.io/@jeong_woo/Spring-Bean-Validation)
 
 ⚠️ 개발 시 주의할 점
 
-• 직접 등록 시 자동 설정 해제: 만약 개발자가 직접 자바 설정 코드(@Bean)를 통해 커스텀 Validator를 글로벌로 등록해 버리면, 스프링 부트는 LocalValidatorFactoryBean을 글로벌로 등록하지 않습니다. 이 경우 기존의 @NotNull 같은 애노테이션 기반 빈 검증이 정상 작동하지 않을 수 있으므로 주의해야 합니다. [1] (https://m.blog.naver.com/hj_kim97/223036873193)
-• 초기화 에러: 간혹 Error creating bean with name 'LocalValidatorFactoryBean'이라는 에러가 발생한다면, 대개 validation 라이브러리 의존성이 빠졌거나 스프링 부트 버전에 따른 패키지 기준(javax.validation vs jakarta.validation)이 꼬였을 가능성이 높습니다. [1] (https://pso62.tistory.com/entry/Error-creating-bean-with-name-LocalValidatorFactoryBean0-%E2%80%94-Unable-to-create-a-Configuration-%ED%95%B4%EA%B2%B0)
+• 직접 등록 시 자동 설정 해제: 만약 개발자가 직접 자바 설정 코드(@Bean)를 통해 
+커스텀 Validator를 글로벌로 등록해 버리면, 스프링 부트는 LocalValidatorFactoryBean을 
+글로벌로 등록하지 않습니다. 
+이 경우 기존의 @NotNull 같은 애노테이션 기반 빈 검증이 정상 작동하지 않을 수 있으므로 주의해야 합니다. 
+[1] (https://m.blog.naver.com/hj_kim97/223036873193)
+• 초기화 에러: 간혹 Error creating bean with name 'LocalValidatorFactoryBean'이라는 
+에러가 발생한다면, 대개 validation 라이브러리 의존성이 빠졌거나 스프링 부트 버전에 따른 패키지 
+기준(javax.validation vs jakarta.validation)이 꼬였을 가능성이 높습니다. 
+[1] (https://pso62.tistory.com/entry/Error-creating-bean-with-name-LocalValidatorFactoryBean0-%E2%80%94-Unable-to-create-a-Configuration-%ED%95%B4%EA%B2%B0)
+
+
 혹시 현재 프로젝트에서 LocalValidatorFactoryBean과 관련된 에러가 발생했나요? 아니면 검증 로직을 커스텀하게 확장하려는 목적이신가요? 상황을 알려주시면 알맞은 구현 방법이나 해결책을 제안해 드릴 수 있습니다.
