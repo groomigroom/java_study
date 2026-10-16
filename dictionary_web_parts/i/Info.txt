@@ -1,0 +1,42 @@
+io.swagger.v3.oas.models.info.Info는 스프링 부트(Spring Boot) 애플리케이션에서 API 문서(Swagger/OpenAPI 3.0)의 기본 정보를 설정하기 위해 사용하는 클래스입니다.
+주로 springdoc-openapi 라이브러리를 사용하여 API 명세서를 자동 생성할 때, 해당 문서의 제목, 버전, 설명 등을 정의하는 데 사용됩니다.
+
+💡 주요 역할 및 설정 항목
+
+이 클래스를 사용하면 생성된 Swagger UI(웹 화면)의 가장 상단에 노출되는 정보를 커스텀할 수 있습니다. 대표적으로 설정할 수 있는 필드는 다음과 같습니다.
+• title: API 문서의 제목
+• version: API의 버전 (예: v1.0.0)
+• description: API에 대한 전체적인 설명
+• termsOfService: 서비스 약관 URL
+• contact: 담당자 정보 (Contact 클래스 활용)
+• license: 라이선스 정보 (License 클래스 활용)
+
+💻 실제 사용 예시 (코드)
+
+보통 스프링 부트의 Configuration 클래스 내에서 OpenAPI 빈(Bean)을 등록할 때 함께 설정합니다.
+java
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.Contact;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class OpenApiConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("내 서비스 API 명세서")
+                        .version("v1.0.0")
+                        .description("스프링 부트 백엔드 API 문서입니다.")
+                        .contact(new Contact().name("개발팀").email("dev@example.com")));
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+🔍 요약
+
+• 의미: OpenAPI 3.0 스펙 규격에 맞춘 API 문서 상단 제목 및 설명 정보 정의용 객체
+• 용도: Swagger UI 페이지를 방문했을 때 사용자가 이 API가 무엇인지 쉽게 알아볼 수 있도록 메타데이터를 제공하는 역할
