@@ -1,27 +1,53 @@
-org.thymeleaf.spring6.SpringTemplateEngine은 스프링 부트 3.x 환경에서 타임리프(Thymeleaf) 템플릿 엔진을 스프링 MVC와 통합하고 구동하는 핵심 클래스입니다. [1] (https://binux.tistory.com/160), [2] (https://luvstudy.tistory.com/227)
-쉽게 말해, 서버에서 만든 데이터(Model)를 HTML 파일(View)에 녹여내어 동적인 웹 페이지를 생성할 때, 그 과정을 총괄하는 '엔진'의 본체라고 보시면 됩니다. [1] (https://hwlee9905.tistory.com/3), [2] (https://hi-hahahoho.tistory.com/99)
+org.thymeleaf.spring6.SpringTemplateEngine은 
+스프링 부트 3.x 환경에서 타임리프(Thymeleaf) 템플릿 엔진을 
+스프링 MVC와 통합하고 구동하는 핵심 클래스입니다. 
+[1] (https://binux.tistory.com/160), 
+[2] (https://luvstudy.tistory.com/227)
+쉽게 말해, 서버에서 만든 데이터(Model)를 HTML 파일(View)에 
+녹여내어 동적인 웹 페이지를 생성할 때, 그 과정을 총괄하는 
+'엔진'의 본체라고 보시면 됩니다. 
+[1] (https://hwlee9905.tistory.com/3), 
+[2] (https://hi-hahahoho.tistory.com/99)
 이 클래스가 스프링 부트에서 가지는 의미와 역할은 다음과 같습니다.
 
 1. 스프링 6 및 스프링 부트 3.x의 기준
 
-패키지 명에 포함된 spring6은 이 클래스가 스프링 프레임워크 6(Spring Framework 6) 버전에 최적화되어 있음을 뜻합니다. [1] (https://binux.tistory.com/160)
+패키지 명에 포함된 spring6은 이 클래스가 스프링 프레임워크 6(Spring Framework 6) 
+버전에 최적화되어 있음을 뜻합니다. 
+[1] (https://binux.tistory.com/160)
 • 스프링 부트 2.x에서는 org.thymeleaf.spring5.SpringTemplateEngine을 사용했습니다.
-• 스프링 부트 3.x로 넘어가면서 베이스 프레임워크가 스프링 6로 업그레이드되었고, 이에 따라 패키지 구조도 spring6로 변경되었습니다. [1] (https://binux.tistory.com/160)
+• 스프링 부트 3.x로 넘어가면서 베이스 프레임워크가 스프링 6로 업그레이드되었고, 
+이에 따라 패키지 구조도 spring6로 변경되었습니다. 
+[1] (https://binux.tistory.com/160)
 
 2. 자동 설정(Auto-Configuration)의 핵심 대상
 
-스프링 부트의 가장 큰 장점은 개발자가 복잡한 설정을 하지 않아도 내부적으로 알아서 빈(Bean)을 등록해 준다는 것입니다. [1] (https://azure.microsoft.com/ko-kr/resources/cloud-computing-dictionary/what-is-java-spring-boot), [2] (https://luvstudy.tistory.com/227)
-• 프로젝트 빌드 파일(build.gradle 등)에 spring-boot-starter-thymeleaf 의존성을 추가하면, 스프링 부트가 이 SpringTemplateEngine을 내부적으로 알아서 생성하고 빈으로 등록합니다.
-• 따라서 평소에 웹 개발을 할 때는 이 클래스를 직접 코드로 다룰 일이 거의 없습니다. 컨트롤러에서 HTML 파일 이름만 반환하면 이 엔진이 뒤에서 알아서 작동하기 때문입니다. [1] (https://luvstudy.tistory.com/227)
+스프링 부트의 가장 큰 장점은 개발자가 복잡한 설정을 하지 않아도 
+내부적으로 알아서 빈(Bean)을 등록해 준다는 것입니다. 
+[1] (https://azure.microsoft.com/ko-kr/resources/cloud-computing-dictionary/what-is-java-spring-boot), 
+[2] (https://luvstudy.tistory.com/227)
+• 프로젝트 빌드 파일(build.gradle 등)에 spring-boot-starter-thymeleaf 의존성을 추가하면, 
+스프링 부트가 이 SpringTemplateEngine을 내부적으로 알아서 생성하고 빈으로 등록합니다.
+• 따라서 평소에 웹 개발을 할 때는 이 클래스를 직접 코드로 다룰 일이 거의 없습니다. 
+컨트롤러에서 HTML 파일 이름만 반환하면 이 엔진이 뒤에서 알아서 작동하기 때문입니다. 
+[1] (https://luvstudy.tistory.com/227)
 
 3. 주요 역할 및 기능
 
 • 스프링 MVC 연동: 스프링의 ExpressionLanguage (SpEL)를 타임리프 문법(${...}) 안에서 그대로 사용할 수 있도록 지원합니다.
 • 메시지 소스(i18n) 통합: 스프링이 제공하는 다국어 처리 기능(#{...})을 타임리프 템플릿 안에서 쓸 수 있게 연결합니다.
-• 뷰 리졸버(ViewResolver)와의 협업: 컨트롤러가 리턴한 문자열(예: "index")을 받아 실제 서버 내의 HTML 파일(templates/index.html)을 찾아내고 렌더링하도록 징검다리 역할을 합니다. [1] (https://bnzn2426.tistory.com/140), [2] (https://luvstudy.tistory.com/227)
+• 뷰 리졸버(ViewResolver)와의 협업: 컨트롤러가 리턴한 문자열(예: "index")을 받아 
+실제 서버 내의 HTML 파일(templates/index.html)을 찾아내고 렌더링하도록 징검다리 역할을 합니다. 
+[1] (https://bnzn2426.tistory.com/140), 
+[2] (https://luvstudy.tistory.com/227)
 
 💡 언제 이 클래스명을 직접 보게 되나요?
 
-보통 일반적인 웹 페이지 렌더링을 할 때는 마주칠 일이 없지만, 아래와 같은 커스텀 설정이 필요할 때 소스 코드나 에러 로그에서 직접 보게 됩니다.
-1. 이메일 템플릿 발송: 웹 화면 렌더링 목적이 아니라, 백엔드 로직 안에서 타임리프 HTML 템플릿을 읽어와 동적으로 이메일 본문을 만들어 발송해야 할 때 이 엔진을 @Autowired로 주입받아 사용합니다.
-2. 타임리프 세부 설정 변경: 기본적으로 제공하는 설정 외에 타임리프의 특정한 옵션(예: 커스텀 다이얼렉트 추가 등)을 수동으로 세팅하고자 할 때 직접 @Bean으로 정의하여 사용합니다.
+보통 일반적인 웹 페이지 렌더링을 할 때는 마주칠 일이 없지만, 아래와 같은 커스텀 설정이 
+필요할 때 소스 코드나 에러 로그에서 직접 보게 됩니다.
+1. 이메일 템플릿 발송: 웹 화면 렌더링 목적이 아니라, 백엔드 로직 안에서 타임리프 
+HTML 템플릿을 읽어와 동적으로 이메일 본문을 만들어 발송해야 할 때 이 엔진을 
+@Autowired로 주입받아 사용합니다.
+2. 타임리프 세부 설정 변경: 기본적으로 제공하는 설정 외에 타임리프의 특정한 
+옵션(예: 커스텀 다이얼렉트 추가 등)을 수동으로 세팅하고자 할 때 직접 @Bean으로 
+정의하여 사용합니다.
