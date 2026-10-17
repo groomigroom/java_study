@@ -108,3 +108,65 @@ exceptionTransfer.setExceptionHandlerService(new ExceptionHandlerService[] {
 
 
 
+------------------------------------------
+
+전자정부 프레임워크(eGovFrame)에서 다음 코드를 사용했다면,
+
+java
+```
+exceptionTransfer.transfer(thisJoinPoint, ex);
+```
+
+여기서 `transfer()`는 발생한 예외(Exception)를 다른 예외 처리 로직으로 전달하는 메서드라고 이해하면 됩니다.
+
+다만, 정확히 어떤 처리를 하는지는 `exceptionTransfer` 객체의 클래스와 `transfer()` 메서드 구현에 따라 달라집니다.
+
+## 1. 코드 구성 요소 살펴보기
+
+java
+```
+exceptionTransfer.transfer(thisJoinPoint, ex);
+```
+
+- `exceptionTransfer`: 예외 전달 기능을 수행하는 객체입니다.
+- `transfer()`: 예외를 전달하는 메서드입니다. 전자정부 프레임워크에서 사용하는 클래스라면 예외 처리 규칙에 따라 다른 예외 처리기로 넘기는 역할일 수 있습니다.
+- `thisJoinPoint`: AspectJ에서 제공하는 객체로, 예외가 발생한 메서드의 실행 정보 등을 담고 있습니다.
+- `ex`: 발생한 예외 객체입니다. 보통 `Exception` 또는 `Throwable` 타입으로 전달합니다.
+
+## 2. 전자정부 프레임워크에서의 동작 예시
+
+AOP를 활용한 예외 처리 코드가 다음과 같다고 가정해 보겠습니다.
+
+java
+```
+try {
+    // 업무 로직 실행
+    service.doSomething();
+} catch (Exception ex) {
+    exceptionTransfer.transfer(thisJoinPoint, ex);
+}
+```
+
+일반적인 동작 흐름은 다음과 같습니다.
+
+업무 로직 실행
+
+예외 발생 (`ex`)
+
+`exceptionTransfer.transfer(thisJoinPoint, ex)`
+
+설정된 예외 처리 로직으로 전달
+
+예외 처리 로직에서는 설정에 따라 로그를 기록하거나, 사용자에게 보여 줄 오류 화면을 결정하거나, 다른 예외로 변환하는 등의 작업을 수행할 수 있습니다. 단, 이러한 세부 동작이 실제로 수행되는지는 구현과 설정을 확인해야 합니다.
+
+## 3. `transfer`라는 이름의 의미
+
+영어 단어 `transfer`는 전달하다, 이관하다라는 뜻입니다.
+
+따라서 이 코드에서는 다음과 같이 해석할 수 있습니다.
+
+> `thisJoinPoint`의 실행 정보를 참고하여 `ex`로 전달된 예외를 적절한 예외 처리 경로로 넘긴다.
+
+단, `transfer()`가 예외를 단순히 전달하는지, 예외를 변환하는지, 내부에서 처리까지 완료하는지는 메서드 구현에 따라 다릅니다.
+
+정확하게 확인하려면 `exceptionTransfer`의 클래스명과 `transfer()` 메서드 구현을 확인하는 것이 가장 좋습니다. 특히 전자정부 프레임워크의 `egovframework.rte.fdl.cmmn.aspect.ExceptionTransfer` 클래스를 사용 중이라면, 해당 클래스의 소스 코드나 선언부를 보여 주시면 실제 동작을 기준으로 설명해 드릴 수 있습니다.
