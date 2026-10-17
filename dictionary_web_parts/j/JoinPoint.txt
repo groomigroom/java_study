@@ -1,9 +1,19 @@
-스프링 부트(Spring Boot) AOP에서 org.aspectj.lang.JoinPoint는 부가 기능(Advice)이 적용되는 싱행 시점의 모든 정보(메서드, 매개변수, 객체 등)를 담고 있는 인터페이스입니다. [1] (https://vmpo.tistory.com/100), [2] (https://mingeun2154.github.io/spring%20boot/aspect-example-01/), [3] (https://codesyun.tistory.com/entry/Spring-Spring-AOP%EB%A1%9C-Log-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0-Around-Before-After)
-쉽게 말해, 공통 로직(로깅, 트랜잭션, 보안 등)이 수행될 때 "지금 호출된 메서드는 무엇이고, 어떤 파라미터가 들어왔는지"를 알려주는 데이터 상자라고 생각하시면 됩니다. [1] (https://konkukcodekat.tistory.com/124), [2] (https://server-technology.tistory.com/490)
+스프링 부트(Spring Boot) AOP에서 org.aspectj.lang.JoinPoint는 부가 
+기능(Advice)이 적용되는 싱행 시점의 모든 정보(메서드, 매개변수, 객체 등)를 
+담고 있는 인터페이스입니다. 
+[1] (https://vmpo.tistory.com/100), 
+[2] (https://mingeun2154.github.io/spring%20boot/aspect-example-01/), [3] (https://codesyun.tistory.com/entry/Spring-Spring-AOP%EB%A1%9C-Log-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0-Around-Before-After)
+쉽게 말해, 공통 로직(로깅, 트랜잭션, 보안 등)이 수행될 때 "지금 호출된 메서드는 무엇이고, 
+어떤 파라미터가 들어왔는지"를 알려주는 데이터 상자라고 생각하시면 됩니다. 
+[1] (https://konkukcodekat.tistory.com/124), 
+[2] (https://server-technology.tistory.com/490)
 
 1. 스프링 부트에서 JoinPoint의 핵심 의미
 
-• 메서드 실행 지점만 지원: 원본 AspectJ 프레임워크는 생성자 호출, 필드 수정 등 다양한 지점을 지원하지만, 프록시 기반의 Spring AOP는 오직 '메서드 실행 시점'만 JoinPoint로 지원합니다. 따라서 스프링 부트에서 JoinPoint는 현재 실행 중인 메서드를 뜻합니다. [1] (https://mingeun2154.github.io/spring%20boot/aspect-example-01/)
+• 메서드 실행 지점만 지원: 원본 AspectJ 프레임워크는 생성자 호출, 필드 수정 등 다양한 지점을 지원하지만, 
+프록시 기반의 Spring AOP는 오직 '메서드 실행 시점'만 JoinPoint로 지원합니다. 따라서 스프링 부트에서 
+JoinPoint는 현재 실행 중인 메서드를 뜻합니다. 
+[1] (https://mingeun2154.github.io/spring%20boot/aspect-example-01/)
 • AOP의 핵심 정보원: 부가 기능 코드(@Before, @After 등)의 파라미터로 JoinPoint를 선언하면, 스프링이 현재 실행 컨텍스트를 주입해 줍니다. [1] (https://vmpo.tistory.com/100), [2] (https://codesyun.tistory.com/entry/Spring-Spring-AOP%EB%A1%9C-Log-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0-Around-Before-After)
 
 2. 자주 사용하는 메서드
