@@ -1,3 +1,5 @@
+jakarta.annotation.Resource
+
 import org.springframework.core.io.Resource;는 **파일, 클래스패스 파일, URL 등 다양한 위치에 있는 자원을 하나의 통일된 방식으로 다루게 해주는 스프링의 인터페이스**입니다. 앞에서 본 `PathMatchingResourcePatternResolver.getResources()`가 반환하던 `Resource[]`의 바로 그 타입입니다.
 
 ## 왜 필요한가?
