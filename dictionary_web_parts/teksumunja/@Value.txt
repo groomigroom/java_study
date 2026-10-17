@@ -1,3 +1,5 @@
+import org.springframework.beans.factory.annotation.Value;
+
 스프링 부트에서 @Value는 외부 설정 파일(properties, yml)에 정의된 값을 자바 변수에 주입하는 어노테이션이며, 
 가장 기본이 되는 spring-boot-starter에 포함되어 있습니다. 
 ------------------------------
