@@ -1,3 +1,134 @@
+`org.springframework.web.multipart.MultipartFile`은 스프링 부트에서 사용자가 웹 페이지를 통해 업로드한 파일을 처리하기 위한 인터페이스입니다.
+
+쉽게 말하면, 사용자가 게시판에 이미지나 PDF 파일을 첨부했을 때 서버에서 해당 파일의 이름, 크기, 내용 등을 확인하고 저장할 수 있도록 해 주는 기능입니다.
+
+### 1\. 패키지 이름 분석
+
+```java
+org.springframework.web.multipart.MultipartFile
+```
+
+| 구성 요소               | 의미                 |
+| ------------------- | ------------------ |
+| org.springframework | 스프링 프레임워크          |
+| web                 | 웹 애플리케이션 관련 기능     |
+| multipart           | 파일을 포함한 요청 데이터 처리  |
+| MultipartFile       | 업로드된 파일을 다루는 인터페이스 |
+
+### 2\. 어떤 기능을 제공할까?
+
+자주 사용하는 메서드는 다음과 같습니다.
+
+| 메서드                   | 기능                  |
+| --------------------- | ------------------- |
+| getOriginalFilename() | 업로드한 파일의 원래 이름 반환   |
+| getSize()             | 파일 크기 반환(바이트 단위)    |
+| getContentType()      | 파일의 MIME 타입 반환      |
+| isEmpty()             | 파일이 비어 있는지 확인       |
+| getBytes()            | 파일 내용을 바이트 배열로 반환   |
+| getInputStream()      | 파일 내용을 읽는 입력 스트림 반환 |
+| transferTo()          | 업로드 파일을 지정한 위치에 저장  |
+
+### 3\. 실제 스프링 부트 코드 예제
+
+사용자가 프로필 이미지를 업로드한다고 가정해 보겠습니다.
+
+```java
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+@RestController
+public class FileController {
+
+    @PostMapping("/upload")
+    public String uploadFile(
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
+
+        if (file.isEmpty()) {
+            return "업로드할 파일이 없습니다.";
+        }
+
+        String filename = file.getOriginalFilename();
+        long size = file.getSize();
+
+        return "파일명: " + filename
+                + ", 크기: " + size + "바이트";
+    }
+}
+```
+
+예를 들어 `profile.jpg` 파일을 업로드했다면 다음과 같은 정보를 확인할 수 있습니다.
+
+```text
+파일명: profile.jpg, 크기: 102400바이트
+```
+
+위 코드는 파일 정보를 확인하는 예제이며, 실제 파일을 저장하지는 않습니다.
+
+### 4\. 파일을 실제로 저장하려면?
+
+`MultipartFile`의 `transferTo()` 메서드를 사용할 수 있습니다.
+
+```java
+@PostMapping("/upload")
+public String uploadFile(
+        @RequestParam("file") MultipartFile file
+) throws IOException {
+
+    if (file.isEmpty()) {
+        return "파일을 선택해 주세요.";
+    }
+
+    // 실제 서비스에서는 서버 설정으로 정한
+    // 안전한 저장 경로와 서버 생성 파일명을 사용하세요.
+    File target = new File("/uploads/profile.jpg");
+
+    file.transferTo(target);
+
+    return "파일 저장 완료";
+}
+```
+
+이 코드는 개념을 보여 주는 예제입니다. `/uploads` 디렉터리가 존재하고 서버에 쓰기 권한이 있어야 합니다. 실제 서비스에서는 사용자 파일명을 그대로 경로에 사용하지 말고, 파일 종류와 크기를 검증하고 안전한 파일명을 생성해야 합니다.
+
+### 5\. HTML에서는 어떻게 연결할까?
+
+파일을 업로드하는 HTML 폼은 일반적으로 다음과 같이 작성합니다.
+
+```html
+<form action="/upload"
+      method="post"
+      enctype="multipart/form-data">
+
+    <input type="file" name="file">
+
+    <button type="submit">파일 업로드</button>
+</form>
+```
+
+여기서 중요한 부분은 다음 두 가지입니다.
+
+* `enctype="multipart/form-data"`: 파일 데이터를 전송하기 위한 인코딩 방식입니다.
+
+* `name="file"`: 컨트롤러의 `@RequestParam("file")`과 이름이 일치해야 합니다.
+
+### 6\. 앞에서 배운 `FileCopyUtils`와 차이점
+
+| 구분    | MultipartFile                     | FileCopyUtils            |
+| ----- | --------------------------------- | ------------------------ |
+| 종류    | 인터페이스                             | 유틸리티 클래스                 |
+| 역할    | 웹 요청으로 업로드된 파일을 표현하고 접근           | 파일이나 스트림의 데이터를 복사        |
+| 주요 기능 | 파일명 확인, 크기 확인, 파일 저장              | 파일 내용 복사                 |
+| 패키지   | org.springframework.web.multipart | org.springframework.util |
+
+핵심 정리: `MultipartFile`은 웹에서 업로드된 파일을 다루는 객체이고, `FileCopyUtils`는 파일 데이터를 복사하는 도구입니다. 게시판 첨부파일, 프로필 이미지, PDF 문서 업로드 기능을 개발할 때 `MultipartFile`을 자주 사용합니다.
+
+
+-----------
+
 제공해주신 코드에는 1) 자바 예외 던지기(throws)의 문법적 오타와, 2) MultipartFile 객체를 디스크에 실제 파일로 저장하는 핵심 전송 로직이 누락되어 있어 그대로 실행하면 파일이 물리적으로 저장되지 않습니다.
 자바에서 MultipartFile을 이용해 업로드된 이미지를 지정된 경로에 안전하게 쓰고, 파일 경로를 데이터베이스에 주입하는 완성형 코드를 안내해 드립니다.
 ------------------------------
