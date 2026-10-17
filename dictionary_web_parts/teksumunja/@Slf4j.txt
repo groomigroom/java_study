@@ -1,6 +1,7 @@
 lombok.extern.slf4j.Slf4j
 
-스프링부트에서 `@Slf4j`는 Lombok이 제공하는 어노테이션으로, 로그를 기록하기 위한 `log` 객체를 자동으로 생성해 주는 역할을 합니다.
+스프링부트에서 `@Slf4j`는 Lombok이 제공하는 어노테이션으로, 로그를 기록하기 
+위한 `log` 객체를 자동으로 생성해 주는 역할을 합니다.
 
 ## 1. `lombok.extern.slf4j.Slf4j`란?
 
@@ -46,7 +47,8 @@ private static final Logger log =
 | `log.error()` | 오류 로그 출력 |
 | `log.debug()` | 디버깅용 로그 출력 |
 
-여기서 SLF4J는 로깅을 위한 인터페이스이고, 실제 로그 출력은 일반적으로 Spring Boot에서 사용하는 Logback 같은 로깅 구현체가 담당합니다.
+여기서 SLF4J는 로깅을 위한 인터페이스이고, 실제 로그 출력은 일반적으로 Spring Boot에서 
+사용하는 Logback 같은 로깅 구현체가 담당합니다.
 
 ## 3. 로그 레벨별 사용 예시
 
@@ -76,7 +78,8 @@ public class OrderService {
 
 `{}`는 로그 메시지에 변수를 넣을 때 사용합니다.
 
-예를 들어 `log.info("주문 ID: {}", orderId)`는 `orderId`가 `100`이라면 `주문 ID: 100`으로 출력됩니다.
+예를 들어 `log.info("주문 ID: {}", orderId)`는 `orderId`가 `100`이라면 
+`주문 ID: 100`으로 출력됩니다.
 
 ## 4. `@Slf4j`를 사용하지 않으면?
 
@@ -101,4 +104,5 @@ public class UserController {
 
 `@Slf4j`를 사용하면 이 반복적인 선언을 생략할 수 있습니다.
 
-정리하면: `@Slf4j`는 Spring Boot 전용 어노테이션이 아니라 Lombok의 어노테이션입니다. 스프링부트 프로젝트에서 로그를 편리하게 작성하도록 도와주며, 실제 로그 출력은 SLF4J와 연결된 로깅 구현체가 처리합니다.
+정리하면: `@Slf4j`는 Spring Boot 전용 어노테이션이 아니라 Lombok의 어노테이션입니다.
+스프링부트 프로젝트에서 로그를 편리하게 작성하도록 도와주며, 실제 로그 출력은 SLF4J와 연결된 로깅 구현체가 처리합니다.
