@@ -14,23 +14,31 @@
 프록시 기반의 Spring AOP는 오직 '메서드 실행 시점'만 JoinPoint로 지원합니다. 따라서 스프링 부트에서 
 JoinPoint는 현재 실행 중인 메서드를 뜻합니다. 
 [1] (https://mingeun2154.github.io/spring%20boot/aspect-example-01/)
-• AOP의 핵심 정보원: 부가 기능 코드(@Before, @After 등)의 파라미터로 JoinPoint를 선언하면, 스프링이 현재 실행 컨텍스트를 주입해 줍니다. [1] (https://vmpo.tistory.com/100), [2] (https://codesyun.tistory.com/entry/Spring-Spring-AOP%EB%A1%9C-Log-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0-Around-Before-After)
+• AOP의 핵심 정보원: 부가 기능 코드(@Before, @After 등)의 파라미터로 JoinPoint를 선언하면, 
+스프링이 현재 실행 컨텍스트를 주입해 줍니다. 
+[1] (https://vmpo.tistory.com/100), 
+[2] (https://codesyun.tistory.com/entry/Spring-Spring-AOP%EB%A1%9C-Log-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0-Around-Before-After)
 
 2. 자주 사용하는 메서드
 
 JoinPoint 인터페이스가 제공하는 대표적인 메서드는 다음과 같습니다.
 • getSignature(): 호출된 메서드의 명세(이름, 리턴 타입, 패키지 경로 등)를 반환합니다.
-	• joinPoint.getSignature().getName() 형태로 메서드 이름만 쏙 뽑아 로깅할 때 가장 많이 씁니다. [1] (https://adjh54.tistory.com/133)
+	• joinPoint.getSignature().getName() 형태로 메서드 이름만 쏙 뽑아 로깅할 때 
+가장 많이 씁니다. 
+[1] (https://adjh54.tistory.com/133)
 • getArgs(): 메서드로 전달된 실제 매개변수(인자)들을 Object[] 배열로 반환합니다.
-• getTarget(): 대상 비즈니스 로직을 가진 원본 객체(Target Object)를 반환합니다. [1] (https://codesyun.tistory.com/entry/Spring-Spring-AOP%EB%A1%9C-Log-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0-Around-Before-After)
+• getTarget(): 대상 비즈니스 로직을 가진 원본 객체(Target Object)를 반환합니다. 
+[1] (https://codesyun.tistory.com/entry/Spring-Spring-AOP%EB%A1%9C-Log-%EA%B8%B0%EB%A1%9D%ED%95%98%EA%B8%B0-Around-Before-After)
 
 3. JoinPoint vs ProceedingJoinPoint 차이점
 
 코드를 작성하다 보면 이 두 가지를 보게 됩니다.
 
 구분	JoinPoint	ProceedingJoinPoint
-사용 가능 어노테이션	@Before, @After, @AfterReturning, @AfterThrowing	오직 @Around에서만 사용 가능
-특징	정보를 조회할 수만 있고, 메서드의 실행 흐름을 제어할 수는 없습니다.	핵심 기능의 실행 여부 및 시점을 직접 제어할 수 있는 proceed() 메서드를 제공합니다.
+사용 가능 어노테이션	@Before, @After, @AfterReturning, @AfterThrowing	
+		오직 @Around에서만 사용 가능
+특징	정보를 조회할 수만 있고, 메서드의 실행 흐름을 제어할 수는 없습니다.	
+		핵심 기능의 실행 여부 및 시점을 직접 제어할 수 있는 proceed() 메서드를 제공합니다.
 
 java
 // @Before 예시: 메서드 실행 전에 로그만 찍음 (흐름 제어 불가)
