@@ -1,0 +1,32 @@
+java.lang.annotation.Documented
+
+스프링 부트(Spring Boot)에서 @Documented는 해당 어노테이션이 자바독(Javadoc)과 같은 API 문서에 포함되도록 지정하는 메타 어노테이션(어노테이션을 위한 어노테이션)입니다. [1] (https://dev-coco.tistory.com/24), [2] (https://www.youtube.com/watch?v=JCu0NOab5mU&t=55)
+스프링 부트 전용 기술은 아니며 Java 표준(java.lang.annotation.Documented) 문법이지만, 스프링 부트 프레임워크가 제공하는 수많은 핵심 기능(예: @SpringBootApplication, @RestController, @Service 등)의 내부 구현을 살펴보면 거의 항상 이 @Documented가 붙어 있습니다. [1] (https://velog.io/@ferrorist/Java-Annotation), [2] (https://velog.io/@gehwan96/SpringBootApplication%EC%9D%B4%EB%9E%80)
+구체적인 의미와 효과는 다음과 같습니다.
+
+1. Javadoc 문서화 대상 명시
+
+기본적으로 자바에서 커스텀 어노테이션을 만들면, 그 어노테이션을 적용한 클래스로 Javadoc 문서를 생성했을 때 문서상에 어떤 어노테이션이 붙어 있는지 표시되지 않습니다. 하지만 어노테이션 정의부에 @Documented를 붙여두면, 이를 사용하는 클래스가 문서화될 때 "이 클래스에는 어떤 어노테이션이 적용되어 있다"는 사실이 문서상에 명확히 기록됩니다. [1] (https://dev-coco.tistory.com/24), [2] (https://velog.io/@gehwan96/SpringBootApplication%EC%9D%B4%EB%9E%80)
+
+2. 스프링 부트에서의 실제 예시
+
+스프링 부트의 가장 대표적인 어노테이션인 @SpringBootApplication 소스코드를 열어보면 아래와 같이 구성되어 있습니다. [1] (https://velog.io/@gehwan96/SpringBootApplication%EC%9D%B4%EB%9E%80)
+java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented // <-- 바로 이 부분!
+@Inherited
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan
+public @interface SpringBootApplication {
+    // ...
+}
+코드를 사용할 때는 주의가 필요합니다.
+이 덕분에 개발자가 만든 메인 클래스(ExampleApplication)의 자바독 문서를 뽑아보면, 해당 클래스 선언부 위에 @SpringBootApplication이 적용되어 있다는 정보가 문서에 함께 노출됩니다.
+
+요약
+
+• 역할: 어노테이션의 정보가 Javadoc 등의 API 문서에 포함되도록 만듭니다.
+• 스프링 부트에서의 의미: 스프링이 제공하는 다양한 기능성 어노테이션들의 시각적 문서화 및 메타데이터 추적을 보장하기 위해 기본적으로 널리 사용됩니다. 만약 직접 스프링 부트에서 커스텀 어노테이션을 만들어 다른 개발자들과 공유할 계획이라면 @Documented를 함께 붙여주는 것이 좋은 관례(Best Practice)입니다. [1] (https://livenow14.tistory.com/24), [2] (https://dev-coco.tistory.com/24), [3] (https://www.youtube.com/watch?v=JCu0NOab5mU&t=55), [4] (https://velog.io/@gehwan96/SpringBootApplication%EC%9D%B4%EB%9E%80), [5] (https://velog.io/@ferrorist/Java-Annotation)
+혹시 스프링 부트에서 사용하기 위해 커스텀 어노테이션을 직접 설계하고 계신가요? 구현하시려는 기능이나 목적을 말씀해 주시면, 함께 쓰면 좋은 다른 메타 어노테이션(@Retention, @Target 등)의 설정값도 함께 추천해 드릴 수 있습니다.
