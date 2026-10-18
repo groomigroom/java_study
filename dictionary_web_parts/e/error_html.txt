@@ -1,0 +1,25 @@
+스프링 부트(Spring Boot)에서 커스텀 404 에러 페이지 (404.html)를 설정하는 방법과 404 오류가 발생하는 원인을 해결하는 방법은 다음과 같습니다.
+
+1. 커스텀 404 에러 페이지 만들기 (404.html)
+
+스프링 부트는 규약에 따라 특정 이름과 위치에 에러 HTML 파일을 두면, 별도의 코드 작성 없이 자동으로 에러 페이지를 매핑해 줍니다. [1] (https://lordofkangs.tistory.com/534)
+
+파일 위치
+
+• Thymeleaf, FreeMarker 등 템플릿 엔진을 사용할 경우:
+	• 경로: src/main/resources/templates/error/404.html
+• 순수 정적 HTML 파일만 사용할 경우:
+	• 경로: src/main/resources/static/error/404.html
+참고: 스프링 부트는 기본적으로 /error 요청을 처리하며, 에러 상태 코드(예: 404, 500 등)에 맞춰 error/상태코드.html 파일을 찾아 보여줍니다. 전체 공통 에러 페이지는 error.html로 만들 수도 있습니다. [1] (https://goddaehee.tistory.com/214), [2] (https://medium.com/@js230023/spring-boot-custom-error-page-620177f6c574)
+
+2. 404 에러가 발생하는 주요 원인 및 해결 방법
+
+404 Not Found는 서버는 켜져 있지만, 요청한 URL에 매핑된 핸들러(컨트롤러)나 정적 리소스가 없을 때 발생합니다. [1] (https://buchu-doodle.tistory.com/170), [2] (https://dlwnsdud205.tistory.com/295), [3] (https://www.shopify.com/kr/blog/404-error)
+• 컨트롤러 매핑(@RequestMapping / @GetMapping) 누락 또는 오탈자
+	• @RestController 혹은 @Controller가 클래스에 붙어 있는지 확인합니다.
+	• @GetMapping("/hello")처럼 URL 경로가 정확한지 확인합니다.
+• 프로젝트 패키지 구조 문제 (ComponentScan 범위 바깥)
+	• 메인 클래스(@SpringBootApplication이 붙은 클래스)가 위치한 패키지 하위에 컨트롤러가 있는지 확인하세요. 상위 패키지에 있으면 스프링이 빈(Bean)으로 스캔하지 못해 404가 뜰 수 있습니다.
+• 정적 자원(css, js, html) 경로 문제
+	• 정적 파일은 src/main/resources/static/ 폴더 아래에 있어야 http://localhost:8080/파일명.html 형태로 접근할 수 있습니다.
+스프링 부트에서 템플릿 엔진(Thymeleaf 등)을 사용 중이신지, 아니면 정적 HTML 파일을 띄우려다 404가 발생하는 상황인지 알려주시면 더 구체적인 코드를 안내해 드릴 수 있습니다.
