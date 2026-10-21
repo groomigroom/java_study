@@ -1,3 +1,5 @@
+jakarta.validation.constraints.Min
+
 자바 스프링 부트(Spring Boot)에서 @Min 어노테이션의 의미와 이것이 포함된 스타터 의존성(Starter Dependency)에 대한 핵심 요약입니다.
 ------------------------------
 ## 1. @Min이란 무엇인가요?
