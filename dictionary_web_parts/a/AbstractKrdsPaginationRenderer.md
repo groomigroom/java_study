@@ -30,3 +30,17 @@ protected String previousPageLabel;
 protected String nextPageLabel;
 protected String firstPageLabel;
 protected String currentPageLabel;
+
+java
+```
+//아래와 같은 내용들도 미리 선언되어서 대입해서 사용 가능함.
+previousPageLabel = "<a onclick=\"{0}({1})\" class=\"page-navi prev\" href=\"#\">이전</a>";
+		previousPageDisabledLabel = "<span class=\"page-navi prev disabled\">이전</span>";
+	    firstPageLabel = "<a onclick=\"{0}({1})\" class=\"page-link\" href=\"#\">{2}</a>";
+	    currentPageLabel = "<a class=\"page-link active\" href=\"#\">{0}</a>";
+	    otherPageLabel = "<a onclick=\"{0}({1})\" class=\"page-link\" href=\"#\">{2}</a>";
+	    nextPageLabel = "<a onclick=\"{0}({1})\" class=\"page-navi next\" href=\"#\">다음</a>";
+		nextPageDisabledLabel = "<span class=\"page-navi next disabled\">다음</span>";
+	    lastPageLabel = "<a onclick=\"{0}({1})\" class=\"page-link\" href=\"#\">{2}</a>";
+	    dotPageLabel = "<span class=\"page-link link-dot\">...</span>";	
+```
