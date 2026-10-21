@@ -73,3 +73,74 @@ XML 등에 정의된 SQL 실행
 전자정부프레임워크 버전에 따라 세부적인 구현은 달라질 수 있습니다.
 
 원하시면  EgovMapper와 일반 MyBatis Mapper 비교 또는  Mapper XML과 자바 메서드 연결 원리를 이어서 설명해 드릴게요.
+
+---------------------
+
+`@EgovMapper("sampleMapper")`에서 따옴표 안의 `"sampleMapper"`는 Mapper를 식별하기 위한 이름(ID) 을 의미해요.
+
+## 1. 코드 살펴보기
+
+java
+```
+@EgovMapper("sampleMapper")
+public interface SampleMapper {
+    SampleVO selectSample(SampleVO vo) throws Exception;
+}
+```
+
+여기서 각 요소의 의미는 다음과 같습니다.
+
+- `@EgovMapper`: 이 인터페이스를 Mapper로 등록하기 위한 어노테이션입니다.
+- `"sampleMapper"`: 스프링에서 해당 Mapper를 구분할 때 사용하는 이름입니다.
+- `SampleMapper`: 자바 인터페이스의 이름입니다.
+
+## 2. 이 이름은 어디에 사용될까?
+
+예를 들어 서비스 클래스에서 다음처럼 사용한다고 해볼게요.
+
+java
+```
+@Resource(name = "sampleMapper")
+private SampleMapper sampleMapper;
+```
+
+이 코드에서 `name = "sampleMapper"`는 앞에서 지정한 Mapper 이름을 이용해 해당 객체를 주입받는다는 의미입니다.
+
+Mapper 등록
+
+`@EgovMapper("sampleMapper")`
+
+이름으로 객체 주입
+
+`@Resource(name = "sampleMapper")`
+
+Mapper 메서드 호출
+
+`sampleMapper.selectSample(vo)`
+
+즉, 이름을 통해 어떤 Mapper 객체를 사용할지 구분하는 구조입니다.
+
+## 3. 따옴표 안의 이름을 바꿔도 될까?
+
+가능하지만, 해당 Mapper를 이름으로 참조하는 다른 코드도 함께 변경해야 합니다.
+
+java
+```
+@EgovMapper("userMapper")
+public interface SampleMapper {
+}
+```
+
+이렇게 바꿨다면 이름으로 주입하는 코드도 다음과 같이 맞춰야 합니다.
+
+java
+```
+@Resource(name = "userMapper")
+private SampleMapper sampleMapper;
+```
+
+이름이 일치하지 않으면 스프링이 해당 객체를 찾지 못해 주입 오류가 발생할 수 있습니다.
+
+참고: 정확한 동작은 프로젝트에서 사용하는 전자정부프레임워크 버전과 `@EgovMapper`의 실제 정의에 따라 달라질 수 있어요.
+
+다음으로  인터페이스가 스프링 객체가 되는 원리도 알아보면 이해하기 쉬워요.
