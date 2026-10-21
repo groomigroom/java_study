@@ -22,4 +22,4 @@
 ## [SameSite=None|Strict|None]
 * 크로스 사이트로 전송하는 요청의 경우 쿠키 전송에 제한
 
-## set-cookie: 1P_JAR=2021-11-27-06; expires=Mon, 27-Dec-2021 06:21:38 
+## set-cookie: 1P_JAR=2021-11-27-06; expires=Mon, 27-Dec-2021 06:21:38 GMT; path=/; domain=.google.com; Secure; SameSite=none
