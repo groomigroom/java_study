@@ -102,3 +102,101 @@ implementation 'org.apache.commons:commons-lang3'
 한마디로 정리하면: `ToStringBuilder`는 자바 객체의 필드들을 문자열로 편리하게 변환해서 로그나 디버깅에 활용하도록 도와주는 클래스야.
 
 원하면  ToStringBuilder와 Lombok @ToString 비교 도 설명해 줄게.
+
+
+--------
+
+`reflectionToString()`은 Apache Commons Lang의 `ToStringBuilder`에서 제공하는 메서드로, 자바 리플렉션(Reflection)을 이용해 객체의 필드 값을 자동으로 읽고 문자열로 변환하는 기능이야.
+
+쉽게 말해, 객체의 필드를 하나씩 직접 꺼내서 문자열로 만들지 않아도 자동으로 출력해 주는 거야.
+
+## 1. 사용 예제
+
+java
+```
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class User {
+    private String name = "Kim";
+    private int age = 25;
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(
+            this,
+            ToStringStyle.SHORT_PREFIX_STYLE
+        );
+    }
+}
+```
+
+다음 코드를 실행하면,
+
+java
+```
+User user = new User();
+System.out.println(user.toString());
+```
+
+출력 결과는 다음과 같아.
+
+text
+```
+User[name=Kim,age=25]
+```
+
+`name`과 `age`를 직접 가져와서 연결하지 않았는데도 필드 값이 출력되는 거지.
+
+## 2. 내부적으로 어떤 일을 할까?
+
+1. 객체 전달
+
+`this` (User 객체)
+
+2. 리플렉션으로 필드 정보 조회
+
+필드명과 필드 값을 읽음
+
+3. 문자열 생성
+
+`User[name=Kim,age=25]`
+
+일반적으로 리플렉션을 사용하면 `private` 필드도 접근 가능한 경우 읽을 수 있어. 다만 Java 모듈 접근 제한 등으로 접근이 차단될 수 있고, 모든 필드가 무조건 읽히는 건 아니야.
+
+## 3. 직접 구현하는 방식과 비교
+
+직접 구현하는 경우
+
+java
+```
+@Override
+public String toString() {
+    return "User[name=" + name + ", age=" + age + "]";
+}
+```
+
+`reflectionToString()`을 사용하는 경우
+
+java
+```
+@Override
+public String toString() {
+    return ToStringBuilder.reflectionToString(this);
+}
+```
+
+두 번째 방식은 필드가 추가되더라도 문자열 생성 코드를 매번 수정할 필요가 적다는 장점이 있어.
+
+## 4. 주의할 점
+
+- 성능: 리플렉션을 사용하므로 단순히 필드를 직접 연결하는 것보다 비용이 발생할 수 있어.
+- 민감 정보: `private` 필드도 출력될 수 있으므로 비밀번호나 인증 토큰이 노출되지 않도록 주의해야 해.
+- 순환 참조: 객체끼리 서로 참조하는 구조에서는 출력 방식에 따라 문제가 발생할 수 있어.
+
+참고로 `ToStringBuilder.reflectionToString()`은 `ReflectionToStringBuilder`를 활용하는 편의 메서드야.
+
+한마디로, `reflectionToString()`은 리플렉션을 통해 객체의 필드 값을 자동으로 읽어서 `toString()` 결과를 만들어 주는 메서드야.
+
+원하면  Java 리플렉션이란? 도 알아볼 수 있어.
