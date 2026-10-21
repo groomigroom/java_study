@@ -109,3 +109,106 @@ public CustomDialect customDialect() {
 참고로 `org.thymeleaf.dialect.AbstractDialect`의 정확한 메서드와 구현 방식은 사용 중인 Thymeleaf 버전에 따라 확인하는 것이 좋습니다.
 
 한 문장으로 정리하면, `AbstractDialect`는 Thymeleaf에 프로젝트만의 템플릿 문법이나 처리 기능을 추가할 수 있도록 제공되는 추상 기반 클래스입니다.
+
+
+------
+
+# EgovPaginationDialect()
+
+여기서 `super("EgovPaginationDialect");`는 부모 클래스의 생성자(Constructor)를 호출하는 코드입니다.
+
+앞서 질문하신 `AbstractDialect`와 연결해서 보면 이해하기 쉽습니다.
+
+## 1. 코드부터 살펴보겠습니다
+
+java
+```
+public EgovPaginationDialect(
+        EgovKrdsPaginationRenderer egovKrdsPaginationRenderer) {
+
+    super("EgovPaginationDialect");
+
+    this.egovKrdsPaginationRenderer = egovKrdsPaginationRenderer;
+}
+```
+
+이 코드는 크게 두 가지 일을 합니다.
+
+- `super("EgovPaginationDialect")`: 부모 클래스의 생성자를 호출하면서 Dialect 이름을 전달합니다.
+- `this.egovKrdsPaginationRenderer = egovKrdsPaginationRenderer`: 생성자로 전달받은 렌더러 객체를 현재 객체의 필드에 저장합니다.
+
+## 2. `super()`는 무엇인가요?
+
+Java에서 `super`는 부모 클래스를 가리키는 키워드입니다.
+
+부모 클래스가 다음과 같이 정의되어 있다고 가정해 보겠습니다.
+
+java
+```
+public abstract class AbstractDialect {
+
+    private final String name;
+
+    public AbstractDialect(String name) {
+        this.name = name;
+    }
+}
+```
+
+자식 클래스에서는 다음처럼 부모 생성자를 호출할 수 있습니다.
+
+java
+```
+public class EgovPaginationDialect extends AbstractDialect {
+
+    public EgovPaginationDialect() {
+        super("EgovPaginationDialect");
+    }
+}
+```
+
+이때 `super("EgovPaginationDialect")`가 실행되면 부모 생성자의 `name` 매개변수에 문자열이 전달됩니다.
+
+즉, 부모 클래스가 관리하는 이름을 초기화하는 것입니다.
+
+참고로 실제 Thymeleaf의 `AbstractDialect` 구현은 라이브러리 버전의 소스 코드를 기준으로 확인해야 합니다. 위 코드는 생성자 호출 원리를 설명하기 위한 예시입니다.
+
+## 3. 그렇다면 왜 이름을 전달하나요?
+
+`EgovPaginationDialect`는 앞서 살펴본 것처럼 Thymeleaf의 템플릿 처리 기능을 확장하는 Dialect입니다.
+
+java
+```
+super("EgovPaginationDialect");
+```
+
+이 문자열은 해당 Dialect의 이름을 지정하기 위해 전달하는 값입니다.
+
+여기서 주의할 점은 이 이름이 HTML에서 사용하는 `th:` 같은 속성 접두사와 반드시 같은 의미는 아니라는 것입니다. Dialect 이름과 템플릿 속성의 접두사는 별개의 개념입니다.
+
+## 4. `super`와 `this`의 차이
+
+| 코드 | 의미 |
+| --- | --- |
+| `super(...)` | 부모 클래스의 생성자 호출 |
+| `super.someMethod()` | 부모 클래스의 메서드 호출 |
+| `this.field` | 현재 객체의 필드 참조 |
+| `this(...)` | 같은 클래스의 다른 생성자 호출 |
+
+따라서 질문하신 코드에서는 다음과 같이 이해하면 됩니다.
+
+java
+```
+super("EgovPaginationDialect");
+```
+
+→ 부모 클래스의 초기화 작업을 수행하면서 Dialect 이름을 전달합니다.
+
+java
+```
+this.egovKrdsPaginationRenderer = egovKrdsPaginationRenderer;
+```
+
+→ 전달받은 페이지네이션 렌더러 객체를 현재 Dialect 객체의 필드에 저장합니다.
+
+한 문장으로 정리하면, `super("EgovPaginationDialect")`는 부모 클래스인 `AbstractDialect`의 생성자를 호출해 이 Dialect의 이름을 초기화하는 코드입니다.
