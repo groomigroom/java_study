@@ -79,3 +79,18 @@ implementation 'org.springframework.boot:spring-boot-starter-validation'
 참고로 스프링 부트 2에서는 주로 `javax.validation.constraints.Pattern`을 사용했고, 스프링 부트 3부터는 `jakarta.validation.constraints.Pattern`을 사용해.
 
 더 알아보고 싶다면  정규표현식 문법 설명 또는  @Pattern과 @Valid의 차이 도 확인해 볼 수 있어.
+
+---------------
+
+# 예시
+
+```
+@Pattern(regexp = "^$|0|1")
+^$ : 빈 문자열
+
+| : OR (또는)
+
+0 : 문자열 안에 0이 있는 경우
+
+1 : 문자열 안에 1이 있는 경우
+```
