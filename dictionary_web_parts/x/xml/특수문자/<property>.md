@@ -16,6 +16,7 @@ setter 메소드를 호출하여 종속성을 주입한다.<br>
 <bean id="yetAnotherBean" class="examples.YetAnotherBean"/>
 ```
 
+```java
 public class ExampleBean {
    private AnotherBean beanOne;
    private YetAnotherBean beanTwo;
@@ -33,3 +34,4 @@ public class ExampleBean {
        this.i = i;
    }    
 }
+```
