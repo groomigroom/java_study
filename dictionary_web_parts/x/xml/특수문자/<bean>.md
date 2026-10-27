@@ -101,7 +101,9 @@ public class Foo {
 </beans>
 ```
 # depends-on
-bean들간의 종속성은 ‘’<ref/>’’ element에 의해 표현된다. 하지만 드물게 이런 종속성이 직접 나타나지 않는 경우도 있다(예를 들면, database driver 등록처럼 static 메소드에 의해 초기화되어야 하는 경우 등). 이런 경우 ‘depends-on’ attribute를 사용하여 명시적으로 종속성을 표현할 수 있다.
+* bean들간의 종속성은 ‘’<ref/>’’ element에 의해 표현된다.
+* 하지만 드물게 이런 종속성이 직접 나타나지 않는 경우도 있다(예를 들면, database driver 등록처럼 static 메소드에 의해 초기화되어야 하는 경우 등).
+* 이런 경우 ‘depends-on’ attribute를 사용하여 명시적으로 종속성을 표현할 수 있다.
 ```xml
 <bean id="beanOne" class="ExampleBean" depends-on="manager"/>
  
