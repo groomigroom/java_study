@@ -1,0 +1,32 @@
+AOP(Aspect-Oriented Programming, 관점 지향 프로그래밍)는 프로그램의 핵심 기능(Core Concern)과 여러 곳에서 공통적으로 쓰이는 부가 기능(Cross-Cutting Concern, 횡단 관심사)을 분리하여 모듈화하는 프로그래밍 패러다임입니다. [1] (https://namu.wiki/w/%EA%B4%80%EC%A0%90%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D), [2] (https://velog.io/@nayeon010508/%EA%B4%80%EC%A0%90-%EC%A7%80%ED%96%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-AOP-Aspect-Oriented-Programming-%EA%B0%9C%EB%85%90)
+OOP(객체 지향 프로그래밍)를 대체하는 기술이 아니라, OOP의 한계를 보완해 주는 보조적 프로그래밍 기법입니다. [1] (https://ji-hwaja.tistory.com/42)
+
+1. 주요 개념 (핵심 용어)
+
+• 핵심 관심사 (Core Concern): 사용자가 요청한 주요 업무 로직 (예: 계좌이체, 상품 주문, 회원가입 등) [1] (https://translate.google.com/translate?u=https://en.wikipedia.org/wiki/Aspect-oriented_programming&hl=ko&sl=en&tl=ko&client=sge), [2] (https://namu.wiki/w/%EA%B4%80%EC%A0%90%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D)
+• 횡단 관심사 (Cross-cutting Concern): 여러 핵심 로직에 걸쳐 공통적으로 반복해서 사용되는 부가 기능 (예: 로깅, 보안/인증, 트랜잭션 관리, 성능 측정) [1] (https://www.youtube.com/watch?v=txSJZN48RzA), [2] (https://namu.wiki/w/%EA%B4%80%EC%A0%90%20%EC%A7%80%ED%96%A5%20%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D), [3] (https://translate.google.com/translate?u=https://en.wikipedia.org/wiki/Aspect-oriented_programming&hl=ko&sl=en&tl=ko&client=sge)
+• 애스펙트 (Aspect): 횡단 관심사를 모듈화한 단위로, 부가 기능 코드와 그 기능이 적용될 위치(Pointcut)를 정의한 것 [1] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP), [2] (https://translate.google.com/translate?u=https://en.wikipedia.org/wiki/Aspect-oriented_programming&hl=ko&sl=en&tl=ko&client=sge)
+• 조인 포인트 (Join Point): 부가 기능이 적용될 수 있는 실행 가능한 시점 (예: 메서드 호출 전후, 예외 발생 시점 등) [1] (https://translate.google.com/translate?u=https://en.wikipedia.org/wiki/Aspect-oriented_programming&hl=ko&sl=en&tl=ko&client=sge), [2] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP)
+• 포인트컷 (PointCut): 조인 포인트 중에서 실제로 부가 기능을 적용할 위치를 선별하는 필터 역할 [1] (https://translate.google.com/translate?u=https://en.wikipedia.org/wiki/Aspect-oriented_programming&hl=ko&sl=en&tl=ko&client=sge), [2] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP)
+• 어드바이스 (Advice): 조인 포인트에서 실제로 실행해야 하는 부가 기능 코드 자체 (Before, After, Around 등) [1] (https://translate.google.com/translate?u=https://en.wikipedia.org/wiki/Aspect-oriented_programming&hl=ko&sl=en&tl=ko&client=sge), [2] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP)
+• 타겟 (Target): 어드바이스를 받는 대상 객체 (핵심 로직을 가진 객체) [1] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP)
+• 프록시 (Proxy): 타겟을 감싸서 타겟의 요청을 대신 받아주고, 부가 기능을 실행해 주는 대리자 객체 (주로 Spring AOP에서 사용) [1] (https://www.youtube.com/watch?v=Hm0w_9ngDpM&t=405), [2] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP), [3] (https://www.youtube.com/watch?v=txSJZN48RzA)
+
+2. AOP를 쓰는 이유 (장점)
+
+• 코드 중복 제거: 로깅이나 트랜잭션 처럼 모든 메서드마다 반복되던 코드를 한 곳에 모아 관리할 수 있습니다.
+• 유지보수성 향상: 공통 기능에 변경 사항이 생겼을 때, 핵심 비즈니스 로직을수정할 필요 없이 애스펙트(Aspect)만 수정하면 됩니다.
+• 핵심 로직의 가독성 향상: 비즈니스 코드 안에 보안 검사나 로그 출력 코드가 뒤섞이지 않아 핵심 로직에만 집중할 수 있습니다. [1] (https://mangkyu.tistory.com/121), [2] (https://velog.io/@nayeon010508/%EA%B4%80%EC%A0%90-%EC%A7%80%ED%96%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-AOP-Aspect-Oriented-Programming-%EA%B0%9C%EB%85%90), [3] (https://www.youtube.com/watch?v=txSJZN48RzA)
+
+3. 대표적인 활용 예시
+
+• 로깅 (Logging): 메서드가 실행될 때마다 호출 시간이나 입력값을 로그로 남길 때
+• 트랜잭션 (Transaction): 서비스 계층에서 데이터베이스 트랜잭션을 시작하고, 성공 시 커밋, 실패 시 롤백할 때
+• 보안 및 권한 검사 (Security): 특정 메서드를 실행하기 전에 사용자가 로그인했는지, 권한이 있는지 확인할 때
+• 성능 측정 (Performance Monitoring): 메서드 실행에 걸린 시간을 측정할 때 (MangKyu's Diary 등 참고) [1] (https://mangkyu.tistory.com/121), [2] (https://translate.google.com/translate?u=https://en.wikipedia.org/wiki/Aspect-oriented_programming&hl=ko&sl=en&tl=ko&client=sge), [3] (https://velog.io/@nayeon010508/%EA%B4%80%EC%A0%90-%EC%A7%80%ED%96%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-AOP-Aspect-Oriented-Programming-%EA%B0%9C%EB%85%90), [4] (https://www.youtube.com/watch?v=txSJZN48RzA)
+
+4. Spring AOP의 특징
+
+자바 진영의 Spring AOP (Spring AOP)는 프록시(Proxy) 패턴을 기반으로 동작합니다.
+스프링 빈(Bean)에만 AOP를 적용할 수 있으며, AspectJ 같은 다른 AOP 프레임워크에 비해 복잡한 설정 없이 애너테이션(@Aspect, @Around, @Before 등)을 통해 손쉽게 구현할 수 있습니다. [1] (https://mangkyu.tistory.com/121), [2] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP), [3] (https://www.youtube.com/watch?v=Hm0w_9ngDpM&t=405)
+스프링 기반 프로젝트에서 특정 AOP 애너테이션(@Around, @Before 등)의 구체적인 사용법이나 예제 코드가 필요하시면 편하게 말씀해 주세요.
