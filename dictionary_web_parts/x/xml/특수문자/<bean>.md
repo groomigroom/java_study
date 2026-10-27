@@ -148,4 +148,7 @@ public class Foo {
 </beans>
 ```
 # 자동엮기(Autowiring collaborators)
-Spring Container는 서로 관계된 bean들을 자동으로 엮어(autowire)줄 수 있다. 자동엮기(autowiring)는 각각의 bean 단위로 설정된다. 자동엮기(autowiring) 기능을 사용하면 property나 생성자 argument를 지정할 필요가 없어지므로, 타이핑일 줄일 수 있다. 자동엮기(autowiring)에는 5가지 모드가 있으며, XML 기반 설정에서는 <bean/> element의 ‘autowire’ attribute를 사용하여 설정할 수 있다.
+* Spring Container는 서로 관계된 bean들을 자동으로 엮어(autowire)줄 수 있다.
+* 자동엮기(autowiring)는 각각의 bean 단위로 설정된다.
+* 자동엮기(autowiring) 기능을 사용하면 property나 생성자 argument를 지정할 필요가 없어지므로, 타이핑일 줄일 수 있다.
+* 자동엮기(autowiring)에는 5가지 모드가 있으며, XML 기반 설정에서는 <bean/> element의 ‘autowire’ attribute를 사용하여 설정할 수 있다.
