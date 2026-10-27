@@ -5,3 +5,12 @@
 * 별도의 추가 설정은 필요없다.( DispatcherServlet과 DispatcherPortlet은 이미 모든 관련있는 상태를 제공한다.)
 * 만약 Servlet 2.4+ web Container를 사용하고, JSF나 Struts 등과 같이 Spring의 DispatcherServlet의 외부에서 요청을 처리하는 경우,
 * 다음 jakarta.servlet.ServletRequestListener를 ‘web.xml’ 파일에 추가해야 한다.
+```xml
+<web-app>
+   ...
+   <listener>
+       <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+   </listener>
+   ...
+</web-app>
+```
