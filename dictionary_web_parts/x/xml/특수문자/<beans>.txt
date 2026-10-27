@@ -1,0 +1,1 @@
+<beans> tag는 Spring IoC Container의 설정 정보를 나타내는 tag이다.
