@@ -1,17 +1,8 @@
-# Java Collection 타입인 Map을 표현
+# Java Collection 타입인 Properties를 표현
 ```xml
-<map>
-      <entry>
-          <key>
-              <value>an entry</value>
-          </key>
-          <value>just some string</value>
-      </entry>
-      <entry>
-          <key>
-              <value>a ref</value>
-          </key>
-          <ref bean="myDataSource" />
-      </entry>
-</map>
+<props>
+      <prop key="administrator">administrator@example.org</prop>
+      <prop key="support">support@example.org</prop>
+      <prop key="development">development@example.org</prop>
+</props>
 ```
