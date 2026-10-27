@@ -75,3 +75,28 @@ public class Foo {
        p:email="foo@bar.com"/>
 </beans>
 ```
+# ref
+* bean 객체의 참조를 삽입하는 예제이다.
+* Attribute 이름 끝에 ‘-ref’를 붙이면 참조로 인식한다.
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+   <bean name="john-classic" class="com.example.Person">
+       <property name="name" value="John Doe"/>
+       <property name="spouse" ref="jane"/>
+   </bean>
+ 
+   <bean name="john-modern" 
+       class="com.example.Person"
+       p:name="John Doe"
+       p:spouse-ref="jane"/>
+ 
+   <bean name="jane" class="com.example.Person">
+       <property name="name" value="Jane Doe"/>
+   </bean>
+</beans>
+```
