@@ -136,3 +136,9 @@ public class Foo {
  
 <bean name="not.lazy" class="com.foo.AnotherBean"/>
 ```
+* 늦은 객체화에 대해서 이해하고 있어야 하는 것은,
+* 만약 늦은 객체화로 설정된 bean에 대해서 그렇지 않은 singleton bean이 종속성을 가지고 있다면,
+* ApplicationContext는 시작 시에 singleton bean이 종속하고 있는 모든 bean을 생성한다는 것이다.
+* 즉, 명시적으로 늦은 객체화로 선언한 bean이라도 시작 시에 생성될 수 있다.
+
+* 그리고, <beans/> element의 ‘default-lazy-init’ attribute를 사용하여 Container 레벨에서의 늦은 객체화를 설정할 수 있다.
