@@ -109,3 +109,11 @@ public class Foo {
  
 <bean id="manager" class="ManagerBean" />
 ```
+만약 다수의 bean에 대한 종속성을 표현하고 하는 경우에는, ‘depends-on’ attribute의 값으로 bean 이름을 나열하면 된다. bean 이름의 구분자로는 콤마(’,’), 공백문자(’ ‘), 세미콜론(’;’) 등을 사용할 수 있다.
+
+<bean id="beanOne" class="ExampleBean" depends-on="manager,accountDao">
+   <property name="manager" ref="manager" />
+</bean>
+ 
+<bean id="manager" class="ManagerBean" />
+<bean id="accountDao" class="x.y.jdbc.JdbcAccountDao" 
