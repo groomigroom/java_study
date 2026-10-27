@@ -267,3 +267,41 @@ WebSocket scope bean은 WebSocket 세션 속성에 저장된다.
 <!--websocket-->
 <bean id="appPreferences" class="com.foo.AppPreferences" scope="websocket"/>
 ```
+# init-method
+```
+Spring 프레임워크(및 이를 기반으로 한 전자정부프레임워크) XML 설정에서 init-method="init"은 스프링 컨테이너가 해당 빈(Bean) 객체를 생성하고 의존성 주입(DI)을 마친 후, 개발자가 지정한 특정 메서드(init)를 자동으로 실행하도록 지정하는 속성입니다.
+즉, 객체가 생성될 때 수행해야 하는 초기화 작업(초기 데이터 로딩, 리소스 연결 등)을 담당하는 메서드를 지정하는 역학을 합니다.
+
+⚙️ 빈(Bean) 생성 및 초기화 흐름
+
+1. 객체 생성: 스프링이 ExampleBean 클래스의 생성자를 호출하여 객체를 만듭니다.
+2. 의존성 주입: <property> 태그 등으로 설정된 다른 객체나 설정값들을 주입(DI)합니다.
+3. 초기화 메서드 실행 (중요): 의존성 주입이 완료되면, init-method에 적힌 init() 메서드를 스프링이 자동으로 호출합니다.
+4. 사용 대기: 초기화가 끝난 빈이 컨테이너에 등록되어 프로그램에서 사용할 수 상태가 됩니다.
+
+💻 실제 자바 코드 예시
+
+위 XML 설정이 제대로 작동하려면 ExampleBean 클래스 내부에 설정한 이름과 똑같은 init() 메서드가 구현되어 있어야 합니다.
+java
+package examples;
+
+public class ExampleBean {
+
+    // 1. 생성자 호출
+    public ExampleBean() {
+        System.out.println("1. 빈 객체 생성");
+    }
+
+    // 2. 의존성 주입이 끝난 후, 스프링이 init-method에 의해 자동 호출
+    public void init() {
+        System.out.println("3. 의존성 주입 완료 후 초기화 메서드 실행");
+        // 주로 서버 시작 시 필요한 데이터베이스 초기값 설정, 외부 파일 읽기 등의 로직을 작성합니다.
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+💡 왜 생성자 대신 init-method를 쓰나요?
+
+생성자가 호출되는 시점에는 스프링이 관리하는 다른 의존성(다른 Service나 DAO 등)이 아직 주입되지 않은 상태입니다. 반면 init-method로 지정된 메서드는 필요한 모든 데이터와 객체가 주입 완료된 것이 보장된 상태에서 실행되므로, 안전하게 초기화 로직을 수행할 수 있습니다.
+혹시 현재 전자정부프레임워크 버전이나 자바 기반 설정(@Bean)으로 변경하는 방법 등 더 궁금한 점이 있으신가요?
+```
