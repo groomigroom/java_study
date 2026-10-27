@@ -5,3 +5,5 @@
      <ref bean="myDataSource" />
  </set>
 ```
+* set의 value의 값은 아래 element 중 하나가 될 수 있다.
+* bean | ref | idref | list | set | map | props | value | null
