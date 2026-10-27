@@ -203,6 +203,7 @@ Primitive 타입과 collection, 관련된 객체에 대해서 종속성 검사�
 ```
 singleton
 하나의 Bean 정의에 대해서 Spring IoC Container 내에 단 하나의 객체만 존재한다.
+Bean이 singleton인 경우, 단지 하나의 공유 객체만 관리된다.
 
 prototype
 하나의 Bean 정의에 대해서 다수의 객체가 존재할 수 있다.
@@ -223,4 +224,7 @@ web-aware Spring ApplicationContext 안에서만 유효하다.
 websocket
 하나의 Bean 정의에 대해서 하나의 Websocket 생명주기 안에 단 하나의 객체만 존재한다.
 web-aware Spring ApplicationContext 안에서만 유효하다.
+```
+```xml
+<!--singleton-->
 ```
