@@ -169,5 +169,7 @@ constructor
 byType과 유사하지만, 생성자 argument에만 적용된다.
 만약 같은 타입의 bean이 존재하지 않거나 둘 이상 존재할 경우, exception이 발생한다.
 
-
+autodetect
+Bean class의 성질에 따라 constructor와 byType 모드 중 하나를 선택한다.
+만약 default 생성자가 존재하면, byType 모드가 적용된다
 ```
