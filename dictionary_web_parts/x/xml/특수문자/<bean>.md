@@ -36,3 +36,11 @@ public class Foo {
    </bean>
 </beans>
 ```
+# Inner beans
+* <property/> 또는 <constructor-arg/> element 안에 있는 <bean/> element를 inner bean이라고 한다.
+* Inner bean은 id나 name을 정의할 필요가 없다.
+* 정의한다 해도 Container에서 무시하기 때문에 정의하지 않는 것이 좋다.
+
+```xml
+
+```
