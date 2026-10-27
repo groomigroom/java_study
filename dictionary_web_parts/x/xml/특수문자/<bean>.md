@@ -208,6 +208,9 @@ Bean이 singleton인 경우, 단지 하나의 공유 객체만 관리된다.
 prototype
 하나의 Bean 정의에 대해서 다수의 객체가 존재할 수 있다.
 Singleton이 아닌 prototype scope의 형태로 정의된 bean은 필요한 매 순간 새로운 bean 객체가 생성된다.
+Prototype scope을 사용할 때 염두에 두고 있어야 할 것이 있다.
+Spring은 prototype bean의 전체 생명주기를 관리하지 않는데 Container는 객체화하고,
+값을 설정하고, 다른 prototype 객체와 조립하여 Client에게 전달한 후 더 이상 prototype 객체를 관리하지 않는다.
 
 request
 하나의 Bean 정의에 대해서 하나의 HTTP request 생명주기 안에 단 하나의 객체만 존재한다.
