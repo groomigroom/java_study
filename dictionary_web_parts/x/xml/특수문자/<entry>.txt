@@ -1,0 +1,40 @@
+전자정부프레임워크(Spring 기반) XML 설정 파일에서 <entry> 태그는 Map 형태의 컬렉션(Collection) 객체에 키(Key)와 값(Value)의 쌍(Pair)을 정의하여 주입(Dependency Injection)할 때 사용합니다. [1] (https://www.concretepage.com/spring/spring-collection-injection-example-with-list-set-map-and-properties)
+
+1. 주요 특징 및 의미
+
+• Map 데이터 정의: 스프링 설정에서 <map> 태그 내부에 위치하며, Java의 Map<K, V> 구조에 데이터(key와 value)를 한 쌍씩 채워 넣을 때 쓰입니다. [1] (https://blog.naver.com/tyboss/70111946681?viewType=pc), [2] (https://www.concretepage.com/spring/spring-collection-injection-example-with-list-set-map-and-properties)
+• 키와 값 지정 방식:
+	• 속성(key, value)을 이용해 간단하게 지정할 수 있습니다:xml
+<entry key="키이름" value="값내용" />
+코드를 사용할 때는 주의가 필요합니다.
+	• 태그(<key>, <value>, <ref> 등)를 이용해 복잡한 객체나 다른 빈(Bean)을 참조 형태로 넣을 수도 있습니다. [1] (https://kdg-is.tistory.com/entry/Spring-XML-Collection-List-Set-Map-Property-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95), [2] (https://blog.naver.com/tyboss/70111946681?viewType=pc), [3] (https://www.concretepage.com/spring/spring-collection-injection-example-with-list-set-map-and-properties)
+
+2. 사용 예시
+
+
+기본 속성 방식
+
+xml
+<property name="myMap">
+    <map>
+        <entry key="error.code.01" value="시스템 오류가 발생했습니다." />
+        <entry key="error.code.02" value="권한이 부족합니다." />
+    </map>
+</property>
+코드를 사용할 때는 주의가 필요합니다.
+
+태그 및 빈(Bean) 참조 방식
+
+xml
+<property name="configMap">
+    <util:map id="configMap" map-class="java.util.HashMap">
+        <entry>
+            <key>
+                <value>dataSourceKey</value>
+            </key>
+            <ref bean="egovDataSource" />
+        </entry>
+    </util:map>
+</property>
+코드를 사용할 때는 주의가 필요합니다.
+혹시 특정 XML 파일(예: context-*.xml)이나 어떤 설정 부분에서 <entry> 태그가 사용되었는지 공유해주시면 더 구체적인 설명을 드릴 수 있습니다.
