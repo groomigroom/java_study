@@ -182,5 +182,15 @@ Bean class의 성질에 따라 constructor와 byType 모드 중 하나를 선택
 * 종속성 검자(Dependency checking) 기능은 자동엮기(autowiring) 기능과 마찬가지로 각각의 bean마다 설정할 수 있다.
 * 종속성 검사에는 4가지 모드가 있으며, XML 기반 설정에서는 <bean/> element의 ‘dependency-check’ attribute를 사용하여 설정할 수 있다.
 ```
+none
+종속성 검사를 하지 않는다. 기본(default) 모드이다.
 
+simple
+Primitive 타입과 collection에 대해서 종속성 검사를 수행한다.
+
+object
+관련된 객체에 대해서만 종속성 검사를 수행한다.
+
+all
+Primitive 타입과 collection, 관련된 객체에 대해서 종속성 검사를 수행한다.
 ```
