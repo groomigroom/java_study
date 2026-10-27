@@ -13,3 +13,19 @@ XML 설정 정보를 여러 개의 파일로 나뉘어 구성될 수 있다. 이
    <bean id="bean2" class="..."/>
 </beans>
 <import> tag의 resource attribute는 import할 XML 설정 파일의 위치를 나타낸다.
+
+
+-------------------------------------------------
+
+Container 객체화
+다음은 Container를 객체화하는 한 예이다.
+
+ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "daos.xml"});
+
+// an Application is also a BeanFactory (via inheritance)
+BeanFactory factory = context;
+
+위 예제의 ClassPathXmlApplicationContext는 ApplicationContext의 한 종류이며, ApplicationContext 인터페이스는 BeanFactory 인터페이스를 상속하고 있다.
+
+Container 사용 방법
+Container를 객체화하면 getBean(String) 메소드를 사용하여 bean을 가져올 수 있다.
