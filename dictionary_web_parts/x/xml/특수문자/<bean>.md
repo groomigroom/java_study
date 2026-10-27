@@ -173,3 +173,6 @@ autodetect
 Bean class의 성질에 따라 constructor와 byType 모드 중 하나를 선택한다.
 만약 default 생성자가 존재하면, byType 모드가 적용된다
 ```
+# Bean을 자동엮기 대상에서 제외하는 방법(Excluding a bean from being available from autowiring
+* <bean/> element의 ‘autowire-candidate’ attribute 값을 ‘false’로 설정함으로써,
+* 대상 bean이 다른 bean에 의해 자동엮임을 당하는 것을 방지할 수 있다.
