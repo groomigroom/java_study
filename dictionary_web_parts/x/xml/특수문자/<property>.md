@@ -46,3 +46,11 @@ public class ExampleBean {
    <property name="password" value="masterkaoli"/>
 </bean>
 ```
+
+# 복합 형식의 property 이름도 사용 가능하다.
+```xml
+<bean id="foo" class="foo.Bar">
+   <property name="fred.bob.sammy" value="123" />
+</bean>
+
+```
