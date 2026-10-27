@@ -36,7 +36,7 @@ public class ExampleBean {
 }
 ```
 
-# <value> 대체
+# &lt;value&gt; 대체
 ```xml
 <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
    <!-- results in a setDriverClassName(String) call -->
