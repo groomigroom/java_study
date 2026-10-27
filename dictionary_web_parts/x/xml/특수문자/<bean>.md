@@ -224,6 +224,10 @@ web-aware Spring ApplicationContext 안에서만 유효하다.
 session
 하나의 Bean 정의에 대해서 하나의 HTTP Session 생명주기 안에 단 하나의 객체만 존재한다.
 web-aware Spring ApplicationContext 안에서만 유효하다.
+Spring Container는 하나의 HTTP Session 일생동안 ‘userPreferences’ bean 정의에
+대한 UserPreferences 객체를 생성할 것이다.
+즉, ‘userPreferences’ bean은 HTTP Session 수준에 한정된다(scoped).
+HTTP Session이 폐기될 때, 한정된(scoped) bean로 폐기된다.
 
 application
 하나의 Bean 정의에 대해서 하나의 ServletContext 생명주기 안에 단 하나의 객체만 존재한다.
@@ -245,4 +249,7 @@ web-aware Spring ApplicationContext 안에서만 유효하다.
 
 <!--request-->
 <bean id="loginAction" class="com.foo.LoginAction" scope="request"/>
+
+<!--session-->
+<bean id="userPreferences" class="com.foo.UserPreferences" scope="session"/>
 ```
