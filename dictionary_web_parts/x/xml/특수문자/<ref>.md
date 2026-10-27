@@ -6,3 +6,10 @@
 ```xml
 <ref bean="someBean"/>
 ```
+# local attribute
+* 같은 XML 설정 파일 내의 bean 객체를 참조한다.
+* ’local’ attribute는 반드시 대상 bean의 ‘id’와 같아야 한다.
+* 만약 대상 bean이 같은 XML 파일에 존재한다면. local을 사용하는 것이 좋다.
+```xml
+<ref local="someBean"/>
+```
