@@ -38,3 +38,6 @@ Bean 별명(Aliasing beans)
 
 name attribute는 대상이 되는 bean의 이름이고, alias attribute는 부여할 새로운 이름이다.
 
+-----------------------------------------------
+
+
