@@ -232,6 +232,12 @@ HTTP Session이 폐기될 때, 한정된(scoped) bean로 폐기된다.
 application
 하나의 Bean 정의에 대해서 하나의 ServletContext 생명주기 안에 단 하나의 객체만 존재한다.
 web-aware Spring ApplicationContext 안에서만 유효하다.
+Spring Container는 전체 Web Application에 대해 ‘appPreferences’
+bean 정의에 대한 AppPreferences 객체를 생성할 것이다.
+singleton scope와 비슷하지만 bean의 scope와 관련하여 매우 중요한 차이가 있는데,
+bean이 application 범위인 경우 bean의 동일한 instance는 동일한 ServletContext에서
+실행되는 여러 서블릿 기반 애플리케이션에서 공유되는 반면 singleton
+범위의 bean은 단일 애플리케이션 컨텍스트로만 범위가 지정된다.
 
 websocket
 하나의 Bean 정의에 대해서 하나의 Websocket 생명주기 안에 단 하나의 객체만 존재한다.
@@ -252,4 +258,7 @@ web-aware Spring ApplicationContext 안에서만 유효하다.
 
 <!--session-->
 <bean id="userPreferences" class="com.foo.UserPreferences" scope="session"/>
+
+<!--application-->
+<bean id="appPreferences" class="com.foo.AppPreferences" scope="application"/>
 ```
