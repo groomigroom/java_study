@@ -216,6 +216,10 @@ request
 하나의 Bean 정의에 대해서 하나의 HTTP request 생명주기 안에 단 하나의 객체만 존재한다.
 즉, 각각의 HTTP Request는 자신만의 객체를 가진다.
 web-aware Spring ApplicationContext 안에서만 유효하다.
+위 정의에 따라, Spring Container는 모든 HTTP request에
+대해서 ’loginAction’ bean 정의에 대한 LoginAction 객체를 생성할 것이다.
+즉, ’loginAction’ bean은 HTTP request 수준에 한정된다(scoped).
+요청에 대한 처리가 완료되었을 때, 한정된(scoped) bean도 폐기된다.
 
 session
 하나의 Bean 정의에 대해서 하나의 HTTP Session 생명주기 안에 단 하나의 객체만 존재한다.
@@ -238,4 +242,7 @@ web-aware Spring ApplicationContext 안에서만 유효하다.
 
 <!--prototype-->
 <bean id="accountService" class="com.something.DefaultAccountService" scope="prototype"/>
+
+<!--request-->
+<bean id="loginAction" class="com.foo.LoginAction" scope="request"/>
 ```
