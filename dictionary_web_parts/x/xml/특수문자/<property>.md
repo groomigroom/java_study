@@ -35,3 +35,14 @@ public class ExampleBean {
    }    
 }
 ```
+
+# <value> 대체
+```xml
+<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+   <!-- results in a setDriverClassName(String) call -->
+   <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+   <property name="url" value="jdbc:mysql://localhost:3306/mydb"/>
+   <property name="username" value="root"/>
+   <property name="password" value="masterkaoli"/>
+</bean>
+```
