@@ -120,3 +120,13 @@ public class Foo {
 <bean id="manager" class="ManagerBean" />
 <bean id="accountDao" class="x.y.jdbc.JdbcAccountDao"/>
 ```
+# 늦은 객체화(Lazily-instantiated beans)
+ApplicationContext는 시작시에 모든 singleton bean을 선객체화(pre-instantiate)한다. 선객체화(pre-instantiate)는 초기화 과정에서 모든 singleton baen을 생성하고 설정한다는 것을 의미한다. 일반적으로 선객체화가 좋은 방식인데, 왜냐하면 잘못된 설정이 있는 경우, 즉시 발견할 수 있기 때문이다.
+
+어쨌거나, 이런 방식을 원하지 않을 경우도 있다. 만약 ApplicationContext에 의해 선 객체화 되는 singleton bean을 원하지 않을 경우, 선택적으로 bean 정의에 늦은 객체화(lazy-initailized)를 설정할 수 있다. 늦은 객체화(lazy-initailized)로 설정된 bean은 시작 시에 생성되는 것이 아니라, 처음으로 필요로 했을 때 생성된다.
+
+XML 설정에서는 ‘’<bean/>’’ element의 ’lazy-init’ attribute를 사용한다.
+
+<bean id="lazy" class="com.foo.ExpensiveToCreateBean" lazy-init="true"/>
+ 
+<bean name="not.lazy" class="com.foo.AnotherBean"/>
