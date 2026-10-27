@@ -39,4 +39,15 @@ xml
 코드를 사용할 때는 주의가 필요합니다.
 혹시 특정 XML 파일(예: context-*.xml)이나 어떤 설정 부분에서 <entry> 태그가 사용되었는지 공유해주시면 더 구체적인 설명을 드릴 수 있습니다.
 
-# <entry/> element는 ‘key’ / ‘key-ref’와 ‘value’ / ‘value-ref’ attribute를 사용할 수 있다.
+##### <entry/> element는 ‘key’ / ‘key-ref’와 ‘value’ / ‘value-ref’ attribute를 사용할 수 있다.
+
+<entry>
+   <key>
+       <ref bean="myKeyBean" />
+   </key>
+   <ref bean="myValueBean" />
+</entry>
+
+위 설정은 아래와 같은 설정이다.
+
+<entry key-ref="myKeyBean" value-ref="myValueBean"/>
