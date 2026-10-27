@@ -152,3 +152,7 @@ public class Foo {
 * 자동엮기(autowiring)는 각각의 bean 단위로 설정된다.
 * 자동엮기(autowiring) 기능을 사용하면 property나 생성자 argument를 지정할 필요가 없어지므로, 타이핑일 줄일 수 있다.
 * 자동엮기(autowiring)에는 5가지 모드가 있으며, XML 기반 설정에서는 <bean/> element의 ‘autowire’ attribute를 사용하여 설정할 수 있다.
+```
+no
+자동엮기를 사용하지 않는다. Bean에 대한 참조는 ref element를 사용하여 지정해야만 한다. 이 모드가 기본(default)이다.
+```
