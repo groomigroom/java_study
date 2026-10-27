@@ -55,3 +55,21 @@ public class Foo {
 * Inner bean의 ‘scope’ flag와 ‘id’, ’name’은 무시된다. 
 * Inner bean의 scope은 항상 prototype이다.
 * 따라서 inner bean을 다른 bean에 주입하는 것은 불가능한다.
+
+# p-namespace
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+   <bean name="classic" class="com.example.ExampleBean">
+       <property name="email" value="foo@bar.com/>
+   </bean>
+ 
+   <bean name="p-namespace"
+       class="com.example.ExampleBean"
+       p:email="foo@bar.com"/>
+</beans>
+```
