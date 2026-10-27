@@ -155,4 +155,6 @@ public class Foo {
 ```
 no
 자동엮기를 사용하지 않는다. Bean에 대한 참조는 ref element를 사용하여 지정해야만 한다. 이 모드가 기본(default)이다.
+byName
+Property 이름으로 자동엮기를 수행한다. Property의 이름과 같은 이름을 가진 bean을 찾아서 엮어준다.
 ```
