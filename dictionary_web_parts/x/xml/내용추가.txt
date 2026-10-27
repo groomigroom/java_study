@@ -11,6 +11,25 @@ XML 설정에서는 ‘class’ attribute를 통해 Java Class를 설정한다. 
  
 <bean name="anotherExample" class="examples.ExampleBeanTwo"/>
 
+package x.y;
+ 
+public class Foo {
+   public Foo(Bar bar, Baz baz) {
+       // ...
+   }
+}
+
+<beans>
+   <bean name="foo" class="x.y.Foo">
+       <constructor-arg>
+           <bean class="x.y.Bar"/>
+       </constructor-arg>
+       <constructor-arg>
+           <bean class="x.y.Baz"/>
+       </constructor-arg>
+   </bean>
+</beans>
+
 
 XML 설정 정보를 여러 개의 파일로 나뉘어 구성될 수 있다. 이 경우, 전체 설정 정보를 읽기 위해서 하나의 설정 파일에서 다른 파일을 import할 수 있다. Import 하는 방법으로 <import> tag를 사용한다.
 
