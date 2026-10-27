@@ -131,7 +131,8 @@ public class Foo {
 * 늦은 객체화(lazy-initailized)로 설정된 bean은 시작 시에 생성되는 것이 아니라, 처음으로 필요로 했을 때 생성된다.
 
 * XML 설정에서는 ‘’<bean/>’’ element의 ’lazy-init’ attribute를 사용한다.
-
+```xml
 <bean id="lazy" class="com.foo.ExpensiveToCreateBean" lazy-init="true"/>
  
 <bean name="not.lazy" class="com.foo.AnotherBean"/>
+```
