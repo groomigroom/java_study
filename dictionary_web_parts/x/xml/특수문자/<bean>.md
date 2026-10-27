@@ -57,6 +57,8 @@ public class Foo {
 * 따라서 inner bean을 다른 bean에 주입하는 것은 불가능한다.
 
 # p-namespace
+* ‘’<property/>’’ element 대신 “p-namespace”를 사용하여 XML 설정을 작성할 수 있다.
+* 아래 classic bean과 p-namespace bean은 동일한 Bean 설정이다.
 ```xml
 <beans xmlns="http://www.springframework.org/schema/beans"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
