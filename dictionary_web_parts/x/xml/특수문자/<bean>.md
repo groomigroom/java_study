@@ -195,15 +195,32 @@ all
 Primitive 타입과 collection, 관련된 객체에 대해서 종속성 검사를 수행한다.
 ```
 # scope
-Bean 정의를 통해 객체에 다양한 종속성 및 설정값을 주입할 수 있을 뿐 아니라, 객체의 범위(Scope)를 정의할 수 있다.
+* Bean 정의를 통해 객체에 다양한 종속성 및 설정값을 주입할 수 있을 뿐 아니라,
+* 객체의 범위(Scope)를 정의할 수 있다.
+* Spring 프레임워크는 6개의 Scope를 지원하며,
+* 이 중 4개의 Scope는 Web-aware ApplicationContext를 사용하는 경우에만 사용할 수 있다.
+* 또한, 사용자 정의 범위를 생성할 수도 있다.
+```
+singleton
+하나의 Bean 정의에 대해서 Spring IoC Container 내에 단 하나의 객체만 존재한다.
 
-설명
-Spring 프레임워크는 6개의 Scope를 지원하며, 이 중 4개의 Scope는 Web-aware ApplicationContext를 사용하는 경우에만 사용할 수 있다. 또한, 사용자 정의 범위를 생성할 수도 있다.
+prototype
+하나의 Bean 정의에 대해서 다수의 객체가 존재할 수 있다.
 
-Scope	설명
-singleton	하나의 Bean 정의에 대해서 Spring IoC Container 내에 단 하나의 객체만 존재한다.
-prototype	하나의 Bean 정의에 대해서 다수의 객체가 존재할 수 있다.
-request	하나의 Bean 정의에 대해서 하나의 HTTP request 생명주기 안에 단 하나의 객체만 존재한다. 즉, 각각의 HTTP Request는 자신만의 객체를 가진다. web-aware Spring ApplicationContext 안에서만 유효하다.
-session	하나의 Bean 정의에 대해서 하나의 HTTP Session 생명주기 안에 단 하나의 객체만 존재한다. web-aware Spring ApplicationContext 안에서만 유효하다.
-application	하나의 Bean 정의에 대해서 하나의 ServletContext 생명주기 안에 단 하나의 객체만 존재한다. web-aware Spring ApplicationContext 안에서만 유효하다.
-websocket	하나의 Bean 정의에 대해서 하나의 Websocket 생명주기 안에 단 하나의 객체만 존재한다. web-aware Spring ApplicationContext 안에서만 유효하다.
+request
+하나의 Bean 정의에 대해서 하나의 HTTP request 생명주기 안에 단 하나의 객체만 존재한다.
+즉, 각각의 HTTP Request는 자신만의 객체를 가진다.
+web-aware Spring ApplicationContext 안에서만 유효하다.
+
+session
+하나의 Bean 정의에 대해서 하나의 HTTP Session 생명주기 안에 단 하나의 객체만 존재한다.
+web-aware Spring ApplicationContext 안에서만 유효하다.
+
+application
+하나의 Bean 정의에 대해서 하나의 ServletContext 생명주기 안에 단 하나의 객체만 존재한다.
+web-aware Spring ApplicationContext 안에서만 유효하다.
+
+websocket
+하나의 Bean 정의에 대해서 하나의 Websocket 생명주기 안에 단 하나의 객체만 존재한다.
+web-aware Spring ApplicationContext 안에서만 유효하다.
+```
