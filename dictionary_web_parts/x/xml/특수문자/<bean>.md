@@ -165,5 +165,9 @@ Property의 타입과 같은 타입을 가진 bean을 찾아서 엮어준다.
 만약 같은 타입을 가진 bean이 Container에 둘 이상 존재할 경우 exception이 발생한다.
 만약 같은 타입을 가진 bean이 존재하지 않는 경우, 아무 일도 발생하지 않는다; 즉, property에는 설정되지 않는다.
 
+constructor
+byType과 유사하지만, 생성자 argument에만 적용된다.
+만약 같은 타입의 bean이 존재하지 않거나 둘 이상 존재할 경우, exception이 발생한다.
+
 
 ```
