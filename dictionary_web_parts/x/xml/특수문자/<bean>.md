@@ -8,10 +8,13 @@ XML 설정에서는 ‘class’ attribute를 통해 Java Class를 설정한다. 
 또는 특수한 경우, static 메소드를 사용할 수도 있다. 본 문서는 생성자를 이용한 객체화만을 설명한다.
 생성자를 이용한 객체화는 가장 일반적인 방식으로, 다음과 같이 사용한다.
 
+```xml
 <bean id="exampleBean" class="example.ExampleBean"/>
  
 <bean name="anotherExample" class="examples.ExampleBeanTwo"/>
+```
 
+```java
 package x.y;
  
 public class Foo {
@@ -19,7 +22,9 @@ public class Foo {
        // ...
    }
 }
+```
 
+```xml
 <beans>
    <bean name="foo" class="x.y.Foo">
        <constructor-arg>
@@ -30,3 +35,4 @@ public class Foo {
        </constructor-arg>
    </bean>
 </beans>
+```
