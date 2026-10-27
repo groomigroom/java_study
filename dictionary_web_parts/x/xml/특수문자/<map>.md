@@ -1,7 +1,17 @@
-# Java Collection 타입인 Set을 표현
+# Java Collection 타입인 Map을 표현
 ```xml
-<set>
-     <value>just some string</value>
-     <ref bean="myDataSource" />
- </set>
+<map>
+      <entry>
+          <key>
+              <value>an entry</value>
+          </key>
+          <value>just some string</value>
+      </entry>
+      <entry>
+          <key>
+              <value>a ref</value>
+          </key>
+          <ref bean="myDataSource" />
+      </entry>
+</map>
 ```
