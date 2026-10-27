@@ -176,3 +176,11 @@ Bean class의 성질에 따라 constructor와 byType 모드 중 하나를 선택
 # Bean을 자동엮기 대상에서 제외하는 방법(Excluding a bean from being available from autowiring
 * <bean/> element의 ‘autowire-candidate’ attribute 값을 ‘false’로 설정함으로써,
 * 대상 bean이 다른 bean에 의해 자동엮임을 당하는 것을 방지할 수 있다.
+# 종속성 검사(Checking for dependencies)
+* Spring IoC Container는 bean의 미해결 종속성의 존재를 검사할 수 있다.
+* 이 기능은 bean의 모든 property가 지정되었는지는 확인하고 싶을 때 유용하다.
+* 종속성 검자(Dependency checking) 기능은 자동엮기(autowiring) 기능과 마찬가지로 각각의 bean마다 설정할 수 있다.
+* 종속성 검사에는 4가지 모드가 있으며, XML 기반 설정에서는 <bean/> element의 ‘dependency-check’ attribute를 사용하여 설정할 수 있다.
+```
+
+```
