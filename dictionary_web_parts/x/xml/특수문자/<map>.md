@@ -15,3 +15,5 @@
       </entry>
 </map>
 ```
+* map의 key와 value는 아래 중에 하나
+* bean | ref | idref | list | set | map | props | value | null
