@@ -42,5 +42,13 @@ public class Foo {
 * 정의한다 해도 Container에서 무시하기 때문에 정의하지 않는 것이 좋다.
 
 ```xml
-
+<bean id="outer" class="...">
+   <!-- instead of using a reference to a target bean, simply define the target bean inline -->
+   <property name="target">
+       <bean class="com.example.Person"> <!-- this is the inner bean -->
+           <property name="name" value="Fiona Apple"/>
+           <property name="age" value="25"/>
+       </bean>
+   </property>
+</bean>
 ```
