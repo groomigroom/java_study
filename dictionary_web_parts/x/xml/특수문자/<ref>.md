@@ -13,3 +13,23 @@
 ```xml
 <ref local="someBean"/>
 ```
+# parent attribute
+* 현재 Container의 부모 Container의 bean 객체를 참조한다.
+* ‘parent’ attribute는 대상 bean의 ‘id’ 또는 여러 ’name’들 중 하나와 같아야 한다.
+
+```xml
+<!-- in the parent context -->
+<bean id="accountService" class="com.foo.SimpleAccountService">
+   <!-- insert dependencies as required as here -->
+</bean>
+```
+```xml
+<!-- in the child (descendant) context -->
+<bean id="accountService"  <-- notice that the name of this bean is the same as the name of the 'parent' bean
+   class="org.springframework.aop.framework.ProxyFactoryBean">
+   <property name="target">
+       <ref parent="accountService"/>  <-- notice how we refer to the parent bean
+   </property>
+   <!-- insert other configuration and dependencies as required as here -->
+</bean>
+```
