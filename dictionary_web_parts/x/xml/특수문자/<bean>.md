@@ -52,4 +52,6 @@ public class Foo {
    </property>
 </bean>
 ```
-Inner bean의 ‘scope’ flag와 ‘id’, ’name’은 무시된다. Inner bean의 scope은 항상 prototype이다. 따라서 inner bean을 다른 bean에 주입하는 것은 불가능한다.
+* Inner bean의 ‘scope’ flag와 ‘id’, ’name’은 무시된다. 
+* Inner bean의 scope은 항상 prototype이다.
+* 따라서 inner bean을 다른 bean에 주입하는 것은 불가능한다.
