@@ -118,5 +118,5 @@ public class Foo {
 </bean>
  
 <bean id="manager" class="ManagerBean" />
-<bean id="accountDao" class="x.y.jdbc.JdbcAccountDao" 
+<bean id="accountDao" class="x.y.jdbc.JdbcAccountDao"/>
 ```
