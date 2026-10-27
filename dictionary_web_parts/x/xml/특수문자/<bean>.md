@@ -155,6 +155,15 @@ public class Foo {
 ```
 no
 자동엮기를 사용하지 않는다. Bean에 대한 참조는 ref element를 사용하여 지정해야만 한다. 이 모드가 기본(default)이다.
+
 byName
 Property 이름으로 자동엮기를 수행한다. Property의 이름과 같은 이름을 가진 bean을 찾아서 엮어준다.
+
+byType
+Property 타입으로 자동엮기를 수행한다.
+Property의 타입과 같은 타입을 가진 bean을 찾아서 엮어준다.
+만약 같은 타입을 가진 bean이 Container에 둘 이상 존재할 경우 exception이 발생한다.
+만약 같은 타입을 가진 bean이 존재하지 않는 경우, 아무 일도 발생하지 않는다; 즉, property에는 설정되지 않는다.
+
+
 ```
