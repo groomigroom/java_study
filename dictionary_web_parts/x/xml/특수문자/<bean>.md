@@ -242,6 +242,8 @@ bean이 application 범위인 경우 bean의 동일한 instance는 동일한 Ser
 websocket
 하나의 Bean 정의에 대해서 하나의 Websocket 생명주기 안에 단 하나의 객체만 존재한다.
 web-aware Spring ApplicationContext 안에서만 유효하다.
+WebSocket scope bean은 WebSocket 세션 속성에 저장된다.
+그리고 전체 WebSocket 세션 동안 해당 bean에 액세스할 때마다 bean의 동일한 instance가 반환된다.
 ```
 ```xml
 <!--singleton-->
@@ -261,4 +263,7 @@ web-aware Spring ApplicationContext 안에서만 유효하다.
 
 <!--application-->
 <bean id="appPreferences" class="com.foo.AppPreferences" scope="application"/>
+
+<!--websocket-->
+<bean id="appPreferences" class="com.foo.AppPreferences" scope="websocket"/>
 ```
