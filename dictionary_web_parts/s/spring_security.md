@@ -34,19 +34,31 @@ setContinueChainBeforeSuccessfulAuthentication은 스프링 시큐리티(Spring 
 ```
 
 ```
-전자정부프레임워크의 기반인 Spring Security에서 doFilter는 클라이언트의 요청(Request)이 서블릿이나 다음 보안 필터로 넘어가기 전후에 보안 검사 및 처리 로직을 실행하고, 다음 체인으로 요청을 전달하는 핵심 메서드입니다. [1] (https://curiousjinan.tistory.com/entry/spring-filterchain-dofilter), [2] (https://seongsu.me/post/20)
+전자정부프레임워크의 기반인 Spring Security에서 doFilter는 클라이언트의 요청(Request)이
+서블릿이나 다음 보안 필터로 넘어가기 전후에 보안 검사 및 처리 로직을 실행하고,
+다음 체인으로 요청을 전달하는 핵심 메서드입니다.
+[1] (https://curiousjinan.tistory.com/entry/spring-filterchain-dofilter), [2] (https://seongsu.me/post/20)
 
 1. doFilter의 기본 개념과 역할
 
-• 요청 가로채기: 클라이언트가 서버로 보낸 HTTP 요청을 서블릿(DispatcherServlet 등)이나 비즈니스 로직에 도달하기 전에 먼저 가로챕니다. [1] (https://seongsu.me/post/20)
-• 보안 처리 실행: 로그인 인증(Authentication), 권한 부여(Authorization), CSRF 검증, 세션 체크 등 Spring Security의 다양한 보안 필터 로직을 이 메서드 내부에서 수행합니다.
+• 요청 가로채기: 클라이언트가 서버로 보낸 HTTP 요청을 서블릿(DispatcherServlet 등)이나
+비즈니스 로직에 도달하기 전에 먼저 가로챕니다. [1] (https://seongsu.me/post/20)
+• 보안 처리 실행: 로그인 인증(Authentication), 권한 부여(Authorization), CSRF 검증,
+세션 체크 등 Spring Security의 다양한 보안 필터 로직을 이 메서드 내부에서 수행합니다.
 • 다음 필터로 전달 (chain.doFilter()):
-	• 현재 필터의 작업이 끝나면 chain.doFilter(request, response)를 호출하여 다음 보안 필터 또는 최종 목적지인 Controller로 요청을 넘겨줍니다.
-	• 만약 이 메서드를 호출하지 않으면 요청이 멈추어(차단되어) 다음 단계로 진행되지 못하고 응답이 반환됩니다. [1] (https://curiousjinan.tistory.com/entry/spring-filterchain-dofilter)
+	• 현재 필터의 작업이 끝나면 chain.doFilter(request, response)를 호출하여 다음 보안 필터
+또는 최종 목적지인 Controller로 요청을 넘겨줍니다.
+	• 만약 이 메서드를 호출하지 않으면 요청이 멈추어(차단되어) 다음 단계로 진행되지 못하고 응답이 반환됩니다.
+[1] (https://curiousjinan.tistory.com/entry/spring-filterchain-dofilter)
 
 2. 전자정부프레임워크(eGovFrame)에서의 의미
 
-• 서블릿 기반 보안 적용: 전자정부프레임워크의 Server Security Service는 표준 Spring Security를 활용하며, DB 기반의 JDBC 인증 및 권한 제어를 필터 체인 형태로 처리합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.0:fdl:server_security), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:fdl:server_security:architecture)
-• 요청 전/후 공통 보안 로직: 사용자가 특정 URL에 접근할 때, doFilter를 통해 "이 사용자가 로그인했는가?", "이 자원에 접근할 권한이 있는가?"를 실시간으로 검증하는 관문 역할을 합니다. [1] (https://seongsu.me/post/20)
-혹시 특정 커스텀 필터를 구현하는 중이신가요, 아니면 전자정부프레임워크의 보안 설정(context-security.xml 등) 에 대해 구체적인 코드 분석이 필요하신가요? 편하게 말씀해 주세요.
+• 서블릿 기반 보안 적용: 전자정부프레임워크의 Server Security Service는 표준 Spring Security를 활용하며,
+DB 기반의 JDBC 인증 및 권한 제어를 필터 체인 형태로 처리합니다.
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.0:fdl:server_security),
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:fdl:server_security:architecture)
+• 요청 전/후 공통 보안 로직: 사용자가 특정 URL에 접근할 때, doFilter를 통해 "이 사용자가 로그인했는가?",
+"이 자원에 접근할 권한이 있는가?"를 실시간으로 검증하는 관문 역할을 합니다. [1] (https://seongsu.me/post/20)
+혹시 특정 커스텀 필터를 구현하는 중이신가요, 아니면 전자정부프레임워크의 보안 설정(context-security.xml 등)
+에 대해 구체적인 코드 분석이 필요하신가요? 편하게 말씀해 주세요.
 ```
