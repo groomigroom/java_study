@@ -1,0 +1,11 @@
+전자정부프레임워크(및 기반인 Spring Security)에서 GrantedAuthority는 인증된 사용자(Principal)에게 부여된 권한(Authority)을 나타내는 인터페이스입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:server_security:authorization), [2] (https://backend-jaamong.tistory.com/84)
+
+주요 의미와 역할
+
+• 권한 정의 컴포넌트: 시스템 사용자가 수행할 수 있는 작업이나 접근할 수 있는 영역에 대한 권한 정보를 담고 있습니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:com:v4.3:sec:%EA%B6%8C%ED%95%9C%EA%B4%80%EB%A6%AC), [2] (https://egovframe.go.kr/docs/5.0/common-component/security/authority-management/), [3] (https://egovframe.go.kr/docs/5.0/common-component/security/)
+• 문자열(String) 기반 반환: getAuthority() 메서드를 통해 권한 이름을 문자열 형태로 반환하며, 접근 제어 관리자(AccessDecisionManager)가 이를 읽어 사용자의 접근 허용 여부를 판단합니다. [1] (https://one9five.tistory.com/88), [2] (https://backend-jaamong.tistory.com/84)
+• Role과의 관계: ROLE_ADMIN, ROLE_USER처럼 'ROLE_' 접두사를 사용하는 역할(Role)도 GrantedAuthority의 일종으로 처리됩니다. [1] (https://backend-jaamong.tistory.com/84)
+• 인증 객체(Authentication)에 포함: 로그인에 성공하면 생성되는 Authentication 객체 안에 GrantedAuthority 객체들의 컬렉션(배열 또는 리스트)이 저장되어 사용자의 권한을 체크하는 데 쓰입니다. [1] (https://velog.io/@pooh6195/Spring-Security-%EB%BD%80%EA%B0%9C%EA%B8%B0-Authorization-Architecture), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:server_security:authorization)
+전자정부프레임워크의 보안 모듈 및 권한관리 - 표준프레임워크 포털 eGovFrame 기능에서는 이러한 권한 개념을 바탕으로 메뉴별·리소스별 접근 제어를 수행합니다. [1] (https://egovframe.go.kr/docs/5.0/common-component/security/authority-management/), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:com:v4.3:sec:%EA%B6%8C%ED%95%9C%EA%B4%80%EB%A6%AC)
+만약 특정 권한을 부여하거나 체크하는 구현 코드 예제가 필요하시면 편하게 말씀해 주세요!
