@@ -1,0 +1,21 @@
+전자정부 표준프레임워크(기반이 되는 스프링 프레임워크)에서 ApplicationListener는 애플리케이션 내에서 발생하는 
+특정 이벤트(ApplicationEvent)를 감지하고 처리하기 위한 인터페이스입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:the_applicationcontext)
+전자정부프레임워크 공식 문서에 따르면, The ApplicationContext - 전자정부 표준프레임워크의 핵심 개념은 다음과 같습니다:
+
+1. 주요 의미와 역할
+
+• 이벤트 처리: ApplicationListener 인터페이스를 구현한 빈(Bean)은 ApplicationContext에서 발생하는 모든 
+ApplicationEvent를 전달받아 처리할 수 있습니다.
+• 옵저버 패턴(Observer Pattern): 객체의 상태 변화를 다른 객체들에게 통보하는 방식처럼, 
+시스템 전반에 특정 사건(예: 애플리케이션 시작, 종료, 특정 데이터 처리 완료 등)이 발생했을 때 이를 
+구독(Subscribe)하여 후속 작업을 실행할 때 사용됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:the_applicationcontext)
+
+2. 작동 방식
+
+1. 이벤트 발행: 애플리케이션 로직이나 스프링 컨테이너 내부에서 ApplicationEvent를 발생(publish)시킵니다.
+2. 이벤트 수신: ApplicationListener<E extends ApplicationEvent> 인터페이스를 구현하고 onApplicationEvent() 
+메서드를 오버라이딩해 둔 빈이 해당벤트를 자동으로 감지합니다.
+3. 로직 실행: 수신한 이벤트에 담긴 정보를 바탕으로 추가적인 업무 로직(예: 로그 기록, 알림 전송, 캐시 초기화 등)을 수행합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:the_applicationcontext), [2] (https://velog.io/@appti/Listener)
+ApplicationListener를 활용한 구체적인 구현 예제 코드나 특정 이벤트 처리 상황에 대한 설명이 필요하시면 알려주세요.
