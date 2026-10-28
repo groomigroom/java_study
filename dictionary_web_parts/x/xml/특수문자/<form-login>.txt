@@ -1,1 +1,22 @@
+전자정부프레임워크(및 기반인 Spring Security)의 XML 설정에서 <form-login> 태그는 폼 기반(HTML Form) 사용자 인증 기능을 활성화하고 설정하는 요소입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:authentication), 
+[2] (https://velog.io/@gongkeo/8%EC%9E%A5-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-%EB%A1%9C%EA%B7%B8%EC%9D%B8%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0)
 
+주요 의미 및 역할
+
+• 폼 기반 로그인 활성화: 사용자가 아이디와 비밀번호를 입력해 전송하는 전통적인 HTML 폼 방식의 로그인 처리를 스프링 시큐리티(Spring Security)가 담당하도록 지정합니다. 
+[1] (https://soso-shs.tistory.com/entry/Spring%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-%ED%8D%BC%EC%98%B4), 
+[2] (https://velog.io/@gongkeo/8%EC%9E%A5-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-%EB%A1%9C%EA%B7%B8%EC%9D%B8%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+• 기본값 제공: 속성을 따로 지정하지 않거나 <form-login /> 형태로만 작성하면, 스프링 시큐리티가 기본으로 제공하는 로그인 페이지와 인증 처리 흐름을 그대로 사용합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:authentication)
+
+주요 속성(Attributes)과 기능
+
+<form-login> 태그 내부나 속성으로 다음과 같은 로그인 관련 경로 및 동작을 커스터마이징할 수 있습니다: 
+[1] (https://velog.io/@gongkeo/8%EC%9E%A5-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-%EB%A1%9C%EA%B7%B8%EC%9D%B8%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+• login-page: 사용자가 직접 만든 커스텀 로그인 페이지(JSP, HTML 등)의 URL을 지정합니다 (기본값은 스프링 시큐리티 기본 로그인 페이지).
+• login-processing-url: 클라이언트가 로그인 폼(POST)을 제출할 때, 인증 처리를 수행할 URL을 지정합니다 (HTML <form action="...">에 매칭됨).
+• default-target-url: 로그인에 성공한 뒤 기본으로 이동할 페이지 경로를 설정합니다.
+• always-use-default-target: true로 설정하면, 사용자가 원래 가려던 페이지와 상관없이 로그인 성공 시 항상 default-target-url로 이동합니다. 
+[1] (https://velog.io/@gongkeo/8%EC%9E%A5-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0-%EB%A1%9C%EA%B7%B8%EC%9D%B8%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0)
+만약 현재 프로젝트에서 로그인 페이지 경로 설정, 권한(Role)별 접근 제어, 또는 XML 대신 자바 기반(Java Config) 설정으로 전환하는 방법이 필요하신가요? 편하게 말씀해 주세요.
