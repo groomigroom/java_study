@@ -1,1 +1,23 @@
+전자정부 표준프레임워크(Spring 기반)에서 @ContextConfiguration은 스프링 테스트를 실행할 때, 어떤 설정 파일(-context.xml 등)이나 클래스를 읽어서 스프링 컨테이너(ApplicationContext)를 구성할지 지정하는 클래스 수준의 애너테이션입니다. [1] (https://cotak.tistory.com/359), [2] (https://data-study-clip.tistory.com/145), [3] (https://tlatmsrud.tistory.com/36)
 
+주요 역할
+
+• 스프링 설정 파일 지정: 전자정부프레임워크는 context-common.xml, context-datasource.xml, context-mapper.xml 등 XML 기반의 설정 파일을 많이 사용합니다. 테스트 코드에서 @ContextConfiguration을 이용해 이 파일들의 경로를 명시해 주어야 빈(Bean)들을 주입받아 테스트할 수 있습니다. [1] (https://tlatmsrud.tistory.com/36)
+• 통합 테스트 환경 구축: Service나 DAO 계층 등을 테스트할 때, 실제 구동 환경과 유사한 스프링 컨텍스트를 메모리에 로드하기 위해 사용합니다. [1] (https://data-study-clip.tistory.com/145), [2] (https://cotak.tistory.com/359)
+
+사용 예시
+
+java
+@RunWith(SpringJUnit4ClassRunner.class) // JUnit과 스프링 테스트 연동
+@ContextConfiguration(locations = {
+    "classpath:/egovframework/spring/com/context-common.xml",
+    "classpath:/egovframework/spring/com/context-datasource.xml"
+})
+public class EgovSampleServiceTest {
+    // 테스트 코드 작성
+}
+코드를 사용할 때는 주의가 필요합니다.
+• locations 속성: 스프링 XML 설정 파일의 경로를 배열 형태로 입력합니다. classpath*: 등을 이용해 클래스패스 내의 XML 파일을 지정할 수 있습니다. [1] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC)
+• classes 속성: Java Config(@Configuration 클래스)를 사용하는 스프링 부트나 최신 환경일 경우 XML 대신 자바 클래스를 지정할 수도 있습니다.
+전자정부 표준프레임워크 공식 가이드 및 설정 파일 구조는 전자정부 표준프레임워크 위키에서 자세히 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:com:v2:init_configration)
+만약 현재 작성 중인 테스트 코드에서 특정 에러가 발생하고 있거나, 어떤 설정 파일 경로를 넣어야 할지 모르겠다면 에러 메시지나 파일 구조를 공유해 주세요.
