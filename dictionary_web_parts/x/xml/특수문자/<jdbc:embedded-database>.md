@@ -28,7 +28,8 @@
     </jdbc:embedded-database>
 </beans>
 ```
-• id="dataSource": 스프링 빈(Bean)으로 등록되는 데이터소스의 이름입니다.
-• type="HSQL": 사용할 내장형 데이터베이스의 종류를 지정합니다 (HSQL, H2 등).
-• <jdbc:script>: DB가 생성될 때 실행할 초기 SQL 파일의 경로를 지정합니다. [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0), [2] (https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=ramisiel&logNo=221165261185&categoryNo=25&proxyReferer=)
-실제 운영 환경으로 전환할 때는 이 태그를 제거하고, 오라클이나 MySQL 등 실제 운영용 DB의 접속 정보(URL, 계정, 패키지 등)를 담은 DataSource 설정으로 교체해야 합니다. 혹시 현재 프로젝트를 운영용 DB로 연결하는 방법이 필요하신가요?
+* id="dataSource": 스프링 빈(Bean)으로 등록되는 데이터소스의 이름입니다.
+* type="HSQL": 사용할 내장형 데이터베이스의 종류를 지정합니다 (HSQL, H2 등).
+* <jdbc:script>: DB가 생성될 때 실행할 초기 SQL 파일의 경로를 지정합니다. [1]
+* (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0),
+* [2] (https://m.blog.naver.com/PostView.nhn?isHttpsRedirect=true&blogId=ramisiel&logNo=221165261185&categoryNo=25&proxyReferer=)
