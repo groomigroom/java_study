@@ -1,0 +1,15 @@
+전자정부프레임워크(기반인 스프링 프레임워크)에서 FileSystemResource는 파일 
+시스템(서버의 로컬 디스크)에 있는 특정 파일을 다루기 위해 사용하는 Resource 인터페이스의 구현체입니다. 
+[1] (https://yonghwankim-dev.tistory.com/522)
+
+주요 특징 및 의미
+
+• 파일 시스템 경로 접근: java.io.File 또는 파일 경로 문자열을 기반으로 서버 운영체제의 
+실제 파일 시스템에 존재하는 파일에 접근할 수 있게 해줍니다. [1] (https://yonghwankim-dev.tistory.com/522)
+• 스프링 Resource 추상화: 스프링은 파일, 클래스패스, URL 등 다양한 경로에 있는 자원들을 동일한 방식으로 
+다루기 위해 Resource 인터페이스를 제공하는데, FileSystemResource는 그중 로컬 파일 시스템을 전담합니다.
+• 주요 용도:
+	• 서버 로컬 경로에 있는 설정 파일이나 프로퍼티 파일 읽기
+	• 파일 업로드/다운로드 처리 시 서버 디스크에 저장된 파일 참조
+	• 배치(Spring Batch) 처리 시 로컬에 위치한 입력 파일(CSV, TXT 등)이나 출력 파일을 읽고 쓸 때 활용
+FileSystemResource 사용과 관련하여 특정 기능(파일 업로드, 배치 처리 등)의 구현 코드나 ClassPathResource와의 차이점이 궁금하신가요?
