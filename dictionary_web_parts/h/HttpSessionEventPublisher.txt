@@ -1,0 +1,27 @@
+전자정부 표준프레임워크(Spring 기반)에서 HttpSessionEventPublisher는 서블릿 컨테이너(Tomcat 등)에서 
+발생하는 HTTP 세션 생성/소멸 이벤트(Lifecycle)를 스프링(Spring)의 애플리케이션 이벤트로 변환해 주는 
+리스너(Listener)입니다. [1] (https://blog.naver.com/jjhstr/60099200668), 
+[2] (https://velog.io/@kimdy0915/Spring-Security-%EC%A4%91%EB%B3%B5-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EB%B0%A9%EC%A7%80-%EB%B0%8F-%EC%95%8C%EB%A6%BC-%ED%91%9C%EC%8B%9C%ED%95%98%EA%B8%B0)
+
+핵심 의미 및 역할
+
+1. 세션 이벤트의 스프링 연동
+	• 웹 서버(WAS)에서 HttpSession이 새로 만들어지거나(sessionCreated) 만료/종료될 때(sessionDestroyed), 
+스프링 시큐리티(Spring Security)나 스프링 컨텍스트가 이를 실시간으로 인지할 수 있도록 브리지(Bridge) 역할을 합니다. 
+[1] (https://blog.naver.com/jjhstr/60099200668), [2] (https://velog.io/@kimdy0915/Spring-Security-%EC%A4%91%EB%B3%B5-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EB%B0%A9%EC%A7%80-%EB%B0%8F-%EC%95%8C%EB%A6%BC-%ED%91%9C%EC%8B%9C%ED%95%98%EA%B8%B0)
+2. 주요 활용 목적 (중복 로그인 방지 등)
+	• 스프링 시큐리티의 동시 세션 제어(Concurrent Session Control / 중복 로그인 방지) 기능을 사용할 때 필수적으로 등록해야 합니다.
+	• 사용자가 로그아웃하거나 세션이 타임아웃(만료)되어 소멸할 때, 스프링 시큐리티가 "현재 사용자 세션이 종료되었다"는 사실을 정확히 
+감지하여 허용된 최대 세션 수(max-sessions)를 갱신할 수 있게 만듭니다. 이를 등록하지 않으면 세션이 
+만료되어도 로그인 카운트가 줄어들지 않아 재로그인이 안 되는 문제가 발생할 수 있습니다.
+
+설정 위치 및 방법
+
+• web.xml (XML 기반 설정 시):xml
+<listener>
+    <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+</listener>
+코드를 사용할 때는 주의가 필요합니다.
+• Java Config 기반 설정 시 (Spring Boot 등):
+스프링 시큐리티 설정 클래스에 Bean으로 등록하거나, 서블릿 리스너로 등록해 사용합니다.
+만약 중복 로그인 제어나 세션 관리 설정 중 특정 에러나 동작 방식이 궁금하시다면, 현재 설정하신 환경(XML 또는 Java Config)을 알려주세요.
