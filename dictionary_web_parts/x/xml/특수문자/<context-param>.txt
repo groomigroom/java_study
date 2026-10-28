@@ -1,3 +1,7 @@
+<context-param>
+   <param-name>contextConfigLocation</param-name>
+   <param-value>/WEB-INF/daoContext.xml /WEB-INF/applicationContext.xml</param-value>
+</context-param>
 
 제시하신 설정은 스프링(Spring) 기반의 웹 애플리케이션에서 전체 IoC(Inversion of Control) 
 컨테이너가 읽어 들일 공통 설정 파일들의 위치를 지정하는 역할입니다. 
