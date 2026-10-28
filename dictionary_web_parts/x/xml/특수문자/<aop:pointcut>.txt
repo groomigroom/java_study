@@ -8,9 +8,16 @@
 
 • 공통 관심사 적용 위치 지정: 로깅, 트랜잭션, 예외 처리 등 여러 비즈니스 로직에 공통으로 들어가는 기능(Advice)을 
 "어떤 클래스의 어떤 메서드에 실행할지" 범위를 결정합니다. 
-[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:egovrteaopguide), [2] (https://velog.io/@rjsdn04111/Spring-AOP-%EB%A5%BC-%EC%83%85%EC%83%85%EC%9D%B4-%ED%8C%8C%ED%97%A4%EC%B3%90-%EB%B3%B4%EC%9E%90), [3] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
-• AspectJ 표현식 사용: expression 속성을 통해 패키지명, 클래스명, 메서드명을 패턴 매칭 방식으로 지정합니다. [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=4), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
-• 코드 중복 제거: 핵심 비즈니스 로직에 공통 코드를 직접 작성하지 않고, XML 설정만으로 특정 메서드가 실행될 때 공통 기능이 동작하도록 연결합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:fdl:aop), [2] (https://creamilk88.tistory.com/148), [3] (https://blog.naver.com/1_soft/220706819718?viewType=pc)
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:egovrteaopguide), 
+[2] (https://velog.io/@rjsdn04111/Spring-AOP-%EB%A5%BC-%EC%83%85%EC%83%85%EC%9D%B4-%ED%8C%8C%ED%97%A4%EC%B3%90-%EB%B3%B4%EC%9E%90), 
+[3] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
+• AspectJ 표현식 사용: expression 속성을 통해 패키지명, 클래스명, 메서드명을 패턴 매칭 방식으로 지정합니다. 
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=4), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
+• 코드 중복 제거: 핵심 비즈니스 로직에 공통 코드를 직접 작성하지 않고, XML 설정만으로 특정 메서드가 실행될 때 
+공통 기능이 동작하도록 연결합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:fdl:aop), 
+[2] (https://creamilk88.tistory.com/148), [3] (https://blog.naver.com/1_soft/220706819718?viewType=pc)
 
 기본 구조 예시
 
@@ -25,7 +32,11 @@ xml
 </aop:config>
 코드를 사용할 때는 주의가 필요합니다.
 • id: 이 포인트컷을 식별하기 위한 고유 이름입니다.
-• expression: 적용할 메서드를 결정하는 표현식입니다. (위 예시는 egovframework.rte.fdl.aop.sample 패키지 아래의 이름이 Sample로 끝나는 클래스의 모든 메서드를 의미)
-• pointcut-ref: 하단의 <aop:aspect> 등에서 위에서 정의한 <aop:pointcut>의 id를 참조하여 실제 공통 기능과 엮습니다(Weaving). [1] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-aspectxml), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema), [3] (https://blog.naver.com/1_soft/220706819718?viewType=pc)
-자세한 가이드와 설정 방법은 표준프레임워크 포털 eGovFrame 위키에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
+• expression: 적용할 메서드를 결정하는 표현식입니다. (위 예시는 egovframework.rte.fdl.aop.sample 
+패키지 아래의 이름이 Sample로 끝나는 클래스의 모든 메서드를 의미)
+• pointcut-ref: 하단의 <aop:aspect> 등에서 위에서 정의한 <aop:pointcut>의 id를 참조하여 실제 공통 기능과 엮습니다(Weaving). 
+[1] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-aspectxml), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema),
+[3] (https://blog.naver.com/1_soft/220706819718?viewType=pc)
+자세한 가이드와 설정 방법은 표준프레임워크 포털 eGovFrame 위키에서 확인할 수 있습니다.
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
 만약 특정 포인트컷 표현식(expression) 작성법이나 context-aspect.xml 설정 예시가 더 필요하다면 편하게 말씀해 주세요.
