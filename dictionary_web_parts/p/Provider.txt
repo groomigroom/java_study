@@ -1,0 +1,7 @@
+ JSR-330 표준의 객체 제공자 (javax.inject.Provider)
+
+• 의미: 스프링 등의 IoC(Inversion of Control) 컨테이너에서 빈(Bean)을 직접 주입받는 대신,
+필요할 때 Provider.get()을 통해 동적으로 빈을 지연 조회(Lazy Lookup)하거나 새로 받아올 수 있게 해주는 인터페이스입니다.
+• 역할: 객체가 생성될 때 한 번만 주입되는 기본 의존성과 달리, 호출 시점에 최신 상태의 빈을 얻고 싶을 때 사용합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:fdl:ioc_container:jsr_330_standard_annotations)
+현재 작성 중이신 설정 파일의 위치나 소스코드에서 Provider가 쓰인 구체적인 줄(XML 태그나 자바 코드)을 알려주시면 더 정확한 역할을 짚어드릴 수 있습니다.
