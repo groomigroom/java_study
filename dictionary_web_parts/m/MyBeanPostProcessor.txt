@@ -1,0 +1,21 @@
+전자정부프레임워크(스프링 기반)에서 MyBeanPostProcessor는 개발자가 BeanPostProcessor 인터페이스를 직접 구현하여 임의로 만든 빈 후처리기(Bean Post-Processor) 클래스의 예시 명칭을 뜻합니다. [1] (https://sundaland.tistory.com/396)
+
+1. 핵심 의미 및 역할
+
+• 빈 후처리기 (BeanPostProcessor): 스프링 IoC 컨테이너가 빈(Bean)을 생성·초기화하는 시점의 전후에 커스텀 로직을 끼워넣어 빈을 조작하거나 다른 객체(프록시 등)로 바꿔치기할 수 있게 해주는 확장 포인트 인터페이스입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.0:fdl:ioc_container:container_extension_points), [2] (https://hongchangsub.com/spring-aop2/)
+• MyBeanPostProcessor: 스프링 공식 문서나 학습 자료에서 BeanPostProcessor 인터페이스를 구현하는 커스텀 클래스를 설명할 때 흔히 사용하는 샘플(예제) 클래스 이름입니다. (즉, 전자정부프레임워크 자체에 내장된 고정 클래스가 아니라 개발자가 직접 작성하거나 예제로 보는 클래스입니다.) [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.0:fdl:ioc_container:container_extension_points)
+
+2. 주요 콜백 메서드
+
+MyBeanPostProcessor 같은 구현체는 보통 아래의 두 가지 핵심 메서드를 오버라이드하여 동작합니다: [1] (https://sundaland.tistory.com/396)
+1. postProcessBeforeInitialization(Object bean, String beanName)
+	• 빈이 초기화 메서드(예: @PostConstruct나 afterPropertiesSet())가 호출되기 전에 실행됩니다. [1] (https://sundaland.tistory.com/396)
+2. postProcessAfterInitialization(Object bean, String beanName)
+	• 빈이 초기화된 후에 실행됩니다.
+	• 이 단계에서 원본 빈을 가로채어 AOP 프록시 객체로 변환해서 반환하는 등 다양한 후속 작업을 처리할 수 있습니다. [1] (https://sundaland.tistory.com/396), [2] (https://hongchangsub.com/spring-aop2/)
+
+3. 전자정부프레임워크(스프링 컨테이너)에서의 특징
+
+• 자동 감지: ApplicationContext를 사용할 경우, BeanPostProcessor를 구현한 빈을 컨테이너가 자동으로 인식하여 등록합니다.
+• 용도: 공통 로깅, 특정 인터페이스를 구현한 빈에 대한 부가 기능 주입, 어노테이션 기반 검증, 동적 프록시 생성 등 스프링 컨테이너 레벨에서 빈의 생성 과정을 제어할 때 쓰입니다. [1] (https://rainsister.tistory.com/33), [2] (https://docs.spring.io/spring-framework/docs/5.2.13.RELEASE/spring-framework-reference/core.html), [3] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.0:fdl:ioc_container:container_extension_points)
+혹시 특정 예제 코드나 에러 로그에서 MyBeanPostProcessor를 보셨나요? 어떤 작업을 하다가 마주치셨는지 알려주시면 더 구체적으로 설명해 드릴 수 있습니다.
