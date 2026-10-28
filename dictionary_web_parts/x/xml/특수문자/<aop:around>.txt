@@ -1,0 +1,32 @@
+전자정부프레임워크(및 기반인 스프링) XML 설정에서 <aop:around>는 
+핵심 비즈니스 메서드가 실행되기 전과 후(Around)에 공통 기능(Advice)을 실행하도록 설정하는 태그입니다. 
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=4), [2] (https://tragramming.tistory.com/47)
+
+주요 특징 및 동작 방식
+
+• 실행 시점: 대상 메서드가 호출되기 전(before), 메서드가 정상적으로 끝난 후 또는 예외 발생 시 전후 과정을 모두 제어합니다.
+[1] (https://tragramming.tistory.com/47)
+• 제어권: Around 어드바이스는 메서드 실행을 직접 제어할 수 있습니다. 즉, 공통 코드 내에서 ProceedingJoinPoint.proceed()를 
+호출해야만 실제 핵심 비즈니스 메서드가 실행됩니다. 호출하지 않으면 핵심 메서드가 실행되지 않습니다.
+• 활용 사례:
+	• 메서드 실행 시간 측정 (시작 시간 기록 -> proceed() 호출 -> 종료 시간 기록 후 차이 계산)
+	• 트랜잭션 처리 (트랜잭션 시작 -> proceed() -> 성공 시 커밋, 예외 시 롤백)
+	• 예외 처리 및 로깅 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:egovrteaopguide), 
+[2] (https://blu-blu.tistory.com/104), [3] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=4)
+
+XML 설정 예시 구조
+
+xml
+<aop:config>
+    <aop:aspect id="timeAspect" ref="performanceTraceAdvice">
+        <!-- pointcut: 적용할 대상 메서드 지정 -->
+        <aop:pointcut id="publicMethod" expression="execution(* com.example.service.*.*(..))" />
+        
+        <!-- around advice 적용 -->
+        <aop:around method="trace" pointcut-ref="publicMethod" />
+    </aop:aspect>
+</aop:config>
+코드를 사용할 때는 주의가 필요합니다.
+• method 속성: 공통 기능을 담당하는 빈(Bean) 내의 실제 메서드 이름 (trace 등)을 적습니다.
+• pointcut-ref 또는 pointcut 속성: 이 공통 기능을 적용할 대상 메서드의 위치(포인트컷)를 지정합니다.
+만약 실제 프로젝트에서 <aop:around>를 작성 중인 특정 코드나 에러/동작 방식에 대해 궁금한 점이 있다면 공유해 주세요. 더 자세히 설명해 드릴게요.
