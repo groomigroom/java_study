@@ -1,1 +1,26 @@
+전자정부프레임워크(eGovFrame)에서 사용하는 Quartz 스케줄러의 핵심 요소는 원래 Quartz 라이브러리가 가진 
+개념과 동일하며, 백그라운드 배치 작업 및 정기 실행을 위해 Spring Framework와 연동(Integration)하여 XML 설정(context-quartz.xml 등)이나 애너테이션으로 관리됩니다. [1] (https://arckwon.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-Spring-quartz-%EC%8A%A4%EC%BC%80%EC%A4%84%EB%9F%AC-%EC%82%AC%EC%9A%A9%EB%B2%95), [2] (https://bcuts.tistory.com/457), [3] (https://fun-developer.tistory.com/m/133)
 
+주요 요소별 의미와 역할
+
+• Scheduler (스케줄러)
+	• 의미: Quartz 실행 환경을 관리하고 제어하는 핵심 엔진/관리자 개체입니다.
+	• 역할: Job과 Trigger를 등록하고, 설정된 시간에 맞춰 Job이 실행되도록 스케줄링을 총괄합니다. [1] (https://blog.naver.com/xcv1524/220535863146?viewType=pc), [2] (https://leejaedoo.github.io/spring_quartz/), [3] (https://bcuts.tistory.com/457)
+• Job (잡)
+	• 의미: 사용자가 실제로 수행하기를 원하는 작업 로직(코드)을 정의하는 인터페이스입니다.
+	• 역할: execute(JobExecutionContext context) 메서드를 구현하여 실제로 해야 할 일(예: 배치 처리, 데이터 동기화 등)을 
+작성합니다. [1] (https://wonyong-jang.github.io/spring/2020/07/04/Spring-Quartz-Scheduler.html), [2] (https://blog.naver.com/xcv1524/220535863146?viewType=pc)
+• JobDetail (잡디테일)
+	• 의미: 실행할 Job에 대한 상세 정보와 메타데이터(부수 정보)를 정의하는 개체입니다.
+	• 역할: 작업의 이름(Name), 속해 있는 그룹(Group), 그리고 JobDataMap 등을 지정하여 실제 Job 인스턴스가 어떻게 구성되고 불릴 것인지 정의합니다. (하나의 Job 클래스를 서로 다른 이름/그룹의 여러 JobDetail로 만들어 재사용할 수 있습니다.) [1] (https://wonyong-jang.github.io/spring/2020/07/04/Spring-Quartz-Scheduler.html), [2] (https://blog.naver.com/xcv1524/220535863146?viewType=pc)
+• Trigger (트리거)
+	• 의미: 정의한 Job이 언제, 어떤 주기로 실행될지(실행 스케줄)를 정의하는 개체입니다.
+	• 역할: 시간 조건(단순 반복인 SimpleTrigger나 크론 표현식을 쓰는 CronTrigger 등)을 갖고 있다가, 시점이 되면 Scheduler에게 해당 Job을 실행하라고 알려줍니다. [1] (https://adjh54.tistory.com/437), [2] (https://subinto.tistory.com/137), [3] (https://blog.naver.com/xcv1524/220535863146?viewType=pc), [4] (https://bcuts.tistory.com/457)
+
+전자정부프레임워크에서의 특징
+
+• 분리와 유연성: 작업 내용(Job)과 실행 시점(Trigger)이 분리되어 있으므로, 실행 주기가 바뀌어도 Job 코드를 수정할 필요 없이 Trigger 설정만 변경하면 됩니다. [1] (https://d2d2.tistory.com/661)
+• 설정 방식: 전자정부프레임워크에서는 주로 JobDetail을 직접 빈(Bean)으로 등록하거나, MethodInvokingJobDetailFactoryBean을
+사용해 특정 비즈니스 서비스(Service 클래스의 메서드)를 직접 Quartz 작업으로 연결하여 사용합니다. [1] (https://fun-developer.tistory.com/m/133), [2] (https://blog.naver.com/xcv1524/220535863146?viewType=pc)
+• 관련 공식 가이드는 전자정부 표준프레임워크 스케줄링 문서에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:scheduling)
+전자정부프레임워크에서 XML 기반 설정(context-quartz.xml) 예제나 특정 서비스 메서드를 연결하는 방법이 필요하신가요?
