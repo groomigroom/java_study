@@ -1,0 +1,21 @@
+AnnotationConfigApplicationContext는 전자정부프레임워크(및 기반인 스프링 프레임워크)에서 
+자바 코드 기반의 설정 클래스와 어노테이션(@Configuration, @Bean 등)을 사용하여 스프링 컨테이너(ApplicationContext)를 
+생성하고 빈(Bean) 객체를 관리하는 구현체를 의미합니다. 
+[1] (/goto?url=CAES3AEB6zswFT19PoP6Ut8W32UlsYdYfovR47pUyPNWm8kIhK48pmXORhhHs36t7Nhx26MCKcrOoOZf0xl8pgfcSRPBqCivZb3eHLboTAkuiz9MYjJXYe3SzKrGXiEvLaNWX6Tp0SYhKx12KkiV0cgV0SWh7jmQr6wHYjyYncMrMKqV0DK2ei9KmOWH1G_RjWu3Sf-7kl3W9jjf47ddBmGvTMuHZoZlMHCV1wX7tlAqm8KA3SMnaE0n3rqgZJpv3ETsbFz1VCA_2CP6_8ub-jG1TUgcQOYeky2VC8fVUdT1), 
+[2] (/goto?url=CAEScwHrOzAVXFGpinkL--4WcVhdhN0YJNvGdcZ0_7sZgE4eOpvcoX8OuL4PgSkrUn6t1PVa5UuhB3gTPoPcUqHsFkMX5AAnfvaVapLrlzDnyxvPSyiaWsc0Xoj8w7e7ZIRzSCkZRu9CrVwf1ReUgLz1sc4UXWE), [3] (/goto?url=CAESXAHrOzAVw810y7dYZm5XAsytFE6sv6hf1Cvd_Zs2b0jXeZhu23AHjxnQQJflLi34824WnsuqMPo3F8gNiVLTSeotqLa-vwj_h_uvJ_1s1XIQ7LYCSCMOUSlSGexq)
+
+핵심 역할과 의미
+
+• 자바 기반 설정 컨테이너: 기존에 주로 사용하던 XML 파일 설정 방식(GenericXmlApplicationContext 등) 대신, 순수 자바 클래스와 어노테이션을 
+설정 정보로 읽어들여 스프링 컨테이너를 초기화합니다. 
+[1] (/goto?url=CAESwAEB6zswFWJjPzYmqpMmozt1R3fkvR7iRdKf9U5DTIAJoNsaKlnbigHewoEETAKN7RZ0y6k_6nv7Ekp3xxyLYXUMlCFQhcXgqjKuYPApZu0UUU4nhxnJVZvpS0uQbPQ5Ac8MZ9TS19bg3_Ycdl4lupBAgbrctI7cgChw5Pnsiuas0_uH1-Z4-3F51xsFTexTkqgSKJV6oTncBNYClUGGrN2fwTNr_xOw5YS9-bBVBzqoodH3fPCpPzWbxq0qq2qBTro), [2] (/goto?url=CAEScwHrOzAVXFGpinkL--4WcVhdhN0YJNvGdcZ0_7sZgE4eOpvcoX8OuL4PgSkrUn6t1PVa5UuhB3gTPoPcUqHsFkMX5AAnfvaVapLrlzDnyxvPSyiaWsc0Xoj8w7e7ZIRzSCkZRu9CrVwf1ReUgLz1sc4UXWE)
+• 빈(Bean) 등록 및 관리: @Configuration이 붙은 클래스나 @Component 계열의 어노테이션이 붙은 클래스들을 스캔하거나 직접 파라미터로 넘겨받아, 
+객체 생성부터 의존관계 주입(DI), 생명주기를 스프링 컨테이너가 직접 관리하도록 합니다. 
+[1] (/goto?url=CAESgQIB6zswFQYNp6KauptXFRaYm2U6xdeyK9vjERKhlTlvK98yStS_dWMmPM-rTgOCR7i1C2G-2GMRYen-lnUgu1rW0SHk7jckjOnxSP5QzGngjxPu5vcVtwnSglvNCsA5y70MWdN_lfV4wm2OvDhlqDEefJjIgnHOaTjJU0OBcyHUwEDkjGdrvnArtj-Pr78WURzWHNnjql7Rs2d5nxuDEAZhTarkermkyOM0PN3a8vWyqnZ4R_SH1qkTfjhRZxsmcsbGitH-zoUFabo0DduqPbljPH2W0L9KsCqtR0yCL8THDQJdRGGHLfV7_7JTsXxlu6FrwAW9lw1MUsfTZE7aqjp1eQ), [2] (/goto?url=CAESWgHrOzAV1F2TjN4rRMm9NXAZWGW8Hx1Nz0-hRyI1vHP26Pc4pr_AKi6L6wFW5K6TxsMw1V2U_gxCqKwbouprECHQXBpFZPUVK4BIpbreM6SPSn4IG-3VK8iR3Q), [3] (/goto?url=CAESXAHrOzAVw810y7dYZm5XAsytFE6sv6hf1Cvd_Zs2b0jXeZhu23AHjxnQQJflLi34824WnsuqMPo3F8gNiVLTSeotqLa-vwj_h_uvJ_1s1XIQ7LYCSCMOUSlSGexq)
+• 전자정부프레임워크에서의 위치: 전자정부 표준프레임워크는 스프링 기반이므로, IoC(Inversion of Control) / 
+DI 컨테이너를 구축할 때 XML 설정의 번거로움을 줄이고 자바 중심의 모던한 설정을 사용할 때 이 클래스를 활용합니다. 
+[1] (/goto?url=CAESWQHrOzAVw_btB55LLHJ-nbPpbXv2YR9EboGFTzT1-Y1O58_CvPqca6kDuMqOYUT6NzChbHFHHNUGLovz1dxbFVrqhi4Lkrazzuw4ByE-YnMjJb_fHik_Elg0)
+관련 상세 가이드는 전자정부 표준프레임워크 위키에서 확인할 수 있습니다. 
+[1] (/goto?url=CAESpwEB6zswFQUV5EGZUJ6T45YRQ3MUrXurXoUPmIOET22IUrT817Rztw6__itwje2G8D4fXt5Vk4qwEkvJqk3p3tZT5gWYf0w35zd68k_v_1qqyoIkGMB16wlvCbaIAwRYrfaUBZxzijV3QhiSFK9EIoBZKhXdp7BI7AaLzqBDbQXLkEekqIlDj-T0XzohC19Yf9lJWepkHLxE57rg8s4I0pTtN4QaptdDWg)
+혹시 지금 작성 중인 프로젝트가 XML 기반 설정에서 자바 어노테이션 기반으로 전환하는 작업 중이신가요? 
+아니면 특정 빈 등록이나 에러 해결과 관련하여 궁금한 점이 있으시면 편하게 알려주세요.
