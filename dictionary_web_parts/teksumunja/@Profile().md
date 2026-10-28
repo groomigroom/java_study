@@ -37,6 +37,11 @@
 ------------------------------
 혹시 스프링에서 여러 프로필을 동시에 제외하거나 조합하는 방법(&나 | 연산자 사용법)이 궁금하신가요? 아니면 이 어노테이션을 활용한 실제 설정 파일(application.yml) 작성법이 필요하신지 말씀해 주세요!
 ```
+# @Profile 설정
+* Bean Profile XML 설정을 Annotation(@Profile)으로 설정하면 다음과 같다.
+* @Profile은 XML의 beans profile의 설정과 똑같이 동작하며 @Bean은 XML의 bean설정과 매칭된다.
+* 
+* 다음은 “dev” Profile을 정의했을 때의 Java코드이다. Profile명이 dev인 “dataSource” Bean을 정의하고 있다.
 ```java
 
 ```
