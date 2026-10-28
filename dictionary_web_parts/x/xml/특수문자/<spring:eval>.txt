@@ -1,0 +1,32 @@
+<spring:eval>은 XML 설정 파일 자체가 아니라, JSP 파일에서 Spring 태그 
+라이브러리(http://www.springframework.org/tags)를 불러와 SpEL(Spring Expression Language)을 실행할 때 사용하는 JSP 커스텀 태그입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:ptl:spel), [2] (https://m.blog.naver.com/aservmz/222225560205)
+
+주요 역할 및 의미
+
+• SpEL 표현식 평가: JSP 페이지 내에서 스프링의 SpEL 문법을 이용해 자바 빈(Bean), 모델 객체, 또는 프로퍼티(.properties) 파일의 값을 직접 읽어올 수 
+있습니다. [1] (https://liketh.tistory.com/entry/springeval-%EC%84%A4%EC%A0%95), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:ptl:spel)
+• 결과 출력 또는 변수 저장: 연산 결과를 화면에 바로 출력하거나, var 속성을 이용해 특정 변수에 담아두고 JSP 내에서 재사용할 수 있습니다. [1] (https://retrieverj.tistory.com/115), [2] (https://minggu92.tistory.com/62)
+• 포맷터 자동 적용: @NumberFormat, @DateTimeFormat 등이 적용된 모델 객체의 필드를 읽을 때 포맷을 자동으로 변환해 줍니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:ptl:spel)
+
+사용 예시
+
+1. JSP 선언부 (태그 라이브러리 추가)jsp
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+코드를 사용할 때는 주의가 필요합니다.
+2. Properties 파일 값 가져오기 (XML에 정의된 Bean 활용)
+	• XML 설정 예 (dispatcher-servlet.xml 등):xml
+<util:properties id="globalProperties" location="classpath:config/global.properties" />
+코드를 사용할 때는 주의가 필요합니다.
+	• JSP 내 사용:jsp
+<spring:eval expression="@globalProperties['api.server.url']" var="serverUrl" />
+<p>서버 주소: ${serverUrl}</p>
+코드를 사용할 때는 주의가 필요합니다.
+3. 모델 객체의 속성 및 메서드 호출jsp
+<%-- 모델에 담겨있는 sampleVO 객체의 money 속성 출력 --%>
+<spring:eval expression="sampleVO.money" />
+
+<%-- toString() 메서드 직접 호출 --%>
+<spring:eval expression="sampleVO.toString()" />
+코드를 사용할 때는 주의가 필요합니다.
+만약 현재 작업 중인 전자정부프레임워크 프로젝트에서 특정 XML 파일(예: context-*.xml 또는 dispatcher-servlet.xml)과 연계하여 에러가 발생하거나 설정하려는 구체적인 목적이 있다면 말씀해 주세요.
