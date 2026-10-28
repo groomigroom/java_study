@@ -1,0 +1,25 @@
+전자정부 표준프레임워크(기반이 되는 스프링 프레임워크)에서 ObjectFactory는 
+DL(Dependency Lookup, 의존성 검색)을 수행하여, 필요할 때 프로그래밍 방식으로 스프링 
+빈(Bean) 인스턴스를 동적으로 찾아 반환해 주는 팩토리 인터페이스입니다. 
+[1] (https://gunju-ko.github.io/toby-spring/2019/04/15/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EA%B3%BC-%EC%8A%A4%EC%BD%94%ED%94%84.html), 
+[2] (https://www.borntodare.me/1c6ad381-9db0-80af-8de9-f75ec6f8e5b3), [3] (https://docs.spring.io/spring-framework/docs/4.1.0.RC2/javadoc-api/org/springframework/beans/factory/ObjectFactory.html)
+
+핵심 개념 및 의미
+
+• DL(Dependency Lookup) 서비스: 스프링 컨테이너에 등록된 빈을 코드 내에서 직접 찾아오고 싶을 때 사용합니다. [1] (https://www.borntodare.me/1c6ad381-9db0-80af-8de9-f75ec6f8e5b3)
+• 지연 조회(Lazy Lookup): @Autowired는 빈이 생성될 때 주입이 끝물이지만, ObjectFactory를 쓰면 실제로 빈이 필요하여 
+.getObject() 메서드를 호출하는 시점에 컨테이너로부터 빈을 가져옵니다. 
+[1] (https://docs.spring.io/spring-framework/docs/4.1.0.RC2/javadoc-api/org/springframework/beans/factory/ObjectFactory.html)
+• 프로토타입 빈 조회에 활용: 싱글톤(Singleton) 빈 내부에 프로토타입(Prototype) 스코프의 빈을 주입받아 사용할 때, 
+매번 새로운 프로토타입 빈 인스턴스를 얻기 위해 ObjectFactory를 주로 활용합니다. 
+[1] (https://yangbongsoo.gitbook.io/study/spring-1/ioc_container_di), [2] (https://gunju-ko.github.io/toby-spring/2019/04/15/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EA%B3%BC-%EC%8A%A4%EC%BD%94%ED%94%84.html)
+
+주요 특징
+
+• 인터페이스 구조: 내부에 T getObject() 단일 메서드만 정의되어 있는 매우 단순한 구조입니다.
+• 스프링 기본 제공: 개발자가 직접 구현할 필요 없이 스프링 컨테이너가 구현체를 자동 주입해 줍니다.
+• 현대적 대안 (ObjectProvider): 스프링 4.3 이상부터는 ObjectFactory를 확장하여 스트림 처리, 옵셔널 처리 등 편의 기능이 더해진 ObjectProvider를 권장합니다. 
+(예: ObjectProvider<MyBean>) [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:ioc_container:jsr_330_standard_annotations), 
+[2] (https://docs.spring.io/spring-framework/docs/4.1.0.RC2/javadoc-api/org/springframework/beans/factory/ObjectFactory.html), 
+[3] (https://yangbongsoo.gitbook.io/study/spring-1/ioc_container_di), [4] (https://www.borntodare.me/1c6ad381-9db0-80af-8de9-f75ec6f8e5b3), [5] (https://velog.io/@bami/Spring-DL%EA%B3%BC-Provider)
+ObjectFactory를 사용하려는 구체적인 빈 스코프(예: 싱글톤 안에서 프로토타입 빈 호출 등)나 사용하려는 코드 상황을 알려주시면, 예제 코드와 함께 더 자세히 안내해 드릴 수 있습니다.
