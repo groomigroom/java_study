@@ -305,3 +305,9 @@ public class ExampleBean {
 생성자가 호출되는 시점에는 스프링이 관리하는 다른 의존성(다른 Service나 DAO 등)이 아직 주입되지 않은 상태입니다. 반면 init-method로 지정된 메서드는 필요한 모든 데이터와 객체가 주입 완료된 것이 보장된 상태에서 실행되므로, 안전하게 초기화 로직을 수행할 수 있습니다.
 혹시 현재 전자정부프레임워크 버전이나 자바 기반 설정(@Bean)으로 변경하는 방법 등 더 궁금한 점이 있으신가요?
 ```
+# 파괴 callbacks(Destruction callbacks)
+* Container가 파괴될 때 bean이 callback를 받을 수 있다.
+* DisposableBean interface는 다음 메소드를 명시하고 있다.
+```xml
+<bean id="exampleInitBean" class="examples.ExampleBean" destroy-method="cleanup"/>
+```
