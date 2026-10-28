@@ -1,3 +1,18 @@
 <listener>
    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 </listener>
+
+제시하신 web.xml 설정은 스프링(Spring) 기반의 웹 애플리케이션이 시작될 때, 
+공통 영역(Root ApplicationContext)을 자동으로 구동하고 로드하는 역할을 합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:getting_started), [2] (https://ksb-dev.tistory.com/341)
+
+핵심 의미 및 역할
+
+• 애플리케이션 맨 앞단 구동: 톰캣(Tomcat) 같은 웹 서버가 web.xml을 읽고 웹 애플리케이션을 초기화할 때, 
+ContextLoaderListener 클래스를 가장 먼저 실행합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:getting_started)
+• 공통 설정 파일 로드: 보통 이 리스너는 <context-param>에 정의된 공통 설정 파일들(예: 데이터베이스 연결 
+context-datasource.xml, 트랜잭션, 공통 서비스 등)을 읽어들여 전역 컨텍스트를 생성합니다. [1] (https://gomest.tistory.com/5), [2] (https://ksb-dev.tistory.com/341)
+• 서블릿과의 구분: 여기서 만들어진 Root Context는 이후에 요청을 받는 스프링 MVC의 
+DispatcherServlet(개별 컨트롤러/뷰 관련 설정)보다 먼저 생성되며, 전체 애플리케이션에서 공유됩니다. 
+[1] (https://unabated.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-ContextLoaderListener-%EC%9D%98-%EC%97%AD%ED%95%A0), [2] (https://ksb-dev.tistory.com/341)
+혹시 특정 에러가 발생해서 이 설정을 확인하고 계신가요? 아니면 contextConfigLocation 경로 설정에 대해 더 알고 싶으신가요? 말씀해주시면 추가로 설명해 드릴게요.
