@@ -43,3 +43,7 @@ ctx.refresh();
 "운영 환경(production)용 설정을 활성화한 상태에서, 특정 경로의 XML 설정 파일들을 읽어들인 뒤 스프링 컨테이너를 구동시키는 과정"을 나타냅니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:bean_definition_profiles)
 이 코드와 관련해서 혹시 특정 프로필별 설정 분리나 빈(Bean) 등록 과정에 대해 더 궁금한 점이 있으신가요?
 
+
+--------------------------------------------------------------------------
+
+ctx.scan("com.bank.config.code"); // find and register all @Configuration classes within
