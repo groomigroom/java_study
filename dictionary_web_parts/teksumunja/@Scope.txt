@@ -1,19 +1,28 @@
 전자정부 표준프레임워크(기반이 되는 스프링 프레임워크)에서 @Scope는 
 스프링 빈(Bean) 객체가 생성되고 유지되는 범위(생명주기)를 지정할 때 사용하는 애노테이션입니다. 
-[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3), [2] (https://velog.io/@jonghne/Spring-Bean-Scope%EC%9D%98-%EA%B0%9C%EB%85%90%EA%B3%BC-%EC%A2%85%EB%A5%98)
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3), 
+[2] (https://velog.io/@jonghne/Spring-Bean-Scope%EC%9D%98-%EA%B0%9C%EB%85%90%EA%B3%BC-%EC%A2%85%EB%A5%98)
 
 주요 Bean Scope 종류
 
 • singleton (기본값)
 	• 스프링 컨테이너당 단 하나의 객체만 생성해서 공유합니다.
-	• 컨테이너가 시작될 때 만들어져 종료될 때까지 유지됩니다. [1] (https://gyoogle.dev/blog/web-knowledge/spring-knowledge/%5BSpring%5D%20Bean%20Scope.html), [2] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90), [3] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3)
+	• 컨테이너가 시작될 때 만들어져 종료될 때까지 유지됩니다. 
+[1] (https://gyoogle.dev/blog/web-knowledge/spring-knowledge/%5BSpring%5D%20Bean%20Scope.html), 
+[2] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90), 
+[3] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3)
 • prototype
 	• 빈을 요청할 때마다 매번 새로운 객체를 생성합니다.
-	• 스프링 컨테이너는 객체 생성과 의존관계 주입까지만 관여하고 이후 소멸 관리는 하지 않습니다. [1] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90)
+	• 스프링 컨테이너는 객체 생성과 의존관계 주입까지만 관여하고 이후 소멸 관리는 하지 않습니다. 
+[1] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90)
 • request (웹 환경 전용)
-	• 하나의 HTTP 요청(Request)이 들어오고 나갈 때까지만 객체가 유지됩니다. [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3), [2] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90)
+	• 하나의 HTTP 요청(Request)이 들어오고 나갈 때까지만 객체가 유지됩니다. 
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3), 
+[2] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90)
 • session (웹 환경 전용)
-	• 하나의 HTTP 세션(Session)이 생성되고 종료될 때까지 객체가 유지됩니다. [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3), [2] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90)
+	• 하나의 HTTP 세션(Session)이 생성되고 종료될 때까지 객체가 유지됩니다. 
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3), 
+[2] (https://velog.io/@jinjoa1/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%B9%88-%EC%8A%A4%EC%BD%94%ED%94%84-%EC%A0%9C%EB%8C%80%EB%A1%9C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-%EC%8B%B1%EA%B8%80%ED%86%A4-vs-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85-%EC%B0%A8%EC%9D%B4%EC%A0%90)
 • application (웹 환경 전용)
 	• 웹의 ServletContext와 같은 범위 동안 객체가 유지됩니다. [1] (https://9hyuk9.tistory.com/11)
 
@@ -26,4 +35,5 @@ public class MyBean {
     // 요청할 때마다 새로운 객체가 생성되는 빈
 }
 코드를 사용할 때는 주의가 필요합니다.
-특정 Scope의 동작 방식이나, 싱글톤 사용 시 발생할 수 있는 동시성(Concurrency) 문제에 대해 더 알고 싶으시면 말씀해 주세요.
+특정 Scope의 동작 방식이나, 싱글톤 사용 시 발생할 수 있는 
+동시성(Concurrency) 문제에 대해 더 알고 싶으시면 말씀해 주세요.
