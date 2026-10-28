@@ -1,3 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+ 
+   <context:component-scan base-package="org.example"/>
+ 
+</beans>
+
+======================================================================
+
 전자정부프레임워크(스프링 기반)의 XML 설정에서 <context:component-scan>은 지정한 패키지 안의 
 클래스들을 자동으로 스캔해서 스프링 빈(Bean)으로 등록하는 역할을 합니다. 
 [1] (https://devel-log.tistory.com/51), [2] (https://ailiartsua.tistory.com/4)
