@@ -6,21 +6,32 @@ Context(컨텍스트)는 애플리케이션이 원활하게 동작할 수 있도
 
 1. 스프링 컨테이너 (ApplicationContext)
 
-• 객체(Bean) 관리: 애플리케이션에서 사용하는 서비스, DAO, 유틸리티 등의 자바 객체를 생성하고 스프링 컨테이너가 직접 관리합니다. [1] (https://translate.google.com/translate?u=https://www.quora.com/What-is-meant-by-%25E2%2580%259Capplication-context%25E2%2580%259D-in-spring-and-how-do-you-create-one&hl=ko&sl=en&tl=ko&client=sge)
+• 객체(Bean) 관리: 애플리케이션에서 사용하는 서비스, DAO, 유틸리티 등의 자바 객체를 생성하고 스프링 컨테이너가 직접 관리합니다. 
+[1] (https://translate.google.com/translate?u=https://www.quora.com/What-is-meant-by-%25E2%2580%259Capplication-context%25E2%2580%259D-in-spring-and-how-do-you-create-one&hl=ko&sl=en&tl=ko&client=sge)
 • 의존성 주입(DI): 객체들이 서로 필요로 할 때, 설정 파일(XML 또는 Java Config, 어노테이션)을 바탕으로 알아서 연결(주입)해 줍니다.
-• 이벤트 처리: The ApplicationContext - 전자정부 표준프레임워크에 명시된 대로 ApplicationEvent와 ApplicationListener를 이용한 이벤트 발행 및 구독 메커니즘을 제공합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:the_applicationcontext)
+• 이벤트 처리: The ApplicationContext - 전자정부 표준프레임워크에 명시된 대로 ApplicationEvent와 ApplicationListener를 이용한 
+이벤트 발행 및 구독 메커니즘을 제공합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:the_applicationcontext)
 
 2. 설정 파일 접두사 (context-*.xml)
 
-전자정부 프레임워크 프로젝트를 생성하면 src/main/resources (또는 WEB-INF/spring) 경로 아래에 context-로 시작하는 XML 설정 파일들이 생성됩니다. 각 파일은 영역별 설정을 분리하여 담당합니다. [1] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC), [2] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml)
+전자정부 프레임워크 프로젝트를 생성하면 src/main/resources (또는 WEB-INF/spring) 경로 아래에 context-로 시작하는 XML 설정 파일들이 생성됩니다. 
+각 파일은 영역별 설정을 분리하여 담당합니다. [1] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC), 
+[2] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml)
 • context-common.xml: 공통 설정, 어노테이션 스캔 제외 처리, 다국어 처리 메시지 소스(ReloadableResourceBundleMessageSource) 등을 정의합니다.
 • context-datasource.xml: 데이터베이스 연결(DataSource) 및 트랜잭션 관련 설정을 담당합니다.
 • context-mapper.xml / context-sql-map.xml: MyBatis 등과 연동하는 ORM/SQL 설정 파일을 연결합니다.
 • context-security.xml: Spring Security를 활용한 로그인, 권한 부여, 접근 제어 등 보안 설정을 확장하여 관리합니다.
-• context-idgen.xml: 게시물 번호 등 유일한 ID를 생성해 주는 IDgeneration 서비스 설정입니다. [1] (https://sharonprogress.tistory.com/323), [2] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml)
+• context-idgen.xml: 게시물 번호 등 유일한 ID를 생성해 주는 IDgeneration 서비스 설정입니다. 
+[1] (https://sharonprogress.tistory.com/323), 
+[2] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml)
 
 3. 웹 어플리케이션에서의 위치 (web.xml)
 
-웹 애플리케이션이 처음 구동될 때 web.xml 파일을 읽는데, 여기에 contextConfigLocation 파라미터를 통해 context-*.xml 파일들의 경로를 지정해 줍니다. [1] (https://m.blog.naver.com/1_soft/220704730059), [2] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC), [3] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml)
-• WAS(웹 애플리케이션 서버)가 시작될 때 이 설정들을 다 읽어서 공통 비즈니스 영역의 컨텍스트를 먼저 로딩하고, 이후 DispatcherServlet 등을 통해 웹 요청 처리용 서블릿 컨텍스트가 연결됩니다. [1] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml), [2] (https://m.blog.naver.com/1_soft/220704730059)
+웹 애플리케이션이 처음 구동될 때 web.xml 파일을 읽는데, 여기에 contextConfigLocation 파라미터를 통해 context-*.xml 파일들의 경로를 지정해 줍니다. 
+[1] (https://m.blog.naver.com/1_soft/220704730059), [2] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC), 
+[3] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml)
+• WAS(웹 애플리케이션 서버)가 시작될 때 이 설정들을 다 읽어서 공통 비즈니스 영역의 컨텍스트를 먼저 로딩하고, 
+이후 DispatcherServlet 등을 통해 웹 요청 처리용 서블릿 컨텍스트가 연결됩니다. 
+[1] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml), [2] (https://m.blog.naver.com/1_soft/220704730059)
 만약 특정 XML 파일(context-common.xml이나 context-datasource.xml 등)의 구체적인 설정 방법이나 에러 해결에 대해 알고 싶다면 편하게 말씀해 주세요.
