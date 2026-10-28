@@ -57,3 +57,8 @@ public class StandaloneDataConfig {
 }
 
 ```
+* “production” Profile을 정의했을 때의 Java코드이다.
+* Profile명이 production인 “dataSource” Bean을 정의하고 있다.
+```java
+
+```
