@@ -13,3 +13,33 @@
 • 실무/웹 환경과의 차이: 실제 전자정부프레임워크로 구축하는 웹(Web) 프로젝트에서는 개발자가 직접 new GenericXmlApplicationContext()를 코드로 호출할 일이 거의 없습니다. 대신 웹 서버가 뜰 때 web.xml이나 Spring의 ContextLoaderListener / DispatcherServlet이 자동으로 XmlWebApplicationContext 등을 생성해 관리하기 때문입니다. [1] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml), [2] (https://ppowerppush.tistory.com/76), [3] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC)
 • 언제 쓰이는가?: 주로 전자정부프레임워크 기반의 배치 작업, 암호화 유틸리티 테스트, 또는 프레임워크의 기초 원리를 실습(HelloWorld 등)할 때 메인 메서드 내에서 수동으로 컨테이너를 띄울 때 등장합니다. [1] (https://ktko.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%ACeGovframework-DB%EC%95%94%ED%98%B8%ED%99%94-%EB%B0%A9%EB%B2%95-%EB%B0%8F-%EA%B0%80%EC%9D%B4%EB%93%9C), [2] (https://egovframe.go.kr/docs/5.0/getting-started/)
 전자정부프레임워크 프로젝트를 진행하면서 특정 XML 설정 파일을 직접 로드하는 코드를 작성하다가 마주치셨나요? 아니면 다른 컨테이너 클래스(예: AnnotationConfigApplicationContext 등)와의 차이가 궁금하신가요?
+
+------------------------------------------------------------------
+
+GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+ctx.getEnvironment().setActiveProfiles("production");
+ctx.load("classpath:/com/bank/config/xml/*-config.xml");
+ctx.refresh();
+
+제시된 코드는 스프링(Spring) 기반의 전자정부 표준프레임워크에서 XML 설정 파일을 사용하는 스프링 컨테이너(IoC Container)를 수동으로 생성하고, 운영(Production) 프로필을 활성화한 뒤, 설정 파일을 불러와 컨테이너를 초기화(가동)하는 코드입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:bean_definition_profiles)
+
+코드 줄별 의미 분석
+
+1. GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+	• 클래스 패스(ClassPath)나 파일 시스템에 있는 XML 설정 파일을 읽어와 스프링 컨테이너(IoC 컨테이너, ApplicationContext)를 생성하는 객체를 만듭니다.
+	• 이 시점에서는 아직 설정 파일을 읽거나 빈(Bean)을 생성하지 않은 빈 상태의 컨테이너입니다. [1] (https://gardentree.tistory.com/151)
+2. ctx.getEnvironment().setActiveProfiles("production");
+	• 스프링 컨테이너의 환경(Environment) 설정에 접근하여 production (운영 환경) 프로필(Profile)을 활성화합니다.
+	• XML 설정 파일 내에 <beans profile="production"> 등으로 조건부 정의된 빈(Bean)들만 활성화되고, 다른 프로필(예: dev 등)로 설정된 빈들은 무시(Skip)됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:bean_definition_profiles)
+3. ctx.load("classpath:/com/bank/config/xml/*-config.xml");
+	• 클래스 패스(Classpath)의 /com/bank/config/xml/ 경로 아래에 있는 -config.xml로 끝나는 모든 XML 설정 파일을 컨테이너에 로드(적재)합니다.
+	• 이 역시 설정 정보만 메모리에 읽어들인 단계이며, 실제 빈 객체 생성은 아직 이루어지지 않았습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:bean_definition_profiles)
+4. ctx.refresh();
+	• 로드된 설정 정보를 바탕으로 스프링 컨테이너를 실제로 초기화(Refresh)합니다.
+	• 이 메서드가 호출되는 시점에 빈(Bean) 객체들이 생성되고, 의존성 주입(DI)이 일어나며, AOP 및 각종 초기화 작업이 완료되어 컨테이너가 정상적으로 구동됩니다. [1] (https://pplenty.tistory.com/6)
+
+요약
+
+"운영 환경(production)용 설정을 활성화한 상태에서, 특정 경로의 XML 설정 파일들을 읽어들인 뒤 스프링 컨테이너를 구동시키는 과정"을 나타냅니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:bean_definition_profiles)
+이 코드와 관련해서 혹시 특정 프로필별 설정 분리나 빈(Bean) 등록 과정에 대해 더 궁금한 점이 있으신가요?
+
