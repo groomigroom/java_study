@@ -308,6 +308,10 @@ public class ExampleBean {
 # 파괴 callbacks(Destruction callbacks)
 * Container가 파괴될 때 bean이 callback를 받을 수 있다.
 * DisposableBean interface는 다음 메소드를 명시하고 있다.
+* DisposableBean interface의 사용을 권장하지 않는다.
+* 왜냐하면 code가 불필요하게 Spring과 결합되기(couple) 때문이다.
+* 대안으로, bean 정의는 초기화 메소드를 지정할 수 있다.
+* XML 기반 설정의 경우, ‘destroy-method’ attribute를 사용한다.
 ```xml
 <bean id="exampleInitBean" class="examples.ExampleBean" destroy-method="cleanup"/>
 ```
