@@ -1,1 +1,36 @@
+전자정부프레임워크(Spring Framework 기반) XML 설정 파일에서 <qualifier value="main"/>은 
+동일한 타입의 빈(Bean)이 여러 개 존재할 때, 주입(Injection)할 특정 빈을 식별하기 위해 사용하는 이름표입니다.
+주로 @Autowired나 <annotation-driven> 환경에서 어떤 객체를 가져올지 명확하게 지정하는 역할을 합니다.
 
+💡 왜 사용할까요? (사용 예시)
+
+만약 시스템에 PaymentService라는 인터페이스가 있고, 이를 구현한 클래스가 2개 있다고 가정해 보겠습니다.
+1. CardPaymentService (카드 결제)
+2. BankPaymentService (계좌 이체)
+컴퓨터는 그냥 "PaymentService를 주입해줘!"라고만 하면 둘 중 어떤 것을 고를지 몰라 에러(NoUniqueBeanDefinitionException)를 발생시킵니다.
+이때 XML에 다음과 같이 main이라는 이름표(Qualifer)를 붙여두면 해결됩니다.
+xml
+<!-- 1. 카드 결제 빈 등록 및 main이라는 식별자 부여 -->
+<bean id="cardPayment" class="com.example.CardPaymentService">
+    <qualifier value="main"/>
+</bean>
+
+<!-- 2. 계좌 이체 빈 등록 -->
+<bean id="bankPayment" class="com.example.BankPaymentService">
+    <qualifier value="sub"/>
+</bean>
+코드를 사용할 때는 주의가 필요합니다.
+이렇게 설정해 두면, 자바 코드에서 주입받을 때 @Qualifier("main")을 사용하여 카드 결제 서비스(cardPayment)를 안전하게 지정하여 가져올 수 있습니다.
+java
+@Autowired
+@Qualifier("main") // XML에서 지정한 value="main"을 찾아 정확히 주입됨
+private PaymentService paymentService;
+코드를 사용할 때는 주의가 필요합니다.
+
+📌 핵심 요약
+
+• 역할: 여러 개의 동일 타입 빈 중 특정 빈을 구분하는 식별자
+• 매칭: 자바 코드의 @Qualifier("main") 애노테이션과 연결됨
+• 효과: 빈 자동 주입 시 발생하는 충돌(모호성) 해결
+추가로 현재 설정 중인 XML 전체 코드나 연동하려는 자바 클래스 구조를 보여주시면, 
+더 정확하게 커스텀된 적용 방법을 안내해 드릴 수 있습니다. 어떻게 도와드릴까요?
