@@ -1,0 +1,21 @@
+전자정부프레임워크(스프링 기반)에서 @Inject는 자바 표준 DI(Dependency Injection, 의존성 주입) 
+애노테이션으로, 필요한 객체(Bean)를 컨테이너로부터 주입받을 때 사용합니다. 
+[1] (https://d2.naver.com/helloworld/342818), [2] (https://tech.kakaopay.com/post/martin-dev-honey-tip-2/)
+
+주요 의미와 특징
+
+• 자바 표준 기술 (JSR-330):
+	• 특정 프레임워크(스프링 등)에 종속되지 않는 표준 의존성 주입 규격(javax.inject.Inject 또는 jakarta.inject.Inject)입니다.
+	• 나중에 스프링이 아닌 다른 DI 컨테이너로 교체할 가능성이 있는 공통 모듈을 만들 때 유리합니다. [1] (https://godogha9man.tistory.com/226)
+• 스프링의 @Autowired와의 차이점:
+	• 기본적으로 스프링의 @Autowired와 동일한 역할을 합니다 (타입을 기준으로 빈을 주입함).
+	• 차이점은 @Autowired는 스프링 전용 애노테이션인 반면, @Inject는 자바 표준 라이브러리(javax.inject / jakarta.inject)에 포함되어 있습니다.
+	• @Autowired가 제공하는 required=false 속성이 @Inject에는 기본적으로 없으며, 선택적 주입을 하려면 자바 
+표준의 @Named나 스프링의 @Qualifier, 혹은 Optional을 함께 사용해야 합니다. 
+[1] (https://www.reddit.com/r/SpringBoot/comments/1ct57yv/difference_between_autowired_and_inject/?tl=ko), [2] (https://tech.kakaopay.com/post/martin-dev-honey-tip-2/), [3] (https://godogha9man.tistory.com/226)
+
+사용 방법 요약
+
+• 타입 기준 주입: 변수나 생성자, 세터(Setter) 위에 @Inject를 붙이면 스프링 컨테이너가 일치하는 타입의 빈(Bean)을 찾아 자동으로 주입합니다.
+• 이름 특정하기: 같은 타입의 빈이 여러 개 있을 때는 자바 표준인 @Named를 함께 써서 주입할 빈의 이름을 지정합니다.
+@Inject를 프로젝트에 적용할 때 @Autowired와의 선택 기준이나 구체적인 설정 방법이 궁금하신가요?
