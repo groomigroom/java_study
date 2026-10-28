@@ -1,0 +1,43 @@
+전자정부 표준프레임워크(스프링 기반)에서 <tx:advice> 태그는 AOP(관점 지향 프로그래밍)를 활용해 트랜잭션 처리 방식을 정의하는 태그입니다. 
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=4), [2] (https://blog.naver.com/dydals56789/221575650658?viewType=pc)
+
+주요 역할 및 의미
+
+• 트랜잭션 공통 기능 정의: 메서드가 실행될 때 트랜잭션을 언제 시작하고, 언제 Commit(성공 시 반영)할지, 언제 Rollback(에러 발생 시 취소)할지 규칙(속성)을 설정합니다.
+• AOP 연동: <tx:advice>로 정의한 트랜잭션 규칙을 <aop:config>와 <aop:pointcut> 등을 이용해 특정 서비스(Service) 계층의 메서드에 자동으로 적용합니다. 
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=4), 
+[2] (https://blog.naver.com/dydals56789/221575650658?viewType=pc)
+• 주로 쓰이는 파일: 보통 전자정부 프레임워크 프로젝트의 context-transaction.xml 파일에서 설정합니다. 
+[1] (https://aljjabaegi.tistory.com/273), [2] (https://blog.naver.com/dydals56789/221575650658?viewType=pc)
+
+설정 예시 구조
+
+xml
+<!-- 1. 트랜잭션 어드바이스(Advice) 설정 -->
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <tx:attributes>
+        <!-- 조회(get, select 등) 메서드는 읽기 전용으로 설정 -->
+        <tx:method name="select*" read-only="true" />
+        <!-- 쓰기/수정/삭제 등의 메서드는 트랜잭션 적용 -->
+        <tx:method name="insert*" rollback-for="Exception" />
+        <tx:method name="update*" rollback-for="Exception" />
+        <tx:method name="delete*" rollback-for="Exception" />
+    </tx:attributes>
+</tx:advice>
+
+<!-- 2. AOP를 통해 어디에 적용할지 포인트컷(Pointcut) 연결 -->
+<aop:config>
+    <aop:pointcut id="serviceMethods" 
+        expression="execution(* egovframework.example.sample.service.impl.*Impl.*(..))" />
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
+</aop:config>
+코드를 사용할 때는 주의가 필요합니다.
+
+참고 사항
+
+• XML 방식 대신 자바 어노테이션을 선호하는 경우, XML의 <tx:advice>와 AOP 설정을 주석 처리하고 @Transactional 어노테이션과 
+<tx:annotation-driven />을 사용해 처리할 수도 있습니다.
+• 더 자세한 가이드는 전자정부 표준프레임워크 실행환경 AOP 가이드라인을 참고하실 수 있습니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:aop:egovrteaopguide), 
+[2] (https://keartt.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-Transactional-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-xml)
+현재 작성 중이신 XML 설정 파일 전체 코드나 겪고 계신 구체적인 에러 내용을 알려주시면 트랜잭션 설정 점검을 도와드릴 수 있습니다.
