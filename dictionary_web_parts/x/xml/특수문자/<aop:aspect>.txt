@@ -26,5 +26,7 @@ xml
     </aop:aspect>
 </aop:config>
 코드를 사용할 때는 주의가 필요합니다.
-• 전자정부프레임워크의 상세 AOP 가이드라인은 표준프레임워크 포털 eGovFrame에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
-혹시 context-aspect.xml 파일에서 특정 <aop:aspect> 설정을 해석하고 계신가요? 문제가 되는 XML 코드 조각이나 구현하려는 부가 기능(로깅, 권한 체크 등)을 알려주시면 더 자세히 설명해 드릴 수 있습니다.
+• 전자정부프레임워크의 상세 AOP 가이드라인은 표준프레임워크 포털 eGovFrame에서 확인할 수 있습니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
+혹시 context-aspect.xml 파일에서 특정 <aop:aspect> 설정을 해석하고 계신가요? 
+문제가 되는 XML 코드 조각이나 구현하려는 부가 기능(로깅, 권한 체크 등)을 알려주시면 더 자세히 설명해 드릴 수 있습니다.
