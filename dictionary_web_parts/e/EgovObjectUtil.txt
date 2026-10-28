@@ -1,0 +1,32 @@
+전자정부프레임워크(eGovFrame)에서 EgovObjectUtil은 Java 객체(Object)의 생성, 비교, 
+유효성 검증 등의 작업을 편리하게 처리할 수 있도록 돕는 유틸리티 클래스입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:string_util), [2] (https://github.com/eGovFramework/egovframe-runtime)
+주로 복잡한 Java reflection이나 반복적인 null 체크 코드를 줄여주어 개발 생산성을 높이는 역할을 합니다.
+
+💡 주요 기능 및 역할
+
+1. 인스턴스 동적 생성 (Reflection)
+	• 클래스명을 문자열(String)로 전달받아 해당 클래스를 인스턴스화(객체 생성)합니다.
+	• 파라미터가 없는 기본 생성자뿐만 아니라, 파라미터가 존재하는 생성자 등 다양한 형태로 객체를 동적으로 생성할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:string_util)
+2. Null 및 빈 값 체크
+	• 객체가 null인지 확인하는 isNull(Object obj) 같은 메서드를 제공합니다.
+	• 조건문에서 발생할 수 있는 NullPointerException을 방지하기 위해 자주 사용됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:server_security:upgrade)
+3. 객체 비교 및 검증
+	• 두 객체의 주소나 값이 같은지 비교하거나, 객체가 특정 데이터 타입을 가졌는지 안전하게 검증하는 기능을 수행합니다.
+
+💻 코드로 보는 예시
+
+보통 전자정부프레임워크 내부 소스나 공통 컴포넌트 내에서 아래와 같이 활용됩니다. [1] (https://github.com/eGovFramework/egovframe-common-components), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:server_security:upgrade)
+java
+// 예시 1: 인증 객체가 null인지 체크할 때 (시큐리티 처리 등)
+Authentication authentication = context.getAuthentication();
+
+if (EgovObjectUtil.isNull(authentication)) {
+    log.debug("인증 객체가 비어있습니다.");
+    return null;
+}
+
+// 예시 2: 클래스명(String)을 이용해 동적으로 객체를 가동할 때
+Object myObject = EgovObjectUtil.instantiate("com.example.MyClass");
+코드를 사용할 때는 주의가 필요합니다.
+개발할 때 EgovObjectUtil 외에도 문자열을 다루는 EgovStringUtil, 날짜를 다루는 EgovDateUtil 등 전자정부프레임워크가 제공하는 다양한 기본 유틸리티 클래스들과 함께 세트로 자주 묶여서 사용됩니다. [1] (https://egovframe.go.kr/docs/5.0/common-component/elementary-technology/formatter-util/string-validation/), [2] (http://rfc.skoinfo.co.kr/API/RFC3.0/egovframework/rfc3/common/util/EgovDateUtil.html)
+혹시 현재 소스 코드 상에서 EgovObjectUtil을 활용해 구현하고자 하는 특정 기능이 있거나, 에러가 발생해 확인 중이신가요? 상황을 알려주시면 알맞은 사용법을 더 자세히 설명해 드릴게요.
