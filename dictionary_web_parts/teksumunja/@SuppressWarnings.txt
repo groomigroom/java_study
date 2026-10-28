@@ -7,10 +7,16 @@
 
 주요 특징 및 목적
 
-• 경고 억제: 로직상 문제는 없지만 IDE(이클립스 등)나 컴파일러가 "권장하지 않는 방식"이나 "타입 체크가 안 됨" 등으로 판단해 노란색 밑줄(경고)을 띄우는 경우 이를 숨겨줍니다.
-• 가독성 향상: 불필요하거나 의도된 경고 메시지들로 인해 진짜 중요한 에러나 경고를 놓치는 것을 방지하기 위해 사용합니다. [1] (https://medium.com/@hyeonhomartinkang/suppresswarnings-%ED%99%9C%EC%9A%A9-a9493c0c3f82), [2] (https://aljjabaegi.tistory.com/482), [3] (https://08genie.tistory.com/entry/Spring-SuppressWarnings-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%9D%98%EB%AF%B8), [4] (https://haranglog.tistory.com/3)
+• 경고 억제: 로직상 문제는 없지만 IDE(이클립스 등)나 컴파일러가 "권장하지 않는 방식"이나 
+"타입 체크가 안 됨" 등으로 판단해 노란색 밑줄(경고)을 띄우는 경우 이를 숨겨줍니다.
+• 가독성 향상: 불필요하거나 의도된 경고 메시지들로 인해 진짜 중요한 에러나 경고를 놓치는 것을 방지하기 위해 사용합니다. 
+[1] (https://medium.com/@hyeonhomartinkang/suppresswarnings-%ED%99%9C%EC%9A%A9-a9493c0c3f82), 
+[2] (https://aljjabaegi.tistory.com/482), 
+[3] (https://08genie.tistory.com/entry/Spring-SuppressWarnings-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%9D%98%EB%AF%B8), 
+[4] (https://haranglog.tistory.com/3)
 ###주요 옵션 값 (속성)
-괄호 안에 속성값을 지정하여 어떤 경고를 무시할지 세부적으로 설정할 수 있습니다: [1] (https://haranglog.tistory.com/3), [2] (https://iwannafullstack.tistory.com/entry/SuppressWarnings-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%9D%B4%EB%9E%80)
+괄호 안에 속성값을 지정하여 어떤 경고를 무시할지 세부적으로 설정할 수 있습니다: [1] (https://haranglog.tistory.com/3), 
+[2] (https://iwannafullstack.tistory.com/entry/SuppressWarnings-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%9D%B4%EB%9E%80)
 • "unchecked": 제네릭(Generic) 타입을 사용하지 않았거나 타입 안전성이 검증되지 않은 연산을 할 때 발생하는 경고 억제
 • "deprecation": 더 이상 사용되지 않는(deprecated) 메서드나 클래스를 사용할 때 발생하는 경고 억제
 • "unused": 선언해 놓고 실제로 사용하지 않은 변수나 메서드에 대한 경고 억제
@@ -24,4 +30,5 @@ public List<String> getData() {
     return list;
 }
 코드를 사용할 때는 주의가 필요합니다.
-만약 현재 소스코드에서 @SuppressWarnings가 붙어 있는 구체적인 코드나 발생한 경고 내용을 알려주시면, 해당 경고를 무시해도 되는지 혹은 수정해야 하는지 더 자세히 설명해 드릴 수 있습니다.
+만약 현재 소스코드에서 @SuppressWarnings가 붙어 있는 구체적인 코드나 발생한 경고 내용을 알려주시면,
+해당 경고를 무시해도 되는지 혹은 수정해야 하는지 더 자세히 설명해 드릴 수 있습니다.
