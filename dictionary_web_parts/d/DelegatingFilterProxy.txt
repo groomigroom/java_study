@@ -1,0 +1,27 @@
+전자정부 표준프레임워크(및 기반인 Spring / Spring Security)에서 DelegatingFilterProxy는 
+서블릿 컨테이너(Servlet Container)의 필터와 스프링 IoC 컨테이너(ApplicationContext)에 등록된 
+스프링 빈(Bean) 필터를 연결해 주는 대리자(Proxy) 역할을 의미합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:architecture), 
+[2] (https://www.inflearn.com/community/questions/1270784/filterchain-%EB%82%B4-%EC%9D%BC%EB%B0%98-%EC%84%9C%EB%B8%94%EB%A6%BF-%ED%95%84%ED%84%B0%EC%99%80-delegatingfilterproxy%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90?srsltid=AYCX9vJF2DeKJSKEIwP152hsAymtIRJUVrAq-xI6ScRn0Zu1KA4p5Y7s), [3] (https://velog.io/@yaho1024/spring-security-delegatingFilterProxy)
+
+1. 주요 의미와 역할
+
+• 서블릿과 스프링의 연결고리: 서블릿 컨테이너(Tomcat 등)는 자체적인 Filter 규격을 따르지만, 스프링 시큐리티 등의 보안 기능은 스프링 빈(Bean) 형태로 동작합니다. 
+서블릿 컨테이너는 스프링 빈을 직접 알지 못하므로, 그 중간에서 요청을 받아 스프링 빈으로 위임해 주는 것이 DelegatingFilterProxy입니다. 
+[1] (https://www.inflearn.com/community/questions/1270784/filterchain-%EB%82%B4-%EC%9D%BC%EB%B0%98-%EC%84%9C%EB%B8%94%EB%A6%BF-%ED%95%84%ED%84%B0%EC%99%80-delegatingfilterproxy%EC%9D%98-
+%EC%B0%A8%EC%9D%B4%EC%A0%90?srsltid=AYCX9vJF2DeKJSKEIwP152hsAymtIRJUVrAq-xI6ScRn0Zu1KA4p5Y7s), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:architecture), 
+[3] (https://velog.io/@yaho1024/spring-security-delegatingFilterProxy)
+• 의존성 주입(DI) 지원: 원래 서블릿 필터는 스프링의 라이프사이클 밖에서 관리되기 때문에 스프링 빈을 주입받아 사용할 수 없습니다. 하지만 DelegatingFilterProxy를 거치면 스프링 
+애플리케이션 컨텍스트 내에서 빈을 관리하게 되어 의존성 주입(DI) 등의 스프링 기능을 온전히 누릴 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:architecture)
+• 주로 사용되는 곳: 전자정부 표준프레임워크의 Server Security(서버 보안) 컴포넌트(web.xml 등에 등록)에서 Spring Security를 연동할 때 필수적으로 설정되는 클래스입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:architecture)
+
+2. 동작 방식 요약
+
+1. 웹 브라우저로부터 HTTP 요청이 들어옵니다.
+2. 서블릿 컨테이너가 등록된 DelegatingFilterProxy를 호출합니다.
+3. DelegatingFilterProxy는 요청을 가로채어 스프링의 ApplicationContext에 등록된 실제 필터 빈(예: FilterChainProxy 등)을 찾아 작업을 위임합니다.
+4. 실제 로직이 스프링 빈 필터에서 수행된 뒤 다시 서블릿 체인으로 제어권이 넘어갑니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:architecture), 
+[2] (https://velog.io/@yaho1024/spring-security-delegatingFilterProxy), [3] (https://www.inflearn.com/community/questions/1270784/filterchain-%EB%82%B4-%EC%9D%BC%EB%B0%98-%EC%84%9C%EB%B8%94%EB%A6%BF-%ED%95%84%ED%84%B0%EC%99%80-delegatingfilterproxy%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90?srsltid=AYCX9vJF2DeKJSKEIwP152hsAymtIRJUVrAq-xI6ScRn0Zu1KA4p5Y7s)
+관련 공식 가이드 및 구조는 전자정부 표준프레임워크 위키(Server Security Architecture)에서 더 자세히 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:architecture)
+혹시 web.xml 설정 방법이나 스프링 시큐리티 연동 중 발생하는 구체적인 에러 해결법이 필요하신가요?
