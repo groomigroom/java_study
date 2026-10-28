@@ -19,3 +19,43 @@ DI 컨테이너를 구축할 때 XML 설정의 번거로움을 줄이고 자바 
 [1] (/goto?url=CAESpwEB6zswFQUV5EGZUJ6T45YRQ3MUrXurXoUPmIOET22IUrT817Rztw6__itwje2G8D4fXt5Vk4qwEkvJqk3p3tZT5gWYf0w35zd68k_v_1qqyoIkGMB16wlvCbaIAwRYrfaUBZxzijV3QhiSFK9EIoBZKhXdp7BI7AaLzqBDbQXLkEekqIlDj-T0XzohC19Yf9lJWepkHLxE57rg8s4I0pTtN4QaptdDWg)
 혹시 지금 작성 중인 프로젝트가 XML 기반 설정에서 자바 어노테이션 기반으로 전환하는 작업 중이신가요? 
 아니면 특정 빈 등록이나 에러 해결과 관련하여 궁금한 점이 있으시면 편하게 알려주세요.
+
+-----------------------------------
+
+스프링의 AnnotationConfigApplicationContext에서 register()와 refresh()는 
+스프링 컨테이너에 빈(Bean) 메타정보를 등록하고, 실제 컨테이너를 활성화하는 핵심 단계입니다. 
+[1] (https://m.blog.naver.com/seek316/222163112326), 
+[2] (https://www.inflearn.com/community/questions/774851/applicationcontext-refresh-%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0?srsltid=AYCX9vICNX93wJruWSxE67zNi7RNXjSvEyglfZd0gJFI5j90-EOYod16), [3] (https://jjangadadcodingdiary.tistory.com/entry/Spring-AnnotationConfigApplicationContext%EC%9D%98-%EC%97%AD%ED%95%A0%EA%B3%BC-%ED%99%9C%EC%9A%A9-%EB%B0%A9%EB%B2%95)
+
+1. register()의 의미
+
+• 역할: 스프링 컨테이너(ApplicationContext)에 "어떤 빈(Bean)들을 생성하고 관리할 것인지에 
+대한 정보(설정 클래스나 빈 정의)"를 미리 등록하는 작업입니다.
+[1] (https://www.inflearn.com/community/questions/774851/applicationcontext-refresh-%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0?srsltid=AYCX9vICNX93wJruWSxE67zNi7RNXjSvEyglfZd0gJFI5j90-EOYod16), [2] (https://jjangadadcodingdiary.tistory.com/entry/Spring-AnnotationConfigApplicationContext%EC%9D%98-%EC%97%AD%ED%95%A0%EA%B3%BC-%ED%99%9C%EC%9A%A9-%EB%B0%A9%EB%B2%95)
+• 특징: register()를 호출한다고 해서 즉시 빈 객체들이 생성되거나 컨테이너가 동작하지는 않습니다. 
+단순히 "이런 설정 정보를 바탕으로 빈을 만들 준비를 해라"라며 메타정보를 컨테이너에 차곡차곡 추가하는 과정입니다. 
+[1] (https://www.inflearn.com/community/questions/774851/applicationcontext-refresh-%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0?srsltid=AYCX9vICNX93wJruWSxE67zNi7RNXjSvEyglfZd0gJFI5j90-EOYod16)
+
+2. refresh()의 의미
+
+• 역할: 등록된 설정 정보를 바탕으로 스프링 컨테이너를 초기화하고, 실제 빈 객체들을 생성·의존관계 주입(DI)하며, 
+컨테이너를 가동(start)시키는 메서드입니다. 
+[1] (https://m.blog.naver.com/seek316/222163112326), [2] (https://www.inflearn.com/community/questions/774851/applicationcontext-refresh-%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0?srsltid=AYCX9vICNX93wJruWSxE67zNi7RNXjSvEyglfZd0gJFI5j90-EOYod16), [3] (https://pplenty.tistory.com/6)
+• 특징:
+	• 이름은 refresh(새롭게 고치다)이지만, 실제로는 컨테이너의 부팅 및 시작(start) 역할을 담당합니다.
+	• 내부적으로 BeanFactory를 초기화하고, register() 등으로 모아둔 설정 정보를 읽어 빈을 인스턴스화하고 
+후처리(Post-processing)를 실행합니다.
+	• register() 등으로 설정을 마친 뒤에는 반드시 refresh()를 호출해야 컨테이너가 정상적으로 동작합니다. 
+[1] (https://mangkyu.tistory.com/214), 
+[2] (https://www.inflearn.com/community/questions/774851/applicationcontext-refresh-%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0?srsltid=AYCX9vICNX93wJruWSxE67zNi7RNXjSvEyglfZd0gJFI5j90-EOYod16), [3] (https://pplenty.tistory.com/6), [4] (https://m.blog.naver.com/seek316/222163112326)
+
+요약 비교
+
+
+단계	메서드	주요 기능	상태
+1단계	register()	빈 설정 정보(Java Config 클래스 등)를 컨테이너에 등록	빈 생성 준비 단계
+2단계	refresh()	등록된 정보를 바탕으로 빈 생성, 의존성 주입, 컨테이너 구동	컨테이너 활성화 및 동작 시작
+
+참고 자료: 스프링 커뮤니티 및 아키텍처에 대한 상세 내용은 인프런 질문답변 및 벨로그 분석글에서 확인할 수 있습니다. 
+[1] (https://www.inflearn.com/community/questions/774851/applicationcontext-refresh-%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0?srsltid=AYCX9vICNX93wJruWSxE67zNi7RNXjSvEyglfZd0gJFI5j90-EOYod16), [2] (https://velog.io/@appti/ApplicationContext-Refresh-)
+refresh() 내부에서 구체적으로 어떤 순서로 빈을 만들고 후처리를 진행하는지(BeanFactoryPostProcessor, BeanPostProcessor 등) 흐름이 궁금하시면 편하게 말씀해 주세요.
