@@ -1,0 +1,15 @@
+전자정부 표준프레임워크(전자정부프레임워크)에서 GenericXmlApplicationContext는 스프링(Spring) 기반의 IoC 컨테이너 구현체 중 하나를 의미합니다. [1] (https://developer-r.tistory.com/177), [2] (https://jjunii486.tistory.com/84), [3] (https://jh-labs.tistory.com/24)
+전자정부프레임워크는 내부적으로 스프링 프레임워크를 기반으로 동작하므로, 스프링의 애플리케이션 컨텍스트(ApplicationContext) 개념을 그대로 사용합니다. [1] (https://nara1.kr/art/framework.htm)
+
+핵심 의미 및 역할
+
+• XML 파일 기반 컨테이너 구동: 클래스패스(Classpath)나 파일 시스템에 위치한 XML 설정 파일(context-*.xml 등)을 읽어와서 스프링 빈(Bean) 객체를 생성, 조립(DI), 초기화하는 역할을 합니다. [1] (https://ktko.tistory.com/entry/Spring-DI-%EA%B8%B0%EB%B3%B8-%EA%B0%9C%EB%85%90-GenericXmlApplicationContext), [2] (https://junghn.tistory.com/entry/SPRINGGenericXmlApplicationContext%EC%9D%B4%EB%9E%80-%EC%8A%A4%ED%94%84%EB%A7%81-%EA%B0%9D%EC%B2%B4-%EC%83%9D%EC%84%B1-%EB%B0%A9%EB%B2%95), [3] (https://ppowerppush.tistory.com/76), [4] (https://developer-r.tistory.com/177)
+• 독립형(Stand-alone) 환경 지원: 주로 웹 애플리케이션 서버(WAS)가 실행되는 구조가 아닌, 일반 자바 콘솔 애플리케이션, 단위 테스트(JUnit), 또는 배치(Batch) 프로그램 등에서 스프링 컨테이너를 직접 생성해서 쓸 때 사용합니다. [1] (https://title-developer.tistory.com/105), [2] (https://jjunii486.tistory.com/84)
+• 설정 파일 로딩 방식: 생성자에 XML 파일 경로를 전달하거나, .load()와 .refresh() 메서드를 호출해 설정을 불러옵니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:bean_definition_profiles), [2] (https://developer-r.tistory.com/177), [3] (https://ppowerppush.tistory.com/76)
+
+전자정부프레임워크에서의 사용 특징
+
+• 공통 설정 파일 로드: 전자정부프레임워크는 context-common.xml, context-datasource.xml, context-mapper.xml 같은 XML 파일들로 빈을 관리합니다. [1] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000012580&fileSn=0), [2] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml), [3] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC)
+• 실무/웹 환경과의 차이: 실제 전자정부프레임워크로 구축하는 웹(Web) 프로젝트에서는 개발자가 직접 new GenericXmlApplicationContext()를 코드로 호출할 일이 거의 없습니다. 대신 웹 서버가 뜰 때 web.xml이나 Spring의 ContextLoaderListener / DispatcherServlet이 자동으로 XmlWebApplicationContext 등을 생성해 관리하기 때문입니다. [1] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9Dcontext-commonxml), [2] (https://ppowerppush.tistory.com/76), [3] (https://velog.io/@crazy-oung/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC)
+• 언제 쓰이는가?: 주로 전자정부프레임워크 기반의 배치 작업, 암호화 유틸리티 테스트, 또는 프레임워크의 기초 원리를 실습(HelloWorld 등)할 때 메인 메서드 내에서 수동으로 컨테이너를 띄울 때 등장합니다. [1] (https://ktko.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%ACeGovframework-DB%EC%95%94%ED%98%B8%ED%99%94-%EB%B0%A9%EB%B2%95-%EB%B0%8F-%EA%B0%80%EC%9D%B4%EB%93%9C), [2] (https://egovframe.go.kr/docs/5.0/getting-started/)
+전자정부프레임워크 프로젝트를 진행하면서 특정 XML 설정 파일을 직접 로드하는 코드를 작성하다가 마주치셨나요? 아니면 다른 컨테이너 클래스(예: AnnotationConfigApplicationContext 등)와의 차이가 궁금하신가요?
