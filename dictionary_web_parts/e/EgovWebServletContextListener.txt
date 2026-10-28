@@ -1,0 +1,15 @@
+전자정부 표준프레임워크에서 EgovWebServletContextListener는 웹 애플리케이션이 시작되거나 종료될 때, 
+데이터베이스 설정 등 공통 컴포넌트의 초기화 및 종료 작업을 수행하는 서블릿 리스너(Servlet Listener)입니다. [1] (https://parksrazor.tistory.com/831)
+
+주요 역할
+
+• 환경 및 DB 설정 로드: 스프링 프로필(Active Profile)이나 globals.properties 등의 설정 파일을 참조해 데이터베이스 접속 유형(DbType) 및 
+공통 속성을 시스템에 로드합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:com:v3.9:init_customizing), [2] (https://parksrazor.tistory.com/831)
+• 라이프사이클 관리:
+	• contextInitialized(): 웹 컨테이너가 시작될 때 필요한 공통 프로퍼티와 DB 연결 관련 기본값을 초기화합니다.
+	• contextDestroyed(): 웹 컨테이너가 종료될 때 리소스를 해제합니다. [1] (https://okky.kr/questions/978600), 
+[2] (https://ninetynine-2026.tistory.com/365)
+• 등록 방식: 전통적인 웹 환경에서는 web.xml 파일에 <listener> 태그로 등록하며, 서블릿 3.0 이상 기반의 Java-based 설정 환경에서는 EgovWebApplicationInitializer 
+내부에서 자바 코드로 등록하여 사용합니다. [1] (https://nect2r.tistory.com/m/46), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:com:v3.9:init_customizing)
+혹시 EgovWebServletContextListener와 관련된 특정 에러(예: NullPointerException 등)를 해결하고 계신가요? 발생한 오류 메시지를 공유해 주시면 원인과 해결 방법을 안내해 드릴 수 있습니다.
