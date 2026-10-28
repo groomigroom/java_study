@@ -1,1 +1,25 @@
+전자정부 표준프레임워크(기반이 되는 스프링 프레임워크)에서 @Required 또는 트랜잭션 전파 속성인 REQUIRED는 
+사용되는 위치에 따라 크게 두 가지 의미를 가집니다. [1] (https://mangkyu.tistory.com/269), [2] (https://blog.naver.com/hjs4827/90124748183?viewType=pc)
+
+1. 트랜잭션 전파 속성 (Propagation)의 REQUIRED
+
+@Transactional(propagation = Propagation.REQUIRED) 형태로 주로 사용되며, 스프링 트랜잭션의 기본(Default) 속성입니다. 
+[1] (https://yooniversal.github.io/study/post288/), [2] (https://mangkyu.tistory.com/269)
+• 의미: "트랜잭션이 필요하다"는 뜻입니다. [1] (https://mangkyu.tistory.com/269)
+• 동작 방식:
+	• 진행 중인 트랜잭션이 있을 경우: 기존 트랜잭션에 그대로 참여(합류)합니다.
+	• 진행 중인 트랜잭션이 없을 경우: 새로운 트랜잭션을 생성합니다. [1] (https://mangkyu.tistory.com/269)
+• 특징:
+	• 하나의 물리적 트랜잭션으로 묶이기 때문에, 내부 로직에서 롤백이 발생하면 전체 트랜잭션이 함께 롤백됩니다. 
+[1] (https://kkamji.net/posts/spring-transactional-propagation/), [2] (https://yooniversal.github.io/study/post288/)
+
+2. 의존성 주입(DI)에서의 @Required (스프링 어노테이션)
+
+스프링 프레임워크(과거 버전)에서 빈(Bean) 속성을 설정할 때 쓰이던 어노테이션입니다. [1] (https://yeonyeon.tistory.com/277)
+• 의미: 해당setter 메서드가 필수값임을 나타냅니다. [1] (https://blog.naver.com/hjs4827/90124748183?viewType=pc)
+• 동작 방식: 스프링이 빈을 생성할 때, @Required가 붙은 프로퍼티(setter)에 값이 주입되지 않으면 BeanInitializationException을 발생시키며 애플리케이션 구동을 중단시킵니다.
+• 참고: 스프링 5.0 이상부터는 해당 어노테이션이 Deprecated 되었으며, 대신 생성자 주입(@Autowired 또는 생성자 필수 파라미터 등)을 권장합니다.
+혹시 현재 소스코드나 에러 로그에서 REQUIRED가 사용된 구체적인 코드 위치(@Transactional 내부인지, XML 설정인지 등)를 알려주시면 더 정확히 설명해 드릴 수 있습니다.
+
+
 
