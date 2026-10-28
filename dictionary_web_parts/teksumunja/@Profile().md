@@ -43,5 +43,17 @@
 * 
 * 다음은 “dev” Profile을 정의했을 때의 Java코드이다. Profile명이 dev인 “dataSource” Bean을 정의하고 있다.
 ```java
+@Configuration
+@Profile("dev")
+public class StandaloneDataConfig {
+    @Bean
+    public DataSource dataSource() {
+        return new EmbeddedDatabaseBuilder()
+            .setType(EmbeddedDatabaseType.HSQL)
+            .addScript("classpath:com/bank/config/sql/schema.sql")
+            .addScript("classpath:com/bank/config/sql/test-data.sql")
+            .build();
+    }
+}
 
 ```
