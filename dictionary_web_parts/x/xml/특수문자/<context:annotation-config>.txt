@@ -1,3 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+ 
+   <context:annotation-config/>
+</beans>
+
+
+--------------------------
+
 전자정부 표준프레임워크(스프링 기반)의 XML 설정 파일에서 <context:annotation-config> 태그는 스프링 빈(Bean) 내에 선언된 
 애노테이션(Annotation)을 활성화하는 역할을 합니다. [1] (https://jake-seo-dev.tistory.com/497)
 
