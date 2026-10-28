@@ -1,14 +1,22 @@
-XmlBeanFactory는 전자정부 표준프레임워크(eGovFrame)의 핵심 기반인 스프링(Spring) 프레임워크의 IoC(제어의 역전) 컨테이너 구현체 중 하나입니다. [1] (https://stackoverflow.com/questions/56021511/spring-xmlbeanfactory-is-deprecated), [2] (https://m.blog.naver.com/cuzluvu/70052449243), [3] (https://velog.io/@rocker_nun/eGovFrame-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)
+XmlBeanFactory는 전자정부 표준프레임워크(eGovFrame)의 핵심 기반인 스프링(Spring) 프레임워크의 IoC(제어의 역전) 컨테이너 구현체 중 하나입니다. [1] (https://stackoverflow.com/questions/56021511/spring-xmlbeanfactory-is-deprecated), [2] (https://m.blog.naver.com/cuzluvu/70052449243), 
+[3] (https://velog.io/@rocker_nun/eGovFrame-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)
 
 주요 의미와 특징
 
 • 빈(Bean) 생성 및 관리: XML 설정 파일에 기술된 빈(Bean) 정의를 읽어와 객체를 생성, 등록, 조회하고 생명주기를 관리하는 역할을 합니다.
 • 지연 로딩(Lazy Loading): getBean() 메서드가 호출될 때 비로소 빈 객체를 인스턴스화하는 특징을 가집니다.
-• 스프링 내 위치: org.springframework.beans.factory.xml.XmlBeanFactory 경로에 있는 클래스로, 스프링 컨테이너의 최상위 인터페이스인 BeanFactory를 구현합니다. [1] (https://stackoverflow.com/questions/5231371/springs-xmlbeanfactory-is-deprecated), [2] (https://annajin.tistory.com/72), [3] (https://jiwondev.tistory.com/126), [4] (https://docs.spring.io/spring-framework/docs/1.2.9/javadoc-api/org/springframework/beans/factory/xml/XmlBeanFactory.html)
+• 스프링 내 위치: org.springframework.beans.factory.xml.XmlBeanFactory 경로에 있는 클래스로, 스프링 컨테이너의 최상위 인터페이스인 BeanFactory를 구현합니다. [1] (https://stackoverflow.com/questions/5231371/springs-xmlbeanfactory-is-deprecated), [2] (https://annajin.tistory.com/72), 
+[3] (https://jiwondev.tistory.com/126), [4] (https://docs.spring.io/spring-framework/docs/1.2.9/javadoc-api/org/springframework/beans/factory/xml/XmlBeanFactory.html)
 
 현재 전자정부프레임워크에서의 사용 유의사항
 
-• 지원 중단(Deprecated): 스프링 3.1 버전부터 XmlBeanFactory는 Deprecated(지원 중단) 되었으며, 상위 스프링 버전(스프링 5, 6 및 최신 전자정부프레임워크 버전)에서는 AOP, 이벤트 처리 등의 확장 기능 한계로 인해 삭제되었습니다. [1] (https://medium.com/@singh.piyush/spring-6-migration-guide-replacing-xmlbeanfactory-with-classpathxml-vs-f5a276935fbf), [2] (https://stackoverflow.com/questions/56021511/spring-xmlbeanfactory-is-deprecated)
-• 권장 대안: 현재 전자정부프레임워크 기반 개발에서는 XmlBeanFactory 대신 웹 애플리케이션 표준 컨테이너인 ApplicationContext 계열 (ClassPathXmlApplicationContext, GenericXmlApplicationContext)이나 자바 기반 설정 방식을 사용합니다. [1] (https://www.youtube.com/watch?v=h03dfKrj4bw&t=14), [2] (https://stackoverflow.com/questions/56021511/spring-xmlbeanfactory-is-deprecated), [3] (https://medium.com/@singh.piyush/spring-6-migration-guide-replacing-xmlbeanfactory-with-classpathxml-vs-f5a276935fbf)
+• 지원 중단(Deprecated): 스프링 3.1 버전부터 XmlBeanFactory는 Deprecated(지원 중단) 되었으며, 상위 스프링 버전(스프링 5, 6 및 최신 전자정부프레임워크 버전)에서는 
+AOP, 이벤트 처리 등의 확장 기능 한계로 인해 삭제되었습니다. 
+[1] (https://medium.com/@singh.piyush/spring-6-migration-guide-replacing-xmlbeanfactory-with-classpathxml-vs-f5a276935fbf), 
+[2] (https://stackoverflow.com/questions/56021511/spring-xmlbeanfactory-is-deprecated)
+• 권장 대안: 현재 전자정부프레임워크 기반 개발에서는 XmlBeanFactory 대신 웹 애플리케이션 표준 컨테이너인 ApplicationContext 계열 
+(ClassPathXmlApplicationContext, GenericXmlApplicationContext)이나 자바 기반 설정 방식을 사용합니다. 
+[1] (https://www.youtube.com/watch?v=h03dfKrj4bw&t=14), [2] (https://stackoverflow.com/questions/56021511/spring-xmlbeanfactory-is-deprecated), 
+[3] (https://medium.com/@singh.piyush/spring-6-migration-guide-replacing-xmlbeanfactory-with-classpathxml-vs-f5a276935fbf)
 혹시 현재 진행 중인 프로젝트의 전자정부프레임워크 버전이 어떻게 되나요? (예: 3.x, 4.x, 5.x 등)
 버전별로 권장하는 빈 설정 방식을 안내해 드릴 수 있습니다.
