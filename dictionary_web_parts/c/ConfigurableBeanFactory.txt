@@ -1,0 +1,17 @@
+ConfigurableBeanFactory는 전자정부 표준프레임워크의 기반이 되는 스프링 프레임워크(Spring Framework)의 핵심 인터페이스 중 하나로, 스프링 빈(Bean) 팩토리를 설정하고 커스터마이즈할 수 있는 기능들을 제공하는 설정용 컨테이너 인터페이스를 의미합니다. [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/ConfigurableBeanFactory.html)
+전자정부프레임워크 자체에만 존재하는 독자적 개념은 아니며, 이 프레임워크가 내부적으로 사용하는 스프링 IoC(Inversion of Control) 컨테이너의 동작을 제어하기 위해 존재합니다.
+
+주요 역할과 특징
+
+• 빈 팩토리 설정 확장: 기본 BeanFactory 인터페이스가 빈을 조회하고 사용하는 클라이언트 중심의 기능만 가졌다면, ConfigurableBeanFactory는 빈의 부모-자식 계층 설정, 타입 변환기 등록, 후처리기(BeanPostProcessor) 등록, 스코프(Scope) 등록 등 빈 팩토리 자체를 구성(Configure)하는 메서드를 추가로 제공합니다. [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/ConfigurableBeanFactory.html)
+• 프레임워크 내부용 인터페이스: 일반적인 애플리케이션 개발 코드(Service, Controller 등)에서 직접 ConfigurableBeanFactory를 주입받아 호출할 일은 거의 없습니다. 주로 스프링이나 전자정부 표준프레임워크의 내부 엔진, 확장 플러그인, 컨테이너 초기화 과정에서 동작합니다. [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/ConfigurableBeanFactory.html)
+• 상속 구조에서의 위치:
+	• BeanFactory (기본 빈 조회 및 관리)
+	• → ConfigurableBeanFactory (빈 팩토리 설정 기능 확장 및 싱글톤 레지스트리 기능 포함)
+	• → ConfigurableListableBeanFactory (빈 정의 분석/수정 및 싱글톤 사전 초기화 기능 추가 - 스프링 ApplicationContext 내부에서 핵심으로 사용됨) [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/ConfigurableListableBeanFactory.html), [2] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/ConfigurableBeanFactory.html)
+
+전자정부프레임워크에서 마주치는 맥락
+
+• 전자정부 표준프레임워크는 스프링 기반으로 동작하기 때문에, 애플리케이션이 구동되면서 context-*.xml 같은 설정 파일이나 자바(@Configuration) 기반 설정들을 읽어들여 스프링 컨테이너를 생성합니다. [1] (https://github.com/eGovFramework/egovframe-docs), [2] (https://crazy-oung.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC)
+• 이 과정에서 빈들의 메타데이터(BeanDefinition)를 등록하고, 라이프사이클 콜백을 관리하며, 빈 후처리기를 적용하는 등 컨테이너를 조립하고 설정하는 심장부 역할을 수행하는 인터페이스 중 하나로 작동합니다.
+만약 특정 에러 로그(예: NoSuchBeanDefinitionException이나 빈 생성 관련 이슈)를 해결하는 중이시라면, 발생한 구체적인 에러 메시지나 설정 파일(XML/Java) 내용을 공유해 주시면 더 정확하게 원인을 짚어드릴 수 있습니다.
