@@ -1,0 +1,17 @@
+전자정부프레임워크(스프링 기반)의 XML 설정에서 <context:component-scan>은 지정한 패키지 안의 
+클래스들을 자동으로 스캔해서 스프링 빈(Bean)으로 등록하는 역할을 합니다. 
+[1] (https://devel-log.tistory.com/51), [2] (https://ailiartsua.tistory.com/4)
+
+주요 특징과 역할
+
+• 자동 빈 등록: @Component, @Controller, @Service, @Repository 등의 애노테이션이 붙은 클래스를 찾아 자동으로 스프링 컨테이너에 빈으로 등록합니다. 일일이 <bean> 태그로 등록하지 않아도 되므로 설정 파일이 간결해집니다. [1] (https://zorba91.tistory.com/249), [2] (https://devel-log.tistory.com/51)
+• base-package 속성: 스캔을 시작할 패키지 경로를 지정합니다.
+	• 예: <context:component-scan base-package="egovframework" />
+	• 콤마(,)나 세미콜론 등으로 여러 패키지를 동시에 지정할 수 있습니다. (예: base-package="egovframework, com.example.project") [1] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000011829&fileSn=0), [2] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0), [3] (https://devel-log.tistory.com/51)
+• 필터 기능 (include-filter / exclude-filter): 특정 애노테이션이나 클래스만 골라서 포함시키거나 제외할 수 있습니다.
+	• 예: Controller만 따로 분리해서 스캔하거나, Service/Repository만 스캔할 때 사용합니다. [1] (https://www.inflearn.com/community/questions/618156/%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94-%EC%98%81%EC%83%81%EC%97%90-%EB%82%98%EC%98%A8-component-scan%EA%B4%80%EB%A0%A8-%EC%B6%94%EA%B0%80%EC%A7%88%EB%AC%B8?srsltid=AYCX9vJpGqGHvqnbTHH25-Unb2afIR1zqDpv1O3CsmEgJt9LyTkfy5A7), [2] (https://devel-log.tistory.com/51), [3] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000011829&fileSn=0)
+
+실무에서의 활용 팁
+
+전자정부프레임워크로 프로젝트를 진행하며 새로운 패키지나 컨트롤러/서비스 클래스를 만들었을 때, 실행 시 Bean을 찾지 못하는 오류(No qualifying bean of type...)가 난다면 이 base-package 경로에 내가 만든 패키지가 포함되어 있는지 확인해야 합니다. [1] (https://eorms6599.tistory.com/30)
+만약 현재 프로젝트에서 특정 에러가 발생했거나 패키지 추가 중 설정에 어려움이 있다면 구체적인 설정 파일 내용을 공유해 주세요. 함께 확인해 드릴 수 있습니다.
