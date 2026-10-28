@@ -1,1 +1,22 @@
+<context:property-override location="classpath:override.properties"/>
 
+전자정부프레임워크(스프링 기반 IoC 컨테이너)에서 <context:property-override> 태그는 기존에 빈(Bean) 정의 파일에 설정되어 있던 프로퍼티 값을 
+외부 파일(.properties)에 작성된 값으로 덮어쓰기(override)할 때 사용하는 태그입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.3:fdl:ioc_container:container_extension_points), [2] (http://maven.egovframe.go.kr/publist/HDD1/public/wiki_en/egovframe2.0/runtime/container%20extension%20points.pdf)
+
+주요 의미와 특징
+
+• 값 재정의: XML 파일이나 애너테이션으로 이미 선언된 빈의 프로퍼티 값을 소스코드나 XML을 수정하지 않고, 외부 프로퍼티 파일을 통해 
+변경하고 싶을 때 사용합니다. [1] (http://maven.egovframe.go.kr/publist/HDD1/public/wiki_en/egovframe2.0/runtime/container%20extension%20points.pdf), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.3:fdl:ioc_container:container_extension_points)
+• 사용 형식:xml
+<context:property-override location="classpath:override.properties"/>
+코드를 사용할 때는 주의가 필요합니다.
+• 프로퍼티 파일 작성 방식:
+프로퍼티 파일 내부에는 [빈의 이름].[프로퍼티명] = [덮어쓸 값] 형태로 작성합니다.
+	• 예시 (override.properties):properties
+dataSource.maxConnections=50
+코드를 사용할 때는 주의가 필요합니다.
+	• 위와 같이 적으면, dataSource라는 이름을 가진 빈의 maxConnections 프로퍼티 값이 외부 설정 파일에 의해 50으로 변경됩니다.
+• 차이점 (property-placeholder와의 비교):
+	• <context:property-placeholder>는 ${key}와 같은 형태로 빈 정의의 특정 값을 치환(placeholder)할 때 사용합니다.
+	• <context:property-override>는 기존에 이미 값이 설정되어 있는 빈의 프로퍼티를 외부 값으로 강제 덮어쓰기할 때 사용합니다. 운영 환경별로 특정 빈의 속성만 손쉽게 조작할 때 유용합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.3:fdl:ioc_container:container_extension_points), [2] (http://maven.egovframe.go.kr/publist/HDD1/public/wiki_en/egovframe2.0/runtime/container%20extension%20points.pdf)
+만약 현재 설정 중인 특정 빈(Bean)이나 덮어쓰려는 프로퍼티 적용에 문제가 있다면, 해당 XML 설정 코드나 .properties 파일 내용을 공유해 주세요. 정확한 원인을 분석해 드릴 수 있습니다.
