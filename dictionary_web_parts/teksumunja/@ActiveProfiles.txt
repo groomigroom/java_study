@@ -1,0 +1,19 @@
+전자정부프레임워크(기반인 스프링/스프링 부트)에서 @ActiveProfiles는 테스트 코드를 실행할 때 특정 프로파일(Profile)을 활성화하여 지정하는 어노테이션입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:ioc_container:bean_definition_profiles), [2] (https://blogshine.tistory.com/527)
+
+주요 의미와 역할
+
+• 프로파일 활성화: @ActiveProfiles("test")처럼 사용하면, 해당 테스트 클래스를 실행할 때 "test"라는 이름의 프로파일을 활성화합니다. [1] (https://duswnsxnxn.tistory.com/19)
+• 환경별 설정 분리: 개발용(dev), 운영용(prod), 테스트용(test) 등 환경에 따라 데이터베이스 접속 정보나 설정 파일(application-test.properties 등)이 다를 때, 테스트 환경에 맞는 설정만 골라서 로드할 수 있게 해줍니다. [1] (https://blogshine.tistory.com/527), [2] (https://velog.io/@lunia1109/ActiveProfiles%EC%99%80-Properties-%ED%8C%8C%EC%9D%BC), [3] (https://duswnsxnxn.tistory.com/19)
+• 테스트 격리: 운영 DB나 개발 DB에 실수로 접속하는 것을 막고, 테스트 전용 인메모리 DB(예: H2)나 목(Mock) 설정으로 안전하게 테스트할 수 있도록 격리합니다. [1] (https://wikidocs.net/430469), [2] (https://duswnsxnxn.tistory.com/19)
+
+사용 예시
+
+java
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = AppConfig.class)
+@ActiveProfiles("test") // "test" 프로파일 활성화
+public class MemberServiceTest {
+    // 테스트 코드 작성
+}
+코드를 사용할 때는 주의가 필요합니다.
+더 구체적인 설정 파일(properties/yaml) 분리 방법이나 테스트 코드 작성 시 에러 해결법이 필요하신가요?
