@@ -1,0 +1,17 @@
+org.springframework.beans.factory.config.BeanPostProcessor는 스프링에서 ‘빈 후처리기(Bean Post-Processor)’를 만들기 위해 제공하는 인터페이스입니다. [1] (https://rebugs.tistory.com/831), [2] (https://velog.io/@dnjstjt1297/Spring-BeanPostProcessor)
+
+주요 의미와 역할
+
+• 빈 조작 및 커스터마이징: 스프링 컨테이너가 자바 객체(빈)를 생성하고 초기화한 전(Before) 또는 후(After)에, 빈 객체 자체를 조작하거나 다른 객체로 바꿔치기할 수 있게 해줍니다. [1] (https://translate.google.com/translate?u=https://www.quora.com/What-is-the-use-of-BeanPostProcessor-in-Spring&hl=ko&sl=en&tl=ko&client=sge), [2] (https://velog.io/@dnjstjt1297/Spring-BeanPostProcessor)
+• 핵심 메서드 2개 제공:
+	• postProcessBeforeInitialization(): 빈의 초기화 메서드(예: @PostConstruct 등)가 호출되기 전에 실행됩니다.
+	• postProcessAfterInitialization(): 빈의 초기화 메서드가 호출된 후에 실행됩니다. [1] (https://jjeongil.tistory.com/1077)
+• 프록시(Proxy) 생성에 활용: 스프링 AOP(관점 지향 프로그래밍) 등에서 원본 객체를 프록시 객체로 변환하여 빈 저장소에 등록할 때 이 BeanPostProcessor를 광범위하게 사용합니다. [1] (https://fordevelop.tistory.com/300), [2] (https://yejun-the-developer.tistory.com/8)
+
+동작 방식 요약
+
+1. 개발자가 BeanPostProcessor 인터페이스를 구현한 클래스를 만들고 스프링 빈으로 등록합니다.
+2. 스프링 컨테이너가 구동되면서 다른 빈들을 생성합니다.
+3. 생성된 빈이 초기화되기 전/후에 스프링이 자동으로 BeanPostProcessor의 메서드를 호출합니다.
+4. 구현한 로직에 따라 빈을 수정하거나, 아예 완전히 다른 객체(프록시 등)로 교체하여 반환할 수 있습니다. [1] (https://rebugs.tistory.com/831), [2] (https://velog.io/@dnjstjt1297/Spring-BeanPostProcessor), [3] (https://jjeongil.tistory.com/1077), [4] (https://fordevelop.tistory.com/300)
+만약 특정 AOP 적용 원리나 실제 구현 코드 예시가 필요하신지 알려주시면 추가로 설명해 드릴 수 있습니다.
