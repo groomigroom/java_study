@@ -61,3 +61,7 @@ BeanFactory factory = context;
 
 Container 사용 방법
 Container를 객체화하면 getBean(String) 메소드를 사용하여 bean을 가져올 수 있다.
+
+----------------------------------------------------------
+
+##### ApplicationContext는 Event 처리를 위해 ApplicationEvent, ApplicationListener interface를 제공한다.
