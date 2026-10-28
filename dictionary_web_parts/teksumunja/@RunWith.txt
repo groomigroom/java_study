@@ -1,0 +1,21 @@
+전자정부프레임워크(Spring 기반)에서 @RunWith 어노테이션은 JUnit 테스트가 실행될 때 테스트를 확장·제어할 실행 클래스(Runner)를 지정하는 역할입니다. [1] (https://hoit1302.tistory.com/14)
+전자정부프레임워크는 내부적으로 Spring을 사용하므로, 일반적인 JUnit 테스트가 아닌 스프링 컨테이너(ApplicationContext)가 통합된 테스트 환경을 구축할 때 주로 사용합니다.
+
+핵심 의미 및 역할
+
+• 스프링 컨테이너 로드: @RunWith(SpringJUnit4ClassRunner.class) 형태로 주로 사용하며, JUnit이 테스트를 실행할 때 스프링 기반 테스트 프레임워크(SpringJUnit4ClassRunner)를 구동하도록 만듭니다. [1] (https://hoit1302.tistory.com/14)
+• 의존성 주입(DI) 지원: 이 어노테이션이 있어야 테스트 클래스 안에서 @Autowired 등을 사용해 스프링 빈(Bean)을 주입받아 테스트할 수 있습니다.
+• 테스트 생명주기 관리: 스프링 애플리케이션 맥맥락(Context)을 생성하고, 테스트가 끝난 후 자원을 정리하는 등의 확장 기능을 제공합니다.
+
+자주 쓰이는 형태 예시
+
+java
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:egovframework/spring/com/context-*.xml"})
+public class EgovSampleServiceTest {
+    // 스프링 빈 주입 및 테스트 코드 작성
+}
+코드를 사용할 때는 주의가 필요합니다.
+• SpringJUnit4ClassRunner.class: JUnit 4 환경에서 스프링 테스트를 실행할 때 쓰이는 표준 러너입니다.
+• (참고) 최신 Spring Boot 기반 환경이나 JUnit 5를 사용할 때는 @RunWith 대신 @ExtendWith 또는 @SpringBootTest 등을 주로 활용합니다. [1] (https://hoit1302.tistory.com/14)
+만약 사용 중인 전자정부프레임워크 버전(예: 3.x, 4.x)이나 테스트하려는 구체적인 레이어(Service, Controller 등)를 알려주시면 더 자세한 예시 코드를 작성해 드릴 수 있습니다.
