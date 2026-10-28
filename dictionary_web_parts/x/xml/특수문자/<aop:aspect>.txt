@@ -1,0 +1,30 @@
+전자정부프레임워크(Spring 기반) XML 설정에서 <aop:aspect> 태그는 
+횡단 관심사(Cross-cutting Concerns)를 모듈화한 '관점(Aspect)'을 정의하는 역할을 합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema), [2] (https://minibcake.tistory.com/331)
+
+주요 의미와 역할
+
+• 관점(Aspect) 정의: 핵심 비즈니스 로직(예: 회원가입, 조회 등)과 분리하여, 여러 메서드에 공통으로 
+적용될 부가 기능(로깅, 트랜잭션, 예외 처리 등)을 하나의 모듈(Aspect)로 묶어 설정합니다. 
+[1] (https://medium.com/@delivalue100/2-%EB%81%84%EC%A0%81%EC%9D%B4%EB%8A%94-spring-framework-core-technologies-aop-%ED%8E%B8-d06539c3ceb0), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
+• Bean 연결 (ref 속성): <aop:aspect ref="beanId"> 형태로 작성하며, 여기서 지정한 ref는 실제 부가 기능 로직이 구현되어 있는 
+Spring Bean 객체를 가리킵니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
+• 하위 요소 포함: <aop:aspect> 내부에는 언제 공통 기능을 실행할지 결정하는 어드바이스(Advice)—예: <aop:before>, 
+<aop:after>, <aop:around> 등—와 적용 위치를 지정하는 포인트컷(Pointcut)을 포함합니다.
+
+설정 예시 구조
+
+xml
+<bean id="adviceUsingXML" class="egovframework.rte.fdl.aop.sample.AdviceUsingXML" />
+
+<aop:config>
+    <aop:aspect ref="adviceUsingXML">
+        <aop:pointcut id="targetMethod" expression="execution(* egovframework.example..*Impl.*(..))" />
+        <aop:before method="beforeLog" pointcut-ref="targetMethod" />
+    </aop:aspect>
+</aop:config>
+코드를 사용할 때는 주의가 필요합니다.
+• 전자정부프레임워크의 상세 AOP 가이드라인은 표준프레임워크 포털 eGovFrame에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
+혹시 context-aspect.xml 파일에서 특정 <aop:aspect> 설정을 해석하고 계신가요? 문제가 되는 XML 코드 조각이나 구현하려는 부가 기능(로깅, 권한 체크 등)을 알려주시면 더 자세히 설명해 드릴 수 있습니다.
