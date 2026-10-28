@@ -15,3 +15,36 @@ ConfigurableBeanFactory는 전자정부 표준프레임워크의 기반이 되�
 • 전자정부 표준프레임워크는 스프링 기반으로 동작하기 때문에, 애플리케이션이 구동되면서 context-*.xml 같은 설정 파일이나 자바(@Configuration) 기반 설정들을 읽어들여 스프링 컨테이너를 생성합니다. [1] (https://github.com/eGovFramework/egovframe-docs), [2] (https://crazy-oung.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%A0%95%EB%A6%AC)
 • 이 과정에서 빈들의 메타데이터(BeanDefinition)를 등록하고, 라이프사이클 콜백을 관리하며, 빈 후처리기를 적용하는 등 컨테이너를 조립하고 설정하는 심장부 역할을 수행하는 인터페이스 중 하나로 작동합니다.
 만약 특정 에러 로그(예: NoSuchBeanDefinitionException이나 빈 생성 관련 이슈)를 해결하는 중이시라면, 발생한 구체적인 에러 메시지나 설정 파일(XML/Java) 내용을 공유해 주시면 더 정확하게 원인을 짚어드릴 수 있습니다.
+
+------------------------------------------------
+
+전자정부프레임워크(Spring 기반)에서 
+ConfigurableBeanFactory.addBeanPostProcessor(postProcessor)가 의미하는 핵심은 Spring IoC 컨테이너가 빈(Bean)을 생성·초기화하는 과정중간에 개입하여 커스텀 로직(프록시 생성, 어노테이션 처리, 데이터 검증 등)을 주입하는 확장 포인트를 프로그래밍 방식으로 등록하는 것입니다. [1] (https://johngrib.github.io/wiki/spring/document/core/01-08-container-extension-points/), [2] (https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html)
+
+1. BeanPostProcessor의 기본 개념
+
+BeanPostProcessor는 스프링 빈의 초기화 생명주기(Lifecycle) 사이에서 동작하는 콜백 인터페이스입니다: [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html), [2] (https://johngrib.github.io/wiki/spring/document/core/01-08-container-extension-points/)
+• postProcessBeforeInitialization: 빈의 초기화 메서드(@PostConstruct, afterPropertiesSet 등)가 호출되기 전에 실행됩니다.
+• postProcessAfterInitialization: 빈의 초기화 메서드가 호출된 후에 실행됩니다. (예: Spring AOP 프록시 객체 생성) [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html)
+
+2. addBeanPostProcessor 메서드의 특징
+
+• 보통 BeanPostProcessor는 설정 파일(context.xml)이나 @Bean 메서드로 등록하면 Spring의 ApplicationContext가 자동으로 감지(Auto-detection)합니다.
+• 하지만 ConfigurableBeanFactory.addBeanPostProcessor()를 이용하면 코드를 통해 직접(프로그래밍 방식으로) 팩토리에 등록하게 됩니다. [1] (https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html)
+
+3. 전자정부프레임워크(eGovFrame) 관점에서의 의미 및 활용
+
+전자정부프레임워크는 내부적으로 Spring Framework를 기반으로 실행환경을 구성하고 있습니다. 따라서 이 코드가 전자정부프레임워크 기반 프로젝트에서 갖는 의미는 다음과 같습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2_batch), [2] (https://rabo93.tistory.com/79)
+• 공통 컴포넌트 및 인프라 기능의 후처리:
+	• 전자정부프레임워크의 보안(Spring Security 연동), 트랜잭션, 글로벌 예외 처리, 로깅, 또는 특정 공통 메타데이터 주입 등을 수행할 때 빈 객체를 가로채서 조작해야 할 때 쓰입니다.
+• AOP나 어노테이션 기반 부가기능 확장:
+	• 전자정부 표준프레임워크의 공통 서비스(예: IdGeneration(아이디 생성 서비스), Property(프로퍼티 서비스) 등)나 사용자 정의 어노테이션을 런타임에 스캔하여 빈의 필드를 초기화하거나 프록시로 감쌀 때 동작합니다.
+• 프로그래밍 방식의 제어:
+	• XML이나 Java Config가 아니라, 특정 조건(Conditional Logic)에 따라 동적으로 빈 후처리기(PostProcessor)를 빈팩토리에 직접 장착해야 할 때 사용됩니다. [1] (https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html)
+
+주의할 점 (전자정부 프로젝트 개발 시)
+
+1. 등록 순서(Ordered) 문제: 컨테이너가 자동 감지하는 BeanPostProcessor는 Ordered나 PriorityOrdered 인터페이스를 지원하지만, addBeanPostProcessor()로 직접 추가한 것은 등록한 순서대로 실행됩니다. [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/factory/config/BeanPostProcessor.html), [2] (https://docs.spring.io/spring-framework/reference/core/beans/factory-extension.html)
+2. 시점 문제: 컨테이너가 생성된 뒤 너무 늦게 등록하면, 이미 먼저 만들어져 버린 일부 싱글톤 빈에는 BeanPostProcessor가 적용되지 않을 수 있습니다. [1] (https://www.cnblogs.com/tuyang1129/p/12866484.html)
+혹시 특정 전자정부프레임워크 공통 컴포넌트(예: 시큐리티, 로깅, 커스텀 어노테이션 등)를 구현하거나 분석하다가 이 코드를 마주치셨나요? 구체적인 사용 맥락을 알려주시면 더 자세히 설명해 드릴 수 있습니다.
+
