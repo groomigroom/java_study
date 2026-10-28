@@ -5,9 +5,14 @@
 
 주요 역할 및 특징
 
-• 설정 값의 분리: 소스 코드나 XML 설정 파일 내에 하드코딩하기엔 보안상 위험하거나 환경(개발, 운영, 테스트)마다 달라져야 하는 정보(.properties)를 외부 파일로 분리합니다. [1] (https://mangkyu.tistory.com/167), [2] (https://blog.naver.com/genycho/60131638082?viewType=pc)
-• ${} 치환: XML 설정 파일(예: context-properties.xml 또는 context-datasource.xml)에서 ${jdbc.username} 처럼 작성된 표현식을 .properties 파일에 정의된 실제 값으로 변환해 줍니다. [1] (https://javacpro.tistory.com/78), [2] (https://godogha9man.tistory.com/167)
-• 레거시 방식: 주로 XML 기반의 전자정부프레임워크 레거시 프로젝트에서 데이터베이스 연결(DataSource) 설정 등을 할 때 빈(Bean)으로 등록해 사용합니다. [1] (https://blog.naver.com/genycho/60131638082?viewType=pc), [2] (https://godogha9man.tistory.com/167)
+• 설정 값의 분리: 소스 코드나 XML 설정 파일 내에 하드코딩하기엔 보안상 위험하거나 환경(개발, 운영, 테스트)마다 
+달라져야 하는 정보(.properties)를 외부 파일로 분리합니다. [1] (https://mangkyu.tistory.com/167), 
+[2] (https://blog.naver.com/genycho/60131638082?viewType=pc)
+• ${} 치환: XML 설정 파일(예: context-properties.xml 또는 context-datasource.xml)에서 ${jdbc.username} 처럼 
+작성된 표현식을 .properties 파일에 정의된 실제 값으로 변환해 줍니다. [1] (https://javacpro.tistory.com/78), 
+[2] (https://godogha9man.tistory.com/167)
+• 레거시 방식: 주로 XML 기반의 전자정부프레임워크 레거시 프로젝트에서 데이터베이스 연결(DataSource) 설정 등을 할 때 
+빈(Bean)으로 등록해 사용합니다. [1] (https://blog.naver.com/genycho/60131638082?viewType=pc), [2] (https://godogha9man.tistory.com/167)
 
 사용 예시 (XML 설정)
 
@@ -28,5 +33,7 @@ xml
 </bean>
 코드를 사용할 때는 주의가 필요합니다.
 • 위와 같이 설정하면 globals.properties 파일에 있는 Globals.username 등의 값이 dataSource 빈의 프로퍼티에 자동으로 채워집니다.
-• 최신 스프링 및 전자정부프레임워크 환경에서는 PropertyPlaceholderConfigurer 대신 애노테이션 기반(@Value)이나 <context:property-placeholder> 태그, 또는 PropertySource 기반의 방식을 더 권장하거나 혼용합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:property_source), [2] (https://mangkyu.tistory.com/167)
+• 최신 스프링 및 전자정부프레임워크 환경에서는 PropertyPlaceholderConfigurer 대신 애노테이션 기반(@Value)이나 
+<context:property-placeholder> 태그, 또는 PropertySource 기반의 방식을 더 권장하거나 혼용합니다. [
+1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:property_source), [2] (https://mangkyu.tistory.com/167)
 만약 현재 프로젝트에서 에러가 발생해서 이 클래스를 찾아보신 거라면, 어떤 문제(예: 프로퍼티를 못 읽어오는 현상, 빈 생성 오류 등)를 겪고 계신지 알려주세요. 해결 방법을 도와드릴 수 있습니다.
