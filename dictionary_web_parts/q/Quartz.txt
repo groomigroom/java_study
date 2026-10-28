@@ -29,3 +29,33 @@ Scheduler에게 해당 Job을 실행하라고 알려줍니다. [1] (https://adjh
 사용해 특정 비즈니스 서비스(Service 클래스의 메서드)를 직접 Quartz 작업으로 연결하여 사용합니다. [1] (https://fun-developer.tistory.com/m/133), [2] (https://blog.naver.com/xcv1524/220535863146?viewType=pc)
 • 관련 공식 가이드는 전자정부 표준프레임워크 스케줄링 문서에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:scheduling)
 전자정부프레임워크에서 XML 기반 설정(context-quartz.xml) 예제나 특정 서비스 메서드를 연결하는 방법이 필요하신가요?
+
+
+----------------------------------------------
+
+사용자 정의 Job
+사용자는 Job 개체를 생성하기 위해 org.quartz.Job 인터페이스를 구현하고 심각한 오류가 발생한 경우 JobExecutionException 예외를 던질 수 있다. Job 인터페이스는 단일 메소드로 execute()을 정의한다.
+
+public class DumbJob implements Job {
+	public void execute(JobExecutionContext context) throws JobExecutionException {
+		System.out.println("DumbJob is executing.");
+	}
+}
+
+DumbJob은 Job 인터페이스의 execute() 메소드를 구현한다.
+execute() 메소드는 단순히 Job이 수행됨을 표시하는 메시지를 출력한다.
+Quartz 사용 코드
+  JobDetail jobDetail = 
+            new JobDetail("myJob",// Job 명
+              sched.DEFAULT_GROUP,  // Job 그룹명('null' 값인 경우 DEFAULT_GROUP 으로 정의됨)
+              DumbJob.class);       // 실행할 Job 클래스
+
+  Trigger trigger = TriggerUtils.makeDailyTrigger(8, 30);  // 매일 08시 30분 실행
+  trigger.setStartTime(new Date()); // 즉시 시작
+  trigger.setName("myTrigger");
+
+  sched.scheduleJob(jobDetail, trigger);
+
+우선 Job 설정을 위해 JobDetail 클래스를 정의한다.
+TriggerUtils을 이용하여 매일 8시30분 실행하는 Trigger를 생성한다.
+마지막으로, Scheduler에 JobDetail과 Trigger를 등록한다.
