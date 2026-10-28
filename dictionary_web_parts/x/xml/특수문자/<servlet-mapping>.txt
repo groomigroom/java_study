@@ -1,0 +1,2 @@
+전자정부 표준프레임워크(및 기반인 Spring MVC)의 설정 파일인 web.xml에서 
+<servlet-mapping> 태그는 특정 URL 요청을 어떤 서블릿(Servlet)으로 연결할지 매칭(Mapping)해주는 역할을 합니다.
