@@ -30,3 +30,15 @@ OOP(객체 지향 프로그래밍)를 대체하는 기술이 아니라, OOP의 �
 자바 진영의 Spring AOP (Spring AOP)는 프록시(Proxy) 패턴을 기반으로 동작합니다.
 스프링 빈(Bean)에만 AOP를 적용할 수 있으며, AspectJ 같은 다른 AOP 프레임워크에 비해 복잡한 설정 없이 애너테이션(@Aspect, @Around, @Before 등)을 통해 손쉽게 구현할 수 있습니다. [1] (https://mangkyu.tistory.com/121), [2] (https://engkimbs.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81AOP), [3] (https://www.youtube.com/watch?v=Hm0w_9ngDpM&t=405)
 스프링 기반 프로젝트에서 특정 AOP 애너테이션(@Around, @Before 등)의 구체적인 사용법이나 예제 코드가 필요하시면 편하게 말씀해 주세요.
+
+
+-=---------------------------------------
+
+관점(Aspect)
+관점은 구현하고자 하는 횡단 관심사의 기능이다.
+
+결합점(Join point)
+결합점은 관점(Aspect)를 삽입하여 실행 가능한 어플리케이션의 특정 지점을 말한다.
+
+포인트컷(Pointcut)
+포인트컷은 결합점 집합을 의미한다. 포인트컷은 어떤 결합점을 사용할 것이지를 결정하기 위해 패턴 매칭을 이용하여 룰을 정의한다. 다음 그림은 Spring 2.5에 포함된 bean() 포인트컷을 이용하여 종적 및 횡적으로 빈을 선택하는 예제를 보여준다.
