@@ -1,1 +1,24 @@
 
+제시하신 설정은 스프링(Spring) 기반의 웹 애플리케이션에서 전체 IoC(Inversion of Control) 
+컨테이너가 읽어 들일 공통 설정 파일들의 위치를 지정하는 역할입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:let4.0:configration)
+전자정부 표준프레임워크는 내부적으로 스프링 프레임워크를 기반으로 동작하므로, 
+이 설정 역시 스프링의 web.xml 파일에 들어가는 표준 설정입니다.
+
+의미하는 핵심 내용
+
+• 스프링 루트 컨테이너(Root Spring Container) 설정 파일 지정:
+웹 애플리케이션이 시작될 때(web.xml이 로드될 때), 스프링의 ContextLoaderListener가 
+이 경로들을 읽어서 공통 빈(Bean, 객체)들을 메모리에 올립니다.
+• 설정 파일 경로:
+	• /WEB-INF/daoContext.xml : 데이터베이스 연결, DAO(Data Access Object), 
+MyBatis/iBatis, 트랜잭션 등 DB 및 데이터 접근 계층과 관련된 설정 파일
+	• /WEB-INF/applicationContext.xml : 비즈니스 로직(Service), 공통 컴포넌트, 
+보안 등 애플리케이션 전반의 핵심 비즈니스 영역 설정 파일 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:getting_started), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:let4.0:configration)
+• 동작 방식:
+공백으로 구분된 두 XML 파일(/WEB-INF/daoContext.xml과 /WEB-INF/applicationContext.xml)을 
+모두 스캔하여 하나의 공통 스프링 컨텍스트로 통합하여 로드합니다.
+더 궁금한 점이 있으시다면:
+• dispatcher-servlet.xml과의 차이점이 궁금하신가요?
+• 특정 XML 파일 내부의 <bean> 설정에 대해 설명이 필요하신가요?
