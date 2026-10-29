@@ -1,0 +1,27 @@
+전자정부프레임워크(주로 Log4j2 환경)의 XML 설정 파일(log4j2.xml)에서 
+<Loggers> 태그는 애플리케이션 내 패키지나 클래스별로 로그의 출력 수준(Level)과 연결할 출력 대상(Appender)을 정의하는 영역을 의미합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:%EC%84%A4%EC%A0%95_%ED%8C%8C%EC%9D%BC%EC%9D%84_%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94_%EB%B0%A9%EB%B2%95), [2] (https://wildeveloperetrain.tistory.com/348)
+
+주요 역할 및 구성 요소
+
+• 개별 로거 지정 (<Logger>): 특정 패키지(예: egovframework.common)나 클래스에 대해 로그 레벨(TRACE, DEBUG, INFO, WARN, ERROR, FATAL)을 다르게 설정할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:logging&s[]=log4j)
+• 루트 로거 지정 (<Root>): <Loggers> 내부에 필수로 포함되며, 명시적으로 설정되지 않은 모든 패키지에 적용되는 기본(전역) 로그 레벨과 Appender를 정의합니다.
+• 중복 출력 방지 (additivity): 하위 로거에서 출력된 로그가 부모 로거(Root 등)로 중복 전달되는 것을 제어하는 속성(additivity="false")을 설정할 수 있습니다.
+
+구조 예시
+
+xml
+<Loggers>
+    <!-- 특정 패키지(egovframework)의 로그 레벨을 DEBUG로 설정 -->
+    <Logger name="egovframework" level="debug" additivity="false">
+        <AppenderRef ref="Console" />
+    </Logger>
+
+    <!-- 그 외 모든 패키지의 기본(Root) 로그 레벨을 INFO로 설정 -->
+    <Root level="info">
+        <AppenderRef ref="Console" />
+        <AppenderRef ref="File" />
+    </Root>
+</Loggers>
+코드를 사용할 때는 주의가 필요합니다.
+• 상세한 설정 방법과 가이드는 표준프레임워크 포털 eGovFrame 위키에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:%EC%84%A4%EC%A0%95_%ED%8C%8C%EC%9D%BC%EC%9D%84_%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94_%EB%B0%A9%EB%B2%95)
+현재 설정하려는 특정 패키지명이나 원하는 로그 레벨(DEBUG, INFO 등)을 알려주시면, 그에 맞는 <Loggers> XML 설정 코드를 작성해 드릴 수 있습니다.
