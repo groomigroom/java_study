@@ -11,10 +11,12 @@ B%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC:%EC%BA%90%EC%89%AC), [2] (https://www.egovfra
 주요 역할과 특징
 
 • 데이터 재사용 및 속도 향상: 자주 조회되거나 생성 비용이 큰 데이터(DB 조회 결과, 연산 결과 등)를 메모리에 담아두어, 
-동일한 요청이 들어올 때 DB나 외부 시스템을 다시 거치지 않고 빠르게 응답합니다. [1] (https://12bme.tistory.com/550), [2] (https://ko.wikipedia.org/wiki/%EC%BA%90%EC%8B%9C)
+동일한 요청이 들어올 때 DB나 외부 시스템을 다시 거치지 않고 빠르게 응답합니다. [1] (https://12bme.tistory.com/550), 
+[2] (https://ko.wikipedia.org/wiki/%EC%BA%90%EC%8B%9C)
 • 기본 캐시와 사용자 정의 캐시:
 	• <defaultCache>: <cache> 태그로 별도 정의되지 않은 캐시를 호출할 때 공통으로 적용되는 기본 정책 설정입니다.
-	• <cache name="...">: 특정 목적이나 데이터 영역별로 고유한 이름과 만료 시간, 저장 개수 등을 따로 설정하는 개별 캐시 영역입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction)
+	• <cache name="...">: 특정 목적이나 데이터 영역별로 고유한 이름과 만료 시간, 저장 개수 등을 따로 설정하는 개별 캐시 영역입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction)
 
 <cache> 태그의 주요 속성 (EhCache 기준)
 
