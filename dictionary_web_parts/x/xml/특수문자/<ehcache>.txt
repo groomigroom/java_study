@@ -1,0 +1,24 @@
+전자정부 표준프레임워크(eGovFrame) XML 설정에서 <ehcache> 태그는 자바 기반의 
+오픈소스 로컬 캐시 라이브러리인 EhCache의 상세 설정과 저장소(Cache) 정책을 정의하는 루트 태그를 의미합니다.
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:cache),
+[3] (https://jhyonhyon.tistory.com/71)
+
+주요 의미와 역할
+
+• 캐시 서비스 표준 선정: 전자정부 프레임워크의 Cache Service는 기본적으로 EhCache를 표준으로 가이드합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:cache)
+• 객체 메모리 저장: 자주 변경되지 않지만 조회 빈도가 높고, 생성 비용이 큰 데이터나 객체를 메모리(RAM)에 미리 올려두어 데이터베이스(DB) 
+조회 횟수를 줄이고 응답 속도를 높이기 위해 사용합니다. [1] (https://sjh836.tistory.com/129), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:cache)
+• 저장소(Cache) 영역 설정: ehcache.xml 파일 내의 <ehcache> 하위에서 기본 캐시 정책(defaultCache)이나 
+특정 엔티티별 커스텀 캐시 저장소(<cache>)의 용량, 유지 시간(TTL), 만료 정책 등을 설정합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction)
+
+관련 링크 및 공식 가이드
+
+• 전자정부 표준프레임워크 캐시 서비스 가이드
+• 캐시 설정관리 안내 [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:oe1:%EC
+%84%A4%EC%A0%95%EA%B4%80%EB%A6%AC:%EA%B0%80%EC%9D%B4%EB%93%9C:%EC%BA%90%EC%8B%9C_%EC%84%A4%EC%A0%95%EA%B4%80%EB%A6%AC),
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:cache)
+EhCache의 구체적인 설정 속성(maxElementsInMemory, timeToLiveSeconds 등)이나 스프링(Spring) 연동 방법에 대해 더 알고 싶으시면 말씀해 주세요.
