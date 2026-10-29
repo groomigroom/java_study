@@ -1,0 +1,41 @@
+io.netty.channel.ChannelOption은 전자정부프레임워크(eGovFrame) 고유의 클래스가 아니라, 
+자바의 고성능 네트워크 애플리케이션 프레임워크인 Netty에서 제공하는 네트워크 소켓 및 채널 
+설정용 옵션 클래스입니다. [1] (https://ko.wikipedia.org/wiki/%EB%84%A4%ED%8B%B0_
+(%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4)), [2] (https://velog.io/@yardyard/%ED%95%AB%ED%95%98%EB%94%94-%ED%95%AB%ED%95%9C-Netty%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-Socket-%ED%86%B5%EC%8B%A0-%EA%B3%A0%EB%8F%84%ED%99%94-%ED%95%98%EA%B8%B0)
+전자정부프레임워크 환경에서 이 클래스가 보인다면, 전자정부프레임워크 내부에서 대용량 데이터 처리, 비동기 연동, 
+혹은 외부 연동(API 통신, 대용량 파일 전송, IoT 장비 소켓 통신 등)을 위해 Netty 라이브러리를 사용하고 있으며, 그 통신 설정을 제어하고 있음을 의미합니다.
+
+❓ 전자정부프레임워크에서 이게 등장하는 주된 이유
+
+전자정부프레임워크 기반 프로젝트에서 ChannelOption 설정이 포함되어 있다면, 90% 이상 아래의 기능 구현 때문입니다.
+1. Spring WebClient 도입 시 설정: 전자정부프레임워크 환경에서 대외 연동 API를 호출할 때 비동기/Non-blocking 방식인 
+WebClient를 사용하는 경우가 많습니다. WebClient의 HTTP 엔진으로 Netty(ReactorNettyHttpClient)를 
+주로 사용하기 때문에 타임아웃 설정을 위해 ChannelOption을 설정하게 됩니다. [1] (https://jforj.tistory.com/457)
+2. 별도 소켓 서버/클라이언트 구축: 공공사업 중 연계 솔루션, 지자체/기관 간 전용선(TCP/IP) 연동, 
+IoT 디바이스 데이터 수집 등 대용량 트래픽 처리가 필요할 때 Netty로 직접 통신 모듈을 개발하여 삽입합니다. 
+[1] (https://soonmin.tistory.com/71)
+
+⚙️ 가장 자주 쓰이는 ChannelOption 종류 및 의미
+
+xml 설정(Spring Bean)이나 Java Config 파일에서 다음과 같은 속성들이 매핑되어 있을 것입니다.
+• ChannelOption.CONNECT_TIMEOUT_MILLIS
+	• 연결 타임아웃 시간: 클라이언트가 서버에 연결을 시도할 때 최대 몇 밀리초(ms) 동안 대기할지 설정합니다. 지정된 
+시간 내에 연결되지 않으면 통신 실패 처리됩니다.
+• ChannelOption.SO_KEEPALIVE
+	• 소켓 연결 유지 여부: TCP 연결이 유효한지 주기적으로 확인 패킷을 보낼지 설정합니다 (true / false). 오랫동안 
+패킷 이동이 없어도 세션을 끊지 않고 유지해야 하는 영구 연결(Persistent) 환경에서 씁니다.
+• ChannelOption.SO_REUSEADDR
+	• 포트 재사용 여부: 서버 소켓이 종료된 후, 아직 커널 단계에서 TIME_WAIT 상태인 포트를 즉시 다시 바인딩하여 서버를 
+재시작할 수 있게 해줍니다.
+• ChannelOption.TCP_NODELAY
+	• Nagle 알고리즘 비활성화 여부: 기본적으로 TCP는 작은 패킷들을 묶어서 한 번에 보냅니다(Nagle 알고리즘). 
+이를 true로 설정하면 데이터가 생기는 즉시 전송하여 반응 속도(레이턴시)를 최적화합니다. 실시간 통신에 필수적입니다.
+• ChannelOption.SO_RCVBUF / SO_SNDBUF
+	• 커널 송수신 버퍼 크기: TCP 패킷을 주고받기 위한 시스템 메모리 버퍼(수신/송신) 크기를 설정하여 데이터 대용량 전송 성능을 조율합니다.
+
+💡 요약
+
+전자정부프레임워크 코드 내 ChannelOption은 시스템이 사용하는 네트워크(TCP/HTTP) 소켓 통신의 성능, 타임아웃, 안정성을 세밀하게 튜닝하기 
+위해 Netty 엔진에 옵션을 전달하는 설정 코드로 이해하시면 됩니다. [1] (https://velog.io/@yardyard/%ED%95%AB%ED%95%98%EB%94%94-
+%ED%95%AB%ED%95%9C-Netty%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-Socket-%ED%86%B5%EC%8B%A0-%EA%B3%A0%EB%8F%84%ED%99%94-%ED%95%98%EA%B8%B0)
+이 코드가 포함된 전체 설정(예: WebClient 생성 부분이나 Netty Bootstrap 설정 부분)의 소스 코드나 관련 XML 스니펫을 공유해 주시면, 현재 어떤 역할을 하는 설정인지 더 구체적으로 짚어 드릴 수 있습니다.
