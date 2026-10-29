@@ -1,15 +1,22 @@
-@CacheEvict는 전자정부프레임워크(기반이 되는 스프링 프레임워크)에서 캐시(Cache)에 저장된 데이터를 삭제할 때 사용하는 어노테이션입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), [2] (https://baek-dev.tistory.com/192)
+@CacheEvict는 전자정부프레임워크(기반이 되는 스프링 프레임워크)에서 캐시(Cache)에 저장된 
+데이터를 삭제할 때 사용하는 어노테이션입니다.
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), 
+[2] (https://baek-dev.tistory.com/192)
 
 주요 역할과 동작 방식
 
 • 캐시 삭제: 해당 어노테이션이 붙은 메서드가 실행될 때, 지정한 캐시 영역에서 데이터를 찾아 지웁니다.
-• 데이터 일치 유지: 데이터베이스(DB)의 정보가 수정(UPDATE)되거나 삭제(DELETE)될 때, 이미 캐시에 남아있는 옛날 데이터(Stale Data)를 지워 다음 조회 시 최신 데이터를 DB에서 다시 불러오도록 만듭니다. [1] (https://kr.linkedin.com/posts/harish8001_springboot-java-caching-activity-7374460963640619008-OGVq?tl=ko), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), [3] (https://baek-dev.tistory.com/192)
+• 데이터 일치 유지: 데이터베이스(DB)의 정보가 수정(UPDATE)되거나 삭제(DELETE)될 때, 이미 캐시에 남아있는 
+옛날 데이터(Stale Data)를 지워 다음 조회 시 최신 데이터를 DB에서 다시 불러오도록 만듭니다. 
+[1] (https://kr.linkedin.com/posts/harish8001_springboot-java-caching-activity-7374460963640619008-OGVq?tl=ko),
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), [3] (https://baek-dev.tistory.com/192)
 
 주요 속성
 
 • cacheNames (또는 value): 삭제할 대상 캐시의 이름을 지정합니다.
 • key: 캐시 안에 들어있는 데이터 중 특정 키값만 골라서 삭제합니다.
-• allEntries = true: 특정 키 하나가 아니라, 해당 캐시 영역에 들어있는 모든 데이터를 한 번에 전부 삭제합니다. [1] (https://techblog.woowahan.com/23138/), [2] (https://velog.io/@bey1548/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%BA%90%EC%8B%9CCacheable-CacheEvict)
+• allEntries = true: 특정 키 하나가 아니라, 해당 캐시 영역에 들어있는 모든 데이터를 한 번에 전부 삭제합니다. 
+[1] (https://techblog.woowahan.com/23138/), [2] (https://velog.io/@bey1548/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%BA%90%EC%8B%9CCacheable-CacheEvict)
 
 사용 예시 코드
 
