@@ -1,1 +1,22 @@
-d
+전자정부프레임워크에서 org.egovframe.rte.fdl.crypto.EgovEnvCryptoService는 설정 
+파일(예: globals.properties)에 기록되는 데이터베이스 접속 정보(DriverClassName, 
+URL, 사용자명, 비밀번호 등)나 민감한 환경 설정값을 암호화 및 복호화하기 위해 제공되는 서비스 인터페이스입니다.
+[1] (https://yeolmok.tistory.com/37)
+
+주요 특징 및 역할
+
+• 민감 정보 보호: 소스코드나 설정 파일(globals.properties)에 데이터베이스 비밀번호를 평문(Plaintext)으로 
+노출하지 않고, 암호화된 문자열로 저장하여 보안을 강화합니다.
+• Jasypt 기반 구현: 내부적으로 Jasypt(Java Simplified Encryption) 라이브러리를 기반으로 동작하며, 
+ARIA 등의 표준 암호화 알고리즘을 지원합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:encryption_decryption), [2] (https://yeolmok.tistory.com/37)
+• 자동 복호화 지원: 애플리케이션이 구동되면서 설정 파일의 암호화된 속성(예: ENC(...) 형태)을 읽어올 때, 
+EgovEnvCryptoService가 자동으로 복호화하여 데이터베이스에 접속할 수 있도록 지원합니다.
+
+활용 및 설정 흐름
+
+1. 의존성 추가: pom.xml에 org.egovframe.rte.fdl.crypto 라이브러리를 추가합니다.
+2. 설정 파일 구성: context-crypto.xml 등의 설정 파일에서 암호화 키(algorithmKey) 및 알고리즘을 정의합니다.
+3. 프로퍼티 암호화 적용: globals.properties 등의 파일에 민감한 정보(비밀번호 등)를 암호화하여 입력합니다. 
+[1] (https://blog.naver.com/phm0515/223399830366?viewType=pc), [2] (https://yeolmok.tistory.com/37)
+만약 실제 적용 방법이나 암호화 키(algorithmKeyHash) 생성 및 설정 파일 수정 절차에 대해 구체적인 코드가 필요하시면 편하게 말씀해 주세요.
