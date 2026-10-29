@@ -1,1 +1,3 @@
-Marshalling/Unmarshallig
+Object/XML Mapping, 줄여서 O/X mapping은 Object를 XML문서로 변환하는데 
+이를 XML Mashalling 또는 Marshalling 이다. 
+반대로 XML문서를 Object로 변환하는 것은 Unmarshalling 이다.
