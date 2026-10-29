@@ -1,0 +1,20 @@
+전자정부프레임워크의 로그 설정 파일(log4j2.xml 등)에서 <Appenders> 태그는 생성된 로그 
+메시지가 출력될 '최종 목적지(출력 대상 및 방식)'를 정의하는 영역을 의미합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:%EC%84%A4%EC%A0%95_%ED%8C%8C%EC%9D%BC%EC%9D%84_%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94_
+%EB%B0%A9%EB%B2%95), [2] (https://dev-post.com/spring-boot-logback/)
+공식 가이드는 전자정부프레임워크 포털에서 확인할 수 있습니다.
+
+주요 특징 및 구성 요소
+
+• 로그 출력 대상 지정: <Appenders> 하위에 어떤 방식으로 로그를 남길 것인지 태그로 선언합니다.
+	• <Console>: 콘솔(이클립스/IDE 콘솔창)로 로그를 출력합니다.
+	• <File>: 특정 지정된 파일에 로그를 저장합니다.
+	• <RollingFile>: 파일 용량이 특정 크기를 넘거나 날짜가 바뀌면 로그를 백업 파일로 나누어 저장합니다.
+	• <JDBC> 등: 데이터베이스(DB) 테이블에 직접 로그를 기록합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:%EC%84%A4%EC%A0%95_%ED%8C%8C%EC%9D%BC%EC%9D%84_
+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94_%EB%B0%A9%EB%B2%95)
+• Layout(형식) 설정: 로그가 어떤 모양과 포맷(%d, %p, %m, %n 등 패턴)으로 찍힐지를 <PatternLayout> 등을 통해 함께 정의합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:fdl:%EC%84%A4%EC%A0%95_%ED%8C%8C%EC%9D%BC%EC%9D%84_
+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94_%EB%B0%A9%EB%B2%95)
+• Logger와의 연결: <Appenders>에서 정의한 출력 설정은 하단의 <Loggers> 영역(Root나 개별 패키지별 Logger)에서 ref 속성을 통해 호출되어 실제로 사용됩니다.
+로그를 파일로 날짜별 분리해서 저장(RollingFile)하거나, 특정 패키지의 로그만 따로 빼는 설정 방법이 필요하시면 말씀해 주세요.
