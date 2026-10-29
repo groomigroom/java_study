@@ -67,3 +67,5 @@ Optional<SiteUser> _siteUser = userRepository.findByUsername("hong");
 현재 이 코드를 로그인 체크나 회원가입 시 중복 사용자를 검사하는 예외 처리 구문에서 사용하고 계시나요?
 그렇다면 if (_siteUser.isEmpty()) 구문 내에서 어떤 예외(Exception)를 던지거나 처리할 계획인지 알려주세요. 상황에 맞는 깔끔한 예외 처리 패턴을 안내해 드리겠습니다.
 
+
+## .ofNullable
