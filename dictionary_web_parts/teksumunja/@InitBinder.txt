@@ -1,1 +1,19 @@
-sd
+@Controller나 @ControllerAdvice 클래스에서 @InitBinder 메소드로 초기화할 수 있다. @InitBinder 메소드는 다음과 같이 사용할 수 있다.
+
+@InitBinder 메소드롤 컨트롤러별 java.beans.PropertyEditor나 스프링 Converter, Formatter를 등록할 수 있다. 
+FormattingConversionService에서 전역으로 사용하는 Converter, Formatter는 웹플럭스 설정으로 등록한다. 
+@InitBinder 메소드가 지원하는 인자는 @ModelAttribute(커맨드 객체)만 제외하고 대부분 @RequestMapping 메소드와 동일하다. 
+보통은 WebDataBinder를 인자로 받아 컴포넌트를 등록하고 void를 리턴한다. 다음은 @InitBinder 어노테이션을 사용하는 예제이다.
+
+@Controller
+public class FormController {
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
+ 
+    // ...
+}
