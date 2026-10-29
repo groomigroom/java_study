@@ -1,0 +1,21 @@
+전자정부프레임워크(eGovFrame)에서 XML 설정 파일(주로 log4j2.xml 등)에 등장하는 
+<Console> 태그는 로그(Log) 메시지를 표준 출력(Console, 보통 이클립스나 IDE의 콘솔창)으로 
+내보내기 위한 Appender(어펜더)를 의미합니다. [1] (https://thinkerodeng.tistory.com/332)
+
+주요 특징 및 속성
+
+• 역할: 애플리케이션 실행 중 발생하는 로그 기록을 파일이나 데이터베이스가 아닌, 시스템 콘솔 
+화면에 출력하도록 설정하는 컴포넌트입니다. [1] (https://yaga.tistory.com/374), 
+[2] (https://thinkerodeng.tistory.com/332)
+• 주요 속성 예시 (log4j2.xml):xml
+<Console name="console" target="SYSTEM_OUT">
+    <PatternLayout pattern="%d %5p [%c] %m%n" />
+</Console>
+코드를 사용할 때는 주의가 필요합니다.
+
+	• name="console": 이 콘솔 어펜더의 이름을 지정합니다.
+	• target="SYSTEM_OUT": 출력을 표준 출력 스트림(System.out)으로 지정합니다. 
+(SYSTEM_ERR를 사용하면 표준 에러 스트림으로 출력됩니다.)
+	• <PatternLayout>: 콘솔에 찍힐 로그의 포맷(날짜, 로그 레벨, 클래스 이름, 메시지 등)을 설정합니다. 
+[1] (https://thinkerodeng.tistory.com/332)
+혹시 log4j2.xml 전체 설정 구조나 로그 패턴(PatternLayout)의 의미에 대해 더 자세히 알고 싶으신가요?
