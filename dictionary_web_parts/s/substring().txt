@@ -1,18 +1,21 @@
 자바(Java)에서 substring() 메서드는 문자열의 특정 부분을 잘라내어 새로운 문자열로 반환할 때 사용합니다. 
-인덱스는 0부터 시작합니다. [1] (https://jamesdreaming.tistory.com/81), [2] (https://yeolco.tistory.com/251), [3] (https://hianna.tistory.com/534)
+인덱스는 0부터 시작합니다. [1] (https://jamesdreaming.tistory.com/81), [2] (https://yeolco.tistory.com/251), 
+[3] (https://hianna.tistory.com/534)
 
 메서드 종류 및 사용법
 
 substring()은 매개변수 개수에 따라 2가지 형태로 사용됩니다. [1] (https://needneo.tistory.com/169)
 1. substring(int beginIndex)
-	• 시작 인덱스(beginIndex)부터 문자열의 끝까지 추출합니다. [1] (https://jamesdreaming.tistory.com/81), [2] (https://hianna.tistory.com/534)
+	• 시작 인덱스(beginIndex)부터 문자열의 끝까지 추출합니다. [1] (https://jamesdreaming.tistory.com/81), 
+[2] (https://hianna.tistory.com/534)
 java
 String str = "Hello Java";
 String result = str.substring(6); 
 // 결과: "Java"
 코드를 사용할 때는 주의가 필요합니다.
 2. substring(int beginIndex, int endIndex)
-	• 시작 인덱스(beginIndex)부터 종료 인덱스 직전(endIndex - 1)까지 추출합니다. (종료 인덱스 자기 자신은 포함되지 않음) [1] (https://jamesdreaming.tistory.com/81), [2] (https://hianna.tistory.com/534)
+	• 시작 인덱스(beginIndex)부터 종료 인덱스 직전(endIndex - 1)까지 추출합니다. (종료 인덱스 자기 자신은 포함되지 않음) 
+[1] (https://jamesdreaming.tistory.com/81), [2] (https://hianna.tistory.com/534)
 java
 String str = "Hello Java";
 String result = str.substring(0, 5); 
@@ -21,6 +24,7 @@ String result = str.substring(0, 5);
 
 주의할 점
 
-• 범위 초과 예외: 시작 인덱스가 음수이거나, 전체 문자열의 길이를 넘어서는 값, 혹은 beginIndex가 endIndex보다 큰 값을 넣으면 StringIndexOutOfBoundsException 에러가 발생합니다. [1] (https://jamesdreaming.tistory.com/81), [2] (https://hianna.tistory.com/534)
+• 범위 초과 예외: 시작 인덱스가 음수이거나, 전체 문자열의 길이를 넘어서는 값, 혹은 beginIndex가 endIndex보다 큰 값을 넣으면 StringIndexOutOfBoundsException 에러가 발생합니다. 
+[1] (https://jamesdreaming.tistory.com/81), [2] (https://hianna.tistory.com/534)
 • 불변성(Immutability): 자바의 String은 불변 객체이므로, substring()을 호출한다고 해서 원본 문자열 str 자체가 바뀌지 않으며, 잘라낸 새로운 문자열을 변수에 담아 사용해야 합니다.
 특정 문자(예: - 기호나 공백)를 기준으로 문자열을 자르고 싶으시다면, substring() 대신 split() 메서드 사용법을 안내해 드릴까요?
