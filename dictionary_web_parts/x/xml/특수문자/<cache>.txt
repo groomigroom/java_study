@@ -1,0 +1,33 @@
+전자정부 표준프레임워크의 XML 설정(주로 ehcache.xml 등 캐시 관련 설정 파일)에서 <cache> 태그는 
+데이터나 계산 결과를 메모리에 임시로 저장하여 시스템 성능을 높이기 위한 캐시 저장소(Cache Store)를 정의하는 
+역할을 합니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:cache), 
+[3] (https://velog.io/@taebong98/Spring-Cache-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)
+전자정부 표준프레임워크는 캐시 서비스 표준으로 EhCache를 공식 선정하여 가이드하고 있습니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:oe2:%EA%B0%80%EC%9D%B4%EB%93%9C:%ED%94%84%E
+B%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC:%EC%BA%90%EC%89%AC), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:cache)
+
+주요 역할과 특징
+
+• 데이터 재사용 및 속도 향상: 자주 조회되거나 생성 비용이 큰 데이터(DB 조회 결과, 연산 결과 등)를 메모리에 담아두어, 
+동일한 요청이 들어올 때 DB나 외부 시스템을 다시 거치지 않고 빠르게 응답합니다. [1] (https://12bme.tistory.com/550), [2] (https://ko.wikipedia.org/wiki/%EC%BA%90%EC%8B%9C)
+• 기본 캐시와 사용자 정의 캐시:
+	• <defaultCache>: <cache> 태그로 별도 정의되지 않은 캐시를 호출할 때 공통으로 적용되는 기본 정책 설정입니다.
+	• <cache name="...">: 특정 목적이나 데이터 영역별로 고유한 이름과 만료 시간, 저장 개수 등을 따로 설정하는 개별 캐시 영역입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction)
+
+<cache> 태그의 주요 속성 (EhCache 기준)
+
+XML 내부에서 <cache> 태그를 사용할 때 주로 포함되는 속성들은 다음과 같습니다:
+• name: 캐시의 고유 이름 (애플리케이션에서 @Cacheable 등의 애너테이션이나 API를 통해 호출할 때 사용)
+• maxElementsInMemory: 메모리에(RAM) 최대로 저장할 수 있는 객체의 개수
+• maxElementsOnDisk: 디스크에 최대로 저장할 수 있는 객체의 개수
+• eternal: 데이터의 영구 저장 여부 (true이면 만료되지 않음)
+• timeToIdleSeconds: 지정된 시간(초) 동안 데이터가 사용(조회)되지 않으면 캐시에서 제거되는 시간
+• timeToLiveSeconds: 데이터가 생성된 후 지정된 시간(초)이 지나면 사용 여부와 관계없이 캐시에서 제거되는 시간
+• overflowToDisk: 메모리(maxElementsInMemory) 용량을 초과할 경우 디스크에 저장할 것인지 여부
+
+관련 공식 문서 참고
+
+• 표준프레임워크 포털 eGovFrame 캐시 가이드 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:cache)
+만약 작성 중이신 ehcache.xml 설정 파일의 구체적인 내용이나 특정 속성(timeToLiveSeconds 등)의 의미가 궁금하시면 언제든 편하게 공유해 주세요!
