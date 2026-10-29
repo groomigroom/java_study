@@ -1,18 +1,27 @@
 전자정부프레임워크(및 스프링 환경)에서 <diskStore> 태그는 자바 기반 캐시 라이브러리인 
-Ehcache의 설정 파일(ehcache.xml)에서 메모리(RAM)를 초과한 캐시 데이터를 저장할 로컬 디스크 경로(위치)를 지정하는 역할입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache), [2] (https://kkwonsy.tistory.com/16), [3] (https://translate.google.com/translate?u=https://www.quora.com/What-is-Ehcache-in-Java&hl=ko&sl=en&tl=ko&client=sge)
+Ehcache의 설정 파일(ehcache.xml)에서 메모리(RAM)를 초과한 캐시 데이터를 저장할 로컬 디스크 경로(위치)를 지정하는 역할입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache), 
+[2] (https://kkwonsy.tistory.com/16), 
+[3] (https://translate.google.com/translate?u=https://www.quora.com/What-is-Ehcache-in-Java&hl=ko&sl=en&tl=ko&client=sge)
 
 주요 의미 및 역할
 
-• 디스크 저장 경로 지정: 메모리 용량 부족 등으로 인해 메모리에 다 담지 못한 캐시 데이터나, 디스크에 백업(Overflow/Persistence)해야 하는 캐시 데이터를 저장할 파일 시스템 경로를 설정합니다.
+• 디스크 저장 경로 지정: 메모리 용량 부족 등으로 인해 메모리에 다 담지 못한 캐시 데이터나, 디스크에 
+백업(Overflow/Persistence)해야 하는 캐시 데이터를 저장할 파일 시스템 경로를 설정합니다.
 • 설정 예시:xml
 <diskStore path="java.io.tmpdir"/>
 코드를 사용할 때는 주의가 필요합니다.
 
-	• path="java.io.tmpdir" 속성은 운영체제의 기본 임시 디렉터리 경로(예: 윈도우의 C:\Users\...\AppData\Local\Temp 또는 리눅스의 /tmp)를 캐시 저장소로 사용하겠다는 의미입니다.
+	• path="java.io.tmpdir" 속성은 운영체제의 기본 임시 디렉터리 경로(예: 윈도우의 C:\Users\...\AppData\Local\Temp 또는 
+리눅스의 /tmp)를 캐시 저장소로 사용하겠다는 의미입니다.
 	• 필요에 따라 절대 경로(예: path="/app/cache/data")를 직접 지정할 수도 있습니다.
 
 사용 배경
 
 • 전자정부프레임워크의 캐시 서비스 표준 프레임워크는 Ehcache를 주로 활용합니다.
-• 메모리만 사용하는 경우 데이터가 많아지면 OutOfMemoryError가 발생할 수 있으므로, 설정 파일(ehcache.xml)에 <diskStore>를 선언하여 메모리와 디스크를 함께 활용한 캐시 전략을 구성합니다. [1] (https://kkwonsy.tistory.com/16), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache), [3] (https://translate.google.com/translate?u=https://www.quora.com/What-is-Ehcache-in-Java&hl=ko&sl=en&tl=ko&client=sge)
+• 메모리만 사용하는 경우 데이터가 많아지면 OutOfMemoryError가 발생할 수 있으므로, 설정 파일(ehcache.xml)에 <diskStore>를 
+선언하여 메모리와 디스크를 함께 활용한 캐시 전략을 구성합니다. 
+[1] (https://kkwonsy.tistory.com/16), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache), 
+[3] (https://translate.google.com/translate?u=https://www.quora.com/What-is-Ehcache-in-Java&hl=ko&sl=en&tl=ko&client=sge)
 캐시의 만료 시간(timeToLiveSeconds)이나 메모리 제한(maxEntriesLocalHeap) 설정에 관해서도 추가 설명이 필요하신가요?
