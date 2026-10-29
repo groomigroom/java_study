@@ -1,0 +1,8 @@
+전자정부프레임워크(eGovFrame)에서 net.sourceforge.ajaxtags.xml.AjaxXmlBuilder는 Ajax 요청에 응답하기 위한 XML 형식의 데이터를 서버(Controller) 사이드에서 손쉽게 조립·생성하기 위해 제공되는 자바 라이브러리(API)입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:ptl:ajax_support), [2] (https://ajaxtags.sourceforge.net/apidocs/net/sourceforge/ajaxtags/xml/AjaxXmlBuilder.html)
+
+주요 의미와 역할
+
+• AjaxTags 연동 데이터 생성: 전자정부프레임워크의 Ajax 지원 기능 중 AjaxTags를 사용할 때, 클라이언트에 반환하는 데이터는 반드시 정해진 XML 구조를 갖추어야 합니다. AjaxXmlBuilder는 이 XML 문자열을 자바 객체 방식으로 간편하게 만들도록 돕습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:ptl:ajax_support:ajaxtags), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:ptl:ajax_support), [3] (https://ajaxtags.sourceforge.net/apidocs/net/sourceforge/ajaxtags/xml/AjaxXmlBuilder.html)
+• 컨트롤러(Controller)에서의 데이터 가공: 뷰(View) 단에서 직접 XML을 파싱하거나 가공하는 대신, 컨트롤러에서 AjaxXmlBuilder를 이용해 필요한 데이터(키-값 형태, 리스트 등)를 XML로 변환한 뒤 모델(Model)에 담아 뷰로 전달하는 구조로 사용됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:ptl:ajax_support)
+• 메서드 제공: addItem("KEY", "VALUE", false) 같은 메서드를 호출하여 XML 엘리먼트나 노드를 동적으로 추가하고, .toString()을 통해 최종 XML 문자열로 변환합니다. [1] (https://open.egovframe.org/nforges/qna/qna/4626/.do)
+만약 구체적인 소스코드 적용 예시나 최근에 많이 쓰는 JSON 방식(Jackson 등)으로 전환하는 방법이 필요하시면 말씀해 주세요.
