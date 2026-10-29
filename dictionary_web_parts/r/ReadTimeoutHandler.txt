@@ -1,1 +1,43 @@
+io.netty.handler.timeout.ReadTimeoutHandler는 전자정부프레임워크(eGovFrame) 자체의 고유 기능이 아니라, 
+프레임워크 내부에서 사용하는 비동기 네트워크 라이브러리인 Netty(네티)의 통신 타임아웃 처리 클래스입니다. 
+[1] (https://blog.cjlee.io/post/webclient-timeout/)
+전자정부프레임워크 환경에서 이 클래스가 의미하는 바와 나타나는 맥락은 다음과 같습니다.
 
+1. 언제, 어디서 사용되나요?
+
+전자정부프레임워크 4.0 버전 이상부터는 리액티브 웹 환경(Spring WebFlux)을 지원합니다. 이때 외부 API를 
+비동기·논블로킹 방식으로 호출하기 위해 전자정부프레임워크 WebClient 모듈을 주로 사용하는데, 이 WebClient의 하부 엔진이 바로 Netty입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:ptl:web_reactive_webclient), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:ptl:web_reactive)
+연결을 맺은 외부 서버로부터 일정 시간 동안 응답 데이터(Inbound traffic)가 들어오지 않을 때 연결을 강제로 끊어 
+시스템이 무한정 대기하는 것을 막기 위해 이 핸들러를 설정에 추가합니다. [1] (https://netty.io/4.0/api/io/netty/handler/timeout/ReadTimeoutHandler.html)
+
+2. 정확한 동작 의미
+
+• Read Timeout 설정: 소켓 연결(Connection)은 정상적으로 맺어졌으나, 상대방 서버가 데이터를 보내주지 않거나 네트워크 문제로 지정한 
+시간(초) 동안 무반응 상태일 때 작동합니다.
+• 동작 결과: 설정된 임계 시간을 넘어가면 io.netty.handler.timeout.ReadTimeoutException 예외가 발생하며 소켓 연결이 자동으로 닫힙니다. 
+[1] (https://eottabom.github.io/post/timeout-settings-guide/), [2] (https://netty.io/4.0/api/io/netty/handler/timeout/ReadTimeoutHandler.html)
+
+3. 실제 설정 코드 예시
+
+전자정부프레임워크 개발 가이드의 WebClient 설정 문서를 보면 아래와 같이 ReadTimeoutHandler를 사용하여 타임아웃을 적용하는 코드가 
+안내되어 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:ptl:web_reactive_webclient)
+java
+import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.handler.timeout.WriteTimeoutHandler;
+import reactor.netty.http.client.HttpClient;
+
+HttpClient httpClient = HttpClient.create()
+    .doOnConnected(conn -> conn
+        .addHandlerLast(new ReadTimeoutHandler(10))  // 10초 동안 데이터 수신이 없으면 타임아웃 발생
+        .addHandlerLast(new WriteTimeoutHandler(10))
+    );
+코드를 사용할 때는 주의가 필요합니다.
+
+요약하자면
+
+이 핸들러 관련 로그나 코드가 보인다면, "전자정부프레임워크 내부에서 WebClient 등으로 외부 서버와 통신할 때, 상대방 응답 지연으로 인한 
+멈춤 현상을 방지하기 위해 마련해 둔 소켓 읽기 시간 제한 장치"로 이해하시면 됩니다. [1] (https://eottabom.github.io/post/timeout-settings-guide/), 
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.2:ptl:web_reactive_webclient)
+현재 해당 클래스와 관련해서 ReadTimeoutException 같은 에러 로그가 발생하여 원인을 찾고 계신가요? 그렇다면 에러가 발생한 구체적인 상황
+(연동 중인 외부 시스템 종류나 설정된 타임아웃 시간 등)을 알려주시면 상세한 해결 조치 방법을 안내해 드리겠습니다.
