@@ -102,4 +102,6 @@ GroupMainSecondEntity entity = groupMainSecondEntity
 groupMainSecondEntity.ifPresent(e -> doSomething(e));
 코드를 사용할 때는 주의가 필요합니다.
 추가적인 코드 개선이나 Optional을 활용한 효율적인 예외 처리 패턴이 필요하시면 언제든 말씀해 주세요!
+
+//Optional<GroupMainSecondEntity> groupMainSecondEntity = Optional.ofNullable(this.groupMainSecondRepository.findByGroupNameAndMemberNumber(groupName, memberNumber));
 ```
