@@ -1,1 +1,30 @@
+전자정부 표준프레임워크(및 기반이 되는 Spring 프레임워크) 
+XML 설정 파일에서 <file> 태그는 주로 파일 업로드 처리, 특정 파일 경로 참조, 혹은 파일 시스템 자원을 설정할 때 사용됩니다.
+구체적인 의미와 사용처는 다음과 같습니다.
 
+1. Spring Multipart(파일 업로드) 설정에서의 <file> 또는 file 관련 속성
+
+• 의미: 웹 애플리케이션에서 사용자가 전송한 파일 업로드 요청을 처리하기 위한 설정입니다.
+• 관련 파일: 주로 context-common.xml이나 context-mapper.xml, 혹은 개별 설정 XML 
+파일에서 파일 업로드 용량 제한이나 임시 저장 경로 등을 지정할 때 쓰입니다.
+• 예시: 파일 업로드 처리를 담당하는 MultipartResolver 빈(Bean) 설정 시 파일 크기 
+제한(maxUploadSize)이나 파일 저장 경로 등을 지정합니다.
+
+2. 파일 리소스(File Resource) 경로 참조
+
+• 의미: Spring 설정 파일 내에서 외부 파일 시스템(file:)이나 특정 경로의 설정 파일, 
+프로퍼티(properties) 파일 등을 불러올 때 사용됩니다.
+• 예시:xml
+<property name="location" value="file:///user/dev/weblogic/issue/..." />
+코드를 사용할 때는 주의가 필요합니다.
+위와 같이 file: 접두사를 사용하여 로컬 디스크의 실제 파일 경로를 직접 참조합니다.
+[1] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/configuration-management-tool/change-management/)
+
+3. XML 파싱 및 파일 생성 기능
+
+• 의미: 전자정부 표준프레임워크의 공통 컴포넌트 중 XML Manipulation(XML 데이터 조립/파싱/파일 생성) 
+기능을 사용할 때, 처리할 대상 파일이나 생성될 파일 규격을 정의하는 요소로 쓰입니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:xml%EB%8D%B0%EC%9D%B4%ED%84%B0%ED%8C%8C%EC%8B%B1),
+[2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:xml_manipulation), 
+[3] (https://egovframe.go.kr/docs/5.0/common-component/elementary-technology/system/file-create/)
+혹시 작성 중이신 구체적인 XML 파일의 전체 코드 일부분이나 에러/궁금한 태그의 앞뒤 내용을 공유해 주시면 더 정확하게 설명해 드릴 수 있습니다.
