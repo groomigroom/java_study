@@ -1,0 +1,25 @@
+전자정부프레임워크(기반이 되는 스프링 프레임워크)에서 @Caching은 하나의 메서드에 여러 개의 캐시 관련 어노테이션(@Cacheable, @CachePut, @CacheEvict)을 동시에 적용하고 싶을 때 사용하는 묶음(Group)용 어노테이션입니다. [1] (https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/cache.html), [2] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/Caching.html)
+자바 언어의 문법적 제약(동일한 타입의 어노테이션을 같은 대상에 중복해서 여러 개 선언할 수 없음) 때문에, 서로 다른 조건이나 서로 다른 캐시 이름(Cache Name)을 가진 어노테이션을 한 메서드에 동시에 걸고 싶을 때 @Caching으로 감싸서 사용합니다. [1] (https://docs.spring.io/spring-framework/docs/3.2.x/spring-framework-reference/html/cache.html)
+
+주요 특징 및 활용 예시
+
+• 다중 캐시 어노테이션 조합: @Cacheable, @CachePut, @CacheEvict를 복합적으로 묶을 수 있습니다. [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/Caching.html)
+• 사용 예시 (캐시 갱신 및 삭제 동시 처리):java
+@Caching(
+    put = {
+        @CachePut(value = "userCache", key = "#result.id"),
+        @CachePut(value = "userCache", key = "#result.email")
+    },
+    evict = {
+        @CacheEvict(value = "userListCache", allEntries = true)
+    }
+)
+public User updateUser(User user) {
+    // 비즈니스 로직 수행
+    return updatedUser;
+}
+코드를 사용할 때는 주의가 필요합니다.
+• 전자정부프레임워크에서의 위치:
+	• 전자정부프레임워크 실행환경은 기본적으로 스프링 캐시 추상화(Cache Abstraction)와 EhCache 등을 연동하여 사용합니다.
+	• 따라서 @Caching 어노테이션 역시 스프링 프레임워크의 캐시 메커니즘을 그대로 따릅니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), [2] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:oe1:%EC%84%A4%EC%A0%95%EA%B4%80%EB%A6%AC:%EA%B0%80%EC%9D%B4%EB%93%9C:%EC%BA%90%EC%8B%9C_%EC%84%A4%EC%A0%95%EA%B4%80%EB%A6%AC), [3] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/Caching.html)
+혹시 현재 프로젝트에서 특정 메서드에 적용하려는 캐시 시나리오가 있으신가요? @Cacheable이나 @CacheEvict 설정에 대해 궁금한 점을 알려주시면 구체적인 코드를 작성해 드릴 수 있습니다.
