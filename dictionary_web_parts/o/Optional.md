@@ -69,3 +69,37 @@ Optional<SiteUser> _siteUser = userRepository.findByUsername("hong");
 
 
 ## .ofNullable
+```
+데이터가 존재하지 않을 때 발생할 수 있는 NullPointerException(NPE)을 안전하게 방지하고, 데이터의 부재(Null)를 명확하게 표현하기 위해서입니다.
+이 방식을 사용하는 핵심 이유는 다음과 같습니다.
+
+1. NullPointerException 방지
+
+• findByGroupNameAndMemberNumber 쿼리 메서드는 조건에 맞는 데이터가 데이터베이스에 없을 경우 null을 반환합니다.
+• 만약 Optional.of(...)를 사용했다면, 반환된 값이 null일 때 그 자리에서 바로 NullPointerException이 발생합니다.
+• Optional.ofNullable(...)은 값이 null이어도 예외를 던지지 않고, 비어있는 Optional 객체(Optional.empty())를 안전하게 생성해 줍니다.
+
+2. Spring Data JPA의 기본 반환 타입 지원
+
+사실 Spring Data JPA는 Optional을 자체적으로 지원합니다. 리포지토리(Repository)의 메서드 반환 타입을 Optional<GroupMainSecondEntity>로 직접 선언하면, 스프링이 알아서
+데이터가 없을 때 Optional.empty()를 반환해 줍니다.
+java
+// 추천하는 방식: 리포지토리 인터페이스에서부터 Optional로 반환
+Optional<GroupMainSecondEntity> findByGroupNameAndMemberNumber(String groupName, Long memberNumber);
+코드를 사용할 때는 주의가 필요합니다.
+현재 코드처럼 서비스 레이어에서 Optional.ofNullable로 직접 감싸고 있다면, 이는 리포지토리 메서드의 반환 타입이 일반 엔티티(GroupMainSecondEntity)로 되어 있기 때문입니다.
+ null이 올 수 있는 레거시 메서드나 외부 라이브러리의 결과를 안전하게 Optional로 변환할 때 ofNullable이 필수적입니다.
+
+3. 후속 처리의 간결함
+
+Optional로 감싸두면 if (entity != null) 같은 지저분한 null 체크 코드 없이, 함수형 스타일로 깔끔하게 후속 처리를 할 수 있습니다.
+java
+// 데이터가 없으면 예외를 던지거나
+GroupMainSecondEntity entity = groupMainSecondEntity
+    .orElseThrow(() -> new EntityNotFoundException("그룹을 찾을 수 없습니다."));
+
+// 데이터가 있을 때만 특정 로직을 수행
+groupMainSecondEntity.ifPresent(e -> doSomething(e));
+코드를 사용할 때는 주의가 필요합니다.
+추가적인 코드 개선이나 Optional을 활용한 효율적인 예외 처리 패턴이 필요하시면 언제든 말씀해 주세요!
+```
