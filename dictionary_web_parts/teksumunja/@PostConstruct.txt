@@ -1,4 +1,4 @@
-https://jakarta.ee/specifications/annotations/3.0/apidocs/jakarta/annotation/PostConstruct.html
+jakarta.annotation.PostConstruct;
 
 
 자바 스프링에서 @PostConstruct는 스프링 빈(Bean)이 생성되고 의존성 주입(DI)이 완료된 직후, 딱 한 번만 실행되는 초기화 메서드를 지정하는 어노테이션입니다. [1] 
