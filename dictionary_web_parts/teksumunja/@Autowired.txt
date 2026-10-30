@@ -1,3 +1,5 @@
+org.springframework.beans.factory.annotation.Autowired;
+
 @Autowired는 스프링 프레임워크에서 의존성을 자동으로 주입(Dependency Injection)해주는 어노테이션입니다. [1, 2] 
 
 빈에 생성자가 두 개 이상 있는 경우, 스프링이 사용할 생성자를 다음과 같이 표시해야 합니다 @Autowired.
