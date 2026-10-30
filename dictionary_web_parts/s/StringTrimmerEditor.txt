@@ -49,3 +49,56 @@ public class GlobalBindingController {
 • 전자정부 표준 감리 대비: 공공 프로젝트에서는 데이터 검증 및 입력 값 정제 기능이 중요하게 다뤄집니다. 프레임워크 레벨에서 
 공백 처리를 자동화해 두면 휴먼 에러로 인한 데이터 오염을 예방할 수 있습니다.
 현재 개발 중인 전자정부프레임워크 환경에서 특정 VO 바인딩 문제나 공백 처리 오류 때문에 이 클래스를 확인하고 계신가요? 상황을 말씀해 주시면 알맞은 구현 방법을 안내해 드리겠습니다.
+
+#####################################z-x=-z=-x=-zx=-z=x-=z-x=z-x=-z=x-=z-x=z-x=-z=x-z=x-z=x-=zx-=zx-z=x
+
+Spring Framework에서 new StringTrimmerEditor(false)를 사용하는 것은 HTTP 요청으로 들어오는 문자열(String) 
+데이터의 앞뒤 공백을 자동으로 제거(Trim)하되, 공백만 있는 문자열을 null로 변환하지 않고 빈 문자열("")로 유지하겠다는 의미입니다.
+일반적으로 Spring Controller에서 @InitBinder 메서드 내에 등록하여 사용합니다.
+
+💡 핵심 생성자 파라미터 의미
+
+StringTrimmerEditor는 생성자에 두 가지 파라미터를 받을 수 있습니다:
+public StringTrimmerEditor(string charsToDelete, boolean emptyAsNull) 또는 public StringTrimmerEditor(boolean emptyAsNull)
+여기서 사용하신 new StringTrimmerEditor(false)의 false는 emptyAsNull 옵션에 해당합니다.
+• true (기본값): 문자열을 Trim한 결과가 빈 문자열("")이거나 원래 공백만 있던 경우, 이를 null로 바꿉니다.
+• false (질문하신 케이스): 문자열을 Trim한 결과가 빈 문자열("")이 되더라도 null로 바꾸지 않고 빈 문자열("") 상태 그대로 유지합니다.
+
+📊 작동 방식 비교
+
+사용자가 데이터 입력창에 공백만 입력했거나("   "), 아무것도 입력하지 않았을 때의 결과 차이입니다.
+
+입력 데이터	new StringTrimmerEditor(true) 결과	new StringTrimmerEditor(false) 결과
+"  hello  "	"hello" (공백 제거)	"hello" (공백 제거)
+"   " (공백만 있음)	null	"" (빈 문자열)
+"" (빈 값)	null	"" (빈 문자열)
+
+
+🛠️ 실제 활용 예시 (Controller)
+
+java
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MyController {
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        // 모든 String 타입 입력에 대해 앞뒤 공백을 제거하되, 빈 값은 null이 아닌 ""로 유지
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(false);
+        binder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+⚠️ 주의할 점 및 선택 기준
+
+• DB Constraints 관련: 만약 데이터베이스의 특정 컬럼이 NOT NULL 조건이고 기본값이 빈 문자열("")로 설정되어 있다면, 
+false로 설정하는 것이 안전합니다. true를 사용하면 null이 유입되어 DB 에러가 발생할 수 있습니다.
+• 유효성 검증(@Valid): @NotBlank나 @NotEmpty 같은 Validation 어노테이션을 사용할 때 null과 ""를 어떻게 처리할지 시스템 
+정책에 맞춰 이 옵션을 결정해야 합니다.
+혹시 현재 개발 중인 환경에서 null과 빈 문자열 중 어떤 값으로 처리하는 것이 목적인지 말씀해주시면, 유효성 검증이나 
+DB 처리 관점에서 더 알맞은 방안을 추천해 드릴 수 있습니다.
