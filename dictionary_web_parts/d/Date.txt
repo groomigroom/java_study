@@ -1,0 +1,26 @@
+java.util.Date는 자바(Java)에서 특정 시점의 날짜와 시간 정보를 다루기 위해 제공되는 클래스입니다. 
+[1] (https://codegym.cc/ko/groups/posts/ko.660.java-util-date-keullaeseu), [2] (https://dudnf99.tistory.com/72)
+
+주요 의미와 특징
+
+• 시간 표현 방식: 1970년 1월 1일 00:00:00 GMT(협정 세계시/Epoch Time)를 기준으로 경과한 시간을 밀리초(millisecond) 
+단위의 정수로 내부에서 관리합니다. [1] (https://velog.io/@zeroh0/java-Date), 
+[2] (https://wonder-bear.tistory.com/entry/java-javautilDate-%EC%99%80-javautilCalendar-%EB%A5%BC-%EC%82%AC%EC%9A%A9%08%ED%95%98%EC%A7%80%EB%A7%90%EC%9E%90)
+• 가변성 (Mutable): 객체의 값을 변경할 수 있는 가변 객체여서, 멀티스레드 환경 등에서 값이 의도치 않게 바뀔 위험이 있습니다. 
+[1] (https://dudnf99.tistory.com/72)
+• 주요 메서드의 비권장(Deprecated): 설계상의 문제로 인해 현재는 대부분의 메서드가 @Deprecated 처리되었습니다. 
+(예: 연도, 월을 다루는 방식이 직관적이지 않음) [1] (https://itellyhood.tistory.com/75)
+
+현재 사용 시 주의할 점 (대체재)
+
+자바 8(Java 8) 이전에는 이 클래스를 주로 썼지만, 현재는 가독성과 기능이 대폭 개선된 새로운 날짜·시간 API (java.time 패키지) 사용을 권장합니다. 
+[1] (https://incheol-jung.gitbook.io/docs/study/java-8-in-action/2020-03-10-java8inaction-chap12), [2] (https://aha2246.tistory.com/121)
+• LocalDate (날짜만 필요할 때)
+• LocalTime (시간만 필요할 때)
+• LocalDateTime (날짜와 시간이 모두 필요할 때)
+• ZonedDateTime (타임존까지 포함할 때) [1] (https://aha2246.tistory.com/121)
+자세한 설계적 한계와 논의는 java.util.date를 사용하지 말아야하는 이유 또는 java.util.Date 와 java.util.Calendar 를 사용 하지말자에서 참고하실 수 있습니다. 
+[1] (https://wonder-bear.tistory.com/entry/java-javautilDate-%EC%99%80-javautilCalendar-%EB%A5%BC-%EC%82%AC%EC%9A%A9%08%ED%95%98%EC%A7%80%EB%A7%90%EC%9E%90), 
+[2] (https://taes-k.github.io/2019/09/25/java-util-date/)
+현재 진행 중인 프로젝트나 코드에서 java.util.Date를 사용 중이라 문제가 발생하셨거나, java.time (LocalDateTime 등)으로 변환하는 방법이 필요하신가요?
+편하게 말씀해 주세요.
