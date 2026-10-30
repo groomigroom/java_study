@@ -1,14 +1,21 @@
-스프링(Spring)에서 org.springframework.web.bind.annotation.ControllerAdvice는 애플리케이션 전역에서 발생하는 컨트롤러(Controller) 관련 예외를 중앙 집중식으로 처리하기 위해 사용하는 어노테이션입니다. [1] (https://velog.io/@devcat/ControllerAdvice), [2] (https://dev-ino.tistory.com/18), [3] (https://shoney.tistory.com/entry/Spring-RestControllerAdvice-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%84%9C-Controller-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC)
+스프링(Spring)에서 org.springframework.web.bind.annotation.ControllerAdvice는 애플리케이션 전역에서 발생하는 컨트롤러(Controller) 
+관련 예외를 중앙 집중식으로 처리하기 위해 사용하는 어노테이션입니다. [1] (https://velog.io/@devcat/ControllerAdvice),
+[2] (https://dev-ino.tistory.com/18), [3] (https://shoney.tistory.com/entry/Spring-RestControllerAdvice-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%84%9C-Controller-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC)
 
 주요 특징과 역할
 
-• 전역 예외 처리 (Global Exception Handling): 개별 컨트롤러마다 중복해서 작성해야 했던 try-catch 또는 @ExceptionHandler 로직을 하나의 클래스로 모아서 관리할 수 있습니다. [1] (https://devfancy.github.io/Goodfriends-RestControllerAdvice/), [2] (https://dev-ino.tistory.com/18)
-• 스프링 빈(Bean) 등록: @ControllerAdvice 내부에는 @Component 어노테이션을 포함하고 있어, 선언한 클래스가 자동으로 스프링 빈으로 등록됩니다. [1] (https://kkang-joo.tistory.com/26)
-• 적용 범위 제한 가능: basePackages, annotations 등의 속성을 설정하여 특정 패키지나 특정 컨트롤러에만 제한적으로 적용할 수도 있습니다. [1] (https://sykeem.tistory.com/entry/Spring-ControllerAdvice-%EB%A5%BC-%ED%86%B5%ED%95%9C-Controller-%EC%A0%84%EC%97%AD-Exception-%EC%B2%98%EB%A6%AC-Controller-%EB%A5%BC-%EB%B3%B4%EB%8B%A4-%EB%AA%85%ED%99%95%ED%95%98%EA%B2%8C-%ED%91%9C%ED%98%84%ED%95%98%EA%B8%B0), [2] (https://devfancy.github.io/Goodfriends-RestControllerAdvice/)
-• @ExceptionHandler와의 조합: 보통 이 클래스 내부에 @ExceptionHandler 어노테이션을 붙인 메서드를 정의하여, 특정 예외 타입별로 알맞은 응답(View 또는 에러 메시지)을 반환합니다. [1] (https://kimhyejin1030.tistory.com/24), [2] (https://shoney.tistory.com/entry/Spring-RestControllerAdvice-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%84%9C-Controller-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC)
+• 전역 예외 처리 (Global Exception Handling): 개별 컨트롤러마다 중복해서 작성해야 했던 try-catch 또는 @ExceptionHandler 로직을 하나의 클래스로 모아서 관리할 수 있습니다.
+[1] (https://devfancy.github.io/Goodfriends-RestControllerAdvice/), [2] (https://dev-ino.tistory.com/18)
+• 스프링 빈(Bean) 등록: @ControllerAdvice 내부에는 @Component 어노테이션을 포함하고 있어, 선언한 클래스가 자동으로 스프링 빈으로 등록됩니다. 
+[1] (https://kkang-joo.tistory.com/26)
+• 적용 범위 제한 가능: basePackages, annotations 등의 속성을 설정하여 특정 패키지나 특정 컨트롤러에만 제한적으로 적용할 수도 있습니다. [1] (https://sykeem.tistory.com/entry/Spring-ControllerAdvice-%EB%A5%BC-%ED%86%B5%ED%95%9C-Controller-%EC%A0%84%EC%97%AD-Exception-%EC%B2%98%EB%A6%AC-Controller-%EB%A5%BC-%EB%B3%B4%EB%8B%A4-%EB%AA%85%ED%99%95%ED%95%98%EA%B2%8C-%ED%91%9C%ED%98%84%ED%95%98%EA%B8%B0), 
+[2] (https://devfancy.github.io/Goodfriends-RestControllerAdvice/)
+• @ExceptionHandler와의 조합: 보통 이 클래스 내부에 @ExceptionHandler 어노테이션을 붙인 메서드를 정의하여, 특정 예외 타입별로 알맞은 응답(View 또는 에러 메시지)을 반환합니다. 
+[1] (https://kimhyejin1030.tistory.com/24), [2] (https://shoney.tistory.com/entry/Spring-RestControllerAdvice-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%84%9C-Controller-%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC)
 
 관련 어노테이션 비교
 
 • @ControllerAdvice: 예외를 처리한 뒤 주로 View(HTML 등)를 응답으로 반환할 때 사용합니다.
-• @RestControllerAdvice: @ControllerAdvice에 @ResponseBody가 결합된 형태로, RESTful API 환경에서 JSON/XML 등의 객체 데이터를 직접 응답할 때 사용합니다. [1] (https://adjh54.tistory.com/313), [2] (https://shxrecord.tistory.com/210)
+• @RestControllerAdvice: @ControllerAdvice에 @ResponseBody가 결합된 형태로, RESTful API 환경에서 JSON/XML 등의 객체 데이터를 직접 응답할 때 사용합니다. 
+[1] (https://adjh54.tistory.com/313), [2] (https://shxrecord.tistory.com/210)
 만약 @ExceptionHandler와 함께 사용하는 구체적인 예제 코드나 API 에러 응답(DTO) 구조 설계 방식이 필요하시다면 편하게 말씀해 주세요.
