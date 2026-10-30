@@ -1,20 +1,33 @@
-org.springframework.context.i18n.LocaleContextHolder는 현재 실행 중인 스레드(Thread)에 사용자의 지역 및 언어 정보(Locale)를 저장하고 조회하기 위한 스프링(Spring) 유틸리티 클래스입니다. [1] (https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/i18n/LocaleContextHolder.html), [2] (https://khdscor.tistory.com/133)
+org.springframework.context.i18n.LocaleContextHolder는 현재 실행 중인 스레드(Thread)에 사용자의 지역 및 
+언어 정보(Locale)를 저장하고 조회하기 위한 스프링(Spring) 유틸리티 클래스입니다. [1] (https://docs.spring.
+io/spring-framework/docs/current/javadoc-api/org/springframework/context/i18n/LocaleContextHolder.html),
+[2] (https://khdscor.tistory.com/133)
 전자정부 표준프레임워크(Spring 기반)에서 이 클래스는 주로 다음과 같은 의미와 역할을 합니다.
 
 1. 주요 역할
 
-• 스레드 로컬(ThreadLocal) 기반 Locale 보관: 클라이언트가 웹 요청을 보낼 때, LocaleResolver가 파악한 사용자의 언어/국가 정보(예: ko_KR, en_US)를 현재 스레드에 보관합니다. [1] (https://medium.com/@AlexanderObregon/how-spring-boot-configures-locale-resolution-cae3e402b0df), [2] (https://khdscor.tistory.com/133)
-• 전역적인 Locale 접근: 컨트롤러뿐만 아니라 서비스 레이어, 유틸리티 클래스, AOP, 예외 처리 핸들러 등 메서드 파라미터로 Locale 객체를 일일이 넘겨주지 않아도 코드 어디서든 현재 스레드의 Locale을 꺼내 쓸 수 있습니다. [1] (https://yummy0102.tistory.com/693), [2] (https://medium.com/@AlexanderObregon/how-spring-boot-configures-locale-resolution-cae3e402b0df)
+• 스레드 로컬(ThreadLocal) 기반 Locale 보관: 클라이언트가 웹 요청을 보낼 때, LocaleResolver가 파악한 사용자의 언어/국가 
+정보(예: ko_KR, en_US)를 현재 스레드에 보관합니다. [1] (https://medium.com/@AlexanderObregon/how-spring-boot-con
+figures-locale-resolution-cae3e402b0df), [2] (https://khdscor.tistory.com/133)
+• 전역적인 Locale 접근: 컨트롤러뿐만 아니라 서비스 레이어, 유틸리티 클래스, AOP, 예외 처리 핸들러 등 메서드 파라미터로 
+Locale 객체를 일일이 넘겨주지 않아도 코드 어디서든 현재 스레드의 Locale을 꺼내 쓸 수 있습니다. [1] (https://yummy0102.tistory.com/693),
+[2] (https://medium.com/@AlexanderObregon/how-spring-boot-configures-locale-resolution-cae3e402b0df)
 
 2. 전자정부프레임워크에서의 활용 예시
 
 • 다국어 메시지 처리 (MessageSource):
-공공 시스템이나 글로벌 웹 표준에 맞춘 화면/메시지 다국어 처리 시, 현재 사용자의 언어에 맞는 messages_ko.properties 또는 messages_en.properties 등의 텍스트를 불러올 때 사용합니다. [1] (https://yeseul-dev.tistory.com/93), [2] (https://www.inflearn.com/community/questions/1651691/locale-%EC%A0%95%EB%B3%B4%EA%B0%80-null-%EC%9D%B4%EB%A9%B4-%EB%AC%B4%EC%A1%B0%EA%B1%B4-messages-ko-properties%EC%9D%B4-%ED%98%B8%EC%B6%9C-%EB%90%98%EB%8A%94-%EB%AC%B8%EC%A0%9C?srsltid=AYCX9vIe-ExFBYqVuUPb4SuHUQ4bmv1BA-zMfZZ-Egp-Nxs2M6hKVtPn)
+공공 시스템이나 글로벌 웹 표준에 맞춘 화면/메시지 다국어 처리 시, 현재 사용자의 언어에 맞는 messages_ko.properties 또는 messages_en.properties 
+등의 텍스트를 불러올 때 사용합니다. [1] (https://yeseul-dev.tistory.com/93), [2] (https://www.inflearn.com/community/questions/165
+1691/locale-%EC%A0%95%EB%B3%B4%EA%B0%80-null-%EC%9D%B4%EB%A9%B4-%EB%AC%B4%EC%A1%B0%EA%B1%B4-messages-ko-properties%EC%9D%B4-%ED%9
+8%B8%EC%B6%9C-%EB%90%98%EB%8A%94-%EB%AC%B8%EC%A0%9C?srsltid=AYCX9vIe-ExFBYqVuUPb4SuHUQ4bmv1BA-zMfZZ-Egp-Nxs2M6hKVtPn)
 java
 // 예시: 현재 로케일에 맞춰 다국어 메시지 가져오기
 Locale locale = LocaleContextHolder.getLocale();
 String message = messageSource.getMessage("common.save.success", null, locale);
 코드를 사용할 때는 주의가 필요합니다.
 • 예외 처리 및 로그 (AOP / BizException):
-전자정부 표준프레임워크의 예외 처리나 공통 AOP 로그 처리 시, 현재 요청자의 언어 환경에 맞춘 에외 메시지를 동적으로 생성하여 반환할 때 활용됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:egovrteaopguide), [2] (https://chamomile.lotteinnovate.com/guides/web-develop/)
-만약 특정 로직에서 LocaleContextHolder.getLocale()을 활용하는 구체적인 코드 구현 방법이나 다국어 설정(context-common.xml 또는 메시지 프로퍼티 설정)에 대해 도움이 필요하시면 편하게 말씀해주세요.
+전자정부 표준프레임워크의 예외 처리나 공통 AOP 로그 처리 시, 현재 요청자의 언어 환경에 맞춘 에외 메시지를 동적으로 생성하여 반환할 때 활용됩니다.
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:egovrteaopguide), [2] (https://chamomile.lotteinnovate.c
+om/guides/web-develop/)
+만약 특정 로직에서 LocaleContextHolder.getLocale()을 활용하는 구체적인 코드 구현 방법이나 다국어 설정(context-common.xml 또는 메시지
+프로퍼티 설정)에 대해 도움이 필요하시면 편하게 말씀해주세요.
