@@ -143,3 +143,66 @@ Login successful.
 * `Locale` 자체가 번역을 수행하는 것은 아니며, 어떤 언어와 지역을 사용할지 알려주는 역할을 합니다.
 
 쉽게 비유하면, `Locale`은 웹사이트에 “이 사용자의 화면을 어떤 언어와 지역 기준으로 보여줄까?” 를 알려주는 설정 정보입니다.
+
+
+`Locale.getDefault()`는 현재 프로그램이 실행되는 컴퓨터(운영체제)에 설정된 기본 지역 및 언어 정보를 가져오는 메서드야.
+
+쉽게 말하면, 컴퓨터가 한국어 환경인지 영어 환경인지 확인하는 기능이야.
+
+### 1. 기본 사용법
+
+```
+import java.util.Locale;
+
+public class Main {
+    public static void main(String[] args) {
+        Locale locale = Locale.getDefault();
+
+        System.out.println(locale);
+    }
+}
+```
+
+한국어 환경에서 실행하면 다음과 비슷한 결과가 나올 수 있어.
+
+```
+ko_KR
+```
+
+- `ko` : Korean (한국어)
+- `KR` : Korea (대한민국)
+
+### 2. 주요 메서드
+
+| 메서드                    | 의미            | 예시    |
+| ---------------------- | ------------- | ----- |
+| `Locale.getDefault()`  | 기본 지역 정보 가져오기 | ko_KR |
+| `getLanguage()`        | 언어 코드 가져오기    | ko    |
+| `getCountry()`         | 국가 코드 가져오기    | KR    |
+| `getDisplayLanguage()` | 언어 이름 가져오기    | 한국어   |
+| `getDisplayCountry()`  | 국가 이름 가져오기    | 대한민국  |
+
+### 3. 실제 활용 예시
+
+```
+Locale locale = Locale.getDefault();
+
+if (locale.getLanguage().equals("ko")) {
+    System.out.println("안녕하세요");
+} else {
+    System.out.println("Hello");
+}
+```
+
+한국어 환경이면 `안녕하세요`, 그 외에는 `Hello`가 출력돼.
+
+### 시험 핵심 정리
+
+암기 포인트
+
+- `Locale` : 지역 및 언어 설정 정보를 관리하는 클래스
+- `Locale.getDefault()` : 시스템의 기본 Locale 정보를 반환
+- `getLanguage()` : 언어 코드 반환
+- `getCountry()` : 국가 코드 반환
+
+한 줄 암기: `Locale.getDefault()` = 현재 시스템의 기본 언어·국가 설정 가져오기!
