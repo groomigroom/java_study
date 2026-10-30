@@ -1,3 +1,72 @@
+org.springframework.web.bind.annotation.InitBinder는 스프링 프레임워크에서 제공하는 애너테이션으로, 전자정부표준프레임워크(eGovFrame)에서도 
+동일하게 HTTP 요청 데이터 바인딩 및 유효성 검증(Validation)을 커스터마이징하는 역할을 합니다. [1] (https://sundaland.tistory.com/333), 
+[2] (https://yessm621.github.io/spring/InitBinder/)
+전자정부프레임워크는 스프링 MVC를 기반으로 만들어졌기 때문에 @InitBinder의 원리와 동작은 기본 스프링과 완벽히 일치하지만, 전자정부프레임워크 
+아키텍처 특성과 공통 컴포넌트 환경 내에서 다음과 같은 구체적인 의미와 활용 방안을 가집니다.
+
+1. 주요 역할 및 의미
+
+• 특정 컨트롤러 내 요청 데이터 처리 규칙 지정: 클라이언트가 전송한 HTTP 파라미터(Form 값, Query Parameter 등)를 가로채어, 컨트롤러의 메서드가 
+실행되기 전에 데이터 변환(타입 캐스팅, 문자열 다듬기 등)이나 유효성 검사 도구(Validator)를 주입합니다.
+• WebDataBinder 초기화: 메서드 인자로 WebDataBinder 객체를 받아 바인딩 프로세스를 제어합니다. [1] (https://thebook.io/080266/0492/), 
+[2] (https://yessm621.github.io/spring/InitBinder/), [3] (https://sundaland.tistory.com/333)
+
+2. 전자정부프레임워크에서의 핵심 활용 패턴
+
+
+① 공통 컴포넌트 및 업무 화면의 유효성 검증(Validator) 등록
+
+전자정부프레임워크로 비즈니스 애플리케이션을 개발할 때, 입력값 검증을 위해 org.springframework.validation.Validator 인터페이스를 구현한 검증 클래스를 자주 사용합니다.
+@InitBinder가 선언된 메서드 내에서 이 Validator를 등록해 두면, 컨트롤러 내부의 모든 요청 메서드에서 @Valid 또는 @Validated 애너테이션을 통해 간결하게 입력값을 검증할 수 
+있습니다. [1] (https://wikidocs.net/439083), [2] (https://thebook.io/080266/0492/)
+java
+@Controller
+public class EgovSampleController {
+
+    @Autowired
+    private EgovSampleValidator sampleValidator;
+
+    // 해당 컨트롤러로 들어오는 모든 요청 전에 실행되어 Validator를 설정함
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(sampleValidator);
+    }
+    
+    @PostMapping("/updateSample.do")
+    public String updateSample(@Valid @ModelAttribute("sampleVO") SampleVO sampleVO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "sample/egovSampleRegister";
+        }
+        // 비즈니스 로직 수행...
+        return "redirect:/selectSampleList.do";
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+② 날짜 및 숫자 포맷 등의 타입 변환 (PropertyEditor 등록)
+
+전자정부프레임워크 프로젝트에서는 String으로 들어오는 특정 날짜 포맷(yyyy-MM-dd)을 Java의 Date나 LocalDate 객체로 자동 변환해야 하는 경우가 많습니다. 
+@InitBinder 메서드 안에서 CustomDateEditor 등을 등록하여 바인딩 규칙을 정의할 수 있습니다.
+
+③ 악성 스크립트 방지 (XSS 필터링 보조)
+
+보안 요건이 엄격한 공통컴포넌트 환경에서 HTML 태그나 스크립트 입력을 원천 차단하거나 치환하기 위해, StringTrimmerEditor나 
+사용자 정의 PropertyEditor를 @InitBinder를 통해 등록하여 문자열 파라미터를 일괄적으로 전처리(Trimming 또는 파일터링)하기도 합니다.
+
+3. 전자정부프레임워크 글로벌 설정과의 관계 (EgovBindingInitializer)
+
+만약 모든 컨트롤러마다 개별적으로 @InitBinder를 작성하는 것이 번거롭다면, 전자정부프레임워크는 글로벌하게 바인딩 설정을 적용하는 방식을 권장합니다.
+• 전자정부 표준프레임워크 설정 파일(servlet-context.xml 등)을 보면 EgovBindingInitializer라는 빈(Bean)이 RequestMappingHandlerAdapter의 
+webBindingInitializer 속성에 주입되어 있는 것을 볼 수 있습니다. [1] (https://godogha9man.tistory.com/214)
+• EgovBindingInitializer는 프로젝트 전체 컨트롤러에 공통으로 적용될 날짜 변환, 공통 Validator, 문자열 처리 규칙을 전역적으로 바인딩하는 역할을 수행합니다.
+[1] (https://godogha9man.tistory.com/214)
+• 따라서 특정 컨트롤러에만 적용되어야 하는 특수한 바인딩/검증 규칙이 있을 때만 해당 컨트롤러 내부에 @InitBinder를 선언하여 사용하며, 이 경우 전역 설정인 
+EgovBindingInitializer보다 해당 컨트롤러의 @InitBinder가 우선권을 가집니다.
+궁금한 컨트롤러에 @InitBinder가 적용되어 있다면, 주로 해당 화면 전용 유효성 검증기(Validator)를 연동했거나 그 컨트롤러에서만 쓰이는 특수한 파라미터 변환 규칙을 
+선언해 둔 것으로 이해하시면 됩니다. [1] (https://thebook.io/080266/0492/), [2] (https://godogha9man.tistory.com/214)
+추가로 확인하고 싶으신 부분이나 분석 중인 컨트롤러의 소스 코드가 있다면 공유해 주세요. 어떤 목적으로 @InitBinder가 사용되었는지 더 정확히 짚어드릴 수 있습니다.
+
+
 @Controller나 @ControllerAdvice 클래스에서 @InitBinder 메소드로 초기화할 수 있다. 
 @InitBinder 메소드는 다음과 같이 사용할 수 있다.
 
