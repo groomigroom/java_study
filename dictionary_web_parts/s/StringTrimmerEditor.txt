@@ -1,16 +1,25 @@
-org.springframework.beans.propertyeditors.StringTrimmerEditor는 사용자가 웹 폼(Form)에 입력하여 서버로 전송한 문자열의 앞뒤 공백을 자동으로 제거(Trim)하고, 빈 문자열("")이 들어올 경우 이를 null로 변환해 주는 스프링 프레임워크의 내장 데이터 바인딩 도구입니다. [1] (https://wannaqueen.gitbook.io/spring5/spring-5.0/3.-by-ys-sh/3.3.-bean-beanwrapper-by-ys/3.3.2.-propertyeditor)
-전자정부프레임워크(eGovFrame)는 기본적으로 스프링 프레임워크(Spring Framework)를 기반으로 구축되어 있으므로, 스프링이 제공하는 이 기능을 그대로 활용하여 데이터의 정제 및 데이터베이스(DB) 무결성을 유지하는 데 사용합니다. [1] (https://namu.wiki/w/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%91%9C%EC%A4%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC)
+org.springframework.beans.propertyeditors.StringTrimmerEditor는 사용자가 웹 폼(Form)에 입력하여 서버로 
+전송한 문자열의 앞뒤 공백을 자동으로 제거(Trim)하고, 빈 문자열("")이 들어올 경우 
+이를 null로 변환해 주는 스프링 프레임워크의 내장 데이터 바인딩 도구입니다. 
+[1] (https://wannaqueen.gitbook.io/spring5/spring-5.0/3.-by-ys-sh/3.3.-bean-beanwrapper-by-ys/3.3.2.-propertyeditor)
+전자정부프레임워크(eGovFrame)는 기본적으로 스프링 프레임워크(Spring Framework)를 기반으로 구축되어 있으므로, 
+스프링이 제공하는 이 기능을 그대로 활용하여 데이터의 정제 및 데이터베이스(DB) 무결성을 유지하는 데 사용합니다. 
+[1] (https://namu.wiki/w/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%91%9C%EC%A4%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC)
 전자정부프레임워크 환경에서 이 클래스가 가지는 구체적인 의미와 역할은 다음과 같습니다.
 
 1. 주요 역할 및 기능
 
-• 공백 자동 제거 (Trim): 사용자가 이름, 제목, 내용 등을 입력할 때 실수로 넣은 앞뒤 공백(예: " 홍길동 " → "홍길동")을 컨트롤러(@Controller)가 데이터를 받기 전에 자동으로 제거합니다.
-• 빈 문자열의 Null 변환 (Empty to Null): 필수 값이 아닌 선택 입력 필드를 비워두고 제출하면 서버에는 빈 문자열("")이 전달됩니다. StringTrimmerEditor는 이를 null로 바꾸어 줍니다.
-• DB 데이터 무결성 확보: 빈 문자열("") 대신 null로 변환되어 들어오기 때문에, 데이터베이스 테이블의 외래키(FK) 제약조건이나 Null 허용 속성을 다룰 때 불필요한 오류를 방지할 수 있습니다.
+• 공백 자동 제거 (Trim): 사용자가 이름, 제목, 내용 등을 입력할 때 실수로 넣은 앞뒤 공백(예: " 홍길동 " → "홍길동")을 
+컨트롤러(@Controller)가 데이터를 받기 전에 자동으로 제거합니다.
+• 빈 문자열의 Null 변환 (Empty to Null): 필수 값이 아닌 선택 입력 필드를 비워두고 제출하면 서버에는 빈 문자열("")이 전달됩니다. 
+StringTrimmerEditor는 이를 null로 바꾸어 줍니다.
+• DB 데이터 무결성 확보: 빈 문자열("") 대신 null로 변환되어 들어오기 때문에, 데이터베이스 테이블의 외래키(FK) 제약조건이나 
+Null 허용 속성을 다룰 때 불필요한 오류를 방지할 수 있습니다.
 
 2. 전자정부프레임워크에서의 사용 방식
 
-주로 컨트롤러 단에서 사용자의 입력을 자바 객체(VO 또는 DTO)로 바인딩할 때 가로채어 처리하는 @InitBinder 메서드 내부에서 등록하여 사용합니다.
+주로 컨트롤러 단에서 사용자의 입력을 자바 객체(VO 또는 DTO)로 바인딩할 때 가로채어 처리하는 @InitBinder 메서드 
+내부에서 등록하여 사용합니다.
 java
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,6 +43,9 @@ public class GlobalBindingController {
 
 3. 전자정부프레임워크 개발 시의 이점
 
-• 공통 컴포넌트와의 호환성: 전자정부프레임워크에서 제공하는 게시판, 사용자 관리 등 다양한 공통 컴포넌트를 커스텀할 때, 파라미터마다 request.getParameter("").trim()을 일일이 작성하지 않아도 되므로 코드가 정형화되고 생산성이 높아집니다. [1] (https://namu.wiki/w/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%91%9C%EC%A4%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC)
-• 전자정부 표준 감리 대비: 공공 프로젝트에서는 데이터 검증 및 입력 값 정제 기능이 중요하게 다뤄집니다. 프레임워크 레벨에서 공백 처리를 자동화해 두면 휴먼 에러로 인한 데이터 오염을 예방할 수 있습니다.
+• 공통 컴포넌트와의 호환성: 전자정부프레임워크에서 제공하는 게시판, 사용자 관리 등 다양한 공통 컴포넌트를 
+커스텀할 때, 파라미터마다 request.getParameter("").trim()을 일일이 작성하지 않아도 되므로 코드가 정형화되고 생산성이 
+높아집니다. [1] (https://namu.wiki/w/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%91%9C%EC%A4%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC)
+• 전자정부 표준 감리 대비: 공공 프로젝트에서는 데이터 검증 및 입력 값 정제 기능이 중요하게 다뤄집니다. 프레임워크 레벨에서 
+공백 처리를 자동화해 두면 휴먼 에러로 인한 데이터 오염을 예방할 수 있습니다.
 현재 개발 중인 전자정부프레임워크 환경에서 특정 VO 바인딩 문제나 공백 처리 오류 때문에 이 클래스를 확인하고 계신가요? 상황을 말씀해 주시면 알맞은 구현 방법을 안내해 드리겠습니다.
