@@ -111,6 +111,37 @@
         특징: 스레드로부터 안전하며(Thread-safe), LocalDateTime 이나 ZonedDateTime 같은 
         모던 날짜/시간 API와 완벽하게 호환됩니다.
 
+
+        Java의 SimpleDateFormat에서 .setLenient(false)는 날짜와 시간을 파싱(Parsing)할 때 입력값이 유효한지 엄격하게 
+        검사하겠다는 의미입니다. [1] (https://m.blog.naver.com/zzang9ha/222156964344), [2] (https://duddns6393.tistory.com/351)
+
+        1. lenient의 뜻
+        
+        • lenient: '관대한', '너그러운' 이라는 뜻입니다.
+        • 기본값(true)일 때는 날짜 형식이 조금 어긋나거나 범위를 벗어나더라도 자동으로 보정해서 날짜로 바꿔줍니다.
+        • false로 설정하면 보정하지 않고, 잘못된 날짜 형식이거나 존재하지 않는 날짜일 경우 예외(java.text.ParseException)를 발생시킵니다. 
+        [1] (https://brightgarden02.com/entry/Java-%EC%9E%85%EB%A0%A5%ED%95%A0-%EB%95%8C-%EB%82%A0%EC%A7%9C%EA%B7%9C%EC%B9%99-%EC%84%A4%EC%A0%95-%ED%
+        97%88%EC%9A%A9-O-or-X-dateFormatsetLenientfalse), [2] (https://im-babycoder.tistory.com/3), [3] (https://dev-sheep.tistory.com/60)
+        
+        2. 동작 비교 (True vs False)
+        
+        예를 들어 날짜 문자열이 "2026-02-31"(2월에 31일은 존재하지 않음)인 경우:
+        • .setLenient(true) (기본값)
+        	• 너그럽게 처리하여 2월 31일을 자동으로 넘겨진 일수만큼 계산합니다. (예: 3월 3일 등으로 자동 보정)
+        • .setLenient(false)
+        	• 엄격하게 검사하여 실제로 존재하지 않는 날짜이므로 ParseException을 던집니다. [1] (https://brightgarden02.com/entry/Java
+        -%EC%9E%85%EB%A0%A5%ED%95%A0-%EB%95%8C-%EB%82%A0%EC%A7%9C%EA%B7%9C%EC%B9%99-%EC%84%A4%EC%A0%95-%ED%97%88%EC%9A%A9-O-or-X-dateFormatsetLenientfalse), 
+        [2] (https://im-babycoder.tistory.com/3), [3] (https://dev-sheep.tistory.com/60)
+        
+        3. 주요 활용 목적
+        
+        • 날짜 유효성 검증: 사용자가 입력한 생년월일, 예약일 등이 2월 30일, 13월 50일처럼 달력상에 존재하지 않는 잘못된 값인지 체크하고 싶을 때 주로 사용합니다. 
+        [1] (https://m.blog.naver.com/zzang9ha/222156964344), [2] (https://brightgarden02.com/entry/Java-%EC%9E%85%EB%A0%A5%ED%95%A0-%EB%95%8C-%EB%82%A0%E
+        C%A7%9C%EA%B7%9C%EC%B9%99-%EC%84%A4%EC%A0%95-%ED%97%88%EC%9A%A9-O-or-X-dateFormatsetLenientfalse), [3] (https://im-babycoder.tistory.com/3)
+        더 자세한 클래스 사양은 Java SE 문서에서 참고하실 수 있습니다.
+        만약 날짜 유효성 검증을 위한 예외 처리 코드 예시가 필요하시거나, Java 8 이상의 LocalDate / DateTimeFormatter를 이용한 더 안전한 검증 방식이 궁금하시면 편하게 말씀해 주세요.
+
+
     </pre>
 </body>
 
