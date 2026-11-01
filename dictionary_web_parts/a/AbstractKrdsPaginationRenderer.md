@@ -186,7 +186,9 @@ AbstractKrdsPaginationRenderer는 공공 웹사이트 UI/UX 표준 가이드인 
 • currentPageLabel
 	• 현재 보고 있는 페이지의 HTML 구조입니다 ({0} 자리에 현재 페이지 번호가 들어가며, active 클래스가 적용되어 현재 페이지임을 표시합니다). [1] (https://ezrealdev.tistory.com/15)
 • otherPageLabel
-	• 현재 페이지가 아닌 일반 다른 페이지 번호들의 HTML 구조입니다 ({0}은 JS 함수명, {1}은 페이지 번호, {2}는 표시될 페이지 번호 텍스트). [1] (https://ezrealdev.tistory.com/15)
+현재 페이지가 아닌 일반 다른 페이지 번호들의
+HTML 구조입니다 ({0}은 JS 함수명, {1}은 페이지 번호,
+{2}는 표시될 페이지 번호 텍스트). [1] (https://ezrealdev.tistory.com/15)
 • nextPageLabel
 	• 다음 페이지 버튼 (다음)의 HTML 구조입니다. 클릭 시 {0}({1}) 함수가 호출됩니다. [1] (https://ezrealdev.tistory.com/15)
 • nextPageDisabledLabel
