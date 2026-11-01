@@ -1,0 +1,47 @@
+전자정부프레임워크(eGovFrame)는 내부적으로 Spring Framework를 기반으로 만들어졌습니다. 
+따라서 org.springframework.web.servlet.mvc.support.RedirectAttributes는 전자정부프레임워크만의 
+독자적인 기능이 아니라, 스프링 MVC(Spring MVC)에서 제공하는 인터페이스이며, 리다이렉트(Redirect)할 
+때 데이터를 안전하게 전달하기 위해 사용합니다. [1] (https://jake-seo-dev.tistory.com/484)
+
+핵심 의미 및 역할
+
+컨트롤러에서 다른 페이지로 리다이렉트(return "redirect:/...")를 할 때, 일반적으로 URL 뒤에 파라미터를 
+붙여서 넘기거나(?key=value) 세션(Session)을 직접 이용해야 했습니다. RedirectAttributes는 이 과정을 
+스프링이 편하게 처리할 수 있도록 돕습니다. [1] (https://ddaaadd.tistory.com/214), [2] (https://jake-seo-dev.tistory.com/484)
+
+주요 메서드 2가지
+
+1. addAttribute(key, value)
+	• 동작 방식: 리다이렉트하는 URL의 쿼리 스트링(?key=value) 형태로 데이터를 붙여서 전송합니다.
+	• 특징:
+		• 주소창에 데이터가 그대로 노출됩니다.
+		• 새로고침을 해도 데이터가 유지됩니다.
+		• 주로 검색어나 페이지 번호 등 노출되어도 상관없는 간단한 값을 넘길 때 씁니다.
+	• 받는 쪽: 이동한 컨트롤러 메서드의 파라미터에서 @RequestParam으로 받습니다. [1] (https://jake-seo-dev.tistory.com/484)
+2. addFlashAttribute(key, value)
+	• 동작 방식: 데이터를 HTTP 세션(Session)에 잠시(Flash) 저장했다가, 단 한 번의 요청(다음 페이지)이 끝나면 자동으로 삭제합니다.
+	• 특징:
+		• URL에 데이터가 보이지 않습니다 (깔끔함).
+		• 새로고침하면 데이터가 사라집니다.
+		• 주로 게시판 "등록/수정/삭제 완료되었습니다" 같은 일회성 알림 메시지나 객체 데이터를 넘길 때 씁니다.
+	• 받는 쪽: 이동한 뷰(JSP/Thymeleaf)나 컨트롤러에서 @ModelAttribute 등으로 꺼내 씁니다. [1] (https://jake-seo-dev.tistory.com/484)
+
+코드 사용 예시 (전자정부프레임워크 Controller)
+
+java
+@RequestMapping("/board/insert.do")
+public String insertBoard(BoardVO boardVO, RedirectAttributes rttr) throws Exception {
+    
+    // 비즈니스 로직(글 등록 처리) 수행...
+    boardService.insertBoard(boardVO);
+    
+    // 1. 일회성 메시지 전달 (FlashAttribute) -> URL에 안 보임
+    rttr.addFlashAttribute("message", "게시물이 정상적으로 등록되었습니다.");
+    
+    // 2. 일반 파라미터 전달 (Attribute) -> ?boardNo=123 형태로 URL에 붙음
+    rttr.addAttribute("boardNo", boardVO.getBoardNo());
+    
+    return "redirect:/board/selectBoardList.do";
+}
+코드를 사용할 때는 주의가 필요합니다.
+만약 현재 작성 중이신 전자정부프레임워크 프로젝트의 특정 소스코드나 에러 상황을 보여주시면 더 구체적으로 설명해 드릴 수 있습니다.
