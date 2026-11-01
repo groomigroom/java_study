@@ -190,7 +190,9 @@ AbstractKrdsPaginationRenderer는 공공 웹사이트 UI/UX 표준 가이드인 
 HTML 구조입니다 ({0}은 JS 함수명, {1}은 페이지 번호,
 {2}는 표시될 페이지 번호 텍스트). [1] (https://ezrealdev.tistory.com/15)
 • nextPageLabel
-	• 다음 페이지 버튼 (다음)의 HTML 구조입니다. 클릭 시 {0}({1}) 함수가 호출됩니다. [1] (https://ezrealdev.tistory.com/15)
+다음 페이지 버튼 (다음)의 HTML 구조입니다.
+클릭 시 {0}({1}) 함수가 호출됩니다.
+[1] (https://ezrealdev.tistory.com/15)
 • nextPageDisabledLabel
 	• 다음 페이지 버튼이 비활성화 상태일 때(예: 마지막 페이지에 도달했을 때)의 HTML 구조입니다.
 • lastPageLabel
