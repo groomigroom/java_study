@@ -1,3 +1,5 @@
+org.springframework.web.bind.annotation.*;
+
 스프링 부트(Spring Boot)에서 @PutMapping과 @PatchMapping은 HTTP 메서드인 PUT과 PATCH를 각각 처리하며, 리소스(데이터)를 수정할 때 사용하지만 수정 방식과 
 의미론에서 차이가 있습니다. [1] (https://www.youtube.com/watch?v=NTPxSex_jEc&t=1), [2] (https://post-this.tistory.com/127), 
 [3] (https://www.inflearn.com/community/questions/1182007/patch%EC%99%80-put%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90?srsltid=AYCX9vIs0pzSZ_r-dQhbByux6QVe56VV5sLZ3tHOAa0VjnWDGVJ-qKTj)
