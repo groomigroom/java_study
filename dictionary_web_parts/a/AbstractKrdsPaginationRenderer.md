@@ -164,3 +164,41 @@ return super.renderPagination(paginationInfo, jsFunction);
 참고로 `renderPagination()` 자체가 데이터베이스에서 게시글을 조회하는 것은 아닙니다. 게시글 조회는 일반적으로 서비스와 Mapper 등의 계층에서 처리하고, 이 메서드는 페이지 이동 UI를 만드는 데 집중합니다.
 
 한 문장으로 정리하면, `renderPagination()`은 `PaginationInfo`를 받아 페이지 이동 버튼과 번호를 HTML로 만들어 반환하는 메서드입니다.
+
+```
+전자정부프레임워크(org.egovframe.rte.ptl.mvc.tags.ui.pagination.AbstractKrdsPaginationRenderer)에서 제시하신 코드는 화면에 그려질
+페이지네이션(Pagination, 페이징) 각 요소의 HTML 마크업 양식(템플릿)을 정의하는 변수들입니다. [1] (https://take-it-into-account.tistory.com/341),
+[2] (https://ezrealdev.tistory.com/15)
+AbstractKrdsPaginationRenderer는 공공 웹사이트 UI/UX 표준 가이드인 KRDS(Korea Design System, 국가중점 웹/앱 디자인 시스템) 스타일을 따르는
+페이지네이터를 생성할 때 사용됩니다.
+각 변수가 의미하는 내용은 다음과 같습니다: [1] (https://knowhoon.tistory.com/114), [2] (https://ezrealdev.tistory.com/15)
+
+각 변수별 의미
+
+• previousPageLabel
+	• 이전 페이지 버튼 (이전)의 HTML 구조입니다.
+	• 활성화 상태일 때 클릭하면 {0}({1}) 형태의 자바스크립트 함수(페이지 이동 함수와 페이지 번호)가 실행됩니다. [1] (https://ezrealdev.tistory.com/15)
+• previousPageDisabledLabel
+	• 이전 페이지 버튼이 비활성화 상태일 때(예: 첫 페이지에 있어 더 이상 앞으로 갈 수 없을 때)의 HTML 구조입니다 (<span> 태그에 disabled 클래스 적용).
+[1] (https://ezrealdev.tistory.com/15)
+• firstPageLabel
+	• 첫 페이지로 이동하는 버튼의 HTML 구조입니다 ({2} 자리에 보통 1 같은 첫 페이지 번호가 들어갑니다).
+• currentPageLabel
+	• 현재 보고 있는 페이지의 HTML 구조입니다 ({0} 자리에 현재 페이지 번호가 들어가며, active 클래스가 적용되어 현재 페이지임을 표시합니다). [1] (https://ezrealdev.tistory.com/15)
+• otherPageLabel
+	• 현재 페이지가 아닌 일반 다른 페이지 번호들의 HTML 구조입니다 ({0}은 JS 함수명, {1}은 페이지 번호, {2}는 표시될 페이지 번호 텍스트). [1] (https://ezrealdev.tistory.com/15)
+• nextPageLabel
+	• 다음 페이지 버튼 (다음)의 HTML 구조입니다. 클릭 시 {0}({1}) 함수가 호출됩니다. [1] (https://ezrealdev.tistory.com/15)
+• nextPageDisabledLabel
+	• 다음 페이지 버튼이 비활성화 상태일 때(예: 마지막 페이지에 도달했을 때)의 HTML 구조입니다.
+• lastPageLabel
+	• 마지막 페이지로 이동하는 버튼의 HTML 구조입니다 ({2} 자리에 마지막 페이지 번호가 들어갑니다).
+• dotPageLabel
+	• 페이지 번호가 많을 때 생략 표시를 나타내는 말줄임표(...)의 HTML 구조입니다.
+
+중괄호({0}, {1}, {2})의 치환 의미
+
+• {0}: 페이지를 변경할 때 호출되는 자바스크립트 함수명 (예: linkPage)
+• {1}: 이동할 대상 페이지 번호 (예: 2, 3 등)
+• {2}: 화면에 출력될 실제 숫자나 텍스트 (예: 페이지 번호나 첫/끝 페이지 숫자) [1] (https://ezrealdev.tistory.com/15)
+```
