@@ -30,3 +30,39 @@ xml
 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema)
 혹시 context-aspect.xml 파일에서 특정 <aop:aspect> 설정을 해석하고 계신가요? 
 문제가 되는 XML 코드 조각이나 구현하려는 부가 기능(로깅, 권한 체크 등)을 알려주시면 더 자세히 설명해 드릴 수 있습니다.
+
+##### ref
+전자정부 표준프레임워크(스프링 기반 AOP)의 <aop:aspect> 태그에서 ref 속성은 공통 
+기능(어드바이스, Advice)을 구현해 놓은 빈(Bean) 객체를 참조(Reference)하기 위한 속성입니다. [1] (https://snoopy81.tistory.com/284)
+
+핵심 의미 및 동작 방식
+
+• 공통 기능 빈 연결: ref 속성 값으로 스프링 컨테이너에 등록된 빈(Bean)의 ID나 이름을 적어주면, 
+해당 빈이 가진 메서드를 공통 관심사(Aspect)의 부가 기능으로 사용하겠다는 의미가 됩니다. [1] (https://snoopy81.tistory.com/284)
+• 사전 조건: ref 속성에 지정된 클래스는 반드시 스프링 빈(Bean)으로 미리 등록되어 있어야 합니다. 
+[1] (https://oowaa.tistory.com/203)
+• 역할: <aop:aspect> 내부에서 선언하는 어드바이스(<aop:before>, <aop:after>, <aop:around> 등)가 
+실제로 실행할 로직이 들어 있는 실체 객체(인스턴스)를 찾아주는 다리 역할을 합니다.
+
+사용 예시 (XML 설정)
+
+xml
+<!-- 1. 공통 기능을 가진 클래스를 스프링 빈으로 등록 -->
+<bean id="traceLogger" class="com.example.common.TraceLogger" />
+
+<aop:config>
+    <!-- 2. aspect 설정 및 ref 속성으로 빈 참조 -->
+    <aop:aspect id="loggingAspect" ref="traceLogger">
+        <aop:pointcut id="publicMethod" expression="execution(* com.example.service.*.*(..))" />
+        
+        <!-- 3. ref로 참조한 빈(traceLogger) 안의 메서드를 실행 -->
+        <aop:before method="doLogging" pointcut-ref="publicMethod" />
+    </aop:aspect>
+</aop:config>
+코드를 사용할 때는 주의가 필요합니다.
+• 위 예시에서 ref="traceLogger"는 컨테이너에 등록된 traceLogger 빈을 지칭하며, 포인트컷 조건에 
+걸리는 메서드가 실행되기 전에 traceLogger 빈의 doLogging 메서드를 실행하게 됩니다.
+더 자세한 가이드라인은 전자정부 표준프레임워크 포털 AOP 가이드라인에서 확인하실 수 있습니다. [1] 
+(https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte3.10:fdl:aop:egovrteaopguide)
+혹시 특정 AOP 설정 XML 파일(예: context-aspect.xml)의 전체 코드를 보면서 분석하는 중이신가요? 
+코드를 공유해 주시면 구체적인 설명과 포인트컷 설정 방법을 도와드릴 수 있습니다.
