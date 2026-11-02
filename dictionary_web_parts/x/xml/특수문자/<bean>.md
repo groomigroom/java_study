@@ -1,4 +1,4 @@
-# 각각의 <bean> tag는 Spring IoC Container가 생성하고, 관리할 객체의 정의를 나타낸다.
+# 각각의 &lt;bean&gt; tag는 Spring IoC Container가 생성하고, 관리할 객체의 정의를 나타낸다.
 ------
 
 # Bean 객체화(Instantiation beans)
