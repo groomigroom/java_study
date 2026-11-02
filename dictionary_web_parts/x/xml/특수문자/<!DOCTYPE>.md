@@ -74,3 +74,80 @@ Mapper XML 파일에서 SQL을 작성하고 실행하는데, 이때 MyBatis가 �
 - XML 문서의 구조와 작성 규칙을 지정하는 코드임.
 
 전자정부프레임워크에서 개발할 때는 이 선언을 Mapper XML 파일 상단에 작성하는 기본 구조라고 이해하면 돼.
+
+-------------------------------
+# configuration
+
+전자정부표준프레임워크(eGovFrame)에서 XML 파일 맨 위에 작성하는
+
+```
+<!DOCTYPE configuration PUBLIC
+    "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+```
+
+이 코드는 \*\*XML 문서의 구조와 작성 규칙을 지정하는 선언문(DTD)\*\*이야.
+
+쉽게 말하면, XML 파일을 작성할 때 어떤 태그를 사용할 수 있고, 태그를 어떤 구조로 작성해야 하는지 알려주는 역할을 해.
+
+## 1. 각 부분의 의미
+
+| 코드                                            | 의미                           |
+| --------------------------------------------- | ---------------------------- |
+| `<!DOCTYPE`                                   | 문서의 유형을 선언                   |
+| `configuration`                               | XML의 최상위 루트 태그 이름            |
+| `PUBLIC`                                      | 외부에서 공개적으로 정의된 DTD를 사용한다는 의미 |
+| `-//mybatis.org//DTD Config 3.0//EN`          | MyBatis가 제공하는 DTD의 식별자       |
+| `http://mybatis.org/dtd/mybatis-3-config.dtd` | DTD 파일의 위치                   |
+
+## 2. 전자정부표준프레임워크에서 사용하는 이유
+
+전자정부표준프레임워크는 MyBatis를 이용해 데이터베이스와 연동할 수 있어.
+
+MyBatis 설정 XML 파일에서는 위 선언문을 통해 MyBatis가 정해 놓은 XML 작성 규칙을 적용해.
+
+예를 들어 다음과 같은 구조를 사용할 수 있어.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC
+    "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias alias="User" type="com.example.User"/>
+    </typeAliases>
+
+</configuration>
+```
+
+여기서 각 태그의 역할은 다음과 같아.
+
+- `<configuration>` : MyBatis 전체 설정을 감싸는 최상위 태그
+- `<settings>` : MyBatis의 동작 설정
+- `<typeAliases>` : 자바 클래스의 별칭 설정
+- `<typeAlias>` : 특정 클래스에 별칭 지정
+
+## 3. 꼭 알아야 할 핵심 개념
+
+헷갈리기 쉬운 부분을 정리해 줄게.
+
+| 구분        | 역할                       |
+| --------- | ------------------------ |
+| XML       | 데이터를 표현하는 문서 형식          |
+| DTD       | XML 문서의 구조와 규칙 정의        |
+| MyBatis   | SQL과 자바 프로그램을 연결하는 프레임워크 |
+| eGovFrame | 전자정부 표준 개발 환경 및 프레임워크    |
+
+한 줄 요약
+
+`DOCTYPE` 선언은 이 XML 파일이 MyBatis 3.0 설정 규칙을 따르는 문서라는 것을 알려주는 역할이야.
+
+참고로 이 선언문 자체가 MyBatis를 실행하거나 데이터베이스에 연결하는 코드는 아니야. XML 문서의 유효성을 검사하고 올바른 구조로 작성하도록 돕는 선언이야.
