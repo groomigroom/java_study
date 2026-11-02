@@ -1,4 +1,4 @@
-# 명확한 값(Straight values(primitives, Strings, etc.))
+# &lt;value&gt; 명확한 값(Straight values(primitives, Strings, etc.))
 * 사람이 인식 가능한 문자열 형태를 <value> tag를 사용하여 표현한다. 
 * String을 argument나 property의 type에 맞춰 변환해준다.
 
