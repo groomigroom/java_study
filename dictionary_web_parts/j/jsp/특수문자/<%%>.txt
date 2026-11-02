@@ -1,3 +1,35 @@
+JSP에서 <% %>는 자바 코드(Java Code)를 작성하여 서버에서 실행할 수 있도록 감싸주는 스크립트릿(Scriptlet) 태그입니다. 
+[1] (https://namu.wiki/w/JSP), [2] (https://velog.io/@productuidev/Study-JSP-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%E
+B%B0%8D-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0), [3] (https://wikidocs.net/198241)
+
+주요 특징
+
+• 역할: HTML 코드 안에 자바 로직(변수 선언, 조건문, 반복문 등)을 직접 삽입할 때 사용합니다. [1] (https://ooeunz.tistory.
+com/25), [2] (https://wikidocs.net/198241)
+• 동작 방식:
+	1. 클라이언트가 페이지를 요청하면, 웹 서버(WAS)가 이 태그 내부의 자바 코드를 서버 측에서 먼저 실행합니다.
+	2. 자바 코드 실행 결과로 생성된 순수한 HTML 등의 결과물만 웹 브라우저로 전송됩니다. (즉, 브라우저에서는 이 자바 코드가 
+보이지 않습니다.) [1] (https://m.blog.naver.com/kimhecan/221520513833), [2] (https://translate.google.com/translate
+?u=https://www.quora.com/What-is-JSP&hl=ko&sl=en&tl=ko&client=sge), [3] (https://velog.io/@productuidev/Study-JSP
+-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0)
+
+JSP의 관련 자바 태그들
+
+<% %> 외에도 JSP에서 자바를 다루기 위해 자주 쓰이는 기본 태그들은 다음과 같습니다: [1] (https://ooeunz.tistory.com/25)
+1. <% %> (스크립트릿 - Scriptlet)
+	• 자바 변수 선언, 제어문(if, for 등) 등 일반적인 자바 코드를 작성합니다.
+	• 예시: <% int a = 10; if(a > 5) { %> ... <% } %>
+2. <%! %> (선언부 - Declaration)
+	• 멤버 변수나 메서드를 선언할 때 사용합니다.
+3. <%= %> (표현식 - Expression)
+	• 변수나 메서드의 결과값, 연산 결과를 화면에 바로 출력할 때 사용합니다. (끝에 세미콜론 ;을 붙이지 않습니다.)
+	• 예시: <%= a %> 또는 <%= "Hello" %>
+4. <%@ %> (지시자 - Directive)
+	• JSP 페이지의 속성을 설정합니다 (예: 인코딩 설정, 다른 자바 클래스 import 등).
+	• 예시: <%@ page language="java" contentType="text/html; charset=UTF-8" %>
+만약 <% %> 안에 작성하려던 구체적인 자바 코드나 에러 내용이 있다면 알려주세요. 코드를 해석하거나 수정하는 것을 도와드릴 수 있습니다.
+
+
 <%
 int x = 3;
 int y = 4;
