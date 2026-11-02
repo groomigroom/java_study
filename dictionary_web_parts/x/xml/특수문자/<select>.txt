@@ -1,0 +1,320 @@
+<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
+
+			SELECT
+				ID, NAME, DESCRIPTION, USE_YN, REG_USER
+			FROM SAMPLE
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND	ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+			ORDER BY ID DESC
+			LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+
+이 코드는 전자정부표준프레임워크(eGovFrame)에서 사용하는 MyBatis SQL Mapper XML이야.
+
+쉽게 말하면, Java에서 전달받은 검색 조건을 이용해서 DB에서 게시글이나 샘플 데이터를 조회하는 SQL이야.
+
+단순히 SQL만 작성하는 것이 아니라, MyBatis의 동적 SQL 기능을 이용해서 검색 조건에 따라 SQL문이 달라지도록 작성한 코드야.
+
+하나씩 초보자 눈높이로 설명해 줄게.
+
+# 1. 전체 코드의 역할
+
+이 코드의 기능은 다음과 같아.
+
+1. SAMPLE 테이블에서 데이터를 조회한다.
+2. 검색어가 입력되었는지 확인한다.
+3. 검색 조건에 따라 ID 또는 NAME을 검색한다.
+4. ID 내림차순으로 정렬한다.
+5. 페이지에 표시할 개수만큼 데이터를 가져온다.
+
+예를 들어 SAMPLE 테이블에 다음 데이터가 있다고 가정해 보자.
+
+| ID | NAME | DESCRIPTION |
+| -- | ---- | ----------- |
+| 1  | 구름이   | 멍멍이          |
+| 2  | 구름이  | 비숑       |
+| 3  | 자동차  | 이동수단        |
+| 4  | 컴퓨터  | 전자제품        |
+
+검색어에 '과일'을 입력하는 것이 아니라, NAME 검색 조건에서 '사과'를 입력하면 사과 데이터가 조회되는 방식이야.
+
+# 2. 코드 한 줄씩 분석하기
+
+## ① select 태그
+
+```
+<select id="selectSampleList"
+        parameterType="searchVO"
+        resultType="egovMap">
+```
+
+MyBatis에서 SELECT SQL을 정의하는 부분이야.
+
+| 속성            | 의미                     |
+| ------------- | ---------------------- |
+| id            | SQL을 호출할 때 사용하는 이름     |
+| parameterType | Java에서 전달받는 파라미터 객체    |
+| resultType    | SQL 실행 결과를 반환하는 데이터 형식 |
+
+쉽게 말하면,
+
+- `selectSampleList`: 이 SQL의 이름
+- `searchVO`: 검색 조건을 담고 있는 객체
+- `egovMap`: 조회 결과를 담는 전자정부표준프레임워크의 Map 형식
+
+Java 코드에서 Mapper를 통해 이 SQL을 호출할 수 있어.
+
+## ② SELECT / FROM
+
+```
+SELECT
+    ID, NAME, DESCRIPTION, USE_YN, REG_USER
+FROM SAMPLE
+```
+
+DB의 SAMPLE 테이블에서 다음 5개 컬럼을 가져오겠다는 의미야.
+
+| 컬럼          | 의미        |
+| ----------- | --------- |
+| ID          | 데이터 고유 번호 |
+| NAME        | 이름        |
+| DESCRIPTION | 설명        |
+| USE_YN      | 사용 여부     |
+| REG_USER    | 등록자       |
+
+즉, SAMPLE 테이블의 모든 컬럼을 가져오는 것이 아니라 지정한 5개 컬럼만 가져와.
+
+## ③ WHERE 1=1
+
+```
+WHERE 1=1
+```
+
+처음 보면 조금 이상하지?
+
+이건 실제 데이터를 필터링하기 위한 조건이라기보다는 동적 SQL을 편하게 작성하기 위한 관용적인 표현이야.
+
+예를 들어 다음과 같이 작성하면,
+
+```
+WHERE 1=1
+AND NAME = '구름이'
+AND USE_YN = 'Y'
+```
+
+`1=1`은 항상 참이기 때문에 뒤에 AND 조건을 자유롭게 붙일 수 있어.
+
+## ④ if 태그
+
+```
+<if test="searchKeyword != null and searchKeyword != ''">
+```
+
+여기가 MyBatis의 동적 SQL 기능이야.
+
+의미는 다음과 같아.
+
+- searchKeyword가 null이 아니고
+- 빈 문자열도 아니라면
+
+중괄호 안의 SQL을 실행하겠다는 뜻이야.
+
+예를 들어 다음과 같아.
+
+| searchKeyword | 실행 여부  |
+| ------------- | ------ |
+| null          | 실행 안 함 |
+| ""            | 실행 안 함 |
+| "구름이"          | 실행함    |
+| "컴퓨터"         | 실행함    |
+
+즉, 검색어가 입력되었을 때만 검색 조건을 추가하는 거야.
+
+## ⑤ choose / when 태그
+
+```
+<choose>
+    <when test="searchCondition == 0">
+        AND ID LIKE '%' || #{searchKeyword} || '%'
+    </when>
+
+    <when test="searchCondition == 1">
+        AND NAME LIKE '%' || #{searchKeyword} || '%'
+    </when>
+</choose>
+```
+
+이 부분은 Java의 `if / else if`와 비슷해.
+
+검색 조건에 따라 서로 다른 SQL을 실행하는 거야.
+
+searchCondition이 0일 때
+
+```
+AND ID LIKE '%' || #{searchKeyword} || '%'
+```
+
+ID 컬럼에서 검색어가 포함된 데이터를 찾아.
+
+searchCondition이 1일 때
+
+```
+AND NAME LIKE '%' || #{searchKeyword} || '%'
+```
+
+NAME 컬럼에서 검색어가 포함된 데이터를 찾아.
+
+여기서 알아야 할 문법이 있어.
+
+\| 문법 | 의미 |\
+\|---|---|\
+\| LIKE | 문자열 패턴 검색 |\
+\| % | 앞뒤에 어떤 문자열이든 허용 |\
+\| `#{searchKeyword}` | Java에서 전달받은 검색어 |\
+\| `||` | 문자열 연결 연산자 |
+
+예를 들어 검색어가 `구름이`라면 다음과 같은 형태가 돼.
+
+```
+AND NAME LIKE '%구름이%'
+```
+
+이렇게 하면 이름에 '구름이'라는 글자가 포함된 데이터를 조회해.
+
+참고로 `||`는 PostgreSQL이나 Oracle 등에서 사용하는 문자열 연결 방식이야. DB 종류에 따라 문법이 달라질 수 있어.
+
+## ⑥ ORDER BY
+
+```
+ORDER BY ID DESC
+```
+
+조회 결과를 ID 기준으로 내림차순 정렬한다는 의미야.
+
+| DESC         | ASC          |
+| ------------ | ------------ |
+| 내림차순         | 오름차순         |
+| 큰 숫자 → 작은 숫자 | 작은 숫자 → 큰 숫자 |
+| 최신 데이터가 위로   | 오래된 데이터가 위로  |
+
+예를 들어 ID가 1, 2, 3, 4라면 결과는 다음과 같아.
+
+4 → 3 → 2 → 1
+
+## ⑦ LIMIT / OFFSET
+
+```
+LIMIT #{recordCountPerPage}
+OFFSET #{firstIndex}
+```
+
+이 부분은 페이징 처리야.
+
+게시판에서 한 페이지에 10개씩 게시글을 보여주는 기능이라고 생각하면 돼.
+
+| 변수                 | 의미                | 예시 |
+| ------------------ | ----------------- | -- |
+| recordCountPerPage | 한 페이지에 표시할 데이터 개수 | 10 |
+| firstIndex         | 조회를 시작할 데이터 위치    | 0  |
+
+예를 들어 다음과 같아.
+
+```
+LIMIT 10 OFFSET 0
+```
+
+첫 번째 페이지에서 10개를 조회해.
+
+```
+LIMIT 10 OFFSET 10
+```
+
+두 번째 페이지에서 10개를 조회해.
+
+```
+LIMIT 10 OFFSET 20
+```
+
+세 번째 페이지에서 10개를 조회해.
+
+# 3. 전체 실행 흐름 이해하기
+
+① Java에서 검색 조건 전달
+
+searchVO 객체에 검색어, 검색 조건, 페이지 정보 저장
+
+② MyBatis XML 실행
+
+selectSampleList SQL 호출
+
+③ 검색 조건 확인
+
+if, choose, when으로 검색 SQL 결정
+
+④ DB에서 데이터 조회
+
+SELECT → WHERE → ORDER BY → LIMIT/OFFSET
+
+⑤ 조회 결과 반환
+
+egovMap 형식으로 결과 전달
+
+# 4. 꼭 기억해야 할 핵심 문법
+
+전자정부표준프레임워크 XML을 읽을 때 아래 문법을 이해하면 대부분의 Mapper 코드를 파악할 수 있어.
+
+| 문법            | 역할                 |
+| ------------- | ------------------ |
+| `<select>`    | 데이터 조회             |
+| `<insert>`    | 데이터 추가             |
+| `<update>`    | 데이터 수정             |
+| `<delete>`    | 데이터 삭제             |
+| `<if>`        | 조건에 따라 SQL 실행      |
+| `<choose>`    | 여러 조건 중 하나 선택      |
+| `<when>`      | 조건 지정              |
+| `<otherwise>` | 나머지 경우 실행          |
+| `<foreach>`   | 반복문을 이용한 SQL 생성    |
+| `#{}`         | 파라미터 바인딩           |
+| `${}`         | 문자열을 SQL에 직접 삽입    |
+| `<where>`     | 동적 WHERE 절 생성      |
+| `<set>`       | 동적 UPDATE SET 절 생성 |
+
+특히 `#{}`와 `${}`는 차이를 알아두는 게 좋아. 일반적인 검색어 입력에는 SQL Injection 방지를 위해 `#{}`를 사용하는 것이 기본이야.
+
+# 5. 실제로 이해했는지 확인해 보자!
+
+간단한 실무형 문제 하나 내볼게.
+
+다음과 같이 Java에서 검색 조건을 전달했다고 가정하자.
+
+```
+searchVO.setSearchCondition(1);
+searchVO.setSearchKeyword("컴퓨터");
+searchVO.setRecordCountPerPage(10);
+searchVO.setFirstIndex(0);
+```
+
+질문: 위 XML을 실행하면 어떤 컬럼을 기준으로 검색할까?
+
+① ID 컬럼
+
+② NAME 컬럼
+
+③ DESCRIPTION 컬럼
+
+④ 모든 컬럼
+
+정답 확인
+
+이런 XML은 전자정부표준프레임워크에서 게시판, 회원관리, 공지사항 등 DB와 연결되는 기능을 만들 때 자주 사용해.&#x20;
+
+핵심은 XML이 단순한 SQL 파일이 아니라 Java에서 전달한 값을 이용해 SQL을 동적으로 만들어 주는 역할을 한다는 것이야.
