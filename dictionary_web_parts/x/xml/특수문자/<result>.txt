@@ -1,0 +1,31 @@
+전자정부 표준프레임워크에서 쓰이는 SQL 매퍼(MyBatis 또는 iBATIS) XML 파일 내의 <result> 태그는 데이터베이스의 
+조회 결과(ResultSet) 컬럼을 자바 객체(VO 또는 DTO)의 필드나 Map의 Key에 1:1로 매핑(연결)해 주는 역할을 합니다. 
+[1] (https://mybatis.org/mybatis-3/ko/sqlmap-xml.html), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=eg
+ovframework:rte2:psl:dataaccess:data_type), [3] (https://couchcoding.tistory.com/m/297)
+
+주요 특징과 사용법
+
+• <resultMap> 내부에서 사용: <select> 쿼리의 결과를 단순히 자바 객체의 기본 타입이나 Map으로 받을 때는 resultType을 쓰지만, 
+DB 컬럼명과 자바 객체의 멤버 변수명이 다르거나 조인(Join) 등으로 복잡한 매핑이 필요할 때 <resultMap> 하위에 <result> 태그를 
+정의합니다. [1] (https://mybatis.org/mybatis-3/ko/sqlmap-xml.html)
+• 주요 속성:
+	• property: 값을 담을 자바 객체(VO)의 필드 이름
+	• column: 조회해 온 데이터베이스(SQL)의 컬럼 이름
+
+작성 예시
+
+xml
+<resultMap id="empWithDeptResult" class="empWithDeptVO">
+    <result property="empId" column="EMP_ID" />
+    <result property="empName" column="EMP_NAME" />
+    <result property="deptName" column="DEPT_NAME" />
+</resultMap>
+
+<select id="selectEmpList" resultMap="empWithDeptResult">
+    SELECT EMP_ID, EMP_NAME, DEPT_NAME 
+    FROM TB_EMPLOYEE
+</select>
+코드를 사용할 때는 주의가 필요합니다.
+• 위 예시에서 DB의 EMP_ID 컬럼 값은 자바 VO 객체의 empId 필드에 매핑되어 담기게 됩니다.
+작업 중이신 SQL XML 파일의 전체 구조나 해당 <result> 태그가 포함된 <resultMap> 코드를 보여주시면 더 
+구체적으로 설명해 드릴 수 있습니다.
