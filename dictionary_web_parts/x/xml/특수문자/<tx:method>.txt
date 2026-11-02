@@ -1,19 +1,24 @@
-전자정부표준프레임워크(및 기반인 스프링 프레임워크)의 XML 설정 파일(context-transaction.xml 등)에서 <tx:method> 태그는 트랜잭션을 적용할 메서드의 규칙(속성)을 정의하는 역할을 합니다. [1] (https://subinto.tistory.com/38), [2] (https://take-it-into-account.tistory.com/354), [3] (https://blog.naver.com/dydals56789/221575650658?viewType=pc)
-트랜잭션(Transaction)은 데이터베이스의 상태를 변경하는 작업들이 하나의 묶음으로 처리되어, 전부 성공하거나(Commit) 전부 취소되도록(Rollback) 만드는 기능입니다.
+전자정부표준프레임워크(및 기반인 스프링 프레임워크)의 XML 설정 파일(context-transaction.xml 등)에서 <tx:method> 
+태그는 트랜잭션을 적용할 메서드의 규칙(속성)을 정의하는 역할을 합니다. [1] (https://subinto.tistory.com/38), 
+[2] (https://take-it-into-account.tistory.com/354), [3] (https://blog.naver.com/dydals56789/221575650658?viewType=pc)
+트랜잭션(Transaction)은 데이터베이스의 상태를 변경하는 작업들이 하나의 묶음으로 처리되어, 전부 성공하거나(Commit) 
+전부 취소되도록(Rollback) 만드는 기능입니다.
 
 1. 주요 속성(Attribute)과 의미
 
 <tx:method> 태그는 주로 name 속성을 필수로 가지며, 어떤 메서드에 어떤 트랜잭션 정책을 적용할지 세부 속성으로 지정합니다.
 • name
 	• 대상 메서드의 이름을 지정합니다.
-	• 와일드카드(*)를 사용하여 특정 패턴의 메서드 전체에 적용할 수 있습니다. (예: name="*"은 모든 메서드, name="get*"은 'get'으로 시작하는 조회용 메서드)
+	• 와일드카드(*)를 사용하여 특정 패턴의 메서드 전체에 적용할 수 있습니다. (예: name="*"은 모든 메서드, name="get*"은 
+'get'으로 시작하는 조회용 메서드)
 • rollback-for
 	• 어떤 종류의 예외(Exception)가 발생했을 때 롤백(Rollback)할 것인지를 지정합니다. (예: rollback-for="Exception")
 • no-rollback-for
 	• 특정 예외가 발생하더라도 롤백하지 않고 커밋(Commit)하게 할 예외를 지정합니다.
 • propagation (전파 속성)
 	• 트랜잭션이 이미 진행 중일 때, 새로운 트랜잭션을 어떻게 처리할지 정의합니다.
-	• 주요 값: REQUIRED(기본값: 진행 중인 트랜잭션이 있으면 참여하고 없으면 새로 생성), REQUIRES_NEW(무조건 새로운 트랜잭션 생성) 등 [1] (https://open.egovframe.org/nforges/qna/qna/2417/.do)
+	• 주요 값: REQUIRED(기본값: 진행 중인 트랜잭션이 있으면 참여하고 없으면 새로 생성), REQUIRES_NEW(무조건 새로운 트랜잭션 생성) 등 
+[1] (https://open.egovframe.org/nforges/qna/qna/2417/.do)
 • isolation (격리 레벨)
 	• 동시에 여러 트랜잭션이 발생할 때 데이터에 대한 접근 수준(격리 정도)을 정합니다. (예: READ_COMMITTED, REPEATABLE_READ 등)
 • read-only
@@ -35,6 +40,10 @@ xml
     </tx:attributes>
 </tx:advice>
 코드를 사용할 때는 주의가 필요합니다.
-위와 같이 설정하면 반복적으로 작성해야 하는 try-catch나 commit/rollback 코드를 일일이 작성하지 않고도, AOP(관점 지향 프로그래밍)를 통해 서비스 메서드 실행 전후에 자동으로 트랜잭션을 제어할 수 있습니다. [1] (https://take-it-into-account.tistory.com/354), [2] (https://blog.naver.com/dydals56789/221575650658?viewType=pc)
-트랜잭션 설정에 관한 자세한 가이드는 전자정부 표준프레임워크 포털에서 확인하실 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:transaction)
-혹시 현재 작성 중인 특정 <tx:method> 설정 코드가 있거나, 특정 예외 상황에서 롤백이 안 되는 문제를 해결하고 싶으신가요? 코드를유여주시면 맞춰서 설명해 드릴 수 있습니다.
+위와 같이 설정하면 반복적으로 작성해야 하는 try-catch나 commit/rollback 코드를 일일이 작성하지 않고도, AOP(관점 지향 프로그래밍)를 
+통해 서비스 메서드 실행 전후에 자동으로 트랜잭션을 제어할 수 있습니다. [1] (https://take-it-into-account.tistory.com/354), 
+[2] (https://blog.naver.com/dydals56789/221575650658?viewType=pc)
+트랜잭션 설정에 관한 자세한 가이드는 전자정부 표준프레임워크 포털에서 확인하실 수 있습니다. [1] (https://www.egovframe.go.kr/
+wiki/doku.php?id=egovframework:rte:sample:cvpl:transaction)
+혹시 현재 작성 중인 특정 <tx:method> 설정 코드가 있거나, 특정 예외 상황에서 롤백이 안 되는 문제를 해결하고 싶으신가요? 
+코드를유여주시면 맞춰서 설명해 드릴 수 있습니다.
