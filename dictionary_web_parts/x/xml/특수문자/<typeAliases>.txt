@@ -1,10 +1,16 @@
-전자정부표준프레임워크에서 <typeAliases>(마이바티스(MyBatis) 설정 파일 내 태그)는 자바 클래스명에 짧은 별칭(Alias)을 부여하여, SQL 매퍼 XML 파일에서 클래스 경로 전체를 반복해서 적지 않고 간단히 사용하기 위한 설정을 의미합니다. [1] (https://laker99.tistory.com/entry/%EC%BD%94%EB%94%A9-66-%EC%9D%BC-20220926-MyBatis-JSP-Model-1-%EC%97%90-MyBatis-%EC%97%B0%EB%8F%99-JSP-Model-2-%EC%97%90-MyBatis-%EC%97%B0%EB%8F%99), [2] (https://93nss.tistory.com/6), [3] (https://stonage.tistory.com/66)
+전자정부표준프레임워크에서 <typeAliases>(마이바티스(MyBatis) 설정 파일 내 태그)는 자바 클래스명에 짧은 별칭(Alias)을 부여하여, 
+SQL 매퍼 XML 파일에서 클래스 경로 전체를 반복해서 적지 않고 간단히 사용하기 위한 설정을 의미합니다. [1] (https://laker99.tist
+ory.com/entry/%EC%BD%94%EB%94%A9-66-%EC%9D%BC-20220926-MyBatis-JSP-Model-1-%EC%97%90-MyBatis-%EC%97%B0%EB%8F%99-JSP-Mo
+del-2-%EC%97%90-MyBatis-%EC%97%B0%EB%8F%99), [2] (https://93nss.tistory.com/6), [3] (https://stonage.tistory.com/66)
 
 주요 의미 및 역할
 
-• 전체 경로 생략: com.example.project.model.vo.UserVO처럼 긴 패키지 경로를 가진 자바 객체(VO, DTO 등)를 매번 적는 대신, userVO 같은 짧은 별칭으로 대체합니다. [1] (https://stonage.tistory.com/66)
-• 가독성 향상: SQL 맵퍼 XML 파일(mapper.xml) 안의 parameterType, resultType 등에 긴 클래스명 대신 별칭을 사용하여 SQL 작성과 유지보수를 쉽게 만듭니다. [1] (https://93nss.tistory.com/6)
-• 공식 가이드: 관련 설정은 표준프레임워크 포털 eGovFrame - Mapper Configuration Editor에서 도구 지원 방식 등을 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:editor:dbio_editor:mapper_configuration_editor)
+• 전체 경로 생략: com.example.project.model.vo.UserVO처럼 긴 패키지 경로를 가진 자바 객체(VO, DTO 등)를 매번 적는 대신, 
+userVO 같은 짧은 별칭으로 대체합니다. [1] (https://stonage.tistory.com/66)
+• 가독성 향상: SQL 맵퍼 XML 파일(mapper.xml) 안의 parameterType, resultType 등에 긴 클래스명 대신 별칭을 사용하여 SQL 작성과 
+유지보수를 쉽게 만듭니다. [1] (https://93nss.tistory.com/6)
+• 공식 가이드: 관련 설정은 표준프레임워크 포털 eGovFrame - Mapper Configuration Editor에서 도구 지원 방식 등을 확인할 수 있습니다. 
+[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:editor:dbio_editor:mapper_configuration_editor)
 
 사용 예시
 
@@ -22,4 +28,5 @@ xml
     SELECT * FROM TB_USER WHERE ID = #{id}
 </select>
 코드를 사용할 때는 주의가 필요합니다.
-만약 typeAliases 패키지 단위로 자동 등록하는 법이나 XML 내에서 자주 발생하는 에러(ClassNotFound 등)에 대해 더 알고 싶으시면 편하게 말씀해 주세요.
+만약 typeAliases 패키지 단위로 자동 등록하는 법이나 XML 내에서 자주 발생하는 에러(ClassNotFound 등)에 대해 더 알고 싶으시면 
+편하게 말씀해 주세요.
