@@ -10,3 +10,8 @@
 * 현재 요청방식이 GET인지 POST인지를 문자열로 반환
 ### getSession()
 * 현재 세션 객체를 반환
+### getRemoteAddr()
+* 클라이언트의 IP 주소를 반환
+### getProtocol()
+* 현재 서버의 프로토콜을 문자열로 반환
+
