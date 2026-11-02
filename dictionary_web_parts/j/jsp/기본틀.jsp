@@ -20,3 +20,4 @@ if (cnt_ != null && !cnt.equals(""))
         
     </body>
 </html>
+<!--teul.jsp?cnt=3 이런식으로 요청하면 cnt가 3이 됨-->
