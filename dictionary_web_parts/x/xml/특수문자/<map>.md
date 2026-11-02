@@ -1,4 +1,4 @@
-# Java Collection 타입인 Map을 표현
+# &lt;map&gt; Java Collection 타입인 Map을 표현
 ```xml
 <map>
       <entry>
