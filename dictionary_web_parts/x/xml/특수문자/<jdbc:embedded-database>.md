@@ -1,3 +1,4 @@
+&lt;jdbc:embedded-database&gt;
 * 전자정부프레임워크(Spring 기반 설정 파일,
 * 예: context-datasource.xml)에서 <jdbc:embedded-database>는 메모리(In-Memory) 기반의 내장형
 * 데이터베이스를 자동으로 생성하고 초기화하는 스프링 설정 태그를 의미합니다.
