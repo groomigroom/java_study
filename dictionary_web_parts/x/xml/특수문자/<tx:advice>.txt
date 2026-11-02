@@ -41,3 +41,40 @@ xml
 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:aop:egovrteaopguide), 
 [2] (https://keartt.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-Transactional-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0-xml)
 현재 작성 중이신 XML 설정 파일 전체 코드나 겪고 계신 구체적인 에러 내용을 알려주시면 트랜잭션 설정 점검을 도와드릴 수 있습니다.
+
+
+---------------------------------------------------------------------------------------------------
+
+
+전자정부표준프레임워크(스프링 기반)의 <tx:advice> 태그에서 transaction-manager 속성은 트랜잭션을 실제로 제어하고 
+관리하는 TransactionManager(트랜잭션 매니저) 빈(Bean)의 ID를 지정하는 역할을 합니다. [1] (https://bkjo94.tistory
+.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC
+%BD%94%EB%93%9C-%EB%B6%84%EC%84%9D-context-transactionxml), [2] (https://velog.io/@rlawnsdud05/Spring-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%84%A4%EC%A0%95)
+
+핵심 의미 및 동작 방식
+
+• 트랜잭션 매니저 연결: 스프링에서 트랜잭션을 시작(begin), 승인(commit), 또는 취소(rollback)하는 실제 로직을 담고 있는 PlatformTransactionManager 
+구현체 빈의 이름을 이 속성에 연결합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:psl:transaction), 
+[2] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83
+%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9D-context-transactionxml), [3] (https://velog.io/@rlawnsdud05/Spring-%ED%8A%B8%E
+B%9E%9C%EC%9E%AD%EC%85%98-%EC%84%A4%EC%A0%95)
+• 선언적 트랜잭션 설정: <tx:advice> 내부에 정의된 트랜잭션 전파 규칙(Propagation), 격리 수준(Isolation Level), 롤백 규칙 등(tx:attributes)을 
+어떤 트랜잭션 매니저를 통해 실행할지 결정합니다.
+• 예시 설정 (context-transaction.xml):xml
+<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="egov.dataSource"/>
+</bean>
+
+<tx:advice id="txAdvice" transaction-manager="txManager">
+    <tx:attributes>
+        <tx:method name="*" rollback-for="Exception"/>
+    </tx:attributes>
+</tx:advice>
+코드를 사용할 때는 주의가 필요합니다.
+
+	• 위 설정에서 transaction-manager="txManager"는 위쪽에 선언된 id="txManager" 빈을 참조하여 해당 데이터소스(egov.dataSource)의 트랜잭션을 
+관리하도록 지시합니다. [1] (https://subinto.tistory.com/38), [2] (https://blog.naver.com/dydals56789/221575650658?viewType=pc), [3] 
+(https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:psl:transaction)
+더 자세한 표준 가이드는 전자정부 표준프레임워크 위키(트랜잭션)에서 확인하실 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php
+?id=egovframework:rte:psl:transaction)
+트랜잭션 전파 속성(propagation)이나 특정 예외 발생 시 롤백 처리하는 방법 등 추가 설정에 대해 알고 싶으시면 편하게 말씀해 주세요.
