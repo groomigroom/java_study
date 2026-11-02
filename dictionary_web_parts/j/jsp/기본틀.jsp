@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
         <title>Insert title here</title>
     </head>
     <body>
-        for(int i = 0; i<cnt; i++)
+        for(int i = 0; i<10; i++)
         안녕 김구름 멍멍<br>
     </body>
 </html>
