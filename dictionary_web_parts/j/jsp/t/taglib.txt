@@ -1,11 +1,17 @@
-전자정부표준프레임워크(eGovFrame)를 포함한 Java 기반 웹 애플리케이션의 JSP 파일 상단에 선언되는 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 코드는 JSTL(JSP Standard Tag Library)의 '코어(Core)' 태그 라이브러리를 해당 JSP 페이지에서 사용하겠다고 선언하는 것입니다.
-이 선언을 거치면 JSP 내부에서 Java 코드(스크립틀릿 <% %>)를 직접 쓰지 않고도, HTML과 유사한 태그 형태로 조건문, 반복문, 변수 처리 등의 로직을 구현할 수 있습니다.
+전자정부표준프레임워크(eGovFrame)를 포함한 Java 기반 웹 애플리케이션의 JSP 파일 상단에 선언되는 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 코드는 JSTL(JSP Standard Tag Library)의 
+'코어(Core)' 태그 라이브러리를 해당 JSP 페이지에서 사용하겠다고 선언하는 것입니다.
+이 선언을 거치면 JSP 내부에서 Java 코드(스크립틀릿 <% %>)를 직접 쓰지 않고도, HTML과 유사한 태그 
+형태로 조건문, 반복문, 변수 처리 등의 로직을 구현할 수 있습니다.
 
 1. 각 속성의 세부 의미
 
-• <%@ taglib ... %>: JSP 지시어(Directive) 중 하나로, 외부 태그 라이브러리를 현재 JSP 페이지에 가져와 사용하겠다는 선언입니다.
-• prefix="c": 가져온 태그들을 사용할 때 붙일 접두사(이름표)를 지정합니다. 관례적으로 Core 라이브러리는 c를 사용하며, 이후 JSP 내에서 <c:if>, <c:forEach>와 같은 형태로 사용하게 됩니다.
-• uri="http://java.sun.com/jsp/jstl/core": 가져올 태그 라이브러리의 고유 식별자(주소)입니다. 톰캣 등의 WAS(Web Application Server)는 이 URI를 보고 내부 라이브러리(JAR 파일) 안에 정의된 태그 규칙과 매핑합니다.
+• <%@ taglib ... %>: JSP 지시어(Directive) 중 하나로, 외부 태그 라이브러리를 현재 JSP 페이지에 가져와 
+사용하겠다는 선언입니다.
+• prefix="c": 가져온 태그들을 사용할 때 붙일 접두사(이름표)를 지정합니다. 관례적으로 Core 라이브러리는 c를 사용하며, 
+이후 JSP 내에서 <c:if>, <c:forEach>와 같은 형태로 사용하게 됩니다.
+• uri="http://java.sun.com/jsp/jstl/core": 가져올 태그 라이브러리의 고유 식별자(주소)입니다. 톰캣 등의 
+WAS(Web Application Server)는 이 URI를 보고 내부 라이브러리(JAR 파일) 안에 정의된 태그 규칙과 매핑합니다.
 
 2. 주로 사용하는 Core 태그 예시
 
@@ -32,6 +38,9 @@ jsp
 
 3. 전자정부표준프레임워크에서의 의미
 
-전자정부표준프레임워크는 개발 표준화를 위해 JSP 내에 Java 소스 코드가 직접 들어가는 스크립틀릿(<％ ... ％>) 사용을 지양하고, JSTL과 EL(Expression Language, ${...}) 사용을 적극 권장합니다.
-따라서 이 선언문은 전자정부프레임워크로 작성된 거의 모든 공통 컴포넌트와 샘플 프로젝트(egovframework template)의 JSP 화면단 상단에서 필수적으로 찾아볼 수 있는 핵심 코드입니다.
-이 선언과 함께 자주 쓰이는 EL 변수 표현식(${...})이나, 전자정부프레임워크 전용 태그 라이브러리인 <ui:pagination>(페이징 처리) 등의 활용법이 추가로 필요하시면 말씀해 주세요!
+전자정부표준프레임워크는 개발 표준화를 위해 JSP 내에 Java 소스 코드가 직접 들어가는 스크립틀릿(<％ ... ％>) 
+사용을 지양하고, JSTL과 EL(Expression Language, ${...}) 사용을 적극 권장합니다.
+따라서 이 선언문은 전자정부프레임워크로 작성된 거의 모든 공통 컴포넌트와 샘플 프로젝트(egovframework template)의 
+JSP 화면단 상단에서 필수적으로 찾아볼 수 있는 핵심 코드입니다.
+이 선언과 함께 자주 쓰이는 EL 변수 표현식(${...})이나, 전자정부프레임워크 전용 태그 라이브러리인 
+<ui:pagination>(페이징 처리) 등의 활용법이 추가로 필요하시면 말씀해 주세요!
