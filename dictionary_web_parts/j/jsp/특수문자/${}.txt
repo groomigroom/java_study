@@ -1,15 +1,21 @@
-JSP에서 ${}는 EL(Expression Language, 표현 언어)을 나타내는 구문입니다. [1] (https://h0-0cat.tistory.com/entry/XFile-4)
+JSP에서 ${}는 EL(Expression Language, 표현 언어)을 나타내는 구문입니다. 
+[1] (https://h0-0cat.tistory.com/entry/XFile-4)
 
 1. 주요 의미와 역할
 
-• 값의 출력 및 대체: 기존 JSP의 표현식(<%= 변수 %>)이나 자바 출력 코드(out.println())를 대신해 데이터를 화면에 간결하게 출력하기 위해 사용합니다. [1] (https://yeo-computerclass.tistory.com/180), [2] (https://blog.naver.com/ka28/222007828129), [3] (https://velog.io/@wlstjdwkd/JSP-ELJSTL)
-• 즉시 평가 (Immediate Evaluation): JSP가 웹 브라우저에 렌더링되어 실행되는 시점에 ${} 내부에 작성된 값이 곧바로 계산되어 출력됩니다. [1] (https://dololak.tistory.com/744), [2] (https://blog.naver.com/ka28/222007828129)
-• 자동 변환 및 null 처리: 데이터가 null일 경우 에러를 내지 않고 빈 문자열("")로 처리하며, 형 변환도 자동으로 유연하게 처리합니다. [1] (https://amy-it.tistory.com/91), [2] (https://opentutorials.org/module/3569/21228)
+• 값의 출력 및 대체: 기존 JSP의 표현식(<%= 변수 %>)이나 자바 출력 코드(out.println())를 
+대신해 데이터를 화면에 간결하게 출력하기 위해 사용합니다. [1] (https://yeo-computerclass.tistory.com/180),
+[2] (https://blog.naver.com/ka28/222007828129), [3] (https://velog.io/@wlstjdwkd/JSP-ELJSTL)
+• 즉시 평가 (Immediate Evaluation): JSP가 웹 브라우저에 렌더링되어 실행되는 시점에 ${} 내부에 작성된 값이 곧바로 
+계산되어 출력됩니다. [1] (https://dololak.tistory.com/744), [2] (https://blog.naver.com/ka28/222007828129)
+• 자동 변환 및 null 처리: 데이터가 null일 경우 에러를 내지 않고 빈 문자열("")로 처리하며, 형 변환도 자동으로 유연하게 처리합니다. 
+[1] (https://amy-it.tistory.com/91), [2] (https://opentutorials.org/module/3569/21228)
 
 2. 주요 사용 방법
 
 • 변수 및 속성(Attribute) 출력
-	• 서블릿 등에서 request.setAttribute("name", "홍길동") 형태로 저장한 값을 JSP에서 ${name} 또는 명시적으로 ${requestScope.name} 형태로 꺼내 쓸 수 있습니다. [1] (https://forsaken.tistory.com/entry/Servlet-JSP-JSP-EL-%ED%91%9C%ED%98%84%EC%8B%9D)
+	• 서블릿 등에서 request.setAttribute("name", "홍길동") 형태로 저장한 값을 JSP에서 ${name} 또는 명시적으로 ${requestScope.name} 
+형태로 꺼내 쓸 수 있습니다. [1] (https://forsaken.tistory.com/entry/Servlet-JSP-JSP-EL-%ED%91%9C%ED%98%84%EC%8B%9D)
 • 연산 및 리터럴 표현
 	• 숫자 출력: ${10}, ${99.99}
 	• 문자열 출력: ${"홍길동"}
