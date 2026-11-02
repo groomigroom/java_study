@@ -1,0 +1,38 @@
+전자정부표준프레임워크(MyBatis/iBatis 기반의 데이터 액세스 XML 매퍼)에서 <resultMap> 태그는 데이터베이스의 
+조회(SELECT) 결과 집합(Result Set)의 컬럼명과 자바 객체(VO/DTO)의 프로퍼티(멤버 변수)를 매핑(연결)하기 
+위해 사용하는 정의 요소입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovf
+ramework:rte2:psl:data_access), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:psl:dataaccess:resultmap)
+
+주요 역할과 특징
+
+• 컬럼명과 프로퍼티명이 다를 때 매핑:
+	• DB 컬럼명은 USER_ID, USER_NAME 등 스네이크 케이스(Snake Case)를 사용하고, 자바 VO 객체는 userId, userName 등 
+카멜 케이스(Camel Case)를 사용할 때 이 둘을 서로 연결해 줍니다.
+• 상세 제어 및 옵션 지정:
+	• javaType, jdbcType, typeHandler 같은 다양한 속성을 지정하여 데이터 타입 변환이나 가공을 세밀하게 제어할 수 
+있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:psl:data_access)
+• 복잡한 객체 구조 매핑:
+	• 단순 1:1 매핑뿐만 아니라, 1:N 관계나 객체 안에 또 다른 객체가 포함된 형태(Association, Collection) 등 
+복잡한 데이터 구조를 자바 객체에 담을 때 필수적으로 사용됩니다.
+
+기본 사용 구조 예시
+
+xml
+<resultMap id="userResultMap" type="egovframework.example.sample.service.UserVO">
+    <result property="userId" column="USER_ID" />
+    <result property="userName" column="USER_NAME" />
+    <result property="userAge" column="USER_AGE" />
+</resultMap>
+
+<select id="selectUserList" resultMap="userResultMap">
+    SELECT USER_ID, USER_NAME, USER_AGE 
+    FROM TB_USER
+</select>
+코드를 사용할 때는 주의가 필요합니다.
+• id: 매퍼 파일 내에서 해당 <resultMap>을 식별하는 고유 이름입니다.
+• type: 매핑 결과가 담길 자바 객체(VO/DTO)의 풀패키지 클래스명입니다.
+• <result property="..." column="-" />: 자바 객체의 프로퍼티(property)와 SQL 결과셋의 컬럼(column)을 
+매칭합니다.
+더 자세한 가이드와 공식 문서는 전자정부 표준프레임워크 위키(resultmap)에서 확인할 수 있습니다. [1] (https
+://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:psl:dataaccess:resultmap)
+혹시 작성 중이신 특정 VO와 DB 테이블 간의 매핑 XML 코드를 보여주시면, <resultMap> 작성법을 직접 첨삭해 드릴까요?
