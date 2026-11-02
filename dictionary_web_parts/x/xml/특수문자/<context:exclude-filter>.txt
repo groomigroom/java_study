@@ -1,10 +1,16 @@
 전자정부표준프레임워크(및 기반인 스프링 프레임워크) XML 설정 파일에서 <context:exclude-filter>는 컴포넌트 
-스캔(context:component-scan)을 통해 빈(Bean)으로 등록할 대상 중에서 특정 조건에 해당하는 클래스들을 제외하겠다는 의미입니다. [1] (https://www.inflearn.com/community/questions/618156/%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94-%EC%98%81%EC%83%81%EC%97%90-%EB%82%98%EC%98%A8-component-scan%EA%B4%80%EB%A0%A8-%EC%B6%94%EA%B0%80%EC%A7%88%EB%AC%B8?srsltid=AYCX9vJk5MYY3Qb_rMa7Tc9Gs5T35tfnA9RlQBRLlGon_9Mf9p0S2JXh), [2] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0), [3] (https://jays-lab.tistory.com/6)
+스캔(context:component-scan)을 통해 빈(Bean)으로 등록할 대상 중에서 특정 조건에 해당하는 클래스들을 제외하겠다는 
+의미입니다. [1] (https://www.inflearn.com/community/questions/618156/%EC%95%88%EB%85%95%ED%95%98%EC
+%84%B8%EC%9A%94-%EC%98%81%EC%83%81%EC%97%90-%EB%82%98%EC%98%A8-component-scan%EA%B4%80%EB%A0%A8-%EC%B
+6%94%EA%B0%80%EC%A7%88%EB%AC%B8?srsltid=AYCX9vJk5MYY3Qb_rMa7Tc9Gs5T35tfnA9RlQBRLlGon_9Mf9p0S2JXh), [2] 
+(https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0), [3] (https://jays-lab.tistory.com/6)
 
 1. 주요 역할
 
-• 스프링은 <context:component-scan base-package="...">를 사용해 지정된 패키지 아래의 @Service, @Repository, @Component, @Controller 등의 어노테이션이 붙은 클래스를 찾아 자동으로 스프링 빈으로 등록합니다.
-• 이때 특정 레이어의 빈만 따로 관리하거나, 중복 등록을 막고 싶을 때 <context:exclude-filter>를 이용해 스캔 대상에서 제외합니다. [1] (https://jays-lab.tistory.com/6), [2] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
+• 스프링은 <context:component-scan base-package="...">를 사용해 지정된 패키지 아래의 @Service, @Repository, 
+@Component, @Controller 등의 어노테이션이 붙은 클래스를 찾아 자동으로 스프링 빈으로 등록합니다.
+• 이때 특정 레이어의 빈만 따로 관리하거나, 중복 등록을 막고 싶을 때 <context:exclude-filter>를 이용해 스캔 대상에서 
+제외합니다. [1] (https://jays-lab.tistory.com/6), [2] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
 
 2. 작성 예시 및 의미
 
@@ -13,10 +19,15 @@ xml
     <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 </context:component-scan>
 코드를 사용할 때는 주의가 필요합니다.
-• type="annotation": 필터의 기준을 '어노테이션' 타입으로 지정한다는 뜻입니다. [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
-• expression="org.springframework.stereotype.Controller": 제외할 대상 어노테이션을 지정합니다. [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
-• 해석: egovframework 패키지 아래의 모든 컴포넌트를 스캔하되, @Controller 어노테이션이 붙은 클래스는 스프링 빈 등록 대상에서 제외합니다.
-	• (보통 웹 계층인 DispatcherServlet용 설정과 비즈니스/서비스 계층인 Root ApplicationContext 설정을 분리할 때, 비즈니스 설정 파일에서는 웹용 @Controller를 제외하기 위해 자주 사용됩니다.) [1] (https://jays-lab.tistory.com/6), [2] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
+• type="annotation": 필터의 기준을 '어노테이션' 타입으로 지정한다는 뜻입니다. [1] (https://egovframe.go.kr/cmm
+/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
+• expression="org.springframework.stereotype.Controller": 제외할 대상 어노테이션을 지정합니다. 
+[1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
+• 해석: egovframework 패키지 아래의 모든 컴포넌트를 스캔하되, @Controller 어노테이션이 붙은 클래스는 스프링 
+빈 등록 대상에서 제외합니다.
+	• (보통 웹 계층인 DispatcherServlet용 설정과 비즈니스/서비스 계층인 Root ApplicationContext 설정을 
+분리할 때, 비즈니스 설정 파일에서는 웹용 @Controller를 제외하기 위해 자주 사용됩니다.) [1] (https://
+jays-lab.tistory.com/6), [2] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
 
 3. 주요 type 속성 값
 
@@ -24,7 +35,8 @@ xml
 • assignable: 특정 클래스나 인터페이스를 상속/구현한 타입 제외
 • aspectj: AspectJ 표현식에 매칭되는 타입 제외
 • regex: 정규표현식에 매칭되는 클래스 이름 제외
-• custom: TypeFilter 인터페이스를 직접 구현한 커스텀 필터 사용 [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
+• custom: TypeFilter 인터페이스를 직접 구현한 커스텀 필터 사용 [1] (https://egovframe.go.kr/cmm/file/r
+eadDownloadFile.do?fileId=FILE_000000000014211&fileSn=0)
 더 구체적인 도움이 필요하시면 아래 내용을 알려주세요:
 • 현재 사용 중인 XML 설정 파일의 전체 코드나 일부분
 • 제외하려는 구체적인 클래스나 어노테이션
