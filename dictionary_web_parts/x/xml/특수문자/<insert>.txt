@@ -1,0 +1,28 @@
+전자정부 표준프레임워크(주로 MyBatis 또는 iBatis를 사용하는 SQL Mapper XML 파일)에서 <insert> 태그는 
+데이터베이스에 새로운 레코드를 생성(Insert)하는 SQL 구문을 정의하는 엘리먼트입니다. [1] (https://
+bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%8
+1%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9D-iBatis-MyBatis), [2] (https://m.blog.naver.com/songintae92/221225986681)
+
+주요 역할과 특징
+
+• SQL 정의: <insert id="메서드명" parameterType="전달받을 객체/타입"> 형태로 작성하며, 태그 내부에 실행할 INSERT INTO ... 
+쿼리문을 기술합니다. [1] (https://harderthanever.tistory.com/234)
+• 파라미터 바인딩: 자바 객체나 Map 등의 필드 값을 #{필드명} 형태로 SQL에 안전하게 주입(PreparedStatement 방식)합니다. 
+[1] (https://adjh54.tistory.com/416), [2] (https://harderthanever.tistory.com/234)
+• 자동 생성 키(Auto-increment) 처리: MySQL, SQL Server 등에서 기본키를 자동 증가로 생성할 때 useGeneratedKeys="true"와 
+keyProperty="속성명" 속성을 추가해 생성된 키를 자바 객체에 다시 담아올 수 있습니다. [1] (https://mybatis.org/mybatis-3/ko/sqlmap-xml.html)
+• 리턴값:
+	• MyBatis 실행 시 기본적으로 삽입(Insert)된 행의 개수(int)를 반환합니다.
+	• 단, <selectKey> 등을 함께 활용하거나 특정 설정에 따라 반환 타입이나 방식이 달라질 수 있습니다. [1] 
+(https://yangyag.tistory.com/212)
+
+작성 예시
+
+xml
+<insert id="insertMember" parameterType="egovframework.example.sample.service.MemberVO">
+    INSERT INTO TB_MEMBER (USER_ID, USER_NAME, EMAIL)
+    VALUES (#{userId}, #{userName}, #{email})
+</insert>
+코드를 사용할 때는 주의가 필요합니다.
+만약 특정 속성(예: useGeneratedKeys나 selectKey)의 사용법이나 파라미터 매핑에 대해 더 알고 싶으시다면 
+구체적인 에러 내용이나 사용 중인 XML 코드를 보여주세요.
