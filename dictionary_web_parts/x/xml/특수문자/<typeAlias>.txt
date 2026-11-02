@@ -5,7 +5,8 @@
 
 • 별칭 부여: com.example.sample.service.impl.SampleVO처럼 길고 복잡한 자바 객체(VO, DTO 등)의 클래스명을 sampleVO나 sample 
 같은 짧은 이름으로 줄여 쓸 수 있게 해줍니다. [1] (https://take-it-into-account.tistory.com/37), [2] (https://93nss.tistory.com/6)
-• 가독성 및 유지보수성 향상: SQL 매퍼 XML 파일(mapper.xml) 내부의 <select>, <insert>, <update>, <delete> 태그에서 parameterType이나 resultType을 지정할 때 매번 긴 패키지 경로를 적지 않아도 되어 코드가 간결해집니다.
+• 가독성 및 유지보수성 향상: SQL 매퍼 XML 파일(mapper.xml) 내부의 <select>, <insert>, <update>, <delete> 
+태그에서 parameterType이나 resultType을 지정할 때 매번 긴 패키지 경로를 적지 않아도 되어 코드가 간결해집니다.
 
 2. 사용 예시
 
@@ -31,10 +32,13 @@ xml
         ID = #{id}
 </select>
 코드를 사용할 때는 주의가 필요합니다.
-• 위 예시에서 parameterType="sampleVO"와 resultType="sampleVO"는 실제로는 com.example.sample.service.SampleVO를 의미합니다. [1] (https://93nss.tistory.com/6), [2] (https://take-it-into-account.tistory.com/37)
+• 위 예시에서 parameterType="sampleVO"와 resultType="sampleVO"는 실제로는 com.example.sample.service.SampleVO를 
+의미합니다. [1] (https://93nss.tistory.com/6), [2] (https://take-it-into-account.tistory.com/37)
 
 3. 참고 사항
 
-• 전자정부 표준프레임워크 개발 환경의 Mapper Configuration Editor를 사용하면 GUI 화면을 통해서도 TypeAlias 항목을 손쉽게 추가·관리할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:editor:dbio_editor:mapper_configuration_editor)
-• 패키지 단위로 한 번에 별칭을 주고 싶다면 <typeAlias> 대신 <package name="com.example.sample.service"/> 태그를 사용하여 해당 패키지 내 모든 클래스에 클래스명(첫 글자 소문자 등)이 자동으로 별칭이 되도록 설정할 수도 있습니다.
+• 전자정부 표준프레임워크 개발 환경의 Mapper Configuration Editor를 사용하면 GUI 화면을 통해서도 TypeAlias 항목을 손쉽게 
+추가·관리할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:editor:dbio_editor:mapper_configuration_editor)
+• 패키지 단위로 한 번에 별칭을 주고 싶다면 <typeAlias> 대신 <package name="com.example.sample.service"/> 태그를 사용하여 
+해당 패키지 내 모든 클래스에 클래스명(첫 글자 소문자 등)이 자동으로 별칭이 되도록 설정할 수도 있습니다.
 만약 현재 작성 중인 XML 파일에서 에러가 발생하거나, 특정 VO 객체 매핑 방법에 대해 더 알고 싶으시다면 편하게 말씀해 주세요.
