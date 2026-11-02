@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%
+String cnt_ = request.getParameter("cnt");
+
+int cnt = 100;
+if (cnt_ != null && !cnt.equals(""))
+    cnt = Integer.parseInt(cnt_);
+%>
 <!DOCTYPE html>
 <html>
     <head>
