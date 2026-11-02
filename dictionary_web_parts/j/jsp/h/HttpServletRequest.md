@@ -14,4 +14,7 @@
 * 클라이언트의 IP 주소를 반환
 ### getProtocol()
 * 현재 서버의 프로토콜을 문자열로 반환
-
+### getCharacterEncoding()
+* 현재 JSP로 전달되는 내용을 지정한 문자셋으로 변환해 줌
+### getHeaderNames()
+* 현재 요청이 가지는 헤더의 이름들을 반환
