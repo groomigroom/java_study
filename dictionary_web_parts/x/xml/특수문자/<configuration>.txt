@@ -1,0 +1,19 @@
+전자정부 표준프레임워크(및 기반인 스프링 프레임워크)의 XML 설정 파일에서 <configuration>이라는 용어나 태그는 프로그램이 실행되는 데 필요한 환경, 연결, 동작 방식을 정의하는 설정 파일 또는 영역을 통칭합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev:imp:codegen:template:config), [2] (https://blog-ko.engram.us/configuration/)
+구체적으로 사용되는 맥락과 의미는 다음과 같습니다.
+
+1. 설정 파일(Configuration File)의 총칭
+
+• 전자정부 표준프레임워크는 스프링(Spring)을 기반으로 동작하며, 빈(Bean) 정의, 데이터베이스 연결, 트랜잭션, 보안, MVC 등을 XML 파일로 설정합니다.
+• 이때 context-*.xml, dispatcher-servlet.xml, sql-map-config.xml 등 각종 설정 파일들을 통틀어 Configuration(환경 설정) 파일이라고 부릅니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:itl:naming_service), [2] (https://backcoder.tistory.com/167), [3] (https://velog.io/@back_end_sc/eGov-%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%84%A4%EC%A0%95), [4] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:spring_mvc), [5] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:psl:data_access), [6] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000012580&fileSn=0)
+
+2. 주요 세부 개념 및 의미
+
+• 데이터 및 연결 설정 (context-datasource.xml 등):
+	• 데이터베이스 접속 정보(Driver, URL, Username, Password)나 커넥션 풀을 정의하는 설정입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:let4.0:configration), [2] (https://velog.io/@back_end_sc/eGov-%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%84%A4%EC%A0%95)
+• 보안 및 스키마 설정 (<security:configuration> 등):
+	• 전자정부 표준프레임워크의 서버 보안(Spring Security 연동 등)에서 보안 규칙이나 접근 권한 등을 간소화하여 정의할 때 사용되는 설정 태그/속성입니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.1:fdl:server_security:xmlschema)
+• MyBatis / iBATIS 설정 (configuration XML):
+	• SQL 매퍼(MyBatis)를 사용할 때 데이터베이스 타입 alias, 트랜잭션 관리, 캐시 설정 등을 담는 핵심 <configuration> 노드(또는 파일)를 의미합니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/presentation-layer/web-servlet/web-servlet-spring-mvc-tag-configuration/), [2] (https://www.egovframe.go.kr/docs), [3] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte3:psl:data_access)
+• 자동 생성 마법사 (Configuration 자동생성):
+	• 전자정부 개발환경(IDE)에서 프로젝트를 구축할 때, 반복적으로 쓰이는 설정 XML들을 쉽게 만들어 주는 Configuration 자동생성 기능을 제공합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev:imp:codegen:template:config)
+혹시 특정 XML 파일 내부에서 본 <configuration> 태그의 상세 구조나, MyBatis/Spring Security/iBATIS 중 어떤 설정 파일에서 보셨는지 알려주시면 더 정확한 코드를 설명해 드릴 수 있습니다.
