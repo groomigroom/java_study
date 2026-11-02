@@ -5,3 +5,5 @@ int y = 4;
 
 
 <% out.print(y) %>
+
+<%= y %>
