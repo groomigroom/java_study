@@ -3,5 +3,5 @@
 ## 메시지 큐
 ## 실시간 통계
 
-이거부터보기 1m 8s
-https://www.youtube.com/watch?v=fYgOdQJ3oj8&list=PLtUgHNmvcs6qoVrxB5jzZ4meINz_KL-Bl&index=10
+이거부터보기 
+https://www.youtube.com/watch?v=ZLrVjeSNLQw&list=PLtUgHNmvcs6qoVrxB5jzZ4meINz_KL-Bl&index=10
