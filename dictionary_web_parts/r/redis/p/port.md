@@ -58,3 +58,99 @@ netstat -ano | findstr :6379
 
 그러면 오류 메시지를 보고 원인을 파악해서 Redis 서버가 정상적으로 실행될 때까지 한 단계씩 같이 해결해 줄게.
 
+--------------------------------
+
+해당 오류는 Windows CMD에서 Redis를 실행했을 때 Redis 서버가 6379번 포트에 정상적으로 바인딩(연결 대기)하지 못해서 발생한 문제야.
+
+로그를 하나씩 살펴보자.
+
+## 1. 오류 메시지 분석
+
+### ① 설정 파일 관련 경고
+
+```
+Warning: no config file specified, using the default config.
+In order to specify a config file use redis-server.exe /path/to/redis.conf
+```
+
+의미:
+
+- Redis 실행 시 별도의 설정 파일(`redis.conf`)을 지정하지 않았다는 뜻이야.
+- Redis가 기본 설정으로 실행을 시도하고 있어.
+- 이 메시지는 오류가 아니라 경고이므로 서버 실행 실패의 직접적인 원인은 아니야.
+
+### ② 실제 오류 메시지
+
+```
+Creating Server TCP listening socket *:6379:
+bind: No such file or directory
+```
+
+의미:
+
+- Redis가 TCP 포트 6379번을 사용해 서버를 실행하려고 했어.
+- 하지만 해당 소켓을 생성하는 과정에서 실패했어.
+- `bind`는 서버가 특정 IP와 포트를 사용하도록 연결하는 작업이야.
+
+여기서 주의할 점은 Windows에서 `No such file or directory`가 출력됐다고 해서 반드시 파일이 없다는 뜻은 아니라는 거야.
+
+## 2. 발생할 수 있는 원인
+
+| 원인             | 설명                                        |
+| -------------- | ----------------------------------------- |
+| Redis 실행 파일 문제 | Windows와 호환되지 않는 Redis 빌드를 사용한 경우         |
+| 실행 환경 문제       | Redis 실행 파일이나 관련 DLL에 문제가 있는 경우           |
+| 포트 문제          | 6379번 포트 사용과 관련된 충돌 또는 소켓 초기화 실패          |
+| Redis 버전 문제    | 오래되었거나 비공식적으로 빌드된 Windows용 Redis를 사용하는 경우 |
+
+특히 Windows에서는 Redis 공식 서버가 기본적으로 Linux 환경을 대상으로 제공되기 때문에 Windows용 Redis 배포판이나 실행 환경에 따라 문제가 발생할 수 있어.
+
+## 3. 해결 방법
+
+우선 아래 순서대로 확인해 보자.
+
+1단계. CMD에서 6379번 포트 확인
+
+```
+netstat -ano | findstr :6379
+```
+
+- 아무것도 출력되지 않으면 현재 확인되는 6379번 포트 사용 프로세스가 없는 거야.
+- `LISTENING`이 출력되면 해당 포트를 사용 중인 프로세스가 있다는 뜻이야.
+
+2단계. Redis 설정 파일을 지정해서 실행
+
+```
+redis-server.exe redis.conf
+```
+
+단, `redis.conf`가 실제로 존재하는 경로에서 실행해야 해.
+
+3단계. Windows에서 Redis 실행 환경 확인
+
+Windows 환경이라면 다음 두 가지 방법을 고려할 수 있어.
+
+- WSL2를 이용해 Linux 환경에서 Redis 실행
+- Docker를 이용해 Redis 컨테이너 실행
+
+## 4. 정확한 원인을 찾기 위해 확인할 것
+
+현재 상황에서는 Redis를 어떤 방식으로 설치했는지가 중요해.
+
+① Redis를 어떤 방식으로 설치했어?
+
+Windows용 Redis ZIP 파일을 다운로드해서 압축 해제
+
+설치 프로그램(MSI)으로 설치
+
+WSL 또는 Ubuntu에서 설치
+
+Docker로 설치
+
+기타 / 잘 모르겠음
+
+② Redis 버전은 어떻게 돼?
+
+답변 제출
+
+이 두 가지를 알려주면 Windows CMD 환경에서 Redis가 정상적으로 실행되도록 한 단계씩 같이 해결해 줄게.
