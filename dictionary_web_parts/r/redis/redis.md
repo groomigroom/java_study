@@ -20,3 +20,7 @@
 * 지리공간 인덱싱 (Geospatial Indexing)
 * 속도 제한 (Rate Limiting)
 * 실시간 채팅 및 메시징 (Real-time Chat And Messaging)
+
+----
+캐싱(데이터 조회 성능 향상)의 사례를 학습하다 보면 자연스럽게<br>
+레디스의 기본 기능들이 익혀진다.
