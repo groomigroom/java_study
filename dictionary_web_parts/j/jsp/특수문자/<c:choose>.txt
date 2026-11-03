@@ -1,0 +1,44 @@
+전자정부표준프레임워크(및 일반적인 JSP 환경)에서 <c:choose> 태그는 JSTL(JSP Standard Tag Library)의 코어 라이브러리에 속하는 조건문 태그입니다. 
+[1] (https://offbyone.tistory.com/367), [2] (https://ajdahrdl.tistory.com/13)
+자바(Java) 언어의 switch - case - default 구문이나 if - else if - else 구문과 같은 역할을 합니다. [1] (https://m.blog.naver.com/woo_jae_
+ho/40201242699), [2] (https://gakari.tistory.com/entry/JSPServlet-%E2%80%93-JSTL-cchoose-%EC%BB%A4%EC%8A%A4%ED%85%80-%EC%95%A1%EC
+%85%98-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0), [3] (https://ajdahrdl.tistory.com/13)
+
+1. 주요 특징 및 구성
+
+<c:choose> 단독으로 쓰이지 않고, 항상 하위에 아래 태그들과 함께 조합해서 사용합니다: [1] (https://ajdahrdl.tistory.com/13)
+• <c:choose>: 조건문 블록의 시작과 끝을 감싸는 부모 태그입니다.
+• <c:when test="조건식">: 자바의 case 또는 else if와 비슷하며, test 속성에 들어간 값이 참(true)일 때 내부 코드를 실행합니다. 
+(여러 개 사용 가능)
+• <c:otherwise>: 자바의 default 또는 else와 비슷하며, 위쪽에 있는 모든 <c:when>의 조건이 만족하지 않을 때 실행됩니다. (생략 가능) 
+[1] (https://ajdahrdl.tistory.com/13), [2] (https://m.blog.naver.com/woo_jae_ho/40201242699)
+
+2. 사용 예시
+
+jsp
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:choose>
+    <c:when test="${userRole == 'ADMIN'}">
+        <p>관리자 페이지입니다.</p>
+    </c:when>
+    <c:when test="${userRole == 'USER'}">
+        <p>일반 사용자 페이지입니다.</p>
+    </c:when>
+    <c:otherwise>
+        <p>권한이 없습니다. 로그인 해주세요.</p>
+    </c:otherwise>
+</c:choose>
+코드를 사용할 때는 주의가 필요합니다.
+• 동작 방식:
+	1. userRole 값이 'ADMIN'이면 첫 번째 구문 출력
+	2. 'ADMIN'이 아니고 'USER'이면 두 번째 구문 출력
+	3. 둘 다 해당하지 않으면 <c:otherwise> 내부 구문 출력 [1] (https://m.blog.naver.com/woo_jae_ho/40201242699)
+
+3. <c:if>와의 차이점
+
+• <c:if>는 단순 if문으로 else 구문이 없어 복기적인 조건 분기가 불편합니다.
+• 따라서 여러 가지 경우의 수(다중 조건 분기)가 필요할 때는 <c:choose>, <c:when>, <c:otherwise> 조합을 사용합니다.
+[1] (https://deveric.tistory.com/15), [2] (https://offbyone.tistory.com/367), [3] (https://ajdahrdl.tistory.com/13)
+혹시 특정 변수나 조건식의 작성법에 대해 도움이 필요하신가요? 구체적으로 어떤 데이터를 비교하려는지 알려주시면 JSP 
+코드를 작성해 드릴 수 있습니다.
