@@ -1,14 +1,24 @@
 ####################################################################################################################################
 
-전자정부표준프레임워크(JSP 환경)에서 <c:out> 태그는 JSTL(JSP Standard Tag Library)의 코어(Core) 라이브러리 태그로, 화면에 데이터를 안전하게 출력하기 위해 사용합니다. [1] (https://www.devkuma.com/docs/jsp-servlet/%EC%B6%9C%EB%A0%A5-%EB%B0%8F-%EB%B3%80%EC%88%98-c-out-c-set-c-remove/), [2] (https://jay-cheol.tistory.com/entry/JSP-%EC%BD%94%EC%96%B4%ED%83%9C%EA%B7%B8-cout%EC%99%80-cset)
+전자정부표준프레임워크(JSP 환경)에서 <c:out> 태그는 JSTL(JSP Standard Tag Library)의 코어(Core) 라이브러리 태그로, 
+화면에 데이터를 안전하게 출력하기 위해 사용합니다. [1] (https://www.devkuma.com/docs/jsp-servlet/%EC%B6%9C%EB%A0%A5
+-%EB%B0%8F-%EB%B3%80%EC%88%98-c-out-c-set-c-remove/), [2] (https://jay-cheol.tistory.com/entry/JSP-%EC%BD%94%EC%9
+6%B4%ED%83%9C%EA%B7%B8-cout%EC%99%80-cset)
 구체적인 의미와 특징은 다음과 같습니다.
 
 1. 주요 의미와 기능
 
-• 데이터 출력: 표현 언어(EL, 예: ${name})를 사용해 변수나 값을 화면에 출력합니다. [1] (https://jay-cheol.tistory.com/entry/JSP-%EC%BD%94%EC%96%B4%ED%83%9C%EA%B7%B8-cout%EC%99%80-cset)
-• HTML/스크립트 이스케이프(Escape): 기본적으로 <c:out>은 출력값에 포함된 HTML 태그나 특수문자(예: <, >, &, ", ')를 문자 그대로(Plain Text) 출력하도록 변환합니다. [1] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0), [2] (https://jay-cheol.tistory.com/entry/JSP-%EC%BD%94%EC%96%B4%ED%83%9C%EA%B7%B8-cout%EC%99%80-cset)
-• XSS(크로스사이트스크립팅) 보안 방지: 악의적인 사용자가 입력폼 등에 <script>alert('HACK')</script> 같은 자바스크립트를 삽입했을 때, 그냥 ${}로 출력하면 스크립트가 실행될 수 있으나, <c:out>을 사용하면 문자열로 처리되어 실행을 막아줍니다. [1] (https://jju240.tistory.com/266), [2] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
-• 기본값(default) 처리: 값이 null이거나 존재하지 않을 경우, default 속성을 통해 대체 문자를 출력할 수 있습니다. [1] (https://www.devkuma.com/docs/jsp-servlet/%EC%B6%9C%EB%A0%A5-%EB%B0%8F-%EB%B3%80%EC%88%98-c-out-c-set-c-remove/)
+• 데이터 출력: 표현 언어(EL, 예: ${name})를 사용해 변수나 값을 화면에 출력합니다. [1] (https://jay-cheol.tistory.com/
+entry/JSP-%EC%BD%94%EC%96%B4%ED%83%9C%EA%B7%B8-cout%EC%99%80-cset)
+• HTML/스크립트 이스케이프(Escape): 기본적으로 <c:out>은 출력값에 포함된 HTML 태그나 특수문자(예: <, >, &, ", ')를 문자 
+그대로(Plain Text) 출력하도록 변환합니다. [1] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7
+%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0), [2] (https://jay-cheol.tistory.com/entry/JSP-%EC%BD%94%EC%96%B4%ED%83%9C%E
+A%B7%B8-cout%EC%99%80-cset)
+• XSS(크로스사이트스크립팅) 보안 방지: 악의적인 사용자가 입력폼 등에 <script>alert('HACK')</script> 같은 자바스크립트를 삽입했을 때, 
+그냥 ${}로 출력하면 스크립트가 실행될 수 있으나, <c:out>을 사용하면 문자열로 처리되어 실행을 막아줍니다. [1] (https://jju240
+.tistory.com/266), [2] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
+• 기본값(default) 처리: 값이 null이거나 존재하지 않을 경우, default 속성을 통해 대체 문자를 출력할 수 있습니다. [1] (https:/
+/www.devkuma.com/docs/jsp-servlet/%EC%B6%9C%EB%A0%A5-%EB%B0%8F-%EB%B3%80%EC%88%98-c-out-c-set-c-remove/)
 
 2. 기본 사용법 및 속성
 
@@ -24,13 +34,16 @@ jsp
 코드를 사용할 때는 주의가 필요합니다.
 • value (필수): 출력할 데이터나 EL 표현식
 • default (선택): value가 null이거나 비어있을 때 대신 보여줄 값
-• escapeXml (선택): XML 특수문자를 이스케이프할지 여부 (true 또는 false, 기본값은 true). 만약 false로 지정하면 HTML/스크립트 태그가 그대로 해석되어 실행됩니다. [1] (https://www.devkuma.com/docs/jsp-servlet/%EC%B6%9C%EB%A0%A5-%EB%B0%8F-%EB%B3%80%EC%88%98-c-out-c-set-c-remove/), [2] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
+• escapeXml (선택): XML 특수문자를 이스케이프할지 여부 (true 또는 false, 기본값은 true). 만약 false로 지정하면 
+HTML/스크립트 태그가 그대로 해석되어 실행됩니다. [1] (https://www.devkuma.com/docs/jsp-servlet/%EC%B6%9C%EB%A0%A5-%EB%B0
+%8F-%EB%B3%80%EC%88%98-c-out-c-set-c-remove/), [2] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
 
 3. ${} 직접 출력과의 차이점
 
 • ${data}: 단순히 값을 파싱하여 출력하며, HTML이나 스크립트 태그가 포함되어 있다면 브라우저가 그대로 해석합니다.
 • <c:out value="${data}" />: 문자열로 안전하게 변환하여 출력하며 XSS 공격을 방지하는 보안적 이점이 있습니다.
-• 전자정부 표준프레임워크 기반 개발 시, 보안 점검(시큐어코딩) 통과를 위해 사용자 입력값이나 외부 데이터 출력에는 ${} 대신 <c:out> 사용을 권장합니다. [1] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0), [2] (https://jju240.tistory.com/266)
+• 전자정부 표준프레임워크 기반 개발 시, 보안 점검(시큐어코딩) 통과를 위해 사용자 입력값이나 외부 데이터 출력에는 ${} 대신 <c:out> 사용을 권장합니다.
+[1] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0), [2] (https://jju240.tistory.com/266)
 전자정부표준프레임워크 프로젝트의 시큐어코딩 규칙이나 JSTL 설정 방법에 대해 더 알고 싶으신가요?
 
 ####################################################################################################################################
