@@ -7,4 +7,7 @@
 
 # Cache Aside (= Look Aside, Lazy Loading) 전략
 * 데이터를 조회할 때 주로 사용하는 전략이 Cache Aside 전략입니다.
-* 
+* Look Aside 전략 또는 Lazy Loading 전략이라고 부름.
+```
+
+```
