@@ -11,3 +11,10 @@
 * 하지만 redis는 메모리(RAM)에 데이터를 저장함.
 * 디스크보다 메모리에서의 데이터 처리속도가 월등하게 빠름.
 * 이 때문에 redis의 데이터 처리 속도가 RDBMS에 비해 훨씬 빠름.
+
+# Redis 주요 사용 사례
+* 캐싱 (Cashing)
+* 세션 관리 (Session Management)
+* 실시간 분석 및 통계 (Real-time Analystics)
+* 메시지 큐 (Message Queue)
+* 지리공간 인덱싱
