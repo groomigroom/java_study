@@ -1,18 +1,26 @@
-전자정부 표준프레임워크(eGovFrame)의 JSP 파일에서 사용된 <form:form> 태그는 Spring Framework의 Spring MVC Form Tag Library를 의미합니다.
-이 코드는 서버의 Java 객체(데이터)와 브라우저의 HTML 폼(입력창)을 자동으로 연결(데이터 바인딩)해주는 역할을 합니다. 각 속성의 세부 의미는 다음과 같습니다.
+전자정부 표준프레임워크(eGovFrame)의 JSP 파일에서 사용된 <form:form> 태그는 
+Spring Framework의 Spring MVC Form Tag Library를 의미합니다.
+이 코드는 서버의 Java 객체(데이터)와 브라우저의 HTML 폼(입력창)을 자동으로 
+연결(데이터 바인딩)해주는 역할을 합니다. 각 속성의 세부 의미는 다음과 같습니다.
 
 📋 속성별 상세 의미
 
 • modelAttribute="sampleVO"
-	• 핵심 역할: 서버(Controller)에서 보낸 sampleVO라는 이름의 Java 객체(VO/DTO)를 이 폼과 연결합니다.
-	• 이 설정을 통해 JSP 안의 입력창들(<form:input path="name" /> 등)이 sampleVO 객체의 필드와 자동으로 매핑됩니다.
-	• 서버에서 데이터를 수정 화면으로 보냈다면 입력창에 기존 값이 자동으로 채워지고, 사용자가 값을 입력하고 전송하면 sampleVO 객체에 값이 자동으로 담깁니다.
+	• 핵심 역할: 서버(Controller)에서 보낸 sampleVO라는 이름의 Java 객체(VO/DTO)를 
+이 폼과 연결합니다.
+	• 이 설정을 통해 JSP 안의 입력창들(<form:input path="name" /> 등)이 sampleVO 
+객체의 필드와 자동으로 매핑됩니다.
+	• 서버에서 데이터를 수정 화면으로 보냈다면 입력창에 기존 값이 자동으로 채워지고, 
+사용자가 값을 입력하고 전송하면 sampleVO 객체에 값이 자동으로 담깁니다.
 • id="listForm"
-	• HTML 태그의 id 속성으로 변환됩니다. 주로 JavaScript나 CSS에서 이 폼 요소를 고유하게 식별할 때 사용합니다. (예: document.getElementById("listForm"))
+	• HTML 태그의 id 속성으로 변환됩니다. 주로 JavaScript나 CSS에서 이 폼 요소를 고유하게 
+식별할 때 사용합니다. (예: document.getElementById("listForm"))
 • name="listForm"
-	• HTML 태그의 name 속성으로 변환됩니다. 과거 JavaScript 방식(document.listForm.submit())으로 폼을 제어하거나 서버에서 폼 자체를 식별할 때 쓰입니다.
+	• HTML 태그의 name 속성으로 변환됩니다. 과거 JavaScript 방식(document.listForm.submit())으로 
+폼을 제어하거나 서버에서 폼 자체를 식별할 때 쓰입니다.
 • method="post"
-	• 폼 데이터를 서버로 전송할 때 HTTP POST 방식을 사용하겠다는 의미입니다. URL에 데이터가 노출되지 않고 대용량 데이터를 안전하게 보낼 수 있어, 등록·수정·삭제 요청에 주로 사용됩니다.
+	• 폼 데이터를 서버로 전송할 때 HTTP POST 방식을 사용하겠다는 의미입니다. URL에 데이터가 
+노출되지 않고 대용량 데이터를 안전하게 보낼 수 있어, 등록·수정·삭제 요청에 주로 사용됩니다.
 
 💡 일반 HTML <form> 태그와의 차이점
 
@@ -30,4 +38,5 @@ html
 코드를 사용할 때는 주의가 필요합니다.
 • action 속성을 생략하면 현재 페이지의 URL로 데이터가 자동으로 전송됩니다.
 • Spring의 유효성 검사(Validation) 기능 및 에러 메시지 처리와 쉽게 연동됩니다.
-다음 단계로 이 폼을 전송하는 Controller(자바 파일)의 매핑 코드나 입력 항목(path) 설정 방법이 필요하시면 말씀해 주세요. 관련 예시 코드를 바로 안내해 드리겠습니다.
+다음 단계로 이 폼을 전송하는 Controller(자바 파일)의 매핑 코드나 입력 항목(path) 
+설정 방법이 필요하시면 말씀해 주세요. 관련 예시 코드를 바로 안내해 드리겠습니다.
