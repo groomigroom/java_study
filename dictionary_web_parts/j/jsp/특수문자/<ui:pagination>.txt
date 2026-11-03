@@ -1,16 +1,21 @@
 #######################################################################################################################################
-전자정부 표준프레임워크의 JSP 파일에서 <ui:pagination paginationInfo="${paginationInfo}" type="krds" jsFunction="fn_egov_link_page" /> 코드는 화면에 목록 페이징(페이지 번호 및 이전/다음 버튼) UI를 자동으로 그려주는 커스텀 태그(Custom Tag)입니다. [1] (https://take-it-into-account.tistory.com/341), [2] (https://alisyabob.tistory.com/243)
+전자정부 표준프레임워크의 JSP 파일에서 <ui:pagination paginationInfo="${paginationInfo}" type="krds" jsFunction="fn_egov_link_page" /> 
+코드는 화면에 목록 페이징(페이지 번호 및 이전/다음 버튼) UI를 자동으로 그려주는 커스텀 태그(Custom Tag)입니다. [1] (https://take-it-into-a
+ccount.tistory.com/341), [2] (https://alisyabob.tistory.com/243)
 
 각 속성(Attribute)의 의미
 
 • paginationInfo="${paginationInfo}"
-	• Java Controller에서 계산하여 Model에 담아 넘겨준 페이징 정보 객체(PaginationInfo)입니다. (전체 게시물 수, 현재 페이지 번호, 한 페이지당 게시물 수, 페이지 블록 크기 등의 데이터가 들어 있습니다.) [1] (https://kimsg.tistory.com/64), [2] (https://alisyabob.tistory.com/243)
+	• Java Controller에서 계산하여 Model에 담아 넘겨준 페이징 정보 객체(PaginationInfo)입니다. (전체 게시물 수, 현재 페이지 번호, 한 페이지당 
+게시물 수, 페이지 블록 크기 등의 데이터가 들어 있습니다.) [1] (https://kimsg.tistory.com/64), [2] (https://alisyabob.tistory.com/243)
 • type="krds"
 	• 페이징 디자인(렌더링 스타일)의 형태를 지정합니다.
-	• krds는 대한민국 행정기관 및 공공기관 웹 디자인 표준인 KRDS(Korea Republic of Design System) 스타일로 페이징 UI를 출력하겠다는 의미입니다. (기존에는 주로 image, text 등을 사용했습니다.) [1] (https://better-9.tistory.com/176), [2] (https://alisyabob.tistory.com/243)
+	• krds는 대한민국 행정기관 및 공공기관 웹 디자인 표준인 KRDS(Korea Republic of Design System) 스타일로 페이징 UI를 출력하겠다는 의미입니다. 
+(기존에는 주로 image, text 등을 사용했습니다.) [1] (https://better-9.tistory.com/176), [2] (https://alisyabob.tistory.com/243)
 • jsFunction="fn_egov_link_page"
 	• 사용자가 다른 페이지 번호(예: 2번, 3번 등)를 클릭했을 때 실행될 자바스크립트 함수명입니다.
-	• 페이지 번호를 누르면 fn_egov_link_page(2) 형태로 호출되며, 이 함수 안에서 페이지 번호를 인자로 받아 목록을 다시 조회하는 AJAX 또는 페이지 이동 로직을 구현하게 됩니다. [1] (https://open.egovframe.org/nforges/qna/qna/5211/.do), [2] (https://better-9.tistory.com/176)
+	• 페이지 번호를 누르면 fn_egov_link_page(2) 형태로 호출되며, 이 함수 안에서 페이지 번호를 인자로 받아 목록을 다시 조회하는 AJAX 또는 페이지 
+이동 로직을 구현하게 됩니다. [1] (https://open.egovframe.org/nforges/qna/qna/5211/.do), [2] (https://better-9.tistory.com/176)
 페이징 처리에 관해 더 궁금한 점이 있으신가요?
 fn_egov_link_page 자바스크립트 구현 방식Controller에서 PaginationInfo 객체 세팅 방법
 등을 알려드리면 추가로 설명해 드릴 수 있습니다.
