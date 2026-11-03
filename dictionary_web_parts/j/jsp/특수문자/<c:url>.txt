@@ -6,12 +6,15 @@
 
 • 컨텍스트 경로 자동 추가: 웹 애플리케이션의 배포 경로(예: http://localhost:8080/myapp/)가 변경되더라도, 코드 수정 없이 
 항상 올바른 경로인 /myapp/updateSampleView.do를 찾아갈 수 있도록 만듭니다.
-• 세션 ID 자동 유지: 만약 사용자의 브라우저가 쿠키를 지원하지 않거나 차단한 경우, URL 뒤에 세션 ID를 자동으로 붙여주는 기능(;jsessionid=...)을 수행하여 로그인을 포함한 세션 상태를 유지해 줍니다.
+• 세션 ID 자동 유지: 만약 사용자의 브라우저가 쿠키를 지원하지 않거나 차단한 경우, URL 뒤에 세션 ID를 자동으로 
+붙여주는 기능(;jsessionid=...)을 수행하여 로그인을 포함한 세션 상태를 유지해 줍니다.
 
 2. 구성 요소 해석
 
-• <c:url ... />: JSTL 코어 라이브러리의 URL 생성 태그입니다. (JSP 상단에 <%@ taglib prefix="c" uri="http://sun.com" %> 선언이 필요합니다.)
-• value='/updateSampleView.do': 이동하고자 하는 대상 경로입니다. 전자정부 표준프레임워크의 관례에 따라 샘플 데이터를 수정하는 화면(View)을 요청하는 Spring Controller의 URL 매핑 값을 의미합니다.
+• <c:url ... />: JSTL 코어 라이브러리의 URL 생성 태그입니다. (JSP 상단에 
+<%@ taglib prefix="c" uri="http://sun.com" %> 선언이 필요합니다.)
+• value='/updateSampleView.do': 이동하고자 하는 대상 경로입니다. 전자정부 표준프레임워크의 관례에 따라 샘플 데이터를 
+수정하는 화면(View)을 요청하는 Spring Controller의 URL 매핑 값을 의미합니다.
 
 3. 실제 활용 예시
 
@@ -24,6 +27,7 @@ jsp
 <c:url var="updateUrl" value="/updateSampleView.do" />
 <form action="${updateUrl}" method="post"> ... </form>
 코드를 사용할 때는 주의가 필요합니다.
-더 궁금한 점이 있으시면 언제든 말씀해 주세요. 아래 내용을 추가로 알려주시면 더 자세히 답변해 드릴 수 있습니다.
+더 궁금한 점이 있으시면 언제든 말씀해 주세요. 아래 내용을 추가로 알려주시면 
+더 자세히 답변해 드릴 수 있습니다.
 • 현재 발생한 에러 메시지가 있나요?
 • 해당 URL을 처리하는 Controller 클래스의 매핑 정보(@RequestMapping)를 찾고 계신가요?
