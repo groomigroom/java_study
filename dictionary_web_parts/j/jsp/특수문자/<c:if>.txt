@@ -1,0 +1,25 @@
+전자정부 표준프레임워크의 JSP(JSTL)에서 해당 코드는 "검색 조건(searchCondition) 값이 비어 있지 않고, 그 값이 1과 같다면 HTML 요소에 selected="selected" 속성을 추가하라"는 의미입니다. [1] (https://pkguma.tistory.com/291), [2] (https://ssamdu.tistory.com/13)
+
+코드 상세 분석
+
+• <c:if test="...">
+	• JSTL(JSP Standard Tag Library)의 조건문 태그로, test 속성 내부의 표현식(EL, Expression Language) 결과가 true일 때 내부의 HTML/JSP 코드를 렌더링합니다. [1] (https://offbyone.tistory.com/367), [2] (https://www.joshi.co.kr/index.php?mid=board_waiJ30&document_srl=306431)
+• not empty sampleVO.searchCondition
+	• sampleVO 객체의 searchCondition 값이 null이 아니며, 빈 문자열("") 등 비어있는 상태가 아닐 때 참(true)이 됩니다. [1] (https://pkguma.tistory.com/291), [2] (https://ssamdu.tistory.com/13)
+• and
+	• 앞뒤의 두 조건이 모두 참이어야 전체가 참이 되는 논리 연산자입니다. [1] (https://blog.naver.com/kjk_lokr/222263920609), [2] (https://offbyone.tistory.com/367)
+• sampleVO.searchCondition eq 1
+	• sampleVO의 searchCondition 값이 숫자 1 (또는 문자열 '1')과 같은지 비교하는 연산자입니다 (eq는 ==와 동일한 의미). [1] (https://iamdaeyun.tistory.com/entry/JSPJSTL-%EB%B9%84%EA%B5%90%EC%97%B0%EC%82%B0%EC%9E%90-%EC%82%AC%EC%9A%A9%EB%B2%95-eq-ne-empty-not-empty), [2] (https://pkguma.tistory.com/291)
+• >selected= selected 
+	• 조건이 참일 경우, 해당 <option> 태그 등에 selected="selected" 속성을 출력하여 웹 페이지가 다시 로드(Submit)되더라도 사용자가 이전에 선택했던 검색 조건(1번)이 유지되도록 만듭니다. [1] (https://ssamdu.tistory.com/13)
+
+주로 쓰이는 위치 예시
+
+보통 게시판 검색 목록 화면의 <select> 박스 안에서 아래와 같이 사용됩니다: [1] (https://ssamdu.tistory.com/13)
+jsp
+<select name="searchCondition">
+    <option value="0" <c:if test="${not empty sampleVO.searchCondition and sampleVO.searchCondition eq 0}">selected="selected"</c:if>>제목</option>
+    <option value="1" <c:if test="${not empty sampleVO.searchCondition and sampleVO.searchCondition eq 1}">selected="selected"</c:if>>작성자</option>
+</select>
+코드를 사용할 때는 주의가 필요합니다.
+혹시 이 코드가 적용된 주변의 전체 HTML 구조나 발생하고 있는 문제(선택이 풀리는 현상 등)가 있다면 공유해 주세요. 추가로 봐드리겠습니다.
