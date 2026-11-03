@@ -1,0 +1,27 @@
+###########################################################################
+<form:textarea path="description" cssClass="krds-input" maxlength="200" placeholder="${placeholderDescription}" />
+전자정부 표준프레임워크(행안부 KRDS 가이드라인 적용 환경 등)의 JSP 파일에서 해당 코드는 서버의 데이터(Java 객체)와 HTML 입력 폼(Form)의 textarea 요소를 서로 연결(Binding)해 주는 Spring Form 태그 공통 컴포넌트를 의미합니다.
+각 속성별 상세 의미는 다음과 같습니다.
+
+📋 속성별 의미 분해
+
+• <form:textarea
+	• Spring Framework가 제공하는 폼 태그 라이브러리입니다.
+	• HTML의 <textarea></textarea> 태그로 치환되어 웹 브라우저에 랜더링됩니다.
+• path="description"
+	• 핵심 기능입니다. Controller에서 전달된 VO(Value Object) 또는 DTO 객체의 description 변수(필드)와 이 태그를 자동 바인딩합니다.
+	• 서버에서 값이 넘어오면 이 영역에 자동으로 글이 채워지고, 사용자가 글을 수정 후 전송(Submit)하면 서버의 description 변수로 값이 자동 매핑됩니다.
+• cssClass="krds-input"
+	• HTML의 class="krds-input"으로 치환됩니다.
+	• 정부의 KRDS(한국형 디지털 서비스 가이드라인) 표준 디자인 시스템 스타일(CSS)을 UI에 적용하는 역할을 합니다.
+• maxlength="200"
+	• 사용자가 입력할 수 있는 최대 글자수를 200자로 제한하는 HTML 표준 속성입니다.
+• placeholder="${placeholderDescription}"
+	• 입력창이 비어있을 때 보여줄 안내 문구입니다.
+	• Description을 입력해주세요와 같은 문구가 다국어 프로퍼티 파일(messages.properties) 등에서 ${placeholderDescription} 표현식을 통해 동적으로 주입됩니다.
+추가로 이 태그가 정상 작동하려면 JSP 최상단에 아래와 같은 태그 라이브러리 선언이 포함되어 있어야 합니다.
+jsp
+<%@ taglib prefix="form" uri="http://springframework.org" %>
+코드를 사용할 때는 주의가 필요합니다.
+화면 개발 중에 글자 수 검증(Validation)이나 KRDS 스타일 깨짐 같은 문제가 발생하셨나요? 구체적인 상황을 알려주시면 관련 해결 방법을 바로 안내해 드리겠습니다.
+###########################################################################
