@@ -17,4 +17,6 @@
 * 세션 관리 (Session Management)
 * 실시간 분석 및 통계 (Real-time Analystics)
 * 메시지 큐 (Message Queue)
-* 지리공간 인덱싱
+* 지리공간 인덱싱 (Geospatial Indexing)
+* 속도 제한 (Rate Limiting)
+* 실시간 채팅 및 메시징 (Real-time Chat And Messaging)
