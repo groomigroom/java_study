@@ -9,3 +9,4 @@ redis는 RDBMS와 다르게 데이터 저장 시 만료 시간을 설정할 수 
 따라서 만료시간(TTL)을 활용해 자주 사용하는
 데이터만 레디스에 저장해 놓고 쓰는 식으로 활용한다.
 ```
+* set groomi:house hometown
