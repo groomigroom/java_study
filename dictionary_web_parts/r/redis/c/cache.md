@@ -4,3 +4,7 @@
 
 # 캐싱
 * 캐시에 접근해서 데이터를 빠르게 가져오는 방식
+
+# Cache Aside (= Look Aside, Lazy Loading) 전략
+* 데이터를 조회할 때 주로 사용하는 전략이 Cache Aside 전략입니다.
+* 
