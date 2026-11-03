@@ -23,6 +23,7 @@ Cache Aside 작동 방식을 이해하기
 # Write Around 전략
 ```
 Cache Aside 전략이 데이터를 어떻게 조회할 지에 대한 전략이었다면,
-Write Around 전략은 데이터를 어떻게
+Write Around 전략은 데이터를 어떻게 쓸 지 (저장, 수정, 삭제)에 대한 전략이다.
+Write Around 전략은 Cache Aside 전략과 같이 자주 활용되는 전략이다.
 
 ```
