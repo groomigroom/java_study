@@ -1,16 +1,21 @@
-전자정부표준프레임워크(및 일반적인 JSP/JSTL 환경)에서 <c:forEach var="result" items="${resultList}" varStatus="status">는 JSTL(JavaServer Pages Standard Tag Library)의 반복문 태그입니다. [1] (https://thefif19wlsvy.tistory.com/61)
+전자정부표준프레임워크(및 일반적인 JSP/JSTL 환경)에서 <c:forEach var="result" items="${resultList}" varStatus="status">는 
+JSTL(JavaServer Pages Standard Tag Library)의 반복문 태그입니다. [1] (https://thefif19wlsvy.tistory.com/61)
 구체적인 의미와 각 속성의 역할은 다음과 같습니다. [1] (https://thefif19wlsvy.tistory.com/61)
 
 태그 구성 요소 의미
 
 • <c:forEach>
-	• JSP에서 자바의 for문이나 foreach문처럼 목록이나 배열을 반복 처리할 때 사용하는 JSTL 코어(Core) 태그입니다. [1] (https://backcoder.tistory.com/124), [2] (https://thefif19wlsvy.tistory.com/61)
+	• JSP에서 자바의 for문이나 foreach문처럼 목록이나 배열을 반복 처리할 때 사용하는 JSTL 코어(Core) 태그입니다. [1] 
+(https://backcoder.tistory.com/124), [2] (https://thefif19wlsvy.tistory.com/61)
 • items="${resultList}"
-	• 반복해서 탐색할 데이터 목록(List, Array, Collection 등)을 의미합니다. 보통 백엔드(Controller)에서 Model이나 ModelAndView를 통해 JSP로 전달해 준 변수명(resultList)입니다. [1] (https://ardbeg.tistory.com/39), [2] (https://thefif19wlsvy.tistory.com/61)
+	• 반복해서 탐색할 데이터 목록(List, Array, Collection 등)을 의미합니다. 보통 백엔드(Controller)에서 Model이나 ModelAndView를 
+통해 JSP로 전달해 준 변수명(resultList)입니다. [1] (https://ardbeg.tistory.com/39), [2] (https://thefif19wlsvy.tistory.com/61)
 • var="result"
-	• 반복을 돌 때 현재 순번에 해당하는 개별 데이터를 담을 변수명입니다. 루프 안에서 ${result.속성명} 형태로 해당 데이터의 값을 꺼내 쓸 수 있습니다. [1] (https://thefif19wlsvy.tistory.com/61)
+	• 반복을 돌 때 현재 순번에 해당하는 개별 데이터를 담을 변수명입니다. 루프 안에서 ${result.속성명} 형태로 해당 데이터의 값을 꺼내 
+쓸 수 있습니다. [1] (https://thefif19wlsvy.tistory.com/61)
 • varStatus="status"
-	• 현재 반복의 상태 정보를 담는 객체의 변수명입니다. 루프가 몇 번째인지, 첫 번째인지 마지막인지 등을 확인할 때 사용합니다. [1] (https://llnote.tistory.com/768), [2] (https://thefif19wlsvy.tistory.com/61)
+	• 현재 반복의 상태 정보를 담는 객체의 변수명입니다. 루프가 몇 번째인지, 첫 번째인지 마지막인지 등을 확인할 때 사용합니다. 
+[1] (https://llnote.tistory.com/768), [2] (https://thefif19wlsvy.tistory.com/61)
 
 status를 통해 사용할 수 있는 주요 속성값
 
