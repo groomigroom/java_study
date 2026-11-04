@@ -1,0 +1,24 @@
+전자정부 표준프레임워크(Maven 기반 프로젝트)의 pom.xml 파일에서 <finalName> 태그는 빌드(Package) 결과물로 생성되는 파일의 최종 이름(확장자 제외)을 지정하는 역할용입니다. [1] (https://maven.apache.org/pom.html), [2] (https://blog.naver.com/hj_kim97/223185930045)
+
+핵심 의미 및 동작 방식
+
+• 기본 생성 규칙 (생략 시):
+	• <finalName>을 별도로 작성하지 않으면, 기본값으로 ${artifactId}-${version} 형태의 파일명으로 빌드 결과물(jar, war 등)이 생성됩니다.
+	• 예: artifactId가 egov-sample, version이 1.0.0이라면 결과물은 egov-sample-1.0.0.war 형태로 만들어집니다. [1] (https://insight-bgh.tistory.com/199), [2] (https://donotlimityourself.tistory.com/28)
+• 지정 시:
+	• <build> 태그 내부에 <finalName>my-project</finalName>과 같이 작성하면, 버전이나 아티팩트 ID와 상관없이 빌드 결과물이 my-project.war (또는 .jar) 이름으로 고정되어 생성됩니다. [1] (https://hongddo.tistory.com/134), [2] (https://donotlimityourself.tistory.com/28)
+
+사용 예시 (pom.xml)
+
+xml
+<build>
+    <!-- 빌드 결과물의 이름을 'ROOT'로 고정하여 ROOT.war 생성 (주로 WAS 배포 시 사용) -->
+    <finalName>ROOT</finalName>
+    <plugins>
+        <!-- 플러그인 설정들... -->
+    </plugins>
+</build>
+코드를 사용할 때는 주의가 필요합니다.
+• 실무 활용 팁:
+	• Tomcat 등의 웹 어플리케이션 서버(WAS)에 war 파일을 직접 올릴 때 URL 경로에 프로젝트명이 포함되지 않도록(예: http://localhost/ 형태로 접속), <finalName>을 ROOT로 설정해 ROOT.war로 빌드하는 방식을 자주 사용합니다. [1] (https://hongddo.tistory.com/134)
+만약 특정 프로젝트의 빌드 에러나 WAR/JAR 배포 설정과 관련해 도움이 필요하시다면 말씀해 주세요.
