@@ -1,9 +1,15 @@
-전자정부 표준프레임워크(및 일반적인 자바 기반 Spring/JSP 웹 애플리케이션)의 web.xml 파일에서 <error-page> 태그는 웹서버나 애플리케이션에서 특정 에러(HTTP 상태 코드 또는 예외 발생)가 발생했을 때, 사용자에게 보여줄 공통 에러 페이지를 지정하는 설정입니다. [1] (https://blog.naver.com/jskimmail/221566763562?viewType=pc), [2] (https://m.blog.naver.com/seonjun92/221694838843)
+########################################################################
+전자정부 표준프레임워크(및 일반적인 자바 기반 Spring/JSP 웹 애플리케이션)의 web.xml 파일에서 
+<error-page> 태그는 웹서버나 애플리케이션에서 특정 에러(HTTP 상태 코드 또는 예외 발생)가 발생했을 때, 
+사용자에게 보여줄 공통 에러 페이지를 지정하는 설정입니다. [1] (https://blog.naver.com/jskimmail/2215667
+63562?viewType=pc), [2] (https://m.blog.naver.com/seonjun92/221694838843)
 
 주요 역할 및 기능
 
-• 기본 에러 화면 감추기: 서버에서 404, 500 같은 에러가 났을 때 자바 스택 트레이스(Stack Trace)나 서버 내부 에러 코드가 그대로 사용자에게 노출되는 보안상/사용성상 문제를 막아줍니다.
-• 사용자 친화적 안내: 에러 발생 시 미리 만들어 둔 깔끔한 안내 페이지(JSP 등)로 부드럽게 이동시킵니다. [1] (https://blog.naver.com/jskimmail/221566763562?viewType=pc)
+• 기본 에러 화면 감추기: 서버에서 404, 500 같은 에러가 났을 때 자바 스택 트레이스(Stack Trace)나 
+서버 내부 에러 코드가 그대로 사용자에게 노출되는 보안상/사용성상 문제를 막아줍니다.
+• 사용자 친화적 안내: 에러 발생 시 미리 만들어 둔 깔끔한 안내 페이지(JSP 등)로 부드럽게 이동시킵니다. 
+[1] (https://blog.naver.com/jskimmail/221566763562?viewType=pc)
 
 주요 설정 구조 및 예시
 
@@ -32,8 +38,12 @@ xml
 
 • <error-code>: HTTP 상태 코드 (404, 500 등)
 • <exception-type>: 처리할 자바 예외 클래스 전문 (java.lang.Throwable, java.lang.NullPointerException 등)
-• <location>: 에러 발생 시 보여줄 JSP 또는 HTML 페이지의 경로 (/로 시작하는 웹 애플리케이션 내부 경로) [1] (https://blog.naver.com/jskimmail/221566763562?viewType=pc)
+• <location>: 에러 발생 시 보여줄 JSP 또는 HTML 페이지의 경로 (/로 시작하는 웹 애플리케이션 내부 경로) 
+[1] (https://blog.naver.com/jskimmail/221566763562?viewType=pc)
 관련 블로그 및 자료에서 상세한 구현 방법을 확인할 수 있습니다:
 • 전자정부 표준프레임워크 3.8 에러페이지 처리 블로그
-• Spring에서 web.xml로 에러 페이지 지정하기 블로그 [1] (https://blog.naver.com/jskimmail/221566763562?viewType=pc), [2] (https://dev-doodoo.tistory.com/entry/%EC%97%90%EB%9F%AC-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%A7%80%EC%A0%95%ED%95%98%EA%B8%B0)
-혹시 특정 에러 코드(예: 404, 500 등)별로 다른 페이지를 보여주는 방법이나, Spring MVC의 @ControllerAdvice를 이용한 예외 처리 방식에 대해서도 알고 싶으신가요?
+• Spring에서 web.xml로 에러 페이지 지정하기 블로그 [1] (https://blog.naver.com/jskimmail/221566763562?viewType=pc), 
+[2] (https://dev-doodoo.tistory.com/entry/%EC%97%90%EB%9F%AC-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%A7%80%EC%A0%95%ED%95%98%EA%B8%B0)
+혹시 특정 에러 코드(예: 404, 500 등)별로 다른 페이지를 보여주는 방법이나, Spring MVC의 @ControllerAdvice를
+이용한 예외 처리 방식에 대해서도 알고 싶으신가요?
+########################################################################
