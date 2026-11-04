@@ -1,0 +1,24 @@
+전자정부 표준프레임워크(및 기반이 되는 Spring)의 XML 설정 파일에서 <parent> 태그는 사용되는 위치(Maven 설정 파일인 pom.xml인지, Spring 빈(Bean) 설정 파일인지)에 따라 크게 두 가지 의미를 갖습니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/ai-layer/springai-layer/springai-sample-project/), [2] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/batch-layer/batch-core-job/), [3] (https://myhappyman.tistory.com/270)
+
+1. Maven pom.xml에서의 <parent> (부모 프로젝트 상속)
+
+Maven 기반 프로젝트(전자정부 표준프레임워크 표준 구조)의 pom.xml 파일에서 <parent> 태그는 부모 프로젝트의 설정을 상속받겠다는 의미입니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/ai-layer/springai-layer/springai-sample-project/), [2] (https://myhappyman.tistory.com/270)
+• 주요 역할:
+	• 공통 라이브러리(BOM) 및 버전 관리: 부모 프로젝트에 정의된 의존성(Library) 버전이나 플러그인 버전을 그대로 상속받으므로, 자식 프로젝트에서 일일이 버전을 명시하지 않아도 됩니다.
+	• 대표 예시 (전자정부 부모 스타터):xml
+<parent>
+    <groupId>org.egovframe.boot</groupId>
+    <artifactId>egovframe-boot-starter-parent</artifactId>
+    <version>5.0.0</version>
+    <relativePath/> <!-- 선택적 경로 -->
+</parent>
+코드를 사용할 때는 주의가 필요합니다.
+	• 위와 같이 설정하면 전자정부 표준프레임워크에서 검증된 라이브러리들의 버전이 자동으로 잡힙니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/ai-layer/springai-layer/springai-sample-project/)
+
+2. Spring Bean 설정 XML에서의 parent 속성 (빈 상속 / 확장)
+
+Spring(전자정부프레임워크 코어 컨테이너)의 Bean 설정 XML 파일(context-*.xml 등)에서 parent는 태그라기보다 <bean> 태그의 속성(parent="...")으로 주로 사용되며, 객체(Bean)의 속성을 다른 부모 Bean으로부터 상속받는다는 의미입니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/batch-layer/batch-core-job/), [2] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3)
+• 주요 역할:
+	• 설정 재사용 및 확장: 객체 지향 프로그래밍의 '클래스 상속'과 유사하게, 부모 Bean에 정의된 공통 프로퍼티(property)나 설정값을 자식 Bean이 물려받고 자신만의 속성만 덮어쓰거나 추가할 수 있습니다.
+	• 배치(Batch) Job 상속 예시: 전자정부 표준프레임워크 배치(Batch) 레이어 등에서 유사한 설정의 Job이 여러 개 있을 때 부모 Job을 정의해두고 parent="부모Job이름" 형태로 재사용합니다. [1] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000016699&fileSn=3), [2] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/batch-layer/batch-core-job/)
+혹시 작성 중이신 구체적인 XML 파일의 전체 코드나 위치(예: pom.xml인지, 특정 context-*.xml 파일인지)를 알려주시면 더 정확한 분석을 도와드릴 수 있습니다.
