@@ -22,9 +22,10 @@ xml
 코드를 사용할 때는 주의가 필요합니다.
 • <doclint>none</doclint>의 의미:
 	• 자바독(Javadoc)을 생성하거나 빌드할 때 DocLint 검사를 비활성화(끄기) 한다는 뜻입니다.
-	• 레거시 코드나 외부 라이브러리 등에서 Javadoc 형식이 완벽하지 않아 빌드가 자바독 에러/경고로 인해 실패하는 현상을 방지하기 위해 주로 none으로 설정합니다. [1] (https://www.baeldung.com/java-doclint), [2] (https://copyandpaste.tistory.com/359), [3] (https://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html)
+	• 레거시 코드나 외부 라이브러리 등에서 Javadoc 형식이 완벽하지 않아 빌드가 자바독 에러/경고로 
+인해 실패하는 현상을 방지하기 위해 주로 none으로 설정합니다. 
 • 기타 값들:
 	• all: 모든 DocLint 검사를 활성화합니다.
-	• all,-missing: 누락된 주석(missing)을 제외한 나머지 검사는 활성화합니다. [1] (https://stackoverflow.com/questions/39333574/use-maven-javadoc-with-reasonable-doclint-parameters), [2] (https://github.com/OWASP/owasp-java-encoder/issues/139), [3] (https://www.baeldung.com/java-doclint), [4] (https://central.sonatype.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api/4.0.3)
-참고로 자세한 설정 옵션과 플러그인 사용법은 Apache Maven Javadoc Plugin 공식 문서나 Java DocLint | Baeldung 가이드에서 확인할 수 있습니다. [1] (https://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html), [2] (https://www.baeldung.com/java-doclint)
+	• all,-missing: 누락된 주석(missing)을 제외한 나머지 검사는 활성화합니다.
+참고로 자세한 설정 옵션과 플러그인 사용법은 Apache Maven Javadoc Plugin 공식 문서나 Java DocLint | Baeldung 가이드에서 확인할 수 있습니다. 
 현재 진행 중인 프로젝트의 pom.xml에서 빌드 에러가 발생하고 있는지, 아니면 특정 자바독 옵션을 수정하고 싶으신지 알려주시면 추가로 도움을 드릴 수 있습니다.
