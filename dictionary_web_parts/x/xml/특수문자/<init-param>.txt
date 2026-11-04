@@ -1,9 +1,13 @@
-
-전자정부표준프레임워크(및 기반인 Spring/Java EE 웹 애플리케이션)의 web.xml 또는 관련 XML 설정 파일에서 <init-param> 태그는 특정 서블릿(Servlet)이나 필터(Filter)가 시작될 때 초기화 파라미터(Initialization Parameter)를 전달하기 위해 사용하는 설정입니다. [1] (https://amy-it.tistory.com/86)
+########################################################################
+전자정부표준프레임워크(및 기반인 Spring/Java EE 웹 애플리케이션)의 web.xml 또는 관련 XML 설정 파일에서 
+<init-param> 태그는 특정 서블릿(Servlet)이나 필터(Filter)가 시작될 때 초기화 파라미터(Initialization Parameter)를 
+전달하기 위해 사용하는 설정입니다. [1] (https://amy-it.tistory.com/86)
 
 1. 주요 의미와 특징
 
-• 서블릿/필터 전용 범위: <init-param>은 선언된 특정 서블릿(servlet)이나 필터(filter) 내부에서만 유효하며, 다른 서블릿이나 전체 애플리케이션 공용으로는 공유되지 않습니다. (전체 공용 파라미터는 <context-param>을 사용합니다.) [1] (https://amy-it.tistory.com/86)
+• 서블릿/필터 전용 범위: <init-param>은 선언된 특정 서블릿(servlet)이나 필터(filter) 내부에서만 유효하며, 
+다른 서블릿이나 전체 애플리케이션 공용으로는 공유되지 않습니다. (전체 공용 파라미터는 <context-param>을 사용합니다.) 
+[1] (https://amy-it.tistory.com/86)
 • 구조:
 	• <param-name>: 파라미터의 이름(키)
 	• <param-value>: 파라미터에 전달할 값
@@ -18,5 +22,8 @@
 
 관련 링크
 
-• 공식 가이드 및 문서 확인: 전자정부 표준프레임워크 포털 [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:bsl:getting_started)
-혹시 web.xml이나 특정 설정 파일에서 마주친 구체적인 <init-param> 코드가 있다면 공유해 주시면 해당 파라미터가 어떤 역할을 하는지 자세히 설명해 드릴 수 있습니다.
+• 공식 가이드 및 문서 확인: 전자정부 표준프레임워크 포털 [1] (https://www.egovframe.go.kr/wiki/do
+ku.php?id=egovframework:rte:bsl:getting_started)
+혹시 web.xml이나 특정 설정 파일에서 마주친 구체적인 <init-param> 코드가 있다면 공유해 주시면 해당 
+파라미터가 어떤 역할을 하는지 자세히 설명해 드릴 수 있습니다.
+########################################################################
