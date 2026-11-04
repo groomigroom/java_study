@@ -1,0 +1,31 @@
+
+전자정부 표준프레임워크(Maven 기반 프로젝트)의 pom.xml 파일에서 <licenses> 태그는 해당 
+프로젝트(또는 사용하는 오픈소스 라이브러리)가 적용받는 소프트웨어 라이선스(사용 허가 조건) 
+정보를 정의하는 영역입니다. 
+
+<licenses> 태그의 주요 의미와 구성
+
+1. 프로젝트의 저작권 및 배포 조건 명시
+	• 이 프로젝트를 다른 사람이 사용, 수정, 배포할 때 어떤 법적 규칙과 조건(예: Apache License 2.0 등)을 따라야 하는지 기록합니다. 
+2. 주요 하위 태그
+	• <license>: 라이선스 항목을 감싸는 태그입니다.
+	• <name>: 라이선스의 공식 명칭입니다 (예: The Apache Software License, Version 2.0).
+	• <url>: 라이선스 세부 약관이 설명되어 있는 공식 웹페이지 주소입니다 
+(예: http://www.apache.org/licenses/LICENSE-2.0.txt).
+	• <distribution>: 배포 방식에 대한 정의(repo 등)를 나타냅니다.
+
+예시 코드 (pom.xml)
+
+xml
+<licenses>
+  <license>
+    <name>The Apache Software License, Version 2.0</name>
+    <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    <distribution>repo</distribution>
+  </license>
+</licenses>
+코드를 사용할 때는 주의가 필요합니다.
+• 참고로 전자정부 표준프레임워크 자체는 Apache 2.0 라이선스를 따르는 
+오픈소스입니다. 
+만약 특정 라이브러리의 라이선스 확인이나 pom.xml 내 다른 
+설정(예: <dependencies>, <repositories>)에 관해 궁금한 점이 있다면 알려주세요.
