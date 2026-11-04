@@ -1,0 +1,1 @@
+<p th:text="|ⓒ ${groupMainThirdEntity?.company}|">ⓒ 도루리</p>
