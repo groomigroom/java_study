@@ -1,0 +1,21 @@
+전자정부표준프레임워크(eGovFrame) 프로젝트의 pom.xml 파일에 쓰이는 <defaultGoal>은 메이븐(Maven) 
+빌드 시 별도의 목표(Goal)를 지정하지 않았을 때 기본으로 실행할 메이븐 명령어를 의미합니다. 
+
+주요 특징 및 역할
+
+• 기본 빌드 명령어 지정: 이클립스나 터미널에서 mvn 이라고만 입력하고 엔터를 치면, <defaultGoal>에 
+설정된 목표가 자동으로 실행됩니다. 
+• 주요 사용 예시:
+	• <defaultGoal>install</defaultGoal> 으로 설정되어 있다면, 목표를 따로 입력하지 않고 빌드했을 
+때 mvn install을 수행한 것과 똑같이 로컬 메이븐 저장소(~/.m2/repository)까지 패키지를 생성해 저장합니다.
+	• 흔히 package, clean install, test 등이 사용됩니다. 
+
+위치 구조 (pom.xml)
+
+메이븐 설정 파일인 pom.xml의 <build> 태그 안에 위치합니다: 
+<build>
+    <defaultGoal>install</defaultGoal>
+    <!-- 기타 directory, finalName, plugins 등 -->
+</build>
+코드를 사용할 때는 주의가 필요합니다.
+혹시 pom.xml의 다른 설정값이나 메이븐 빌드 에러 해결에 대해 궁금한 점이 있으신가요?
