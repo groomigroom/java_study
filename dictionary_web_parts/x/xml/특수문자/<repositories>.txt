@@ -1,0 +1,8 @@
+전자정부 표준프레임워크(메이븐 기반 프로젝트의 pom.xml)에서 <repositories> 태그는 프로젝트에 필요한 외부 라이브러리(Dependencies)를 다운로드할 원격 저장소(Remote Repository)의 목록을 정의하는 곳을 의미합니다. [1] (https://m.blog.naver.com/seek316/222435356466)
+
+주요 역할과 특징
+
+• 라이브러리 검색 위치 지정: 프로젝트에서 사용하는 라이브러리(egovframework.rte 등)를 메이븐 중앙 저장소(Maven Central) 외에 추가로 어디서 다운로드받을지 URL을 명시합니다. [1] (https://www.youtube.com/watch?v=eGrA0vUZDVY), [2] (https://velog.io/@wonizizi99/eGovFramework-eGovFramework-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B4%80%EB%A0%A8-pom.xml-%EC%98%88%EC%A0%9C-%EC%BD%94%EB%93%9C)
+• 전자정부 표준프레임워크 저장소 연동: 전자정부 표준프레임워크 전용 라이브러리나 사내 내부/커스텀 리포지토리(Nexus, Artifactory 등)의 주소를 이곳에 등록하여 필요한 모듈을 불러옵니다. [1] (https://wikidocs.net/18340), [2] (https://velog.io/@wonizizi99/eGovFramework-eGovFramework-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B4%80%EB%A0%A8-pom.xml-%EC%98%88%EC%A0%9C-%EC%BD%94%EB%93%9C)
+• 하위 <repository> 태그: <repositories> 하위에는 각각의 개별 저장소 정보를 담는 <repository> 태그가 들어가며, 저장소 ID, 이름, URL, 그리고 릴리스(Release) 및 스냅샷(Snapshot) 허용 여부 등을 설정합니다. [1] (https://m.blog.naver.com/seek316/222435356466)
+만약 pom.xml 설정이나 특정 라이브러리 의존성(dependencies) 에러 해결에 대해 더 궁금한 점이 있다면 알려주세요.
