@@ -1,0 +1,13 @@
+전자정부표준프레임워크(및 Maven 기반 웹 프로젝트)에서 <failOnMissingWebXml>은 메이븐 WAR 플러그인(maven-war-plugin)이 빌드할 때 web.xml 파일이 없으면 빌드를 실패(에러)시킬지 여부를 결정하는 설정입니다. [1] (https://www.baeldung.com/eclipse-error-web-xml-missing), [2] (https://www.geeksforgeeks.org/java/how-to-resolve-web-xml-is-missing-and-failonmissingwebxml-is-set-to-true-in-eclipse-sts/)
+
+핵심 의미
+
+• 역할: 웹 애플리케이션 설정 파일인 web.xml이 프로젝트 내에 존재하지 않을 때, WAR 파일 생성 작업을 중단할지 허용할지 정합니다. [1] (https://www.baeldung.com/eclipse-error-web-xml-missing)
+• 기본값: 구버전 maven-war-plugin에서는 기본값이 true입니다. [1] (https://www.baeldung.com/eclipse-error-web-xml-missing)
+• 발생 원인: 최근 스프링(Spring)이나 자바 기반 설정(Java-based Configuration, WebApplicationInitializer 등)을 쓰면 web.xml 파일 없이 자바 코드로 설정하기 때문에 web.xml을 만들지 않는 경우가 많습니다. 이때 메이븐은 기본값인 true 때문에 *"web.xml이 없는데 설정이 true로 되어 있어서 빌드/프로젝트에 에러를 띄우겠다"*고 경고 또는 에러를 발생시킵니다. [1] (https://snworks.tistory.com/235), [2] (https://www.geeksforgeeks.org/java/how-to-resolve-web-xml-is-missing-and-failonmissingwebxml-is-set-to-true-in-eclipse-sts/)
+
+해결 방법 (pom.xml 설정)
+
+web.xml을 쓰지 않는 구조라면, pom.xml의 maven-war-plugin 설정에서 <failOnMissingWebXml> 값을 false로 지정해주면 됩니다. [1] (https://www.geeksforgeeks.org/java/how-to-resolve-web-xml-is-missing-and-failonmissingwebxml-is-set-to-true-in-eclipse-sts/)
+pom.xml에 플러그인 설정을 추가하여 <failOnMissingWebXml>false</failOnMissingWebXml>를 지정한 뒤, 이클립스에서 Maven -> Update Project를 실행하면 에러가 해결됩니다. 자세한 설정 예시는 참조 문서를 확인할 수 있습니다. [1] (https://www.youtube.com/watch?v=Jd2jPvv_1uo&t=49), [2] (https://snworks.tistory.com/235), [3] (https://www.geeksforgeeks.org/java/how-to-resolve-web-xml-is-missing-and-failonmissingwebxml-is-set-to-true-in-eclipse-sts/)
+만약 설정 변경 후에도 에러가 남아 있다면, 사용 중인 스프링/자바 버전이나 에러 메시지 전문을 통해 추가적인 도움을 받으실 수 있습니다.
