@@ -1,11 +1,16 @@
 ########################################################################
-전자정부 표준프레임워크(및 일반적인 자바 서블릿 기반 웹 애플리케이션)의 web.xml(배포 서술자) 파일에서 <login-config> 태그는 웹 서버(WAS, 예: 톰캣) 차원의 인증 방식과 보안 영역(Realm)을 설정하는 의미를 가집니다. [1] (https://docs.oracle.com/cd/E13222_01/wls/docs70/webapp/web_xml.html), [2] (https://hipdizzy.tistory.com/61), [3] (https://minisiri.tistory.com/31)
+전자정부 표준프레임워크(및 일반적인 자바 서블릿 기반 웹 애플리케이션)의 web.xml(배포 서술자) 
+파일에서 <login-config> 태그는 웹 서버(WAS, 예: 톰캣) 차원의 인증 방식과 보안 영역(Realm)을 
+설정하는 의미를 가집니다. [1] (https://docs.oracle.com/cd/E13222_01/wls/docs70/webapp/web_xml
+.html), [2] (https://hipdizzy.tistory.com/61), [3] (https://minisiri.tistory.com/31)
 
 1. 주요 역할
 
 • 인증 방식 지정 (<auth-method>): 웹 애플리케이션 사용자를 어떤 방식으로 인증할지 정의합니다.
 • 보안 영역 설정 (<realm-name>): 인증 정보를 처리할 서버(WAS)의 보안 영역 이름을 지정합니다.
-• 폼 기반 로그인 상세 설정 (<form-login-config>): 직접 만든 로그인 페이지나 에러 페이지의 경로를 지정합니다. [1] (https://www.ibm.com/docs/ko/was-liberty/nd?topic=level-enabling-basic-authentication-web-services-access), [2] (https://m.blog.naver.com/leejunga-0409/220738614897), [3] (https://hipdizzy.tistory.com/61)
+• 폼 기반 로그인 상세 설정 (<form-login-config>): 직접 만든 로그인 페이지나 에러 페이지의 경로를 지정합니다.
+[1] (https://www.ibm.com/docs/ko/was-liberty/nd?topic=level-enabling-basic-authentication-web-services
+-access), [2] (https://m.blog.naver.com/leejunga-0409/220738614897), [3] (https://hipdizzy.tistory.com/61)
 
 2. 주요 하위 태그 및 방식
 
@@ -13,7 +18,8 @@
 	1. BASIC: 브라우저 기본 팝업창을 통한 HTTP 기본 인증.
 	2. DIGEST: 암호화된 HTTP 다이제스트 인증.
 	3. CLIENT-CERT: 클라이언트 인증서 기반 인증.
-	4. FORM: 개발자가 직접 제작한 HTML/JSP 로그인 화면을 사용하는 방식 (가장 많이 사용됨). [1] (https://m.blog.naver.com/leejunga-0409/220738614897)
+	4. FORM: 개발자가 직접 제작한 HTML/JSP 로그인 화면을 사용하는 방식 (가장 많이 사용됨). 
+[1] (https://m.blog.naver.com/leejunga-0409/220738614897)
 • FORM 방식 설정 예시:
 xml
 <login-config>
@@ -29,8 +35,14 @@ xml
 3. 전자정부 표준프레임워크에서의 실무적 의미
 
 • 스프링 시큐리티(Spring Security) 사용 시:
-전자정부 표준프레임워크 프로젝트는 보통 자체적인 스프링 시큐리티나 커스텀 로그인 인터셉터/필터를 통해 로그인을 구현하므로, web.xml의 <login-config>를 직접 활성화해서 쓰는 경우는 드뭅니다. (대부분 주석 처리되어 있거나 필터 기반 처리를 사용합니다). [1] (https://egovframe.go.kr/docs/5.0/common-component/user-authentication/login-policy-management/)
+전자정부 표준프레임워크 프로젝트는 보통 자체적인 스프링 시큐리티나 커스텀 로그인 인터셉터/필터를 통해 로그인을 
+구현하므로, web.xml의 <login-config>를 직접 활성화해서 쓰는 경우는 드뭅니다. (대부분 주석 처리되어 있거나 필터 
+기반 처리를 사용합니다). [1] (https://egovframe.go.kr/docs/5.0/common-component/user-authentication/login-
+policy-management/)
 • WAS 컨테이너 인증 사용 시:
-만약 톰캣 등 WAS(웹 애플리케이션 서버)가 제공하는 기본 인증(Container-Managed Authentication) 기능을 사용할 때만 <login-config>와 <security-constraint>를 조합하여 특정 URL에 대한 접근 제어 및 로그인을 강제합니다. [1] (https://docs.oracle.com/cd/E13222_01/wls/docs70/webapp/web_xml.html)
-만약 프로젝트에서 로그인 인증 오류를 해결하고 계시거나, 스프링 시큐리티 기반으로 로그인을 수정하려는 상황이신가요? 현재 사용 중인 인증 방식(일반 로그인, 공인인증서 등)을 알려주시면 더 구체적으로 도움을 드릴 수 있습니다.
+만약 톰캣 등 WAS(웹 애플리케이션 서버)가 제공하는 기본 인증(Container-Managed Authentication) 기능을 사용할 때만 
+<login-config>와 <security-constraint>를 조합하여 특정 URL에 대한 접근 제어 및 로그인을 강제합니다. [1] (https:/
+/docs.oracle.com/cd/E13222_01/wls/docs70/webapp/web_xml.html)
+만약 프로젝트에서 로그인 인증 오류를 해결하고 계시거나, 스프링 시큐리티 기반으로 로그인을 수정하려는 상황이신가요? 
+현재 사용 중인 인증 방식(일반 로그인, 공인인증서 등)을 알려주시면 더 구체적으로 도움을 드릴 수 있습니다.
 ########################################################################
