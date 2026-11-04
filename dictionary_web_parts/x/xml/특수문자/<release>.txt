@@ -1,0 +1,14 @@
+전자정부 표준프레임워크(및 스프링 기반 Maven 프로젝트)의 pom.xml 파일 등에서 쓰이는 <release>는 정식 배포 버전(General Availability, GA)을 의미합니다. 
+
+
+주요 의미 및 특징
+
+• 정식 버전 (GA): 테스트와 검증이 모두 완료되어 안정성이 보장된 정식 출시 버전임을 뜻합니다.
+• Maven 저장소 연동: RELEASE 꼬리표가 붙은 버전은 대개 Maven Central Repository 등에 정식 등록되어 있어 별도의 추가 저장소(Repository) 
+설정 없이 안전하게 다운로드하여 사용할 수 있습니다. 
+• 버전 표기 예시:xml
+<spring.maven.artifact.version>4.3.16.RELEASE</spring.maven.artifact.version>
+코드를 사용할 때는 주의가 필요합니다.
+위와 같이 스프링이나 라이브러리의 버전 넘버 뒤에 붙어, 해당 라이브러리가 정식 릴리스 버전임을 명시합니다. 
+(유사하게 개발 중인 불안정한 버전은 SNAPSHOT 등의 꼬리표를 사용합니다.) 
+더 궁금한 점이 있으시면 언제든지 말씀해주세요.
