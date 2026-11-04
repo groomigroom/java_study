@@ -1,0 +1,30 @@
+##################################################################################
+전자정부표준프레임워크(및 기반인 메이븐 Maven pom.xml)에서 <exclusions> 태그는 특정 라이브러리를 
+의존성(Dependency)으로 가져올 때, 그 라이브러리가 내부적으로 함께 
+끌고 오는(전달 의존성, Transitive Dependency) 불필요하거나 충돌이 나는 하위 라이브러리를 
+제외(exclude)할 때 사용하는 의미를 가집니다. 
+
+주요 특징 및 목적
+
+• 중복 및 충돌 방지: A라는 라이브러리를 추가했는데 그 안에 이미 프로젝트에서 쓰고 있는 B 라이브러리의 구버전이 포함되어 있어 충돌(예: 로깅 라이브러리 충돌 등)이 날 때, 특정 하위 라이브러리를 빼기 위해 사용합니다. [1] (https://velog.io/@hyebbi99/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%91%9C%EC%A4%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EA%B3%B5%ED%86%B5%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-3.9-all-in-one-3-logback.xml-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+• 버전 강제화: 프레임워크 표준이나 특정 목적(예: Log4j 대신 Logback 사용 등)에 맞추어 기본으로 딸려 오는 기본 구현체를 제외하고 원하는 다른 라이브러리로 대체할 때 자주 쓰입니다. [1] (https://velog.io/@hyebbi99/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%91%9C%EC%A4%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EA%B3%B5%ED%86%B5%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-3.9-all-in-one-3-logback.xml-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0)
+
+사용 예시 (pom.xml)
+
+xml
+<dependency>
+    <groupId>org.example</groupId>
+    <artifactId>some-library</artifactId>
+    <version>1.0.0</version>
+    <!-- some-library를 가져올 때 아래의 하위 라이브러리는 제외함 -->
+    <exclusions>
+        <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+코드를 사용할 때는 주의가 필요합니다.
+• 공식 가이드 및 연동 정보는 전자정부 표준프레임워크 포털에서 확인하실 수 있습니다. [1] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000012580&fileSn=0)
+혹시 현재 충돌이 나고 있거나 제외하려는 특정 라이브러리 이름이 있으신가요? pom.xml 작성에 도움을 드릴 수 있습니다.
+##################################################################################
