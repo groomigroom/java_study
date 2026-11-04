@@ -1,0 +1,27 @@
+전자정부 표준프레임워크(스프링 기반)의 XML 설정에서 <executions>(또는 <execution>) 태그는 어떤 상황/단계에서 특정 기능(메서드, 플러그인, 또는 배치 작업)을 실행할 것인가를 정의하는 블록입니다. 
+
+주로 사용되는 위치와 의미는 다음과 같습니다.
+
+1. Maven 빌드 설정(pom.xml)에서의 <executions>
+
+• 의미: 메이븐(Maven) 빌드 플러그인이 어떤 라이프사이클 단계(Phase)에서 동작할지를 세부적으로 지정할 때 사용합니다. [1] (https://armyost.tistory.com/171)
+• 주요 하위 태그:
+	• <execution>: 개별 실행 단위를 감싸는 태그입니다.
+	• <id>: 해당 실행 설정의 고유 식별자입니다.
+	• <phase>: 어떤 빌드 단계(compile, package, install 등)에서 이 플러그인을 실행할지 지정합니다.
+	• <goals>: 해당 단계에서 실행할 구체적인 골(Goal, 예: jar:jar, compile)을 나열합니다. [1] (https://github.com/nexacro-spring/nexacro-parent/blob/master/pom.xml), [2] (https://open.egovframe.org/nforges/qna/qna/5957/.do), [3] (https://armyost.tistory.com/171)
+
+2. Spring AOP / AspectJ 설정(*context*.xml)에서의 <execution> (포인트컷 지정자)
+
+• 의미: 공통 관심사(AOP)를 적용할 타겟 메서드의 범위(포인트컷, Pointcut)를 지정할 때 execution(...) 표현식을 사용합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:aop:xmlschema), [2] (https://velog.io/@daumi125/Spring-06.-AOP-XML%EC%84%A4%EC%A0%95)
+• 구문 형태:xml
+<aop:pointcut id="serviceMethod" 
+    expression="execution(public * egovframework.example..service.*Impl.*(..))" />
+코드를 사용할 때는 주의가 필요합니다.
+
+	• execution(접근제어자? 반환타입 패키지.클래스.메서드(파라미터)) 형태로 작성되어, 특정 패키지나 메서드가 실행될 때 어드바이스(Advice)를 동작시키도록 매핑합니다. [1] (https://velog.io/@daumi125/Spring-06.-AOP-XML%EC%84%A4%EC%A0%95)
+
+3. Spring Batch(스프링 배치) 설정에서의 실행 관련 의미
+
+• 의미: 배치 Job이나 Step이 실행될 때 쓰이는 파라미터나 실행 기록(JobExecution, StepExecution) 등과 연동되는 메타데이터나 실행 흐름을 제어할 때 사용됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:brte:batch_core:step), [2] (https://tech-monster.tistory.com/238)
+작성 중이신 XML 파일의 전체적인 구조(예: pom.xml인지, AOP 설정인지, 배치 설정인지)를 알려주시면 해당 태그가 구체적으로 어떤 역할을 하는지 더 정확히 설명해 드릴 수 있습니다.
