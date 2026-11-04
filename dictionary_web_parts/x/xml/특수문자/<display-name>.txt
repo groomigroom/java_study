@@ -1,5 +1,9 @@
 ###################################################################################################
-전자정부 표준프레임워크(Spring 기반)의 web.xml(배포 서술자) 파일에서 <display-name> 태그는 해당 웹 애플리케이션(프로젝트)이나 서블릿(Servlet)의 사람이 읽을 수 있는 이름(표시 이름)을 정의할 때 사용합니다. [1] (https://github.com/seungbeomi/development/blob/master/java/egovframework/egovframework-all-in-one-2.3.0/src/main/webapp/WEB-INF/web.xml), [2] (https://bkjo94.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9D-webxml), [3] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000005110&fileSn=0)
+전자정부 표준프레임워크(Spring 기반)의 web.xml(배포 서술자) 파일에서 <display-name> 태그는 해당 웹 애플리케이션(프로젝트)이나 
+서블릿(Servlet)의 사람이 읽을 수 있는 이름(표시 이름)을 정의할 때 사용합니다. [1] (https://github.com/seungbeomi/developme
+nt/blob/master/java/egovframework/egovframework-all-in-one-2.3.0/src/main/webapp/WEB-INF/web.xml), [2] (https://bkjo94.
+tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EC%83%98%ED%94%8C-%
+EC%BD%94%EB%93%9C-%EB%B6%84%EC%84%9D-webxml), [3] (https://egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000005110&fileSn=0)
 
 주요 특징 및 역할
 
@@ -13,6 +17,9 @@
     ...
 </servlet>
 코드를 사용할 때는 주의가 필요합니다.
-• 동작 영향력: 애플리케이션의 핵심 비즈니스 로직이나 Spring 빈(Bean) 동작, URL 매핑(.do) 자체에는 직접적인 기술적 영향을 주지 않으며, 메타데이터(설명용 이름) 성격이 강합니다. [1] (https://velog.io/@wonizizi99/eGovFramework-eGovFramework-4.2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-web.xml), [2] (https://github.com/seungbeomi/development/blob/master/java/egovframework/egovframework-all-in-one-2.3.0/src/main/webapp/WEB-INF/web.xml)
+• 동작 영향력: 애플리케이션의 핵심 비즈니스 로직이나 Spring 빈(Bean) 동작, URL 매핑(.do) 자체에는 직접적인 기술적 영향을 주지 않으며, 
+메타데이터(설명용 이름) 성격이 강합니다. [1] (https://velog.io/@wonizizi99/eGovFramework-eGovFramework-4.2-%ED%94%84%EB%A
+1%9C%EC%A0%9D%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-web.xml), [2] (https://github.com/seungbeomi/development/blob/master/jav
+a/egovframework/egovframework-all-in-one-2.3.0/src/main/webapp/WEB-INF/web.xml)
 만약 특정 XML 파일(context-*.xml 등)이나 에러 로그에서 발견하신 구체적인 코드 조각이 있다면 공유해 주시면 더 자세히 설명해 드릴 수 있습니다.
 ###################################################################################################
