@@ -1,0 +1,17 @@
+전자정부 표준프레임워크(Maven 기반 pom.xml 등)에서 <artifactId> 태그는 
+프로젝트의 실제 이름(또는 고유 식별자)을 의미합니다. 
+
+주요 특징
+
+• 프로젝트 식별: <groupId>(그룹/조직 아이디)와 함께 결합되어 메이븐(Maven) 레퍼지토리 내에서 특정 라이브러리나 프로젝트를 유일하게 구분하는 역할을 합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev:dep:maven:%EC%9D%98%EC%A1%B4%EC%84%B1_%EA%B4%80%EB%A6%AC_%EB%A9%94%EC%BB%A4%EB%8B%88%EC%A6%98)
+• 의존성 관리: 다른 외부 라이브러리나 공통 컴포넌트를 불러올 때(Dependency 설정), 어떤 라이브러리를 사용할 것인지 특정하기 위해 <artifactId>를 명시합니다.
+	• 예시:xml
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20231013</version>
+</dependency>
+코드를 사용할 때는 주의가 필요합니다.
+여기서 json이 해당 라이브러리의 <artifactId>입니다. [1] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000012705&fileSn=0), [2] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000012580&fileSn=0), [3] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev:dep:maven:%EC%9D%98%EC%A1%B4%EC%84%B1_%EA%B4%80%EB%A6%AC_%EB%A9%94%EC%BB%A4%EB%8B%88%EC%A6%98)
+공식적인 설정 방법과 설명은 전자정부 표준프레임워크 위키(의존성 관리 메커니즘)에서 더 자세히 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev:dep:maven:%EC%9D%98%EC%A1%B4%EC%84%B1_%EA%B4%80%EB%A6%AC_%EB%A9%94%EC%BB%A4%EB%8B%88%EC%A6%98)
+특정 pom.xml 설정 파일에서 에러가 발생하고 있거나, 특정 라이브러리 추가 방법이 궁금하신가요? 관련 내용을 알려주시면 더 구체적으로 안내해 드릴 수 있습니다.
