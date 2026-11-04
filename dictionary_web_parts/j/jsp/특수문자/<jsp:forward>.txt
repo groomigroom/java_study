@@ -1,13 +1,23 @@
-전자정부표준프레임워크의 index.jsp 등에 쓰인 <jsp:forward page="/egovSampleList.do"/>는 서버 내부에서 다른 요청 경로로 제어를 넘기는(포워딩하는) 태그입니다. [1] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-310-indexjsp)
+###################################################################################################################
+전자정부표준프레임워크의 index.jsp 등에 쓰인 <jsp:forward page="/egovSampleList.do"/>는 서버 내부에서 
+다른 요청 경로로 제어를 넘기는(포워딩하는) 태그입니다. [1] (https://inetsos.tistory.com/entry/%EC%A0%
+84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-310-indexjsp)
 
 주요 의미와 동작 방식
 
 • 서버 내부 포워딩 (Server-side Forwarding):
-클라이언트(브라우저)가 index.jsp를 요청했을 때, 브라우저에게 다른 페이지로 가라고 재요청(Redirect)하는 것이 아니라, 서버 내부에서 곧바로 /egovSampleList.do 요청을 처리하는 컨트롤러(Controller)나 다른 자원으로 흐름을 이동시킵니다. [1] (https://m.blog.naver.com/rpdladhqjf18/220337253326), [2] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-310-indexjsp)
+클라이언트(브라우저)가 index.jsp를 요청했을 때, 브라우저에게 다른 페이지로 가라고 재요청(Redirect)하는 것이 아니라, 
+서버 내부에서 곧바로 /egovSampleList.do 요청을 처리하는 컨트롤러(Controller)나 다른 자원으로 흐름을 이동시킵니다. 
+[1] (https://m.blog.naver.com/rpdladhqjf18/220337253326), [2] (https://inetsos.tistory.com/entry/%EC%A0%84%EC
+%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-310-indexjsp)
 • URL 유지:
-브라우저 주소창의 URL은 /index.jsp 또는 초기 접속 주소로 유지되며, 내부적으로는 /egovSampleList.do의 실행 결과(화면 등)가 클라이언트에 응답으로 전달됩니다. [1] (https://kimcoder.tistory.com/192)
+브라우저 주소창의 URL은 /index.jsp 또는 초기 접속 주소로 유지되며, 내부적으로는 /egovSampleList.do의 실행 결과(화면 등)가 
+클라이언트에 응답으로 전달됩니다. [1] (https://kimcoder.tistory.com/192)
 • 첫 진입점 역할:
-전자정부표준프레임워크의 샘플 프로젝트는 보통 서버를 구동하고 첫 화면에 접속했을 때 곧바로 목록 조회 기능인 egovSampleList.do로 연결되어 샘플 목록 화면이 첫 페이지로 보이도록 설정되어 있습니다. [1] (https://velog.io/@eogh773/egovframework3-indexerror-page), [2] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-310-indexjsp)
+전자정부표준프레임워크의 샘플 프로젝트는 보통 서버를 구동하고 첫 화면에 접속했을 때 곧바로 목록 조회 기능인 egovSampleList.do로 
+연결되어 샘플 목록 화면이 첫 페이지로 보이도록 설정되어 있습니다. [1] (https://velog.io/@eogh773/egovframework3-indexerror-page), 
+[2] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80-%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-310-indexjsp)
 더 궁금한 점이 있으시면 알려주세요:
 • Controller에서 /egovSampleList.do가 어떻게 매핑되어 처리되는지 확인하고 싶으신가요?
 • JSP Forward와 Redirect의 차이점이 궁금하신가요?
+###################################################################################################################
