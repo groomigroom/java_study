@@ -1,0 +1,15 @@
+전자정부 표준프레임워크(Spring 기반)의 XML 설정 파일에서 <includes> 태그는 주로 메이븐(Maven) 빌드 설정 파일(pom.xml) 내부에서 포함할 파일이나 리소스, 테스트 대상 패턴을 지정할 때 사용됩니다. [1] (https://velog.io/@wonizizi99/eGovFramework-eGovFramework-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B4%80%EB%A0%A8-pom.xml-%EC%98%88%EC%A0%9C-%EC%BD%94%EB%93%9C)
+(참고: 만약 Spring Bean 설정 파일 안에서 다른 XML 파일을 불러오는 기능이라면 <includes>가 아니라 <import resource="..."> 태그를 사용합니다). [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/integration-layer/webservice/)
+
+1. pom.xml에서의 <includes> 의미
+
+메이븐 플러그인(maven-surefire-plugin 등) 내의 <includes>는 빌드나 테스트 시 포함할 파일 패턴을 지정합니다. 특정 테스트(*Test.java)나 리소스를 선별적으로 포함할 때 사용되는 예시 코드와 설명은 참조 문서를 참고해 주세요. [1] (https://velog.io/@wonizizi99/eGovFramework-eGovFramework-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B4%80%EB%A0%A8-pom.xml-%EC%98%88%EC%A0%9C-%EC%BD%94%EB%93%9C)
+
+2. Spring XML Bean 설정에서의 혼동 (<import>)
+
+스프링 설정 파일에서 다른 설정 파일을 불러올 때는 <includes> 대신 <import> 태그를 사용합니다: [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/integration-layer/webservice/)
+xml
+<import resource="classpath:/egovframework/spring/com/context-datasource.xml" />
+코드를 사용할 때는 주의가 필요합니다.
+• 의미: 다른 위치에 있는 스프링 XML 설정 파일을 가져와서(Import) 하나의 ApplicationContext로 통합합니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-runtime/integration-layer/webservice/)
+혹시 작성하고 계신 XML 파일의 전체적인 위치나 해당 태그가 쓰인 앞뒤 소스 코드를 보여주실 수 있나요? 더 정확한 의미를 짚어드릴 수 있습니다.
