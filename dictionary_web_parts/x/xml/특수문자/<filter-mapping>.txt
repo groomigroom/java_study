@@ -1,0 +1,18 @@
+전자정부 표준프레임워크(및 일반적인 자바 기반 웹 애플리케이션)의 web.xml 파일에서 <filter-mapping> 태그는 앞서 정의한 필터([<filter>](https://tistory.com))를 어떤 요청 URL이나 서블릿에 실제로 적용할 것인지 연결(매핑)하는 역할을 합니다. [1] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%ACeGovFrame%EC%9D%98-webxml-%EC%84%A4%EC%A0%95)
+
+주요 구성 요소
+
+<filter-mapping> 내부는 주로 다음과 같은 하위 태그로 구성됩니다.
+1. <filter-name>
+	• <filter> 태그에서 정의한 필터의 이름과 정확히 일치해야 합니다. (어떤 필터를 적용할지 지정) [1] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%ACeGovFrame%EC%9D%98-webxml-%EC%84%A4%EC%A0%95)
+2. <url-pattern>
+	• 클라이언트가 요청하는 URL 패턴을 지정합니다.
+	• 예: *.do (모든 .do 확장자 요청), /* (모든 요청) [1] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000012580&fileSn=0), [2] (https://m.blog.naver.com/jskimmail/221566727815), [3] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%ACeGovFrame%EC%9D%98-webxml-%EC%84%A4%EC%A0%95)
+3. <dispatcher> (선택 사항)
+	• 어떤 요청 방식일 때 필터를 동작시킬지 설정합니다 (REQUEST, FORWARD, INCLUDE, ERROR 등). 기본값은 REQUEST입니다. [1] (https://dololak.tistory.com/607)
+
+실제 사용 예시
+
+아래 예시는 한글 깨짐을 방지하기 위한 CharacterEncodingFilter를 모든 .do 요청에 적용하는 설정입니다. [1] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%ACeGovFrame%EC%9D%98-webxml-%EC%84%A4%EC%A0%95)
+전체 XML 설정 예시 및 상세 내용은 참조 문서를 통해 확인하실 수 있습니다. 요약하자면, <filter-mapping>을 통해 *.do 요청 시 encodingFilter가 먼저 실행되어 UTF-8 인코딩을 처리하도록 설정하며, 전자정부 표준프레임워크에서는 로그인 정책(LoginPolicyFilter), 멀티파트 업로드(multipartFilter), HTML 태그 필터링(HTMLTagFilter) 등 다양한 보안 및 공통 기능에 활용됩니다. [1] (https://egovframe.go.kr/docs/5.0/common-component/user-authentication/login-policy-management/), [2] (https://www.egovframe.go.kr/cmm/file/readDownloadFile.do?fileId=FILE_000000000012580&fileSn=0), [3] (https://inetsos.tistory.com/entry/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%ACeGovFrame%EC%9D%98-webxml-%EC%84%A4%EC%A0%95), [4] (https://velog.io/@wonizizi99/eGovFramework-eGovFramework-4.2-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-web.xml)
+혹시 **특정 필터(예: 한글 필터, 인증 필터 등)**의 설정이나 동작 방식에 대해 더 자세히 알고 싶으신가요? 궁금하신 필터 이름을 알려주시면 설명해 드릴 수 있습니다.
