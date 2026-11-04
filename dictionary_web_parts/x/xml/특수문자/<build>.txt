@@ -1,0 +1,9 @@
+전자정부 표준프레임워크(및 일반적인 자바/스프링/Maven 기반 프로젝트)의 XML 설정 
+파일(예: pom.xml 등)에서 <build> 태그는 프로젝트의 빌드 과정(컴파일, 패키징, 리소스 처리 등)을 어떻게 수행할지 정의하는 영역을 의미합니다. [1] (https://hyemi6017.tistory.com/74)
+
+주요 역할과 특징
+
+• 빌드 설정 정의: 소스 코드 경로, 리소스 파일 위치, 출력 디렉토리 등 빌드에 필요한 기본 경로를 설정합니다.
+• 플러그인(Plugin) 관리: Maven 등을 통해 소스를 컴파일(maven-compiler-plugin), 웹 애플리케이션 아카이브로 패키징(maven-war-plugin), 또는 내장 톰캣 실행(tomcat7-maven-plugin 등)에 필요한 빌드 플러그인과 그 옵션을 지정합니다. [1] (https://hyemi6017.tistory.com/74)
+• 환경별 동작 제어: 자바 컴파일 버전(예: Java 8, Java 17 등)이나 빌드 시 포함하거나 제외할 파일들을 명시하여 일관된 빌드 결과물이 나오도록 제어합니다. [1] (https://www.youtube.com/watch?v=h03dfKrj4bw&t=14), [2] (https://hyemi6017.tistory.com/74)
+더 구체적인 내용을 원하시면, pom.xml 전체 코드를 보여주시거나 궁금한 하위 태그(예: <plugins>, <resources> 등)를 알려주세요.
