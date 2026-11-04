@@ -1,0 +1,21 @@
+전자정부 표준프레임워크(Maven/Gradle 등 빌드 도구를 사용하는 프로젝트)의 pom.xml 파일 안에서 사용되는 <directory> 
+태그는 빌드 결과물(컴파일된 클래스, 패키징된 war/jar 등)이 생성되어 저장될 출력 경로를 지정하는 역할을 합니다. 
+
+주요 의미와 설정 예시
+
+• 기본값: 별도로 지정하지 않으면 Maven 프로젝트의 기본 출력 디렉터리는 프로젝트 루트 기준 target 폴더 (${basedir}/target)입니다. 
+
+• 태그 사용 예시 (pom.xml):xml
+<build>
+    <defaultGoal>install</defaultGoal>
+    <directory>${basedir}/target</directory> <!-- 빌드 결과물이 위치할 디렉토리 지정 -->
+    <finalName>${artifactId}-${version}</finalName>
+</build>
+코드를 사용할 때는 주의가 필요합니다.
+• 의미 및 동작:
+	• mvn clean 명령어를 실행할 때, 이 <directory>에 지정된 폴더 안의 내용물이 전부 삭제(clean)됩니다.
+	• mvn compile이나 mvn package를 실행할 때, 컴파일된 결과물과 빌드 산출물이 이 경로 아래에 생성됩니다.
+	• 필요에 따라 빌드 경로를 변경하고 싶을 때 (예: 다른 폴더명으로 바꾸거나 외부 경로를 지정할 때) <directory> 
+태그 값을 수정하여 사용합니다.
+만약 특정 XML 파일(예: pom.xml이 아닌 Spring 설정 파일이나 MyBatis Mapper 등) 안에서 쓰인 <directory>를 찾으시는 거라면, 
+해당 XML 파일의 위치나 주변 코드 조각을 알려주시면 더 정확하게 확인해 드릴 수 있습니다.
