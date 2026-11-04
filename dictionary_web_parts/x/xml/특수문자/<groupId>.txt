@@ -1,0 +1,27 @@
+
+전자정부 표준프레임워크(및 메이븐(Maven) 기반 프로젝트)의 pom.xml 파일에서 <groupId>는 프로젝트나 라이브러리를 만든 조직(Group), 회사, 혹은 패키지/그룹의 식별자(이름 공간)를 의미합니다. [1] (https://hyemi6017.tistory.com/74)
+
+1. 주요 특징 및 의미
+
+• 고유 그룹 식별: 메이븐 저장소(Maven Repository) 등에서 수많은 라이브러리 중 어떤 조직이나 프로젝트 그룹에 속한 라이브러리인지 구분하는 고유 이름입니다. [1] (https://hyemi6017.tistory.com/74)
+• 역전된 도메인 네이밍 (Reverse Domain Name): 자바 패키지 네이밍 규칙과 비슷하게, 보통 회사나 기관의 도메인 주소를 거꾸로 적는 방식을 많이 사용합니다. (예: egovframework.rte, org.springframework, com.example)
+• 프로젝트 구성 3요소 중 하나: pom.xml에서 프로젝트를 정의할 때 아래의 3가지가 핵심 세트로 사용됩니다:
+	• <groupId>: 프로젝트를 소유한 조직/그룹명 (예: egovframework.rte)
+	• <artifactId>: 그룹 내의 구체적인 프로젝트(모듈) 이름 (예: egovframework.rte.ptl.mvc)
+	• <version>: 해당 라이브러리나 프로젝트의 버전 번호 (예: 3.10.0) [1] (http://210.180.118.83/swkim/crosswalk_back/commit/035990a), [2] (https://hyemi6017.tistory.com/74)
+
+2. 사용 예시
+
+xml
+<dependency>
+    <groupId>egovframework.rte</groupId>
+    <artifactId>egovframework.rte.ptl.mvc</artifactId>
+    <version>3.10.0</version>
+</dependency>
+코드를 사용할 때는 주의가 필요합니다.
+• egovframework.rte: 전자정부 표준프레임워크 실행환경(RunTime Environment) 그룹을 뜻합니다.
+• egovframework.rte.ptl.mvc: 그 그룹 안에서 MVC 프레젠테이션 레이어 기능을 담당하는 개별 라이브러리(Artifact)입니다.
+• 3.10.0: 해당 라이브러리의 버전입니다. [1] (http://210.180.118.83/swkim/crosswalk_back/commit/035990a), [2] (https://hyemi6017.tistory.com/74)
+메이븐은 이 <groupId>, <artifactId>, <version> 조합을 고유 주소(좌표)처럼 사용하여 인터넷이나 로컬 저장소로부터 필요한 라이브러리를 자동으로 찾아 다운로드하고 관리합니다.
+더 자세한 메이븐 설정 구조는 전자정부 표준 프레임워크 - 나라원 또는 관련 가이드 블로그인 Spring 전자정부표준프레임워크에서 Maven, pom.xml 정의와 구성을 참고하실 수 있습니다. [1] (https://nara1.kr/art/framework.htm), [2] (https://hyemi6017.tistory.com/74)
+만약 작성 중인 pom.xml에서 특정 <groupId> 설정 관련하여 에러가 나거나 추가하고 싶은 라이브러리가 있다면, 어떤 라이브러리를 추가하려는지 알려주세요.
