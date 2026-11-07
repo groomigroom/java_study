@@ -1,1 +1,38 @@
+filter
+스프링 시큐리티(Spring Security)에서 필터(Filter)는 
+클라이언트의 요청이 서블릿(DispatcherServlet 등)에 
+도달하기 전과 후에 가로채어 보안(인증 및 인가) 및 
+사전/사후 처리를 수행하는 컴포넌트를 의미합니다. 
+스프링 시큐리티는 자바 웹 표준 기술인 서블릿 필터(Servlet Filter) 
+기반으로 동작합니다.
 
+1. 핵심 의미와 역할
+
+• 요청 가로채기: 클라이언트가 보내는 모든 HTTP 요청이 스프링 
+MVC(컨트롤러)로 가기 전에 가장 먼저 보안 필터들을 거치게 됩니다. 
+• 인증(Authentication) 및 인가(Authorization):
+	• 사용자가 누구인지 확인하고(예: 로그인, JWT 검증, 세션 확인)
+	• 해당 리소스에 접근할 권한이 있는지 검사합니다.
+• 보안 기능 분업: 인증(UsernamePasswordAuthenticationFilter), 
+로그아웃(LogoutFilter), CSRF 방어(CsrfFilter), 
+권한 검사 등 각각의 보안 책임이 개별 필터에 나누어져 있습니다.
+
+2. 동작 구조 (Filter Chain)
+
+• 서블릿 필터와 스프링 시큐리티: 스프링 시큐리티는 DelegatingFilterProxy라는 
+서블릿 필터를 통해 스프링 컨테이너에 등록된 시큐리티 빈(Bean)들을 연결합니다.
+• SecurityFilterChain: 여러 개의 보안 필터가 사슬(Chain)처럼 엮여 순서대로 실행됩니다. 
+• 순서의 중요성: 각 필터는 앞선 필터가 넘겨준 결과나 인증 객체(SecurityContextHolder)를 
+기반으로 동작하기 때문에 필터의 실행 순서가 매우 중요합니다. 
+
+3. 주요 필터 예시
+
+• UsernamePasswordAuthenticationFilter: 아이디/비밀번호 기반 폼 로그인 인증 처리
+• DefaultLoginPageGeneratingFilter: 기본 로그인 페이지 생성
+• LogoutFilter: 로그아웃 요청 처리
+• JwtAuthenticationFilter (커스텀 구현 시): JWT 토큰을 추출하고 검증하여 
+시큐리티 맥락에 사용자 등록 
+스프링 시큐리티 필터에 대해 더 알고 싶으신 부분이 있나요?
+• 특정 필터(예: 인증 필터, JWT 필터 등)의 동작 방식
+• 커스텀 필터를 만드는 방법
+• SecurityFilterChain 설정 방법
