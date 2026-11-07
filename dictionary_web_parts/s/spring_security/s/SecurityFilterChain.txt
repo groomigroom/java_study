@@ -1,0 +1,25 @@
+SecurityFilterChain
+
+
+SecurityFilterChain은 스프링 시큐리티(Spring Security)에서 
+인증(Authentication)과 인가(Authorization)를 처리하기 위해 
+순서대로 동작하는 서블릿 필터(Filter)들의 모음을 뜻합니다. 
+───
+
+주요 역할과 특징
+인증 및 인가 처리: 사용자가 웹 애플리케이션에 요청을 보낼 때, 
+SecurityFilterChain에 속한 여러 필터들이 로그인 검증, JWT/세션 
+확인, 권한 체크 등을 순차적으로 수행합니다. 
+FilterChainProxy와의 관계:FilterChainProxy는 현재 클라이언트의 
+요청이 들어왔을 때, 어떤 SecurityFilterChain을 적용해야 할지 
+RequestMatcher를 통해 결정하고 실행합니다.
+커스텀 설정: 개발자는 @Bean으로 SecurityFilterChain 타입을 
+반환하는 설정 메서드를 만들어 특정 URL 패턴별로 다른 보안 필터 
+체인을 적용하거나, 기본 보안 설정을 커스터마이징할 수 있습니다.
+주요 동작 흐름
+클라이언트가 요청을 보냅니다.
+서블릿 컨테이너의 DelegatingFilterProxy가 요청을 받아 스프링 
+빈으로 등록된 FilterChainProxy에게 작업을 위임합니다.
+FilterChainProxy가 요청에 매칭되는 SecurityFilterChain을 찾습니다.
+체인에 포함된 필터들(UsernamePasswordAuthenticationFilter, 
+AuthorizationFilter 등)이 순차적으로 실행되어 인증 및 인가 처리를 진행합니다. 
