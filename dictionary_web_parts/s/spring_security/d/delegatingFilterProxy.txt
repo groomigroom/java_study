@@ -1,1 +1,43 @@
-delegatingFilterProxy
+delegatingFilterProxy 
+가 스프링 시큐리티에서 의미?
+
+스프링 시큐리티에서 DelegatingFilterProxy는 
+서블릿 컨테이너(Servlet Container)와 스프링 IoC 컨테이너(Spring ApplicationContext)를 
+연결해 주는 다리(가교) 역할을 하는 표준 서블릿 필터입니다.
+
+1. 핵심 의미와 역할
+
+• 서블릿 컨테이너와 스프링 빈의 연결
+서블릿 필터(javax.servlet.Filter / jakarta.servlet.Filter)는 
+원래 서블릿 컨테이너(Tomcat 등)에서 관리되기 때문에, 
+스프링 IoC 컨테이너가 관리하는 스프링 빈(Bean)을 직접 주입받거나 사용할 수 없습니다. 
+이 문제를 해결하기 위해 등장한 대리자(Proxy) 필터가 바로 DelegatingFilterProxy입니다.
+• 실제 보안 처리를 하지 않는 위임자
+DelegatingFilterProxy 자체는 어떤 보안 로직이나 인증/인가 처리를 직접 수행하지 않습니다. 
+대신 클라이언트의 요청을 가로채서, 스프링 컨테이너에 등록된 
+실제 보안 필터 빈인 FilterChainProxy(보통 springSecurityFilterChain 
+이라는 이름의 빈)에 요청을 위임합니다.
+
+2. 작동 흐름 요약
+
+1. 요청 발생: 클라이언트가 서버로 HTTP 요청을 보냅니다.
+2. 서블릿 필터 진입: 서블릿 컨테이너에 등록된 DelegatingFilterProxy가 요청을 
+가장 먼저 가로챕니다.
+3. 빈 검색 및 위임: DelegatingFilterProxy는 스프링 애플리케이션 컨텍스트에서 
+springSecurityFilterChain이라는 이름으로 등록된 FilterChainProxy 빈을 찾아 실행합니다.
+4. 시큐리티 필터 체인 실행: FilterChainProxy 내부에서 설정된 여러 
+SecurityFilterChain(인증, 인가, CSRF 등)을 거쳐 보안 처리를 수행합니다.
+
+3. 왜 이렇게 구조가 되어 있을까?
+
+• 서블릿 컨테이너는 스프링이 뜨기 전에(또는 독립적으로) 초기화되므로 서블릿 
+필터 규격만 알지 스프링 빈의 존재를 모릅니다.
+• DelegatingFilterProxy를 서블릿 컨테이너에 표준 필터로 등록해 두고, 
+실제 무거운 시큐리티 로직은 스프링 빈으로 관리되는 FilterChainProxy 및 
+하위 필터들에 위임함으로써 스프링의 DI/AOP 등 강력한 기능을 보안 필터에서도 
+온전히 활용할 수 있게 됩니다.
+관련 설정 및 자동 등록 과정은 Spring Security - DelegatingFilterProxy 
+또는 DelegatingFilterProxy - Spring Security 블로그 글 등에서 더 자세히 
+확인할 수 있습니다.
+스프링 시큐리티의 전체 필터 구조(FilterChainProxy와 내부 SecurityFilterChain들의 
+동작 방식)나 특정 보안 필터의 역할에 대해 더 알고 싶으시면 편하게 말씀해 주세요.
