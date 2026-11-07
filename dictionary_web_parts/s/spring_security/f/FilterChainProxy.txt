@@ -1,0 +1,20 @@
+FilterChainProxy는 Spring Security에서 모든 보안 필터(Security Filters)를 총괄하고 실행하는 핵심적인 Filter 구현체입니다.
+
+
+1. 주요 역할과 의미
+
+• 보안 필터들의 총괄 관리자:
+서블릿 컨테이너(Servlet Container)의 표준 Filter 생명주기와 Spring의 ApplicationContext를 연결해 주는 DelegatingFilterProxy로부터 요청을 받아, 실제 Spring Security가 동작하도록 여러 보안 필터(SecurityFilterChain)를 실행합니다. [1] (https://alstn113.tistory.com/51), [2] (https://memodayoungee.tistory.com/134), [3] (https://ai-back-end.tistory.com/33)
+• 다중 SecurityFilterChain 관리:
+하나의 애플리케이션 내에서 요청 경로(URL Pattern, RequestMatcher)에 따라 서로 다른 보안 정책(예: /api/**와 /admin/**에 서로 다른 인증/인가 규칙 적용)을 가질 수 있도록, 여러 개의 SecurityFilterChain을 묶고 관리합니다. [1] (https://alstn113.tistory.com/51), [2] (https://velog.io/@dbfla0628/Spring-Security-2.-FilterChainProxy)
+• 위임(Delegation) 구조:
+요청이 오면 RequestMatcher를 이용해 현재 요청에 맞는 SecurityFilterChain을 찾아내고, 그 안에 포함된 필터 목록을 VirtualFilterChain을 통해 순차적으로 실행합니다. [1] (https://alstn113.tistory.com/51)
+
+2. 작동 흐름 (요청이 들어왔을 때)
+
+1. 클라이언트 요청 → 서블릿 컨테이너
+2. DelegatingFilterProxy (서블릿 컨테이너에 등록된 표준 필터)가 요청을 가로챔
+3. 스프링 빈으로 등록된 FilterChainProxy에 실제 처리를 위임함
+4. FilterChainProxy가 요청 URL을 분석하여 적합한 SecurityFilterChain을 선택함
+5. 해당 체인에 속한 여러 보안 필터들(예: UsernamePasswordAuthenticationFilter, FilterSecurityInterceptor 등)을 차례대로 실행함 [1] (https://0soo.tistory.com/136), [2] (https://memodayoungee.tistory.com/134), [3] (https://ai-back-end.tistory.com/33), [4] (https://alstn113.tistory.com/51), [5] (https://velog.io/@dbfla0628/Spring-Security-2.-FilterChainProxy)
+Spring Security의 구체적인 필터 동작 순서나 SecurityFilterChain을 직접 커스텀(설정)하는 방법에 대해 알고 싶다면 편하게 말씀해 주세요.
