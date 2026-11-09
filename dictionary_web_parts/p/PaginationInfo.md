@@ -53,6 +53,7 @@
 | `getLastRecordIndex()` | DB 조회에 사용할 마지막 레코드 인덱스 |
 | `getFirstPageNoOnPageList()` | 페이지 번호 목록의 시작 번호 |
 | `getLastPageNoOnPageList()` | 페이지 번호 목록의 마지막 번호 |
+| `getRecordCountPerPage()` | 페이지당 게시글 개수를 가져옵니다. |
 
 정확한 필드와 메서드는 사용하는 전자정부 프레임워크 버전의 소스 코드를 기준으로 확인하면 됩니다.
 
