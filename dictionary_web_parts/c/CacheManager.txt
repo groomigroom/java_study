@@ -1,1 +1,33 @@
+스프링 부트(Spring Boot)에서 org.springframework.cache.CacheManager는 
+애플리케이션 전반의 캐시(Cache)를 관리하고 조율하는 핵심 인터페이스(추상화 계층)를 의미합니다.
+
+1. 주요 역할과 의미
+
+• 캐시 추상화(PSA, Portable Service Abstraction):
+스프링은 특정 캐시 기술(Redis, Caffeine, EhCache 등)에 종속되지 않고
+동일한 방식으로 캐시를 다룰 수 있게 추상화를 제공합니다. CacheManager는 이 추상화 구조의 중심에 있습니다. 
+
+• 캐시 저장소(Cache)들의 관리자:
+CacheManager는 이름(name)별로 여러 개의 개별 Cache 인스턴스를 생성하고 조회하며 관리합니다.
+
+• 어노테이션과의 연동:
+@Cacheable, @CachePut, @CacheEvict 같은 캐시 어노테이션을 메서드에 붙여 사용할 때, 
+스프링 AOP가 내부적으로 빈으로 등록된 CacheManager를 찾아 캐시 데이터를 저장하거나 읽어옵니다.
+
+2. 주요 구현체 종류
+
+사용하려는 캐시 전략에 따라 CacheManager의 구현체를 선택하거나 스프링 부트가 자동 설정(Auto-configuration)해 줍니다: 
+
+• ConcurrentMapCacheManager: 로컬 메모리 기반 (기본/간단한 테스트용, ConcurrentHashMap 사용)
+• CaffeineCacheManager: 고성능 로컬 캐시 라이브러리인 Caffeine을 사용할 때 적용
+• RedisCacheManager: 외부 Redis 서버를 글로벌/분산 캐시로 사용할 때 적용
+• SimpleCacheManager: 개발자가 직접 커스텀한 Cache 컬렉션을 등록해서 사용할 때 사용
+• CompositeCacheManager: 여러 개의 CacheManager를 조합해서 사용할 때 사용 
+
+3. 동작 방식 요약
+
+1. 설정 파일(application.yml 등)이나 Java @Configuration 클래스에 @EnableCaching을 선언합니다.
+2. 사용할 캐시 구현체에 맞게 CacheManager 빈(Bean)을 등록합니다.
+3. 비즈니스 로직 메서드에 @Cacheable("myCache") 등을 붙이면, 스프링이 CacheManager에게 "myCache"라는 
+이름의 캐시 공간을 요청하여 데이터를 저장·조회합니다.
 
