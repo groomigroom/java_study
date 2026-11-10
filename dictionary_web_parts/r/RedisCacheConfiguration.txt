@@ -1,0 +1,20 @@
+org.springframework.data.redis.cache.RedisCacheConfiguration은 스프링 부트에서 Redis를 캐시(Cache) 저장소로 사용할 때, 캐시의 개별 동작 방식과 정책을 설정하기 위한 핵심 클래스입니다. [1] (https://docs.spring.io/spring-data/redis/reference/redis/redis-cache.html), [2] (https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/cache/RedisCacheConfiguration.html)
+
+주요 역할과 의미
+
+스프링 부트에서 @Cacheable 같은 캐시 어노테이션을 사용할 때, 기본 설정을 그대로 쓰면 자바 기본 직렬화(JdkSerializationRedisSerializer)를 사용하거나 만료 시간(TTL)이 설정되지 않는 등 운영 환경에 맞지 않는 경우가 많습니다. [1] (https://medium.com/@AlexanderObregon/using-spring-boot-with-redis-for-caching-and-data-storage-53f3f8d971fb), [2] (https://docs.spring.io/spring-data/redis/reference/redis/redis-cache.html)
+이때 RedisCacheConfiguration을 이용해 다음과 같은 상세 동작을 커스터마이징합니다: [1] (https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/cache/RedisCacheConfiguration.html)
+1. TTL (Time-To-Live, 캐시 만료 시간) 설정
+	• 데이터가 Redis에 언제까지 살아있을지(entryTtl(Duration)) 지정합니다. [1] (https://docs.spring.io/spring-data/redis/reference/redis/redis-cache.html), [2] (https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/cache/RedisCacheConfiguration.html)
+2. 직렬화 방식 (Serializer) 변경
+	• 자바 기본 직렬화 대신 JSON 형태 등으로 데이터를 변환하여 저장 및 조회하도록(serializeKeysWith(), serializeValuesWith()) 설정합니다.
+	• (예: StringRedisSerializer, GenericJackson2JsonRedisSerializer 등 사용) [1] (https://deveric.tistory.com/98), [2] (https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/cache/RedisCacheConfiguration.html), [3] (https://medium.com/@AlexanderObregon/using-spring-boot-with-redis-for-caching-and-data-storage-53f3f8d971fb)
+3. Null 값 캐싱 여부 제어
+	• 메서드가 null을 반환했을 때 이를 캐싱할 것인지 말 것인지(disableCachingNullValues()) 결정합니다. [1] (https://zkdlu.github.io/2020-12-29/redis03-spring-boot%EC%97%90%EC%84%9C-Cache%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/)
+4. 캐시 키(Key) 접두사(Prefix) 설정
+	• Redis에 저장되는 키의 이름 앞쪽에 고유한 접두사를 붙여 네임스페이스를 관리합니다(computePrefixWith()). [1] (https://zkdlu.github.io/2020-12-29/redis03-spring-boot%EC%97%90%EC%84%9C-Cache%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/)
+
+코드 사용 예시
+
+RedisCacheManager를 빈으로 등록할 때 RedisCacheConfiguration.defaultCacheConfig()를 호출하여 키/값 직렬화 방식, TTL(예: 10분), Null 값 캐싱 방지 등을 설정합니다. 전체 설정 코드 및 상세 API 명세는 Spring Data Redis 공식 문서를 참고하시기 바랍니다. [1] (https://docs.spring.io/spring-data/redis/reference/redis/redis-cache.html), [2] (https://deveric.tistory.com/98)
+혹시 특정 캐시 이름별로 서로 다른 만료 시간(TTL)을 설정하는 방법이나, JSON 직렬화 시 발생하는 이슈를 해결하고 싶으신가요?
