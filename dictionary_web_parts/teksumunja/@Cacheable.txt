@@ -1,7 +1,8 @@
+org.springframework.cache.annotation.Cacheable;
+
 전자정부프레임워크(기반이 되는 스프링 프레임워크)에서 @Cacheable 어노테이션은 
 메서드의 실행 결과를 캐시(Cache)에 저장하고, 이후 동일한 요청이 들어오면 메서드를 직접 실행하지 않고 
-저장해 둔 캐시 데이터를 곧바로 반환하는 기능을 의미합니다. [1] (https://adjh54.tistory.com/165), 
-[2] (https://hyeri0903.tistory.com/237), [3] (https://www.coddykit.com/ko/courses/spring_boot/the-spring-cache-abstraction-fundamentals-9298344)
+저장해 둔 캐시 데이터를 곧바로 반환하는 기능을 의미합니다. 
 
 주요 동작 방식
 
