@@ -1,1 +1,23 @@
+스프링 부트(Spring Boot)에서 org.springframework.data.redis.cache.RedisCacheManager는 스프링의 캐시 추상화(Spring Cache Abstraction) 기술을 Redis와 연동하여 관리해 주는 핵심 구현체입니다. [1] (https://velog.io/@ddings73/Redis-Cache), [2] (https://velog.io/@nam___yejun/Spring-Boot%EC%99%80-%EC%BA%90%EC%8B%B1)
 
+1. 주요 의미와 역할
+
+• 스프링 캐시 추상화 연동: 스프링은 @Cacheable, @CachePut, @CacheEvict 같은 **어노테이션 기반 캐싱**을 지원합니다. 기본값은 메모리 기반(ConcurrentMapCacheManager)이지만, RedisCacheManager`를 등록하면 캐시 저장소를 메모리가 아닌 Redis로 변경할 수 있습니다. [1] (https://jforj.tistory.com/425), [2] (https://2021-pick-git.github.io/spring-cache-with-redis/)
+• 비즈니스 코드와 캐시 로직의 분리: RedisTemplate이나 RedisRepository를 직접 사용하면 데이터를 넣고 빼는 코드가 비즈니스 로직(Service 등)에 직접 노출됩니다. 반면 RedisCacheManager를 사용하면 메서드 위에 어노테이션만 붙여도 Redis에 자동으로 데이터가 저장되고 조회됩니다. [1] (https://jforj.tistory.com/425)
+• 캐시 설정 관리: 캐시의 만료 시간(TTL, Time-To-Live), 키/값 직렬화(Serialization) 방식, 캐시 이름별 기본 설정 등을 RedisCacheManager를 통해 정의할 수 있습니다. [1] (https://tech.codedream.co.kr/17), [2] (https://assu10.github.io/dev/2023/10/07/springboot-redis-4/)
+
+2. 작동 방식 요약
+
+1. 설정 등록 (@EnableCaching & CacheManager Bean):
+	• 스프링 부트 설정 클래스에 @EnableCaching을 선언하고, RedisConnectionFactory를 주입받아 RedisCacheManager 빈(Bean)을 생성합니다. [1] (https://velog.io/@nam___yejun/Spring-Boot%EC%99%80-%EC%BA%90%EC%8B%B1)
+2. 어노테이션 사용:java
+@Cacheable(value = "userCache", key = "#id")
+public User getUserById(Long id) {
+    return userRepository.findById(id).orElse(null);
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+	• 위 메서드가 호출되면 스프링은 RedisCacheManager를 통해 userCache::id 형태의 키가 Redis에 존재하는지 먼저 확인합니다.
+	• Cache Hit (데이터가 있으면): Redis에서 바로 값을 반환하여 DB 조회를 생략합니다.
+	• Cache Miss (데이터가 없으면): 실제 메서드 로직을 실행해 DB에서 데이터를 가져온 후, 결과를 Redis에 저장하고 사용자에게 반환합니다. [1] (https://yozm.wishket.com/magazine/detail/2296/)
+만약 RedisCacheManager를 프로젝트에 적용할 때 TTL(만료 시간) 설정 방법이나 객체 직렬화(JSON 변환) 설정 코드 예시가 필요하시다면 편하게 말씀해 주세요.
