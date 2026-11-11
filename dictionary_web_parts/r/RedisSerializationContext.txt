@@ -1,1 +1,26 @@
+스프링 부트(Spring Boot)에서 org.springframework.data.redis.serializer.RedisSerializationContext는 Redis에 데이터를 저장(직렬화, Serialize)하고, 읽어올 때(역직렬화, Deserialize) 어떤 형식과 규칙을 사용할지 설정하기 위한 컨텍스트(설정 묶음) 클래스입니다. [1] (https://seungwontech.tistory.com/114), [2] (https://medium.com/hanni-dev/spring-redis-serializer%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%A0%81%EC%9A%A9%ED%95%B4%EC%95%BC%ED%95%A0%EA%B9%8C-b72cd0907efd)
 
+1. 주요 의미와 역할
+
+• 직렬화/역직렬화 방식 정의: 자바 객체(Object)를 Redis에 그대로 넣을 수 없기 때문에 바이트 배열이나 JSON, String 등으로 변환해야 합니다. 이 클래스는 Key, Value, HashKey, HashValue 등을 각각 어떤 Serializer로 처리할지 지정합니다.
+• Spring Cache(RedisCacheManager) 설정 시 핵심 구성요소: 스프링에서 @Cacheable 같은 캐시 어노테이션을 쓰면서 Redis를 캐시 저장소로 쓸 때, RedisCacheConfiguration을 만들면서 직렬화 방식을 지정할 때 이 Context를 활용합니다.
+
+2. 주로 함께 쓰이는 Serializer 종류
+
+RedisSerializationContext 내부에서 지정하는 대표적인 Serializer들은 다음과 같습니다.
+• StringRedisSerializer: 문자열(String) 그대로 저장합니다. (주로 Redis의 Key에 많이 사용됨)
+• GenericJackson2JsonRedisSerializer 또는 Jackson2JsonRedisSerializer: 자바 객체를 JSON 형태로 변환해서 저장합니다. 객체의 타입 정보도 함께 저장되거나 파싱할 수 있습니다. (주로 Value에 사용됨) [1] (https://seungwontech.tistory.com/114)
+• JdkSerializationRedisSerializer: 자바 기본 직렬화 메커니즘을 사용합니다. (성능이나 타 언어와의 호환성 문제로 실무에서는 JSON 방식을 더 선호합니다)
+
+3. 코드 사용 예시 (개념적 구조)
+
+스프링 부트의 Cache 설정 클래스 등에서 아래와 같은 방식으로 사용됩니다: [1] (https://assu10.github.io/dev/2023/10/07/springboot-redis-4/)
+java
+RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+    // Key를 문자열로 직렬화
+    .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+    // Value를 JSON으로 직렬화
+    .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
+코드를 사용할 때는 주의가 필요합니다.
+• 참고 블로그 링크: Spring Boot - Redis 와 스프링 캐시(4): 스프링 프레임워크 Cache [1] (https://assu10.github.io/dev/2023/10/07/springboot-redis-4/)
+만약 현재 작성 중인 Redis 설정 코드나 에러 내용을 공유해 주시면, 직렬화(Serializer) 설정 부분이 올바르게 작성되었는지 함께 확인해 드릴 수 있습니다.
