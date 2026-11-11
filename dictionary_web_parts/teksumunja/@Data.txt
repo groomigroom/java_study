@@ -1,3 +1,4 @@
+lombok.Data;
 스프링 부트(Spring Boot)에서 자바 라이브러리인 Lombok의 @Data 어노테이션은 반복적으로 작성해야 하는 보일러플레이트(Boilerplate) 코드를 자동으로 생성해 주는 종합 패키지 어노테이션을 의미합니다. [1] (https://wikidocs.net/436972), [2] (https://ittrue.tistory.com/239), [3] (https://djcho.github.io/springboot/spring-boot-chapter6-11/)
 
 1. @Data가 자동으로 생성해 주는 것들
