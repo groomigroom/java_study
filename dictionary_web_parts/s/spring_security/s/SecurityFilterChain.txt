@@ -23,3 +23,70 @@ RequestMatcher를 통해 결정하고 실행합니다.
 FilterChainProxy가 요청에 매칭되는 SecurityFilterChain을 찾습니다.
 체인에 포함된 필터들(UsernamePasswordAuthenticationFilter, 
 AuthorizationFilter 등)이 순차적으로 실행되어 인증 및 인가 처리를 진행합니다. 
+
+-============---------------------------------------------0-=0-=0-=0-0=-0-0-=0-=0=-0-=0-=
+
+
+Spring Boot 3 이상(Spring Security 6.x)부터는 기존의 WebSecurityConfigurerAdapter 방식이 완전히deprecated 되었으며, 대신 SecurityFilterChain 빈(Bean)을 등록하여 보안 설정을 구성합니다. [1] (https://xooxpeak.tistory.com/entry/126-Spring-security-%EC%BD%94%EB%93%9C)
+아래는 Spring Boot 및 Spring Security에서 SecurityFilterChain을 사용하는 기본 예제 코드입니다.
+
+SecurityFilterChain 설정 예제 코드
+
+java
+package com.example.security.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity // Spring Security 활성화
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            // CSRF 보호 비활성화 (REST API 등의 경우 주로 사용)
+            .csrf(AbstractHttpConfigurer::disable)
+            
+            // HTTP 요청에 대한 인가(Authorization) 규칙 설정
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/public/**", "/login", "/register").permitAll() // 누구나 접근 가능
+                .requestMatchers("/api/admin/**").hasRole("ADMIN") // 'ADMIN' 역할을 가진 경우만 접근 가능
+                .anyRequest().authenticated() // 그 외의 모든 요청은 인증(로그인) 필요
+            )
+            
+            // 폼 로그인 설정
+            .formLogin(form -> form
+                .loginPage("/login") // 커스텀 로그인 페이지 경로 (선택 사항)
+                .defaultSuccessUrl("/home", true) // 로그인 성공 시 이동할 페이지
+                .permitAll()
+            )
+            
+            // 로그아웃 설정
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+            );
+
+        return http.build();
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+주요 변경 및 특징 설명
+
+1. @Bean public SecurityFilterChain securityFilterChain(HttpSecurity http)
+	• 기존 방식과 달리 상속(extends WebSecurityConfigurerAdapter) 없이 메서드로 빈을 직접 등록합니다. [1] (https://xooxpeak.tistory.com/entry/126-Spring-security-%EC%BD%94%EB%93%9C)
+2. 람다 기반 설정 (Lambda-dsl)
+	• Spring Security 5.7+ 및 6.x 버전부터는 .csrf().disable() 같은 체이닝 방식 대신 http.csrf(auth -> auth.disable()) 형태의 람다식 설정을 표준으로 사용합니다.
+3. requestMatchers() 사용
+	• 기존의 antMatchers(), mvcMatchers(), regexMatchers() 등이 requestMatchers()로 통합되었습니다. [1] (https://xooxpeak.tistory.com/entry/126-Spring-security-%EC%BD%94%EB%93%9C)
+4. http.build()
+	• 설정이 완료된 HttpSecurity를 http.build()를 호출하여 SecurityFilterChain 객체로 반환해 스프링 빈으로 등록합니다.
+공식 문서 및 상세 아키텍처는 Spring Security Architecture 문서에서 확인할 수 있습니다. [1] (https://docs.spring.io/spring-security/reference/servlet/architecture.html)
+현재 프로젝트에서 JWT 기반 인증, OAuth2 소셜 로그인, 또는 CORS 설정 등 추가로 구현해야 하는 보안 요구사항이 있다면 편하게 말씀해 주세요.
