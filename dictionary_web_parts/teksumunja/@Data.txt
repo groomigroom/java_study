@@ -1,0 +1,20 @@
+스프링 부트(Spring Boot)에서 자바 라이브러리인 Lombok의 @Data 어노테이션은 반복적으로 작성해야 하는 보일러플레이트(Boilerplate) 코드를 자동으로 생성해 주는 종합 패키지 어노테이션을 의미합니다. [1] (https://wikidocs.net/436972), [2] (https://ittrue.tistory.com/239), [3] (https://djcho.github.io/springboot/spring-boot-chapter6-11/)
+
+1. @Data가 자동으로 생성해 주는 것들
+
+@Data는 내부에 여러 개별 Lombok 어노테이션을 하나로 묶어둔 것입니다: [1] (https://medium.com/mo-zza/data-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC-%EB%90%98%EB%82%98-34d04fb23fea), [2] (https://ittrue.tistory.com/239)
+• @Getter / @Setter: 모든 필드의 Getter와 Setter 메서드를 자동으로 만들어 줍니다 (final 필드는 Setter가 생성되지 않음).
+• @ToString: 클래스 이름과 필드명, 값을 문자열로 출력해 주는 toString() 메서드를 생성합니다.
+• @EqualsAndHashCode: 객체의 동등성(equals)과 해시코드(hashCode) 비교를 위한 메서드를 생성합니다.
+• @RequiredArgsConstructor: 초기화되지 않은 final 필드나 @NonNull이 붙은 필드를 매개변수로 받는 생성자를 생성합니다. [1] (https://cn-c.tistory.com/76), [2] (https://velog.io/@tjfdbfls/SpringBoot-Lombok-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-Data-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-getter-setter-%EC%9D%B8%EC%8B%9D-%EC%95%88%EB%90%A0%EB%95%8C), [3] (https://ittrue.tistory.com/239)
+
+2. 사용 시 주의할 점 (Entity vs DTO)
+
+스프링 부트 개발에서 @Data는 편리하지만 무분별하게 사용하면 부작용이 발생할 수 있습니다: [1] (https://medium.com/mo-zza/data-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC-%EB%90%98%EB%82%98-34d04fb23fea)
+• DTO / VO 객체에 사용: 데이터 전달 목적의 클래스(DTO)에는 코드를 크게 줄여주어 유용하게 쓰입니다. [1] (https://wikidocs.net/436972), [2] (https://medium.com/mo-zza/data-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC-%EB%90%98%EB%82%98-34d04fb23fea)
+• JPA 엔티티(Entity)에는 사용 주의:
+	• @EqualsAndHashCode가 엔티티의 모든 필드를 기준으로 구현되기 때문에, 양방향 연관관계가 있는 엔티티 간에 무한 루프(StackOverflowError)나 성능 저하를 일으킬 수 있습니다.
+	• @Setter가 남용되면 엔티티의 상태가 어디서든 변경될 수 있어 객체지향의 무결성이 깨지기 쉽습니다.
+	• 따라서 엔티티에는 @Data 대신 필요한 어노테이션(@Getter, @NoArgsConstructor 등)만 골라서 쓰는 것이 권장됩니다. [1] (https://medium.com/mo-zza/data-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC-%EB%90%98%EB%82%98-34d04fb23fea)
+관련 설정 및 가이드는 위키독스 스프링 부트 입문에서 자세히 확인할 수 있습니다. [1] (https://wikidocs.net/436972)
+혹시 현재 작성 중인 코드(Entity 혹은 DTO)에 @Data를 적용하려다 생긴 구체적인 문제나 궁금증이 있으신가요? 상황을 알려주시면 더 적합한 어노테이션 조합을 추천해 드릴 수 있습니다.
