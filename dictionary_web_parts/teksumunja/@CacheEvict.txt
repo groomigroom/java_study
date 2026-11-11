@@ -1,7 +1,5 @@
 @CacheEvict는 전자정부프레임워크(기반이 되는 스프링 프레임워크)에서 캐시(Cache)에 저장된 
 데이터를 삭제할 때 사용하는 어노테이션입니다.
-[1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:fdl:cache_abstraction), 
-[2] (https://baek-dev.tistory.com/192)
 
 주요 역할과 동작 방식
 
