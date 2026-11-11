@@ -23,3 +23,89 @@ DelegatingFilterProxy로부터 요청을 받아, 실제 Spring Security가 동�
 5. 해당 체인에 속한 여러 보안 필터들(예: UsernamePasswordAuthenticationFilter, FilterSecurityInterceptor 등)을 
 차례대로 실행함 
 Spring Security의 구체적인 필터 동작 순서나 SecurityFilterChain을 직접 커스텀(설정)하는 방법에 대해 알고 싶다면 편하게 말씀해 주세요.
+
+---------------------------------------------------------------------------------------------------------
+
+Spring Boot에서 FilterChainProxy는 개발자가 직접 new FilterChainProxy(...) 형태로 생성하여 사용하는 경우는 드물며, Spring Security를 설정할 때 SecurityFilterChain 빈을 등록하면 Spring Boot와 Spring Security가 내부적으로 FilterChainProxy(springSecurityFilterChain 이름의 빈)를 자동 구성하여 사용합니다. [1] (https://miintto.github.io/docs/spring-security), [2] (https://velog.io/@simhyunmin/Spring-Security-FilterChainProxy-%EC%83%9D%EC%84%B1-%EA%B3%BC%EC%A0%95), [3] (https://ihj0303.tistory.com/9)
+즉, 사용자는 FilterChainProxy 직접 코딩하는 대신 SecurityFilterChain을 정의함으로써 FilterChainProxy가 해당 체인을 관리하도록 동작시킵니다.
+
+Spring Security 설정 예제 (SecurityFilterChain 등록)
+
+Spring Boot 3.x (Spring Security 6.x 기준)에서 SecurityFilterChain 빈을 등록하는 표준적인 예제입니다. 이 빈이 등록되면 FilterChainProxy가 이를 내부 리스트에 포함하여 요청을 처리합니다. [1] (https://dev-meung.tistory.com/entry/%ED%8C%80-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%95%98%EB%A3%A8%EC%B9%98HARUCHI-Spring-Security%EC%9D%98-%EA%B5%AC%EC%A1%B0Filter-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0), [2] (https://alstn113.tistory.com/51), [3] (https://ihj0303.tistory.com/9)
+java
+package com.example.demo.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            // CSRF 설정 (예시)
+            .csrf(csrf -> csrf.disable())
+            // 경로별 인가 작업
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/public/**", "/login").permitAll()
+                .anyRequest().authenticated()
+            )
+            // 폼 로그인 설정
+            .formLogin(form -> form
+                .loginPage("/login")
+                .permitAll()
+            );
+
+        // SecurityFilterChain 객체 반환 -> 내부적으로 FilterChainProxy에 등록됨
+        return http.build();
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+
+다중 SecurityFilterChain 예제 (FilterChainProxy의 핵심 역할)
+
+FilterChainProxy의 가장 중요한 역할 중 하나는 여러 개의 SecurityFilterChain을 관리하고, 요청 URL이나 조건에 따라 적절한 체인을 선택하는 것입니다. [1] (https://alstn113.tistory.com/51), [2] (https://velog.io/@simhyunmin/Spring-Security-FilterChainProxy-%EC%83%9D%EC%84%B1-%EA%B3%BC%EC%A0%95), [3] (https://ihj0303.tistory.com/9)
+아래처럼 여러 개의 SecurityFilterChain 빈을 정의할 수 있습니다.
+java
+@Configuration
+@EnableWebSecurity
+public class MultiSecurityConfig {
+
+    // 1번 체인: /api/** 경로 전용 (예: stateless JWT 인증 등)
+    @Bean
+    @Order(1)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+        http
+            .securityMatcher("/api/**")
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/public/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf.disable());
+        return http.build();
+    }
+
+    // 2번 체인: 일반 웹 페이지 경로 전용 (예: 세션 기반 폼 로그인)
+    @Bean
+    @Order(2)
+    public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().authenticated()
+            )
+            .formLogin(Customizer.withDefaults());
+        return http.build();
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+• 동작 방식:
+	1. 서블릿 컨테이너의 DelegatingFilterProxy가 요청을 받습니다.
+	2. springSecurityFilterChain 이름으로 등록된 FilterChainProxy에게 요청을 위임합니다.
+	3. FilterChainProxy는 RequestMatcher를 이용해 /api/**에 매칭되는지 확인한 뒤, 첫 번째 apiFilterChain 혹은 두 번째 defaultFilterChain을 골라서 실행합니다. [1] (https://docs.spring.io/spring-security/reference/servlet/architecture.html), [2] (https://velog.io/@simhyunmin/Spring-Security-FilterChainProxy-%EC%83%9D%EC%84%B1-%EA%B3%BC%EC%A0%95), [3] (https://alstn113.tistory.com/51), [4] (https://miintto.github.io/docs/spring-security), [5] (https://ihj0303.tistory.com/9)
+공식 아키텍처 및 상세 구조는 Spring Security Architecture 문서에서 확인할 수 있습니다. [1] (https://docs.spring.io/spring-security/reference/servlet/architecture.html)
+현재 구현하시려는 보안 구조가 JWT 기반의 REST API인가요, 아니면 전통적인 로그인 페이지(Session 기반)인가요? 구체적인 인증 방식을 알려주시면 그에 맞춘 설정 코드를 더 자세히 작성해 드릴 수 있습니다.
