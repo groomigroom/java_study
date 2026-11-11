@@ -1,5 +1,8 @@
-Spring Boot와 Spring Security에서 LogoutFilter는 기본적으로 http.logout() 설정을 통해 자동으로 구성되며, 사용자가 로그아웃 요청을 보낼 때 해당 요청을 가로채 세션 무효화, 쿠키 삭제, 인증 객체 제거 등의 로그아웃 처리를 담당합니다. [1] (https://velog.io/@hajju/Spring-Security-11.-LogoutFilter), [2] (https://catnails.tistory.com/276)
-아래는 Spring Boot 3.x / Spring Security 환경에서 SecurityFilterChain을 통해 Logout 및 LogoutFilter를 설정하고 커스텀 핸들러를 사용하는 예제입니다.
+Spring Boot와 Spring Security에서 LogoutFilter는 기본적으로 http.logout() 설정을 통해 자동으로 구성되며, 
+사용자가 로그아웃 요청을 보낼 때 해당 요청을 가로채 세션 무효화, 쿠키 삭제, 인증 객체 제거 등의 
+로그아웃 처리를 담당합니다. 
+아래는 Spring Boot 3.x / Spring Security 환경에서 SecurityFilterChain을 통해 Logout 및 
+LogoutFilter를 설정하고 커스텀 핸들러를 사용하는 예제입니다.
 
 1. Spring Security 설정 클래스 예제 (SecurityConfig.java)
 
@@ -59,8 +62,13 @@ public class SecurityConfig {
 
 2. LogoutFilter 동작 방식 요약
 
-1. 요청 감지: 클라이언트가 설정된 URL(/logout)로 요청을 보내면 LogoutFilter가 이를 가로챕니다. (기본적으로 POST 요청 방식 사용 권장)
-2. LogoutHandler 실행: 등록된 여러 LogoutHandler들(세션 무효화, 쿠키 삭제, 시큐리티 컨텍스트 클리어 등)이 순차적으로 실행됩니다.
-3. LogoutSuccessHandler 실행: 로그아웃 처리가 완료되면 logoutSuccessUrl로 리다이렉트하거나, 설정한 logoutSuccessHandler를 호출하여 응답을 반환합니다. [1] (https://myvelop.tistory.com/220), [2] (https://techjisu.tistory.com/47), [3] (https://pupupee9.tistory.com/121), [4] (https://yoonbing9.tistory.com/95), [5] (https://goto-pangyo.tistory.com/170), [6] (https://soonmin.tistory.com/162)
-더 자세한 필터 구조와 개념은 Spring Security를 활용한 로그인/로그아웃 기능 구현 또는 Spring Security - 11. LogoutFilter 자료를 참고하실 수 있습니다. [1] (https://velog.io/@wd0930/SpringSecurity%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8%EB%A1%9C%EA%B7%B8%EC%95%84%EC%9B%83-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-2-Security-Filter-Chain), [2] (https://velog.io/@hajju/Spring-Security-11.-LogoutFilter)
-만약 JWT 기반의 무상태(Stateless) 인증에서 커스텀 LogoutFilter를 구현하는 예제가 필요하시거나, 특정 REST API 응답 형태로 로그아웃 처리를 하길 원하시면씀씀씀씀씀씀씀씀 말씀해 주세요.
+1. 요청 감지: 클라이언트가 설정된 URL(/logout)로 요청을 보내면 LogoutFilter가 이를 가로챕니다. 
+(기본적으로 POST 요청 방식 사용 권장)
+2. LogoutHandler 실행: 등록된 여러 LogoutHandler들(세션 무효화, 쿠키 삭제, 시큐리티 컨텍스트 클리어 등)이 
+순차적으로 실행됩니다.
+3. LogoutSuccessHandler 실행: 로그아웃 처리가 완료되면 logoutSuccessUrl로 리다이렉트하거나, 
+설정한 logoutSuccessHandler를 호출하여 응답을 반환합니다. 
+더 자세한 필터 구조와 개념은 Spring Security를 활용한 로그인/로그아웃 기능 구현 또는 Spring Security - 
+11. LogoutFilter 자료를 참고하실 수 있습니다. 
+만약 JWT 기반의 무상태(Stateless) 인증에서 커스텀 LogoutFilter를 구현하는 예제가 필요하시거나, 
+특정 REST API 응답 형태로 로그아웃 처리를 하길 원하시면 말씀해 주세요.
