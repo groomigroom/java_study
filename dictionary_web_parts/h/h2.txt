@@ -1,0 +1,35 @@
+스프링 부트(Spring Boot)에서 H2 데이터베이스는 크게 3가지 방식으로 데이터를 저장 및 운영할 수 있습니다. [1] (https://susuhancodingworld.tistory.com/entry/DBSpring-Boot-Spring-Boot-%EC%97%90%EC%84%9C-H2-DB-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EC%8B%9D-H2-DB-%EC%A0%80%EC%9E%A5-%EB%B0%A9%EC%8B%9D-3%EA%B0%80%EC%A7%80)
+
+1. 인-메모리 모드 (In-Memory Mode) — 기본 설정
+
+• 저장 방식: 모든 데이터가 메모리(RAM)에 저장됩니다. [1] (https://colabear754.tistory.com/193), [2] (https://kotlinworld.com/592)
+• 특징:
+	• 별도의 파일 설정 없이 의존성만 추가하면 스프링 부트가 기본으로 동작시키는 방식입니다.
+	• 애플리케이션이 종료되면 메모리에 있던 데이터가 모두 삭제됩니다 (영구 저장 안 됨). [1] (https://velog.io/@code-10/Spring-Boot-%EC%97%90%EC%84%9C-H2-Docker-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0), [2] (https://colabear754.tistory.com/193), [3] (https://kotlinworld.com/592)
+• JDBC URL 예시: jdbc:h2:mem:testdb [1] (https://turtledev.tistory.com/65), [2] (https://colabear754.tistory.com/193)
+
+2. 임베디드 모드 (Embedded Mode) — 로컬 파일 저장
+
+• 저장 방식: 데이터를 로컬 파일 시스템(.mv.db)에 저장합니다. [1] (https://congsong.tistory.com/46), [2] (https://colabear754.tistory.com/193)
+• 특징:
+	• 애플리케이션이 종료되어도 데이터가 파일에 남아 영구적으로 보존됩니다.
+	• 애플리케이션 내부에서 직접 파일에 접근하므로, 동시에 다른 외부 프로그램에서 접속하면 충돌(Locked)이 발생할 수 있습니다. [1] (https://colabear754.tistory.com/193), [2] (https://congsong.tistory.com/46)
+• JDBC URL 예시: jdbc:h2:~/test (사용자 홈 디렉토리에 파일 생성) 또는 jdbc:h2:./test (프로젝트 루트 경로) [1] (https://kukim.tistory.com/105), [2] (https://congsong.tistory.com/46)
+
+3. 서버 모드 (Server Mode) — 외장 서버 방식
+
+• 저장 방식: H2 데이터베이스를 독립적인 외장 서버 프로세스로 띄우고, 스프링 부트가 TCP 네트워크를 통해 접속합니다. [1] (https://colabear754.tistory.com/193), [2] (https://kukim.tistory.com/105)
+• 특징:
+	• 실제 운영용 데이터베이스(MySQL, PostgreSQL 등)처럼 애플리케이션과 독립적으로 동작합니다.
+	• 여러 애플리케이션이나 외부 클라이언트 Tool이 동시에 접속해도 안전합니다.
+• JDBC URL 예시: jdbc:h2:tcp://localhost/~/test [1] (https://kukim.tistory.com/105)
+
+설정 변경 방법 (application.properties 또는 application.yml)
+
+• 기본 인-메모리 모드로 사용할 때 (따로 설정 안 해도 기본 적용):properties
+spring.datasource.url=jdbc:h2:mem:testdb
+코드를 사용할 때는 주의가 필요합니다.
+• 로컬 파일 영구 저장 모드로 사용할 때 (임베디드):properties
+spring.datasource.url=jdbc:h2:./data/testdb
+코드를 사용할 때는 주의가 필요합니다.
+혹시 현재 진행 중인 프로젝트에서 테스트용(인-메모리)으로 쓰려 하시는지, 아니면 로컬에서 데이터를 유지하는 파일 저장 방식으로 바꾸고 싶으신가요? 목적에 맞는 설정 코드가 필요하시면 말씀해 주세요.
