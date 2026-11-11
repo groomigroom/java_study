@@ -27,7 +27,8 @@ AuthorizationFilter 등)이 순차적으로 실행되어 인증 및 인가 처�
 -============---------------------------------------------0-=0-=0-=0-0=-0-0-=0-=0=-0-=0-=
 
 
-Spring Boot 3 이상(Spring Security 6.x)부터는 기존의 WebSecurityConfigurerAdapter 방식이 완전히deprecated 되었으며, 대신 SecurityFilterChain 빈(Bean)을 등록하여 보안 설정을 구성합니다. [1] (https://xooxpeak.tistory.com/entry/126-Spring-security-%EC%BD%94%EB%93%9C)
+Spring Boot 3 이상(Spring Security 6.x)부터는 기존의 WebSecurityConfigurerAdapter 방식이 
+완전히deprecated 되었으며, 대신 SecurityFilterChain 빈(Bean)을 등록하여 보안 설정을 구성합니다. 
 아래는 Spring Boot 및 Spring Security에서 SecurityFilterChain을 사용하는 기본 예제 코드입니다.
 
 SecurityFilterChain 설정 예제 코드
@@ -81,12 +82,13 @@ public class SecurityConfig {
 주요 변경 및 특징 설명
 
 1. @Bean public SecurityFilterChain securityFilterChain(HttpSecurity http)
-	• 기존 방식과 달리 상속(extends WebSecurityConfigurerAdapter) 없이 메서드로 빈을 직접 등록합니다. [1] (https://xooxpeak.tistory.com/entry/126-Spring-security-%EC%BD%94%EB%93%9C)
+	• 기존 방식과 달리 상속(extends WebSecurityConfigurerAdapter) 없이 메서드로 빈을 직접 등록합니다.
 2. 람다 기반 설정 (Lambda-dsl)
-	• Spring Security 5.7+ 및 6.x 버전부터는 .csrf().disable() 같은 체이닝 방식 대신 http.csrf(auth -> auth.disable()) 형태의 람다식 설정을 표준으로 사용합니다.
+	• Spring Security 5.7+ 및 6.x 버전부터는 .csrf().disable() 같은 체이닝 방식 대신 
+http.csrf(auth -> auth.disable()) 형태의 람다식 설정을 표준으로 사용합니다.
 3. requestMatchers() 사용
-	• 기존의 antMatchers(), mvcMatchers(), regexMatchers() 등이 requestMatchers()로 통합되었습니다. [1] (https://xooxpeak.tistory.com/entry/126-Spring-security-%EC%BD%94%EB%93%9C)
+	• 기존의 antMatchers(), mvcMatchers(), regexMatchers() 등이 requestMatchers()로 통합되었습니다. 
 4. http.build()
 	• 설정이 완료된 HttpSecurity를 http.build()를 호출하여 SecurityFilterChain 객체로 반환해 스프링 빈으로 등록합니다.
-공식 문서 및 상세 아키텍처는 Spring Security Architecture 문서에서 확인할 수 있습니다. [1] (https://docs.spring.io/spring-security/reference/servlet/architecture.html)
+공식 문서 및 상세 아키텍처는 Spring Security Architecture 문서에서 확인할 수 있습니다.
 현재 프로젝트에서 JWT 기반 인증, OAuth2 소셜 로그인, 또는 CORS 설정 등 추가로 구현해야 하는 보안 요구사항이 있다면 편하게 말씀해 주세요.
