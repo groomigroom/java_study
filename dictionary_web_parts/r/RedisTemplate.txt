@@ -1,16 +1,21 @@
-org.springframework.data.redis.core.RedisTemplate은 스프링 부트에서 Java 애플리케이션과 Redis(인메모리 데이터베이스) 간의 상호작용을 쉽고 편리하게 처리하기 위해 제공하는 핵심 템플릿 클래스입니다. [1] (https://jongtachi.tistory.com/174)
-SQL 데이터베이스에서 사용하는 JdbcTemplate이나 JpaRepository와 비슷한 역할을 합니다. [1] (https://jongtachi.tistory.com/174)
+org.springframework.data.redis.core.RedisTemplate은 스프링 부트에서 Java 애플리케이션과 
+Redis(인메모리 데이터베이스) 간의 상호작용을 쉽고 편리하게 처리하기 위해 제공하는 핵심 템플릿 클래스입니다. 
+
+SQL 데이터베이스에서 사용하는 JdbcTemplate이나 JpaRepository와 비슷한 역할을 합니다.
 
 주요 역할과 특징
 
-• 데이터 조작 추상화 및 자동화: 복잡한 Redis 저수준(Low-level) 커맨드를 직접 작성할 필요 없이, 스프링에서 제공하는 직관적인 메서드를 통해 데이터를 읽고 쓸 수 있습니다. [1] (https://adjh54.tistory.com/459), [2] (https://jongtachi.tistory.com/174)
-• 다양한 데이터 구조 지원: String, List, Set, Sorted Set(ZSet), Hash 등 Redis가 제공하는 다양한 자료구조를 쉽게 다룰 수 있도록 API를 제공합니다. [1] (https://adjh54.tistory.com/459), [2] (https://jongtachi.tistory.com/174)
-• 연결 관리 및 직렬화(Serialization): Redis 서버와의 연결(Connection) 관리, 예외 처리, 그리고 Java 객체를 Redis에 저장하기 위한 직렬화/역직렬화 처리(예: JSON, String 변환 등)를 추상화해 줍니다. [1] (https://adjh54.tistory.com/459)
-• 유연한 확장성: Redis의 모든 기능을 세밀하게 제어하거나 커스텀해서 사용해야 할 때 주로 활용됩니다 (단순 CRUD 외에 직접 설정이 필요할 때 유용함). [1] (https://velog.io/@seongm1n/Spring-Boot%EC%97%90%EC%84%9C-Redis-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0), [2] (https://jforj.tistory.com/424)
+• 데이터 조작 추상화 및 자동화: 복잡한 Redis 저수준(Low-level) 커맨드를 직접 작성할 필요 없이, 
+스프링에서 제공하는 직관적인 메서드를 통해 데이터를 읽고 쓸 수 있습니다. 
+• 다양한 데이터 구조 지원: String, List, Set, Sorted Set(ZSet), Hash 등 Redis가 제공하는 다양한 자료구조를 
+쉽게 다룰 수 있도록 API를 제공합니다.
+• 연결 관리 및 직렬화(Serialization): Redis 서버와의 연결(Connection) 관리, 예외 처리, 
+그리고 Java 객체를 Redis에 저장하기 위한 직렬화/역직렬화 처리(예: JSON, String 변환 등)를 추상화해 줍니다.
+• 유연한 확장성: Redis의 모든 기능을 세밀하게 제어하거나 커스텀해서 사용해야 할 때 주로 활용됩니다 (단순 CRUD 외에 직접 설정이 필요할 때 유용함).
 
 스프링 부트에서 쓰이는 방식 (예시)
 
-1. 의존성 추가: build.gradle에 spring-boot-starter-data-redis를 추가하면 스프링 부트가 자동으로 관련 빈들을 구성(Auto-Configuration)해 줍니다. [1] (https://junhyunny.github.io/spring-boot/redis/using-redis-template-on-spring-boot/), [2] (https://yeees.tistory.com/477)
+1. 의존성 추가: build.gradle에 spring-boot-starter-data-redis를 추가하면 스프링 부트가 자동으로 관련 빈들을 구성(Auto-Configuration)해 줍니다. 
 2. 빈(Bean) 주입 및 사용: 서비스 레이어 등에서 RedisTemplate을 주입(DI)받아 opsForValue(), opsForList() 등의 오퍼레이션을 통해 Redis 데이터를 제어합니다.
-3. 실무 활용 사례: JWT 토큰 관리(흑/백리스트), 실시간랭킹(ZSet), 세션 관리, 간단한 데이터 캐싱 등에 자주 사용됩니다. [1] (https://jaemoi8.tistory.com/40), [2] (https://devmg.tistory.com/354)
+3. 실무 활용 사례: JWT 토큰 관리(흑/백리스트), 실시간랭킹(ZSet), 세션 관리, 간단한 데이터 캐싱 등에 자주 사용됩니다.
 만약 RedisTemplate 사용 시 특정 자료구조(List, Hash 등) 활용법이나 StringRedisTemplate과의 차이점, 혹은 직렬화 설정(Serializer)에 대한 구체적인 코드가 필요하시면 말씀해 주세요.
