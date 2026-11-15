@@ -1,1 +1,17 @@
-eGovFramework_CodeGen
+전자정부표준프레임워크(eGovFramework)에서 CodeGen(Code Generation, 코드 생성)은 데이터베이스 테이블 구조나 미리 정의된 템플릿을 바탕으로 반복되는 개발 코드를 자동으로 만들어주는 기능을 의미합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:codegen), [2] (https://github.com/egovframework/egovframe-docs/blob/main/egovframe-development/vscode-implementation-tool/vscode-code-generation-generate-crud-code.md)
+개발 환경(Eclipse 기반 eGovFrame IDE 또는 VS Code 확장 등)의 구현 도구에서 제공하며, 크게 다음과 같은 핵심 기능을 담당합니다: [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:dev3.9:client), [2] (https://github.com/egovframework/egovframe-docs/blob/main/egovframe-development/vscode-implementation-tool/vscode-code-generation-generate-crud-code.md)
+
+주요 기능
+
+• 템플릿 기반 CRUD 코드 자동 생성:
+	• 데이터베이스의 특정 테이블 구조(DDL)를 참조하여 실행 가능한 CRUD(Create, Read, Update, Delete) 프로그램 소스코드를 자동으로 생성합니다.
+	• Java 계층(VO, Service, Controller, Mapper), SQL 매핑 파일(MyBatis XML 등), 화면 뷰 템플릿(JSP, Thymeleaf 등)을 일괄적으로 만들어 줍니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.0:imp:codegen:template), [2] (https://github.com/egovframework/egovframe-docs/blob/main/egovframe-development/vscode-implementation-tool/vscode-code-generation-generate-crud-code.md)
+• Configuration(설정) 파일 자동 생성:
+	• 전자정부 실행환경에서 자주 사용되는 각종 설정 및 프로퍼티 파일을 손쉽게 작성할 수 있도록 돕습니다. (예: 데이터소스, 트랜잭션, 캐시, ID 생성기(UUID, Sequence, Table 등), 로깅, 스케줄링(Cron Trigger) 설정 등) [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:codegen:template:config:cron_trigger), [2] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:codegen:template:config:uuid_idgen), [3] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:dev:imp:codegen:template:config:sequence_idgen), [4] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.0:imp:codegen:template)
+
+사용 목적 및 장점
+
+• 반복 작업 감소: 단순하고 반복적인 보일러플레이트(boilerplate) 코드 작성을 줄여 개발 시간을 크게 단축합니다.
+• 표준 준수: 사람이 직접 코딩할 때 발생할 수 있는 휴먼 에러를 방지하고, 전자정부 표준프레임워크의 아키텍처 규칙과 레이어 구조를 일관되게 유지하도록 지원합니다. [1] (https://velog.io/@dahyeon6v6/Code-Generation), [2] (https://github.com/egovframework/egovframe-docs/blob/main/egovframe-development/vscode-implementation-tool/vscode-code-generation-generate-crud-code.md)
+자세한 사용법과 템플릿 설정 가이드는 표준프레임워크 포털 Code Generation 위키에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:codegen)
+혹시 특정 테이블을 기반으로 CRUD 코드를 생성하는 방법이나 특정 Configuration 파일(ID 생성, 로깅 등) 설정 방법에 대해 더 자세한 가이드가 필요하신가요?
