@@ -11,10 +11,15 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // JButton 생성
+        JButton button = new JButton("click now");
         
 
         // 버튼에 ActionListener 등록
-        
+        button.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("button button");
+            }
+        });
 
         // 버튼을 프레임에 추가
         
