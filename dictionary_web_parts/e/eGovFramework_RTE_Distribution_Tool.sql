@@ -5,7 +5,10 @@
 
 주요 역할 및 의미
 
-• 실행환경(RTE) 라이브러리 패키지 관리. 전자정부표준프레임워크는 화면처리, 업무처리, 데이터처리 등 기능별로 수많은 라이브러리(egovframework.rte.*)를 제공합니다. RDT는 이 라이브러리들의 버전과 의존성을 체계적으로 묶어 관리하는 역할을 합니다. [1] (https://www.egovframe.go.kr/home/sub.do?menuNo=25), [2] (https://www.egovframe.go.kr/eng/ntt/nttRead.do?pagerOffset=0&maxPageItems=10&maxIndexPages=5&searchKey=&searchValue=&menuNo=19&bbsId=100&nttId=1861), [3] (https://www.egovframe.go.kr/eng/ntt/nttRead.do?pagerOffset=0&searchKey=&searchValue=&menuNo=19&bbsId=100&nttId=1857), [4] (https://egovframe.go.kr/eng/ntt/nttRead.do?menuNo=21&bbsId=101&nttId=1427)
+• 실행환경(RTE) 라이브러리 패키지 관리. 전자정부표준프레임워크는 화면처리, 업무처리, 데이터처리 등 기능별로 수많은 
+  라이브러리(egovframework.rte.*)를 제공합니다. RDT는 이 라이브러리들의 버전과 의존성을 체계적으로 
+  묶어 관리하는 역할을 합니다.
+  
 • 프로젝트 적용 및 배포 편의성 제공. 개발자가 일일이 수동으로 필요한 라이브러리(JAR 파일 등)를 찾거나 설정하지 않아도, 개발 도구(IDE) 내에서 프로젝트에 필요한 실행환경 구성을 손쉽게 선택하여 적용할 수 있게 해줍니다. [1] (https://egovframe.go.kr/eng/ntt/nttRead.do?menuNo=21&bbsId=101&nttId=1427), [2] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/)
 • 개발환경(Implementation Tool)의 핵심 구성요소. 표준프레임워크 포털에서 배포하는 개발자용 개발환경(Implementation Tool) 패키지에는 코드 에디터, 프로젝트 생성 마법사, 모바일 IDE, 배치 IDE 등과 함께 RDT가 기본 플러그인 형태로 포함되어 있습니다. [1] (https://egovframe.go.kr/eng/ntt/nttRead.do?menuNo=21&bbsId=101&nttId=1427), [2] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/)
 
