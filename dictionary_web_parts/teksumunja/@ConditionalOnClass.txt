@@ -1,0 +1,20 @@
+스프링 부트(Spring Boot)에서 @ConditionalOnClass 어노테이션은 특정 클래스가 클래스패스(Classpath)에 존재할 때만 해당 빈(Bean) 정의나 자동 설정(Auto-Configuration)이 활성화되도록 만드는 조건부 어노테이션입니다. [1] (https://hirlawldo.tistory.com/237), [2] (https://velog.io/@yuno1012/ConditionalOnClass)
+
+주요 특징 및 의미
+
+• 클래스패스 검사: 어노테이션의 인자로 지정한 클래스(예: ObjectMapper.class 등)가 프로젝트의 의존성(Classpath)에 포함되어 있는지 확인합니다.
+• 조건 만족 시 동작: 지정된 클래스가 존재하면, 스프링 부트는 해당 @Configuration 클래스나 @Bean을 정상적으로 등록합니다.
+• 조건 미달 시 동작: 클래스가 클래스패스에 없으면 해당 설정은 무시(skip)됩니다. [1] (https://lob-dev.tistory.com/34), [2] (https://scshim.tistory.com/420), [3] (https://velog.io/@yuno1012/ConditionalOnClass)
+
+활용 예시
+
+스프링 부트의 자동 설정(Auto-Configuration) 메커니즘에서 핵심적으로 사용됩니다. 예를 들어, Jackson 라이브러리가 있을 때만 관련 설정을 활성화하는 방식입니다: [1] (https://hirlawldo.tistory.com/237), [2] (https://scshim.tistory.com/420)
+java
+@Configuration
+@ConditionalOnClass({ObjectMapper.class})
+public class JacksonAutoConfiguration {
+    // ObjectMapper가 클래스패스에 존재할 때만 이 설정이 동작함
+}
+코드를 사용할 때는 주의가 필요합니다.
+• 관련 자료 및 원리는 스프링 부트 AutoConfigure가 작동하는 원리 또는 스프링 부트의 @Conditional 어노테이션에서 자세히 확인할 수 있습니다. [1] (https://jakedevdiray.tistory.com/89), [2] (https://scshim.tistory.com/420)
+@ConditionalOnClass와 함께 자주 쓰이는 짝꿍 어노테이션들(예: @ConditionalOnMissingBean, @ConditionalOnProperty 등)에 대한 설명이 필요하시면 말씀해주세요.
