@@ -22,9 +22,10 @@ public class Main {
         });
 
         // 버튼을 프레임에 추가
-        
+        frame.add(button);
 
         // 프레임을 표시
+        frame.setVisible(true);
         
     }
 }
