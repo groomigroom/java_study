@@ -1,7 +1,7 @@
 <%
     int num = 0;
     String num_ = request.getParameter("n");
-    if (num_ != null && num )
+    if (num_ != null && !num_.equals(""))
 %>
 
 <% if(num % 2 != 0) { %>
