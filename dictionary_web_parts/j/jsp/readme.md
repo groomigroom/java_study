@@ -1,6 +1,6 @@
 <%
     int num = 0;
-    request.getParameter("n");
+    String num = request.getParameter("n");
 %>
 
 <% if(num % 2 != 0) { %>
