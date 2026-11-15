@@ -1,4 +1,5 @@
-전자정부표준프레임워크(eGovFramework)에서 RTE Distribution Tool(RDT)은 실행환경 배포 도구(Runtime Environment Distribution Tool)를 의미합니다. [1] (https://egovframe.go.kr/eng/ntt/nttRead.do?menuNo=21&bbsId=101&nttId=1427), [2] (https://www.egovframe.go.kr/)
+전자정부표준프레임워크(eGovFramework)에서 RTE Distribution Tool(RDT)은 실행환경 배포 도구(Runtime Environment Distribution Tool)를 의미합니다. 
+  
 개발자가 애플리케이션을 실행하는 데 필요한 표준프레임워크 실행환경(RTE) 라이브러리를 손쉽게 구성하고 프로젝트에 배포·적용할 수 있도록 지원하는 이클립스(Eclipse) 기반의 개발 도구입니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/), [2] (https://egovframe.go.kr/eng/ntt/nttRead.do?menuNo=21&bbsId=101&nttId=1427)
 
 주요 역할 및 의미
