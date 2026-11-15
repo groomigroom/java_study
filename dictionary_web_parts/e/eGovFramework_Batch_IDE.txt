@@ -1,0 +1,9 @@
+전자정부 표준프레임워크(eGovFramework)에서 Batch IDE는 배치(Batch, 일괄 처리) 어플리케이션을 쉽고 효율적으로 개발할 수 있도록 돕는 전용 개발 도구(Eclipse 기반 플러그인 묶음)를 의미합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev2.5:imp:editor:batch_ide)
+
+주요 의미 및 특징
+
+• 통합 배치 개발 메뉴 제공: eGovFrame Perspective 내에서 배치 작업 개발에 꼭 필요한 기능과 메뉴에 빠르게 접근할 수 있도록 통합된 인터페이스를 제공합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev2.5:imp:editor:batch_ide)
+• 배치 설정 마법사 지원: 스프링 배치(Spring Batch) 기반의 복잡한 배치 설정(Job 파라미터, Job Reader, Job Writer, Listeners 등)을 마법사 형태의 UI를 통해 손쉽게 구성하고 관리할 수 있도록 돕습니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/batch-ide/batch-config/)
+• 개발 편의성 향상: 대용량 데이터를 주기적으로 처리하거나 일괄 실행해야 하는 공공 시스템의 배치 업무를 표준화된 구조로 빠르게 개발할 수 있게 지원합니다.
+더 자세한 사용법과 설정 가이드는 Batch IDE 표준프레임워크 개발가이드 또는 Batch Configuration 개발가이드에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev2.5:imp:editor:batch_ide), [2] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/batch-ide/batch-config/)
+Batch IDE와 함께 쓰이는 전자정부 배치 실행환경(Batch Core)이나 구체적인 Job 설정 방법에 대해 알고 싶다면 편하게 말씀해 주세요.
