@@ -4,7 +4,7 @@ import java.awt.*;
 public class Main {
     public static void main(String[] args) {
         // 프레임 생성
-        JFrame frame = new JFrame("JPanel Example");
+        JFrame frame = new JFrame("groomis jframe");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 200);
 
