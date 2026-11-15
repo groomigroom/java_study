@@ -1,1 +1,9 @@
-eGovFramework_DBIO
+전자정부표준프레임워크(eGovFramework)에서 DBIO는 Database Input/Output(데이터베이스 입출력)의 줄임말입니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/dbio-editor/dbio-search-view/)
+
+핵심 의미와 역할
+
+• 데이터베이스 접근 표준화: 자바(Java) 기반 애플리케이션에서 데이터베이스(DB)와 데이터를 주고받는(조회, 삽입, 수정, 삭제 등) 작업과 관련된 표준 방법 및 연동 기능을 의미합니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/dbio-editor/dbio-search-view/), [2] (https://velog.io/@99dabi/220930sample)
+• DBIO Search View: 개발 도구(이클립스 기반의 개발환경)에서 데이터베이스 접근 관련 표준 쿼리나 매핑 정보, SQL 작성 및 검색을 쉽게 지원하기 위해 제공하는 기능 및 뷰(View)를 뜻합니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/dbio-editor/dbio-search-view/), [2] (https://velog.io/@99dabi/220930sample)
+• 영속성(Persistence) 처리 지원: 실행환경의 데이터처리(DB 연결, 트랜잭션 관리, MyBatis 등과의 연동) 레이어에서 표준화된 방식으로 SQL을 다루고 개발 생산성을 높이기 위한 구조적 요소로 활용됩니다. [1] (https://www.egovframe.go.kr/home/sub.do?menuNo=25), [2] (https://velog.io/@99dabi/220930sample)
+자세한 활용 방법은 전자정부 표준프레임워크 개발가이드(DBIO Search View)에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/docs/5.0/egovframe-development/implementation-tool/dbio-editor/dbio-search-view/)
+DBIO와 관련하여 MyBatis 연동 방법이나 SQL 맵퍼 설정 등 구체적인 사용법이 필요하시면 편하게 말씀해 주세요.
