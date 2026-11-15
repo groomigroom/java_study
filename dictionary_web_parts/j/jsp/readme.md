@@ -1,5 +1,5 @@
 <%
-    request.getPa
+    request.getParameter("n");
 %>
 
 <% if(num % 2 != 0) { %>
