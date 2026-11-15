@@ -1,0 +1,9 @@
+전자정부 표준프레임워크(eGovFramework)에서 AmaterasUML은 개발환경(eGovFrame IDE) 내부에서 UML(통합 모델링 언어) 다이어그램을 손쉽게 작성할 수 있도록 지원하는 오픈소스 플러그인(UML 에디터)을 의미합니다. [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:dev3.9:client)
+
+주요 특징 및 역할
+
+• UML 작성 도구: 이클립스(Eclipse) 기반의 전자정부 개발환경 내에서 클래스(Class) 다이어그램, 시퀀스(Sequence) 다이어그램, 액티비티(Activity) 다이어그램, 유스케이스(UseCase) 다이어그램 등의 작성을 지원합니다. [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:dev3.9:client)
+• 설계 시각화: 공공정보화 시스템을 개발하기 전, 비즈니스 로직이나 객체 구조, 프로세스 흐름을 시각적으로 설계하고 문서화할 때 사용합니다.
+• 연계성: 전자정부 표준프레임워크의 코드 생성기(eGovFrame CodeGen) 등 일부 확장 도구와 연동되거나 의존성을 가집니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev2:imp:editor:customize_development_tool)
+• 가벼운 구조: 상용 UML 도구에 비해 가볍고 이클립스 플러그인 형태로 바로 통합해 쓸 수 있어 공공 프로젝트 분석 및 설계 단계에서 자주 활용됩니다.
+만약 AmaterasUML 설치 방법이나 다이어그램 작성법, 또는 코드 생성 기능 연계에 대해 더 알고 싶으시면 편하게 말씀해 주세요.
