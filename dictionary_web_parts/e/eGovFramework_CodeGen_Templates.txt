@@ -1,4 +1,6 @@
-전자정부 표준프레임워크(eGovFramework)에서 CodeGen Templates(Code Generation Templates, 코드젠 템플릿)은 미리 정의된 템플릿을 활용해 반복적인 소스코드나 설정 파일(Configuration/Property 파일)을 자동으로 생성해 주는 기능을 의미합니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.0:imp:codegen:template)
+전자정부 표준프레임워크(eGovFramework)에서 CodeGen Templates(Code Generation Templates, 코드젠 템플릿)은 
+미리 정의된 템플릿을 활용해 반복적인 소스코드나 설정 파일(Configuration/Property 파일)을 자동으로 생성해 주는 
+기능을 의미합니다.
 
 주요 특징 및 목적
 
