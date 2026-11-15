@@ -1,0 +1,12 @@
+eGovFramework_TestCase_Templates
+전자정부 표준프레임워크(eGovFramework)의 eGovFramework TestCase Templates는 개발환경(Eclipse 기반 IDE)에서 제공하는 테스트 케이스(TestCase) 및 관련 코드블록 생성을 돕기 위한 템플릿 전용 플러그인을 의미합니다. [1] (https://hwpark5898.tistory.com/entry/3-egov-%EA%B5%AC%ED%98%84%EB%8F%84%EA%B5%AC%EC%9D%98-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%8F%84%EA%B5%AC)
+
+주요 의미 및 특징
+
+• TestCase Generator와의 관계
+	• 단독으로 실행되는 플러그인이 아니며, TestCase Generator라는 트리 뷰(Tree View) 기반 플러그인과 한 세트로 구성되어 동작합니다. [1] (https://hwpark5898.tistory.com/entry/3-egov-%EA%B5%AC%ED%98%84%EB%8F%84%EA%B5%AC%EC%9D%98-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%8F%84%EA%B5%AC)
+• 아키텍처 Tier별 템플릿 제공
+	• 전자정부 표준프레임워크의 아키텍처 계층(Tier, 예: Presentation, Business, Data Access 등)에 맞춘 테스트케이스 기본 템플릿과 상황별 테스트 코드 블록 예시를 담고 있습니다. [1] (https://hwpark5898.tistory.com/entry/3-egov-%EA%B5%AC%ED%98%84%EB%8F%84%EA%B5%AC%EC%9D%98-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EB%8F%84%EA%B5%AC)
+• 개발 효율성 및 일관성 향상
+	• 개발자가 JUnit 기반의 단위 테스트나 통합 테스트 코드를 작성할 때, 표준화된 템플릿을 활용하여 반복적인 코드 작성을 줄이고 테스트 품질과 일관성을 높일 수 있도록 지원합니다. [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:dev3.9:client), [2] (https://brunch.co.kr/@jamescompany/37)
+만약 TestCase Generator 플러그인을 활용한 구체적인 테스트 코드 생성 방법이나 JUnit 기반 테스트 환경 설정에 대해 알고 싶으시다면 편하게 말씀해 주세요.
