@@ -2,7 +2,7 @@
     int num = 0;
     String num_ = request.getParameter("n");
     if (num_ != null && !num_.equals(""))
-        num = Integer.para
+        num = Integer.parseInt(num_);
 %>
 
 <% if(num % 2 != 0) { %>
