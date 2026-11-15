@@ -7,6 +7,10 @@
 
 • 모바일 개발 지원: 스마트폰이나 태블릿 등 모바일 기기 및 모바일 웹 서비스 환경에 맞춘 공공 프로젝트를 쉽게 개발할 수 
 있도록 돕습니다.
-• 선택적 구성(Customizing): 전자정부 표준프레임워크 개발환경을 설치·구성할 때, 전체 기능 중 모바일 개발에 특화된 플러그인 모듈만 골라서 선택적으로 장착해 사용할 수 있습니다. [1] (https://maven.egovframe.go.kr/publist/HDD1/public/edu/textbook/02%EA%B0%95_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EC%86%8C%EA%B0%9C%20%EB%B0%8F%20%EA%B5%AC%ED%98%84%EB%8F%84%EA%B5%AC%2C%20%EA%B0%9C%EC%9D%B8%EB%B9%8C%EB%93%9C.pdf), [2] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:dev3.9:client)
-• 연계 도구: 이와 함께 모바일 기기 하드웨어 제어 등을 지원하는 eGovFramework DeviceAPI IDE 등과 함께 모바일 공공 서비스 개발 표준을 구축하는 데 활용됩니다. [1] (https://www.egovframe.go.kr/wiki/doku.php?id=egovframework:dev4.3:imp:editor:customize_development_tool), [2] (https://maven.egovframe.go.kr/publist/HDD1/public/edu/textbook/02%EA%B0%95_%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EC%86%8C%EA%B0%9C%20%EB%B0%8F%20%EA%B5%AC%ED%98%84%EB%8F%84%EA%B5%AC%2C%20%EA%B0%9C%EC%9D%B8%EB%B9%8C%EB%93%9C.pdf)
+• 선택적 구성(Customizing): 전자정부 표준프레임워크 개발환경을 설치·구성할 때, 전체 기능 중 모바일 개발에 
+특화된 플러그인 모듈만 골라서 선택적으로 장착해 사용할 수 있습니다. 
+
+• 연계 도구: 이와 함께 모바일 기기 하드웨어 제어 등을 지원하는 eGovFramework DeviceAPI IDE 등과 함께 모바일 
+공공 서비스 개발 표준을 구축하는 데 활용됩니다. 
+
 모바일 표준프레임워크의 구체적인 컴포넌트 구성이나 개발 환경 설치 방법에 대해 더 알고 싶으신가요?
