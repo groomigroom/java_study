@@ -1,21 +1,26 @@
-스프링 부트(Spring Boot)에서 @ConditionalOnWebApplication 어노테이션은 현재 애플리케이션이 "웹 애플리케이션"일 때만 해당 빈(Bean)이나 설정(Configuration) 클래스를 활성화하도록 조건부로 등록하는 역할을 합니다. [1] (https://jakedevdiray.tistory.com/89), [2] (https://docs.spring.io/spring-boot/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html)
+스프링 부트(Spring Boot)에서 @ConditionalOnWebApplication 어노테이션은 현재 애플리케이션이 "웹 애플리케이션"일 
+때만 해당 빈(Bean)이나 설정(Configuration) 클래스를 활성화하도록 조건부로 등록하는 역할을 합니다. 
+
 
 1. 주요 특징 및 의미
 
-• 조건부 빈 등록: 스프링 부트는 자동 설정(Auto-Configuration) 기능을 제공하는데, 이때 특정 웹 기술(예: Spring MVC, Spring WebFlux 등)과 관련된 빈은 일반 콘솔(Console)이나 배치(Batch) 애플리케이션에서는 불필요합니다. 이 애노테이션을 사용해 웹 환경에서만 특정 설정을 로드합니다.
-• 적용 대상: 클래스(TYPE) 또는 메서드(METHOD) 레벨에 붙여서 사용할 수 있습니다. [1] (https://jaimemin.tistory.com/2260), [2] (https://docs.spring.io/spring-boot/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html)
+• 조건부 빈 등록: 스프링 부트는 자동 설정(Auto-Configuration) 기능을 제공하는데, 이때 특정 웹 
+기술(예: Spring MVC, Spring WebFlux 등)과 관련된 빈은 일반 콘솔(Console)이나 배치(Batch) 
+애플리케이션에서는 불필요합니다. 이 애노테이션을 사용해 웹 환경에서만 특정 설정을 로드합니다.
+• 적용 대상: 클래스(TYPE) 또는 메서드(METHOD) 레벨에 붙여서 사용할 수 있습니다. [
+
 
 2. 세부 타입 (type 속성)
 
-기본값은 ANY이며, ConditionalOnWebApplication.Type을 통해 웹 애플리케이션의 세부 유형을 지정할 수 있습니다: [1] (https://docs.spring.io/spring-boot/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html)
+기본값은 ANY이며, ConditionalOnWebApplication.Type을 통해 웹 애플리케이션의 세부 유형을 지정할 수 있습니다: 
 • ANY (기본값): 서블릿 기반 웹 애플리케이션이거나 리액티브(Reactive) 웹 애플리케이션인 경우 모두 충족합니다.
 • SERVLET: 서블릿 기반의 웹 애플리케이션(Spring MVC 등)일 때만 조건이 충족됩니다.
 • REACTIVE: 리액티브 기반의 웹 애플리케이션(Spring WebFlux 등)일 때만 조건이 충족됩니다.
 
 3. 반대 개념
 
-• @ConditionalOnNotWebApplication: 웹 애플리케이션이 아닐 때(예: 순수한 백그라운드 워커, 일반 자바 애플리케이션)에만 설정을 적용합니다. [1] (https://jakedevdiray.tistory.com/89), [2] (https://steemit.com/bootannotations/@kormanocorp/6i7gd7)
-더 자세한 공식 규격과 사용법은 Spring Boot API 문서에서 확인할 수 있습니다. [1] (https://docs.spring.io/spring-boot/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html)
+• @ConditionalOnNotWebApplication: 웹 애플리케이션이 아닐 때(예: 순수한 백그라운드 워커, 일반 자바 애플리케이션)에만 설정을 적용합니다. 
+더 자세한 공식 규격과 사용법은 Spring Boot API 문서에서 확인할 수 있습니다.
 더 궁금한 점이 있으신가요?
 • 특정 자동 구성(Auto-configuration) 클래스에서 쓰이는 예시를 보고 싶으신가요?
 • 아니면 직접 커스텀 조건부 어노테이션을 만드는 방법이 궁금하신가요?
