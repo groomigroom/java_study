@@ -161,3 +161,38 @@ public void registration(LoginUsers user, String originalLink) {
 참고: 동시에 여러 요청이 들어오면 `existsBy` 검사 후 `save()` 사이에 중복 데이터가 생성될 수 있어. 중복 등록을 확실하게 방지하려면 DB에도 `(boolean_userid, original_link)` 조합에 UNIQUE 제약조건을 설정하는 것이 좋아.
 
 지금처럼 특정 사용자가 특정 링크를 이미 등록했는지 확인하는 기능이라면 `existsByBooleanUseridAndOriginalLink()`가 가장 적합해.
+
+
+제시하신 Spring Data JPA 메서드 existsByBooleanUseridAndOriginalLink가 내부적으로 변환되어 실행되는 표준 SQL 쿼리는 SELECT 1 ... LIMIT 1 또는 COUNT(*) 형태의 존재 여부 확인 쿼리입니다.
+엔티티와 테이블 구조를 바탕으로 실제 DB에서 실행되는 SQL 형태를 정리했습니다.
+
+1. 표준 SQL 변환 예시 (MySQL / PostgreSQL 기준)
+
+JPA(Hibernate)는 existsBy... 메서드를 호출할 때 전체 데이터를 가져오지 않고, 조건에 맞는 첫 번째 행만 찾으면 즉시 중단하도록 최적화합니다.
+sql
+SELECT 1 
+FROM 테이블명 
+WHERE boolean_userid = ? -- LoginUsers 객체의 PK(기본키) 값
+  AND original_link = ? 
+LIMIT 1;
+코드를 사용할 때는 주의가 필요합니다.
+(참고: 일부 JPA 버전이나 DB 방언(Dialect)에 따라 SELECT count(*) > 0 또는 SELECT id ... LIMIT 1 형태로 생성될 수도 있습니다.)
+
+2. 세부 매핑 설명
+
+• 테이블명: 해당 Repository가 다루는 엔티티의 @Table(name = "...") 이름입니다.
+• 외래키 조건 (boolean_userid = ?): 파라미터로 넘긴 LoginUsers 객체의 기본키(@Id) 값이 바인딩됩니다. 실제 DB 컬럼명은 엔티티에 설정된 @JoinColumn(name = "...") 이름을 따르며, 별도 설정이 없다면 기본 네이밍 전략인 boolean_userid_id 등이 사용됩니다.
+• 일반 컬럼 조건 (original_link = ?): String originalLink 필드가 스네이크 케이스(Snake Case)로 자동 변환된 original_link 컬럼과 비교됩니다.
+• 반환값 처리: 쿼리 결과가 1건이라도 조회되면 Java의 true를 반환하고, 조회된 행이 없으면 false를 반환합니다.
+
+3. Oracle DB를 사용하는 경우
+
+Oracle에서는 LIMIT 대신 ROWNUM 또는 FETCH FIRST 구문이 사용됩니다.
+sql
+SELECT 1 
+FROM 테이블명 
+WHERE boolean_userid = ? 
+  AND original_link = ? 
+  AND ROWNUM = 1;
+코드를 사용할 때는 주의가 필요합니다.
+혹시 사용 중이신 데이터베이스 종류(MySQL, Oracle 등)나 실제 엔티티 클래스의 코드를 알려주시면, 운영 환경에 바로 복사해서 테스트할 수 있는 정확한 SQL 쿼리로 맞춰드릴 수 있습니다. 도움이 필요하신가요?
