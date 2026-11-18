@@ -98,3 +98,66 @@ SELECT * FROM users WHERE name = ?
 SELECT * FROM users WHERE like_color = ? LIMIT 3
 SELECT * FROM users WHERE gender = ? AND like_color = ?
 ```
+
+# exist
+
+맞아! 특정 데이터가 DB에 이미 존재하는지 확인하려면 Spring Data JPA의 \*\*`existsBy`\*\*를 사용하면 돼.
+
+현재 작성한 메서드가 다음과 같지?
+
+```
+EventBooleanEntity findByBooleanUseridAndOriginalLink(
+    LoginUsers booleanUserid,
+    String originalLink
+);
+```
+
+이 메서드를 다음과 같이 변경하면 돼.
+
+## 1. Repository 작성
+
+```
+boolean existsByBooleanUseridAndOriginalLink(
+    LoginUsers booleanUserid,
+    String originalLink
+);
+```
+
+반환값은 다음과 같아.
+
+- `true`: 해당 데이터가 이미 존재함
+- `false`: 해당 데이터가 존재하지 않음
+
+## 2. Service에서 사용하기
+
+```
+public void registration(LoginUsers user, String originalLink) {
+
+    boolean exists = eventBooleanRepository
+        .existsByBooleanUseridAndOriginalLink(user, originalLink);
+
+    if (exists) {
+        throw new IllegalStateException("이미 등록된 데이터입니다.");
+    }
+
+    EventBooleanEntity entity = new EventBooleanEntity();
+
+    entity.setBooleanUserid(user);
+    entity.setOriginalLink(originalLink);
+
+    eventBooleanRepository.save(entity);
+}
+```
+
+## 3. findBy와 existsBy 차이
+
+| 메서드        | 반환값                | 목적               |
+| ---------- | ------------------ | ---------------- |
+| `findBy`   | Entity 또는 Optional | 실제 데이터 조회        |
+| `existsBy` | boolean            | 데이터 존재 여부 확인     |
+| `countBy`  | long               | 조건에 맞는 데이터 개수 확인 |
+| `deleteBy` | 삭제 결과 또는 void 등    | 조건에 맞는 데이터 삭제    |
+
+참고: 동시에 여러 요청이 들어오면 `existsBy` 검사 후 `save()` 사이에 중복 데이터가 생성될 수 있어. 중복 등록을 확실하게 방지하려면 DB에도 `(boolean_userid, original_link)` 조합에 UNIQUE 제약조건을 설정하는 것이 좋아.
+
+지금처럼 특정 사용자가 특정 링크를 이미 등록했는지 확인하는 기능이라면 `existsByBooleanUseridAndOriginalLink()`가 가장 적합해.
