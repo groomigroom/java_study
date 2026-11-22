@@ -1,5 +1,4 @@
-https://www.youtube.com/watch?v=uSuRHSOea6s&list=PLq8wAnVUcTFVOtENMsujSgtv2TOsMy8zd&index=46
-위에꺼 1분 3초부터 보기
+https://www.youtube.com/watch?v=tPEf5VLKJI0&list=PLq8wAnVUcTFVOtENMsujSgtv2TOsMy8zd&index=47부터 보기
 
 <%
     int num = 0;
