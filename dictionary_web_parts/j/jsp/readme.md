@@ -1,5 +1,5 @@
 https://www.youtube.com/watch?v=uSuRHSOea6s&list=PLq8wAnVUcTFVOtENMsujSgtv2TOsMy8zd&index=46
-위에꺼부터 보기
+위에꺼 1분 3초부터 보기
 
 <%
     int num = 0;
