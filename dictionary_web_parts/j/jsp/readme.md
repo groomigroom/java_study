@@ -1,5 +1,5 @@
 https://www.youtube.com/watch?v=tPEf5VLKJI0&list=PLq8wAnVUcTFVOtENMsujSgtv2TOsMy8zd&index=48
-9분 14초부터
+12분 37초부터
  보기
 
 <%
