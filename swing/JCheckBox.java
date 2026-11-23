@@ -14,7 +14,9 @@ public class Main {
         
         checkBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
-                
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    System.out.println("groomi check checked");
+                }
             }
         });
 
