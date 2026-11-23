@@ -16,6 +16,8 @@ public class Main {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     System.out.println("groomi check checked");
+                } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+                    System.out.println("groomi check unchecked");
                 }
             }
         });
