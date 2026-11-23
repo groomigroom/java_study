@@ -22,6 +22,10 @@ public class Main {
             }
         });
 
+        //체크박스를 프레임에 추가
+        frame.add(checkBox);
+
+        //프레임을 표시
         frame.setVisible(true);
     }
 }
