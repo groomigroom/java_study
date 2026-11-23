@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("groomi Radio");
+        frame.setSize(300, 200);
 
         //프레임을 표시
         frame.setVisible(true);
