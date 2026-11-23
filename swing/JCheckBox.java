@@ -12,6 +12,12 @@ public class Main {
         //JCheckBox 생성
         JCheckBox checkBox = new JCheckBox("groomi check");
         
+        checkBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                
+            }
+        });
+
         frame.setVisible(true);
     }
 }
