@@ -8,6 +8,10 @@ public class Main {
         JFrame frame = new JFrame("kimgroomi");
         frame.setSize(300, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        //JCheckBox 생성
+        JCheckBox checkBox = new JCheckBox("groomi check");
+        
         frame.setVisible(true);
     }
 }
