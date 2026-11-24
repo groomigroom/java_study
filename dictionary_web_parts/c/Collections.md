@@ -91,19 +91,21 @@ Collection<String> names =
 Collections.sort(), PriorityQueue 등)에 넘겨 내림차순 기준으로 비교하게 만듭니다. 
 • 기존 비교자 반전 오버로딩: Collections.reverseOrder(Comparator<T> cmp)처럼 특정 Comparator를
 인자로 넣으면, 해당 비교자의 정렬 순서를 역순으로 뒤집은 Comparator를 반환합니다.
-• 객체 타입 전용: String, Integer, Double 같은 참조(객체) 타입에만 사용할 수 있으며, int[] 같은 기본 타입 배열에는 직접 쓸 수 없습니다. [1] (https://sehyeok.tistory.com/190), [2] (https://justdoit0730.tistory.com/102)
+• 객체 타입 전용: String, Integer, Double 같은 참조(객체) 타입에만 사용할 수 있으며, int[] 같은 기본 타입 배열에는 직접 쓸 수 없습니다. 
 
 사용 예시
 
 • 객체 배열 내림차순 정렬: Arrays.sort(arr, Collections.reverseOrder());
 • 리스트 내림차순 정렬: Collections.sort(list, Collections.reverseOrder());
-• 최대 힙(PriorityQueue) 생성: new PriorityQueue<>(Collections.reverseOrder()); [1] (https://dev.to/realnamehidden1_61/collectionsreverseorder-method-in-java-1dpc), [2] (https://justdoit0730.tistory.com/102), [3] (https://sehyeok.tistory.com/190)
+• 최대 힙(PriorityQueue) 생성: new PriorityQueue<>(Collections.reverseOrder()); 
 
 비슷한 기능과의 차이
 
 • Collections.reverse(): 정렬 기준을 만드는 것이 아니라, 이미 있는 List의 요소 순서를 그대로 뒤집습니다.
-• Comparator.reverseOrder(): Java 8 이상에서 제공하는 동일한 목적의 메서드입니다. [1] (https://hianna.tistory.com/936)
-자세한 예시는 자바 역순 정렬, Collections.reverseOrder() 사용이나 오름차순과 내림차순(sort, reverseOrder, reverse)에서 확인할 수 있습니다. [1] (https://moomooj.tistory.com/32), [2] (https://justdoit0730.tistory.com/102)
-배열이나 리스트, 우선순위 큐(PriorityQueue), 또는 사용자 정의 객체 정렬 중 어떤 상황에 적용할지 알려주시면 맞춤형 코드 예시를 보여드릴 수 있습니다.
+• Comparator.reverseOrder(): Java 8 이상에서 제공하는 동일한 목적의 메서드입니다. 
+자세한 예시는 자바 역순 정렬, Collections.reverseOrder() 사용이나 오름차순과 내림차순
+(sort, reverseOrder, reverse)에서 확인할 수 있습니다.
+배열이나 리스트, 우선순위 큐(PriorityQueue), 또는 사용자 정의 객체 정렬 중
+어떤 상황에 적용할지 알려주시면 맞춤형 코드 예시를 보여드릴 수 있습니다.
 
 ```
