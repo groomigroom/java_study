@@ -82,12 +82,15 @@ Collection<String> names =
 # reverseOrder()
 
 ```
-자바에서 Collections.reverseOrder()는 Comparable 인터페이스를 구현한 객체들의 자연 정렬(오름차순) 기준을 뒤집어 내림차순 정렬에 사용하는 Comparator를 반환하는 정적 메서드입니다. [1] (https://learn.microsoft.com/ko-kr/dotnet/api/java.util.collections.reverseorder?view=net-android-37.0), [2] (https://moomooj.tistory.com/32)
+자바에서 Collections.reverseOrder()는 Comparable 인터페이스를 구현한 객체들의 자연 정렬(오름차순)
+기준을 뒤집어 내림차순 정렬에 사용하는 Comparator를 반환하는 정적 메서드입니다. 
 
 핵심 의미
 
-• 역순 비교자(Comparator) 생성: 요소 자체의 순서를 직접 뒤집는 것이 아니라, 정렬 메서드(Arrays.sort(), Collections.sort(), PriorityQueue 등)에 넘겨 내림차순 기준으로 비교하게 만듭니다. [1] (https://dev.to/realnamehidden1_61/collectionsreverseorder-method-in-java-1dpc), [2] (https://justdoit0730.tistory.com/102), [3] (https://moomooj.tistory.com/32)
-• 기존 비교자 반전 오버로딩: Collections.reverseOrder(Comparator<T> cmp)처럼 특정 Comparator를 인자로 넣으면, 해당 비교자의 정렬 순서를 역순으로 뒤집은 Comparator를 반환합니다. [1] (https://learn.microsoft.com/ko-kr/dotnet/api/java.util.collections.reverseorder?view=net-android-37.0)
+• 역순 비교자(Comparator) 생성: 요소 자체의 순서를 직접 뒤집는 것이 아니라, 정렬 메서드(Arrays.sort(),
+Collections.sort(), PriorityQueue 등)에 넘겨 내림차순 기준으로 비교하게 만듭니다. 
+• 기존 비교자 반전 오버로딩: Collections.reverseOrder(Comparator<T> cmp)처럼 특정 Comparator를
+인자로 넣으면, 해당 비교자의 정렬 순서를 역순으로 뒤집은 Comparator를 반환합니다.
 • 객체 타입 전용: String, Integer, Double 같은 참조(객체) 타입에만 사용할 수 있으며, int[] 같은 기본 타입 배열에는 직접 쓸 수 없습니다. [1] (https://sehyeok.tistory.com/190), [2] (https://justdoit0730.tistory.com/102)
 
 사용 예시
