@@ -1,3 +1,5 @@
+import jakarta.servlet.http.HttpServletRequest;
+
 HttpServletRequest는 클라이언트(브라우저)가 서버로 보낸 HTTP 요청 정보를 담고 있는 객체입니다. [1] 
 스프링 부트에서는 Spring Web 스타터 의존성에 포함되어 있습니다.
 ------------------------------
