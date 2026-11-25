@@ -1,0 +1,14 @@
+자바에서 default는 같은 패키지 내에서만 접근할 수 있고, protected는 같은 패키지 내와 다른 패키지의 상속받은 자식 클래스에서도 접근할 수 있습니다. [1] (https://www.hanbit.co.kr/channel-h/view/7523), [2] (https://doeatnow.tistory.com/m/34)
+
+핵심 차이
+
+• 접근 범위
+	• default(접근 제어자 생략): 동일 패키지 내부 클래스에서만 접근 가능합니다. 다른 패키지에서는 상속 관계라도 접근할 수 없습니다.
+	• protected: 동일 패키지 내부 클래스와, 다른 패키지에 있더라도 해당 클래스를 상속받은 하위 클래스에서 접근 가능합니다. [1] (https://rlaehddnd0422.tistory.com/182), [2] (https://www.youtube.com/watch?v=jBnBvZN6LaY&t=283), [3] (https://www.hanbit.co.kr/channel-h/view/7523), [4] (https://doeatnow.tistory.com/m/34)
+• 적용 대상
+	• default: 최상위 클래스와 멤버(필드, 생성자, 메서드)에 사용할 수 있습니다.
+	• protected: 최상위 클래스에는 사용할 수 없으며, 멤버(필드, 생성자, 메서드)에만 사용합니다. [1] (https://adjh54.tistory.com/360), [2] (https://www.youtube.com/watch?v=r_ItAVRvcXU&t=220), [3] (https://www.hanbit.co.kr/channel-h/view/7523)
+• 사용 목적
+	• default: 패키지 내부 구현을 묶어 외부 패키지로부터 숨길 때 씁니다.
+	• protected: 상속 구조에서 하위 클래스가 부모의 핵심 기능이나 상태에 접근하도록 허용할 때 씁니다. [1] (https://velog.io/@jhwest-dev/Java-%EC%9E%90%EB%B0%94-%EC%A0%91%EA%B7%BC%EC%A0%9C%EC%96%B4%EC%9E%90-%EC%A0%95%EB%A6%AC-private-default-protected-public), [2] (https://doeatnow.tistory.com/m/34)
+다른 패키지에 있는 자식 클래스에서 protected 멤버를 호출할 때 주의해야 할 참조 방식이나 코드 예시가 필요하신가요?
