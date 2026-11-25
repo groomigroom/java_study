@@ -1,0 +1,7 @@
+전자정부표준프레임워크에서 VO는 Value Object의 줄임말입니다.
+
+주요 특징은 다음과 같습니다.
+• 역할: 화면이나 계층 간 데이터를 담거나 전달하는 객체로 사용되며, 전자정부표준프레임워크의 클래스명(예: WordDicaryVO) 접미사로 자주 쓰입니다. [1] (https://egovframe.go.kr/docs/5.0/common-component/user-support/online-help/glossary/), [2] (https://blog.naver.com/sambak99/90123339121?viewType=pc)
+• 개념 차이: 순수 객체지향/도메인 설계에서는 값 자체를 표현하고 불변성을 띠는 개념으로 쓰이지만, 실무·프레임워크 환경에서는 계층 간 데이터 전달용(DTO와 유사한 역할)으로 폭넓게 활용되기도 합니다. [1] (https://burningfalls.github.io/java/what-is-value-object/), [2] (https://velog.io/@leesomyoung/Java-DAO-DTO-VO%EC%9D%98-%EA%B0%9C%EB%85%90), [3] (https://hulrud.tistory.com/98), [4] (https://blog.naver.com/sambak99/90123339121?viewType=pc)
+자세한 구성 예시는 표준프레임워크 개발가이드에서 확인할 수 있습니다. [1] (https://egovframe.go.kr/docs/5.0/common-component/user-support/online-help/glossary/)
+현재 작성 중인 코드나 설계 구조(예: VO와 DTO의 구분 기준, MyBatis 매핑 방식, 상속 구조) 중 어떤 부분이 궁금하신지 알려주시면 맞춰서 설명해 드릴게요.
