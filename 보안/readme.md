@@ -16,4 +16,9 @@
 2. TCP/IP
 3. Routing
 4. 네트워크 공격
+5. Firewall
+6. IDS/IPS
+7. VPN
+8. 무선 보안
+9. 네트워크장비 보안
 ```
