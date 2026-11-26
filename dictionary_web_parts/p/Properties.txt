@@ -77,3 +77,53 @@ try (InputStreamReader reader = new InputStreamReader(
 • 불러온 값은 getProperty("키")로 꺼내고, 수정·추가는 setProperty("키", "값")으로 다룹니다.
 • 관련 활용법이나 인코딩 처리가 궁금하다면 velog의 Properties 활용 글이나 티스토리의 Properties 
 한글 깨짐 해결 글도 참고해 보세요. 
+
+
+------------------------------------------
+
+# .containsKey()
+
+java.util.Properties에서 .containsKey(Object key)는 해당 Properties 객체(또는 상속받은 상위 Hashtable)에 특정 키(Key)가 존재하는지 확인하는 메서드입니다. 존재하면 true, 없으면 false를 반환합니다.
+Properties 클래스는 내부적으로 Hashtable<Object, Object>을 상속받기 때문에, Hashtable의 메서드를 그대로 물려받아 사용합니다.
+
+주요 특징 및 주의사항
+
+• 기본 동작: 현재 객체에 키가 매핑되어 있는지 Object 타입으로 검사합니다.
+• 기본값(defaults) 미포함: Properties 생성 시 넘겨준 defaults 객체에 키가 있더라도, 현재 객체 자체에 없으면 false를 반환합니다.
+• 타입 주의: 파라미터가 Object이므로 문자열(String)이 아닌 다른 타입을 넣어도 컴파일 에러가 나지 않지만, 실제로는 false가 반환됩니다.
+• Null 불가: Hashtable 기반이므로 키 값으로 null을 전달하면 NullPointerException이 발생합니다.
+
+containsKey() vs getProperty() 비교
+
+Properties를 다룰 때는 Hashtable에서 상속된 메서드 대신 문자열 전용 메서드(getProperty)를 쓰는 것이 안전합니다.
+
+구분	containsKey(Object key)	getProperty(String key) != null
+출처	Hashtable에서 상속	Properties 고유 메서드
+기본값(defaults) 탐색	안 함 (현재 객체만 확인)	함 (현재 객체에 없으면 기본값까지 탐색)
+권장 여부	일반 Map처럼 쓸 때만 사용	설정 파일(Properties) 조회 시 강력 권장
+
+
+코드 예시
+
+java
+import java.util.Properties;
+
+public class Main {
+    public static void main(String[] args) {
+        Properties defaultProps = new Properties();
+        defaultProps.setProperty("timeout", "5000");
+
+        // defaultProps를 기본값으로 가지는 Properties 생성
+        Properties appProps = new Properties(defaultProps);
+        appProps.setProperty("username", "admin");
+
+        // 1. 현재 객체에 직접 등록된 키 확인
+        System.out.println(appProps.containsKey("username")); // true
+
+        // 2. 기본값(defaults)에만 있는 키 확인 (주의!)
+        System.out.println(appProps.containsKey("timeout"));  // false
+        System.out.println(appProps.getProperty("timeout"));  // "5000" (정상 조회됨)
+    }
+}
+코드를 사용할 때는 주의가 필요합니다.
+따라서 Properties에서 특정 설정 키가 유효한지 확인할 때는 containsKey()보다 props.getProperty("키이름") != null 형태로 확인하는 것이 의도치 않은 버그를 줄이는 좋은 방법입니다.
