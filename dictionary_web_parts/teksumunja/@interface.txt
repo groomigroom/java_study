@@ -1,6 +1,9 @@
 전자정부표준프레임워크(eGovFrame)에서 @interface는 프레임워크 고유의 특별한 문법이 아니라, 
 기반 언어인 Java의 어노테이션(Annotation) 타입 선언 키워드를 의미합니다.
 • 기본 정의: Java에서 커스텀 어노테이션을 만들 때 public @interface 이름 형태로 사용합니다.
-• 전자정부표준프레임워크에서의 쓰임: Spring 기반의 전자정부표준프레임워크 프로젝트에서는 공통 컴포넌트, 로깅·보안·권한 처리, AOP(관점 지향 프로그래밍), 커스텀 검증 등 반복되는 부가 기능을 선언적으로 처리하기 위해 개발자가 직접 @interface로 어노테이션을 정의하거나 기존 어노테이션을 활용합니다. [1] (https://www.youtube.com/watch?v=dqqpcw0l6q0&t=125), [2] (https://nara1.kr/art/framework.htm)
+• 전자정부표준프레임워크에서의 쓰임: Spring 기반의 전자정부표준프레임워크 프로젝트에서는 공통 컴포넌트, 
+로깅·보안·권한 처리, AOP(관점 지향 프로그래밍), 커스텀 검증 등 반복되는 부가 기능을 선언적으로 처리하기 위해 개발자가 
+직접 @interface로 어노테이션을 정의하거나 기존 어노테이션을 활용합니다.
+
 • 유사·연관 개념: interface(객체 간 규약·구현 강제용 인터페이스), @Retention, @Target(어노테이션 메타 어노테이션), 전자정부표준프레임워크의 연계 인터페이스(Interface / Integration 서비스)와 구분해서 이해해야 합니다. [1] (https://egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rte4.2/itl/integration_service.html), [2] (https://opentutorials.org/course/1293/6063)
 궁금하신 맥락이 Java 커스텀 어노테이션 작성법인지, AOP와 결합한 실무 예시인지, 아니면 외부 시스템 연계(Interface)인지 알려주시면 그에 맞춰 자세히 설명해 드리겠습니다.
