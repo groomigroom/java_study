@@ -1,0 +1,20 @@
+전자정부표준프레임워크(eGovFrame)에서 org.springframework.beans.factory.NoSuchBeanDefinitionException은 스프링 컨테이너가 요청된 이름이나 타입의 빈(Bean, 관리 대상 객체)을 찾지 못할 때 발생하는 예외입니다. [1] (https://m.blog.naver.com/mariapang/221506168843), [2] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D), [3] (https://sas-study.tistory.com/385)
+전자정부표준프레임워크는 XML 설정(context-*.xml, dispatcher-servlet.xml 등)과 애노테이션 스캔을 함께 사용하는 경우가 많아, 빈 등록이 누락되거나 스캔 범위가 어긋날 때 자주 나타납니다. [1] (https://appsnuri.tistory.com/429), [2] (https://share9.tistory.com/29), [3] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D)
+
+주요 발생 원인
+
+• 애노테이션 누락: *ServiceImpl, *Controller, *DAO 등 구현 클래스에 @Service, @Controller, @Repository, @Component가 빠진 경우. [1] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D), [2] (https://m.blog.naver.com/mariapang/221506168843), [3] (https://bugdict.tistory.com/43)
+• 컴포넌트 스캔 범위(base-package) 불일치: context-common.xml이나 dispatcher-servlet.xml의 <context:component-scan base-package="..."> 경로에 해당 패키지가 포함되지 않았거나 오타가 있는 경우. [1] (https://share9.tistory.com/29), [2] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D)
+• XML 빈 설정 누락: propertiesService, leaveaTrace 등 프레임워크·공통컴포넌트 관련 빈이 XML 설정 파일(context-common.xml 등)에 정의되지 않았거나 해당 XML이 로딩되지 않은 경우. [1] (https://dololak.tistory.com/761), [2] (https://open.egovframe.org/nforges/qna/qna/697/.do), [3] (https://appsnuri.tistory.com/429)
+• 컨텍스트 분리 문제: 웹 요청 계층(dispatcher-servlet.xml)과 서비스·데이터 계층(context-*.xml)의 빈 스캔 범위가 겹치거나 분리되어 주입 대상 빈을 참조하지 못하는 경우. [1] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D), [2] (https://share9.tistory.com/29)
+• 빌드·배포 미반영: 소스나 XML을 수정한 뒤 클린 빌드, 라이브러리 갱신, 서버 재배포가 반영되지 않은 경우. [1] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D)
+
+관련 표현 및 예시
+
+• 유사·연관 메시지: No bean named '...' is defined, No bean named '...' available, No qualifying bean of type '...' available, BeanCreationException. [1] (https://open.egovframe.org/nforges/qna/qna/697/.do), [2] (https://appsnuri.tistory.com/429), [3] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D)
+• 자주 보이는 예:
+	• No bean named 'leaveaTrace' is defined (EgovAbstractServiceImpl 상속 서비스 사용 시 설정 누락).
+	• No bean named 'propertiesService' is defined (프로퍼티 서비스 빈 설정 누락).
+	• No bean named 'MainService' available (@Service 미지정 또는 패키지 스캔 누락). [1] (https://appsnuri.tistory.com/429), [2] (https://open.egovframe.org/nforges/qna/qna/697/.do), [3] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D)
+실제 오류 해결 사례는 인프런 커뮤니티 질문&답변에서도 확인할 수 있습니다. [1] (https://www.inflearn.com/community/questions/1571080/%EC%A0%9C6%EA%B0%95-no-bean-named-x27-mainservice-x27-available-%EC%97%90%EB%9F%AC-%EB%B0%9C%EC%83%9D)
+발생한 전체 에러 메시지(찾지 못한 빈 이름이나 클래스명)와 문제가 생긴 파일·설정 위치(예: context-common.xml, *ServiceImpl.java)를 알려주시면 구체적인 점검 포인트를 짚어드릴 수 있습니다.
