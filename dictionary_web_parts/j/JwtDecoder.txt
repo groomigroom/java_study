@@ -63,5 +63,6 @@ jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithValidators(
 1. 시간이 유효할 것 (exp, nbf 검증 - 기본 포함)
 2. 지정된 발급자(location)가 만든 토큰일 것 (iss 검증)
 3. 헤더의 타입이 일반 JWT일 것 (typ 검증)
-혹시 특정 에러(예: JwtValidationException)를 해결하기 위해 이 코드를 살펴보시는 중인가요? 발생한 에러 메시지나 사용 중인 인증 서버(Keycloak, Auth0, 자체 서버 등)를 알려주시면 원인과 해결 방법을 바로 짚어드릴 수 있습니다.
+혹시 특정 에러(예: JwtValidationException)를 해결하기 위해 이 코드를 살펴보시는 중인가요? 
+발생한 에러 메시지나 사용 중인 인증 서버(Keycloak, Auth0, 자체 서버 등)를 알려주시면 원인과 해결 방법을 바로 짚어드릴 수 있습니다.
 
