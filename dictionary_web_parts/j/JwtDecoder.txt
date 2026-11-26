@@ -23,3 +23,11 @@ JWT(JSON Web Token) 문자열을 파싱하고 서명·만료 등 유효성을 �
 • 대체·보완 방식: 불투명 토큰(Opaque Token)을 쓸 때는 OpaqueTokenIntrospector를, 자체 발급 JWT나 커스텀 필터를 쓰는 구조에서는 
 별도 토큰 검증기(JwtTokenProvider 등)를 함께 두기도 합니다.
 구현 중인 인증 방식(OAuth2 리소스 서버, 자체 JWT 발급 등)이나 커스텀 검증이 필요한 조건을 알려주시면 설정 코드나 빈 구성 예시를 안내해 드릴 수 있습니다.
+
+-----------------------------------------------------
+
+
+jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithValidators(
+        new JwtIssuerValidator(location),
+        JwtTypeValidator.jwt()
+));
