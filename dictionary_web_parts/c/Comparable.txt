@@ -1,13 +1,16 @@
-자바에서 Comparable은 객체 간 기본 정렬 순서(자연 순서)를 정의할 수 있게 해주는 java.lang 패키지의 인터페이스입니다. 이 인터페이스를 구현한 클래스의 객체는 Arrays.sort(), Collections.sort(), TreeSet, TreeMap 등에서 별도의 비교 기준 없이 정렬할 수 있습니다. [1] (https://sunrise-min.tistory.com/entry/Java-Comparable%EA%B3%BC-Comparator%EC%9D%98-%EC%B0%A8%EC%9D%B4), [2] (https://priming.tistory.com/139), [3] (https://www.youtube.com/watch?v=tmSLcdYWu-g&t=20), [4] (https://www.youtube.com/watch?v=kV05T7beMls)
+자바에서 Comparable은 객체 간 기본 정렬 순서(자연 순서)를 정의할 수 있게 해주는 java.lang 패키지의 인터페이스입니다. 
+이 인터페이스를 구현한 클래스의 객체는 Arrays.sort(), Collections.sort(), TreeSet, TreeMap 등에서 
+별도의 비교 기준 없이 정렬할 수 있습니다. 
 
 핵심 특징과 동작 방식
 
 • compareTo(T o) 메서드: 자기 자신(this)과 매개변수 객체(o)를 비교해 정수를 반환합니다.
 	• 음수: 자기 자신이 매개변수 객체보다 앞에 옴(작음).
 	• 0: 두 객체의 순서가 같음.
-	• 양수: 자기 자신이 매개변수 객체보다 뒤에 옴(큼). [1] (https://st-lab.tistory.com/243), [2] (https://www.youtube.com/shorts/eJF7nMLG-xE), [3] (https://sunrise-min.tistory.com/entry/Java-Comparable%EA%B3%BC-Comparator%EC%9D%98-%EC%B0%A8%EC%9D%B4), [4] (https://www.youtube.com/watch?v=kV05T7beMls)
-• 기본 정렬 기준 고정: 클래스 내부에 직접 구현하므로 보통 한 가지 기본 정렬 기준을 나타냅니다. [1] (https://www.youtube.com/watch?v=EW3Mub24wYg), [2] (https://www.youtube.com/watch?v=tmSLcdYWu-g&t=20)
-• 연관 개념(Comparator): 객체 스스로의 기본 순서가 아니라 외부에서 여러 정렬 기준을 유연하게 적용하려면 Comparator를 함께 활용합니다. [1] (https://kr.linkedin.com/pulse/understanding-difference-between-comparable-java-danilo-queiroz-sk0ef?tl=ko), [2] (https://www.youtube.com/watch?v=EW3Mub24wYg)
+	• 양수: 자기 자신이 매개변수 객체보다 뒤에 옴(큼).
+
+• 기본 정렬 기준 고정: 클래스 내부에 직접 구현하므로 보통 한 가지 기본 정렬 기준을 나타냅니다. 
+• 연관 개념(Comparator): 객체 스스로의 기본 순서가 아니라 외부에서 여러 정렬 기준을 유연하게 적용하려면 Comparator를 함께 활용합니다.
 
 사용 예시
 
