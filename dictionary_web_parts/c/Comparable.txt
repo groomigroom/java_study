@@ -30,7 +30,7 @@ class User implements Comparable<User> {
     }
 }
 코드를 사용할 때는 주의가 필요합니다.
-자세한 비교 메커니즘과 활용법은 자바 [JAVA] - Comparable 과 Comparator의 이해나 [Java] Comparable & Comparator에서도 확인할 수 있습니다. [1] (https://st-lab.tistory.com/243), [2] (https://velog.io/@minseojo/Java-Comparable-Comparator)
+자세한 비교 메커니즘과 활용법은 자바 [JAVA] - Comparable 과 Comparator의 이해나 [Java] Comparable & Comparator에서도 확인할 수 있습니다. 
 원하시는 방향을 알려주시면 더 자세히 도와드릴 수 있습니다:
 • 실전 코드 예시 (문자열·다중 조건 정렬이나 내림차순 구현)
 • Comparator와의 차이 및 선택 기준 비교
