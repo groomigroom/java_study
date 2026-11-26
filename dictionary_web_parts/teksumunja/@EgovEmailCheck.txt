@@ -1,8 +1,11 @@
-org.egovframe.rte.ptl.reactive.validation.EgovEmailCheck는 전자정부 표준프레임워크(eGovFrame) 4.x 이상에서 WebFlux 기반의 리액티브(Reactive) 환경에서 이메일 형식의 유효성을 검증하기 위해 제공하는 커스텀 어노테이션(Annotation)입니다.
+org.egovframe.rte.ptl.reactive.validation.EgovEmailCheck는 전자정부 
+표준프레임워크(eGovFrame) 4.x 이상에서 WebFlux 기반의 리액티브(Reactive) 
+환경에서 이메일 형식의 유효성을 검증하기 위해 제공하는 커스텀 어노테이션(Annotation)입니다.
 
 1. 패키지 구조로 본 역할
 
-• org.egovframe.rte: 전자정부 표준프레임워크의 실행환경(Runtime Environment) 패키지입니다. (4.0 버전부터 기존 egovframework.rte에서 변경됨) [1] (https://opdc.or.kr/pdf/compatibility-guideline.pdf), [2] (https://velog.io/@qkrtkdwns3410/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-3.5-4.0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-%EB%B0%8F-%ED%98%B8%ED%99%98%EC%84%B1-%EC%9D%B8%EC%A6%9D)
+• org.egovframe.rte: 전자정부 표준프레임워크의 실행환경(Runtime Environment) 패키지입니다. 
+(4.0 버전부터 기존 egovframework.rte에서 변경됨) [1] (https://opdc.or.kr/pdf/compatibility-guideline.pdf), [2] (https://velog.io/@qkrtkdwns3410/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-3.5-4.0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-%EB%B0%8F-%ED%98%B8%ED%99%98%EC%84%B1-%EC%9D%B8%EC%A6%9D)
 • ptl (Presentation Layer): 사용자 화면 처리 및 입력 데이터 검증을 담당하는 계층입니다. [1] (https://www.egovframe.go.kr/home/sub.do?menuNo=25), [2] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rtea3.7/ptl/security.html)
 • reactive: 기존 Spring MVC(서블릿 기반)가 아닌 Spring WebFlux 기반의 비동기·논블로킹 웹 환경을 의미합니다.
 • validation.EgovEmailCheck: Jakarta/Javax Bean Validation 규격을 확장하여 이메일 유효성을 검사하는 어노테이션입니다.
