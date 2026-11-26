@@ -1,5 +1,9 @@
-org.springframework.security.oauth2.jwt.NimbusJwtDecoder는 스프링 시큐리티(Spring Security)에서 JWT(JSON Web Token)를 디코딩하고 서명 및 클레임(만료 시간, 발급자 등)을 검증하는 JwtDecoder 인터페이스의 구현체입니다. [1] (https://www.inflearn.com/community/questions/1184977/token-decoder?srsltid=AYCX9vL06u5HMjMm0Zp-nXlQdhwTKOrAkHvdSx-z-hwqAq16CBc1UAuL), [2] (https://velog.io/@wjdtn747/Spring-Boot-3-Spring-Framework-6-Section-19-Spring-Security-JWT-%EA%B4%80%EB%A0%A8-%EC%84%A4%EC%A0%95)
-내부적으로 Nimbus JOSE + JWT 라이브러리를 사용하며, 주로 OAuth2 리소스 서버(Resource Server)가 요청에 담긴 JWT의 유효성을 확인할 때 동작합니다. [1] (https://www.inflearn.com/community/questions/1184977/token-decoder?srsltid=AYCX9vL06u5HMjMm0Zp-nXlQdhwTKOrAkHvdSx-z-hwqAq16CBc1UAuL), [2] (https://velog.io/@wjdtn747/Spring-Boot-3-Spring-Framework-6-Section-19-Spring-Security-JWT-%EA%B4%80%EB%A0%A8-%EC%84%A4%EC%A0%95)
+org.springframework.security.oauth2.jwt.NimbusJwtDecoder는 스프링 시큐리티(Spring Security)에서 JWT(JSON Web Token)를 
+디코딩하고 서명 및 클레임(만료 시간, 발급자 등)을 검증하는 JwtDecoder 인터페이스의 구현체입니다. 
+
+내부적으로 Nimbus JOSE + JWT 라이브러리를 사용하며, 주로 OAuth2 리소스 서버(Resource Server)가 요청에 담긴 
+JWT의 유효성을 확인할 때 동작합니다.
+
 
 주요 역할
 
