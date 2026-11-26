@@ -36,8 +36,12 @@ public void writeFileToResponse(String filePath, OutputStream out) throws IOExce
 
 함께 쓰이거나 비교되는 개념
 
-• FileInputStream: 실제 파일에서 바이트 단위로 데이터를 읽어오는 기반 스트림입니다. BufferedInputStream을 감싸서 함께 씁니다.
+• FileInputStream: 실제 파일에서 바이트 단위로 데이터를 읽어오는 기반 스트림입니다. 
+BufferedInputStream을 감싸서 함께 씁니다.
 • BufferedOutputStream: 출력 쪽에서 버퍼링을 담당하는 스트림입니다.
 • BufferedReader / InputStreamReader: 바이트 스트림이 아니라 문자(텍스트)나 줄(readLine()) 단위로 읽을 때 주로 사용합니다.
-• 프레임워크 파일 유틸리티: 전자정부표준프레임워크의 파일 업로드·다운로드 유틸리티나 Spring의 Resource / StreamUtils 등과 조합해 쓰기도 합니다. [1] (https://blog.naver.com/pisibook/221581234616), [2] (https://kyeong-hoon.tistory.com/538), [3] (https://yeonyeon.tistory.com/267)
-더 자세히 알고 싶은 부분(예: 파일 다운로드 컨트롤러 전체 코드, BufferedReader와의 차이, try-with-resources 적용법)이 있으면 편하게 말씀해 주세요.
+• 프레임워크 파일 유틸리티: 전자정부표준프레임워크의 파일 업로드·다운로드 유틸리티나 Spring의 Resource / StreamUtils 
+등과 조합해 쓰기도 합니다. 
+
+더 자세히 알고 싶은 부분(예: 파일 다운로드 컨트롤러 전체 코드, BufferedReader와의 차이,
+try-with-resources 적용법)이 있으면 편하게 말씀해 주세요.
