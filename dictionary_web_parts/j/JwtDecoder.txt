@@ -1,1 +1,18 @@
+org.springframework.security.oauth2.jwt.JwtDecoder는 스프링 시큐리티(Spring Security)에서 JWT(JSON Web Token) 문자열을 파싱하고 서명·만료 등 유효성을 검증한 뒤 Jwt 객체로 변환하는 인터페이스입니다. 주로 OAuth2 리소스 서버(spring-boot-starter-oauth2-resource-server)가 요청에 담긴 토큰을 검증할 때 핵심 역할을 합니다. [1] (https://www.inflearn.com/community/questions/1398343/jwtdecoder-%EB%AC%B8%EC%A0%9C?srsltid=AYCX9vJg1-iADHw_SAW6yn5KfP6W_fr8mQLf-vSL3nwBwwiNSPnwolfY), [2] (https://velog.io/@wjdtn747/Spring-Boot-3-Spring-Framework-6-Section-19-Spring-Security-JWT-%EA%B4%80%EB%A0%A8-%EC%84%A4%EC%A0%95), [3] (https://devboi.tistory.com/m/901)
 
+주요 역할과 동작 방식
+
+• 토큰 파싱 및 검증: decode(String token) 메서드를 통해 JWT 문자열의 구조와 서명, 만료 시간(exp), 발급자(iss) 등을 검증하고 실패 시 JwtException을 발생시킵니다.
+• 리소스 서버 인증 연동: JwtAuthenticationProvider가 JwtDecoder.decode(token)을 호출해 토큰을 검증하고, 결과를 바탕으로 인증(Authentication) 객체를 만듭니다.
+• 대표 구현체(NimbusJwtDecoder): 인가 서버의 jwk-set-uri에서 공개키(JWK Set)를 가져와(기본 5분 캐시) 서명을 검증하는 기본 구현체입니다. [1] (https://velog.io/@wjdtn747/Spring-Boot-3-Spring-Framework-6-Section-19-Spring-Security-JWT-%EA%B4%80%EB%A0%A8-%EC%84%A4%EC%A0%95), [2] (https://devboi.tistory.com/m/901)
+
+사용 예시
+
+• 자동 설정(JWK Set URI 기반): application.yml에 spring.security.oauth2.resourceserver.jwt.jwk-set-uri를 지정하면 스프링 부트가 NimbusJwtDecoder 빈을 자동으로 구성합니다.
+• 커스텀 빈 등록: 대칭키/비대칭키 직접 지정, 커스텀 클레임 검증(OAuth2TokenValidator) 추가 등이 필요할 때 @Bean으로 JwtDecoder를 직접 정의해 사용합니다. 자세한 검증 흐름은 스프링 시큐리티 JWT 인증 원리 — 리소스 서버 검증 흐름에서 확인할 수 있습니다. [1] (https://www.inflearn.com/community/questions/1398343/jwtdecoder-%EB%AC%B8%EC%A0%9C?srsltid=AYCX9vJg1-iADHw_SAW6yn5KfP6W_fr8mQLf-vSL3nwBwwiNSPnwolfY), [2] (https://devboi.tistory.com/m/901)
+
+관련 개념 및 대체·보완 요소
+
+• 연관 컴포넌트: Jwt(디코딩된 토큰 모델), JwtEncoder(JWT 생성·서명 인터페이스), JwtAuthenticationConverter(권한 매핑).
+• 대체·보완 방식: 불투명 토큰(Opaque Token)을 쓸 때는 OpaqueTokenIntrospector를, 자체 발급 JWT나 커스텀 필터를 쓰는 구조에서는 별도 토큰 검증기(JwtTokenProvider 등)를 함께 두기도 합니다. [1] (https://do5do.tistory.com/20), [2] (https://kimsy8979.tistory.com/2)
+구현 중인 인증 방식(OAuth2 리소스 서버, 자체 JWT 발급 등)이나 커스텀 검증이 필요한 조건을 알려주시면 설정 코드나 빈 구성 예시를 안내해 드릴 수 있습니다.
