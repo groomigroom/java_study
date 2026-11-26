@@ -83,8 +83,10 @@ try (InputStreamReader reader = new InputStreamReader(
 
 # .containsKey()
 
-java.util.Properties에서 .containsKey(Object key)는 해당 Properties 객체(또는 상속받은 상위 Hashtable)에 특정 키(Key)가 존재하는지 확인하는 메서드입니다. 존재하면 true, 없으면 false를 반환합니다.
-Properties 클래스는 내부적으로 Hashtable<Object, Object>을 상속받기 때문에, Hashtable의 메서드를 그대로 물려받아 사용합니다.
+java.util.Properties에서 .containsKey(Object key)는 해당 Properties 객체(또는 상속받은 상위 
+Hashtable)에 특정 키(Key)가 존재하는지 확인하는 메서드입니다. 존재하면 true, 없으면 false를 반환합니다.
+Properties 클래스는 내부적으로 Hashtable<Object, Object>을 상속받기 때문에, Hashtable의 
+메서드를 그대로 물려받아 사용합니다.
 
 주요 특징 및 주의사항
 
