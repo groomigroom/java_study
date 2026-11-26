@@ -52,12 +52,16 @@ resolver.setExceptionMappings(prop); // 설정 적용
 
 # .load()
 
-java.util.Properties의 .load()는 외부 파일이나 스트림에 적힌 key=value 설정 데이터를 읽어와 Properties 객체 안에 채워 넣는 메서드예요. 코드를 다시 컴파일하지 않고도 DB 접속 정보나 환경 설정값 등을 쉽게 불러와 쓸 수 있게 해줍니다. [1] (https://codevang.tistory.com/163), [2] (https://medium.com/@AlexanderObregon/javas-properties-load-method-explained-3a4676ab89c1), [3] (https://velog.io/@exxyeon/Day-9-Java-Properties-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B5%AC%EC%84%B1-%EC%A0%95%EB%B3%B4-%EA%B4%80%EB%A6%AC)
+java.util.Properties의 .load()는 외부 파일이나 스트림에 적힌 key=value 설정 데이터를 읽어와 Properties 
+객체 안에 채워 넣는 메서드예요. 코드를 다시 컴파일하지 않고도 DB 접속 정보나 환경 설정값 등을 쉽게 불러와 쓸 수 있게 해줍니다. 
 
 주요 형태
 
-• load(InputStream inStream): 바이트 스트림(FileInputStream 등)에서 속성을 읽어와 객체에 추가합니다. 기본적으로 ISO-8859-1 인코딩 기준으로 해석합니다.
-• load(Reader reader): 문자 스트림(InputStreamReader, FileReader 등)에서 속성을 읽어와 객체에 추가합니다. 한글 같은 문자가 깨질 때는 UTF-8로 지정한 InputStreamReader를 넘기는 식으로 활용할 수 있어요. [1] (https://noritersand.github.io/java/java-java-util-properties/), [2] (https://studyingdk.tistory.com/23), [3] (https://junetag.tistory.com/52), [4] (https://codevang.tistory.com/163), [5] (https://medium.com/@AlexanderObregon/javas-properties-load-method-explained-3a4676ab89c1), [6] (https://velog.io/@exxyeon/Day-9-Java-Properties-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B5%AC%EC%84%B1-%EC%A0%95%EB%B3%B4-%EA%B4%80%EB%A6%AC)
+• load(InputStream inStream): 바이트 스트림(FileInputStream 등)에서 속성을 읽어와 객체에 추가합니다. 
+기본적으로 ISO-8859-1 인코딩 기준으로 해석합니다.
+• load(Reader reader): 문자 스트림(InputStreamReader, FileReader 등)에서 속성을 읽어와 객체에 추가합니다.
+한글 같은 문자가 깨질 때는 UTF-8로 지정한 InputStreamReader를 넘기는 식으로 활용할 수 있어요. 
+
 
 사용 예시
 
@@ -71,4 +75,5 @@ try (InputStreamReader reader = new InputStreamReader(
 }
 코드를 사용할 때는 주의가 필요합니다.
 • 불러온 값은 getProperty("키")로 꺼내고, 수정·추가는 setProperty("키", "값")으로 다룹니다.
-• 관련 활용법이나 인코딩 처리가 궁금하다면 velog의 Properties 활용 글이나 티스토리의 Properties 한글 깨짐 해결 글도 참고해 보세요. [1] (https://aljjabaegi.tistory.com/535), [2] (https://junetag.tistory.com/52), [3] (https://velog.io/@exxyeon/Day-9-Java-Properties-%ED%81%B4%EB%9E%98%EC%8A%A4%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EA%B5%AC%EC%84%B1-%EC%A0%95%EB%B3%B4-%EA%B4%80%EB%A6%AC)
+• 관련 활용법이나 인코딩 처리가 궁금하다면 velog의 Properties 활용 글이나 티스토리의 Properties 
+한글 깨짐 해결 글도 참고해 보세요. 
