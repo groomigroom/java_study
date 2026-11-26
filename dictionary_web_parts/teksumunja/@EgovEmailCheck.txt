@@ -5,16 +5,19 @@ org.egovframe.rte.ptl.reactive.validation.EgovEmailCheck는 전자정부
 1. 패키지 구조로 본 역할
 
 • org.egovframe.rte: 전자정부 표준프레임워크의 실행환경(Runtime Environment) 패키지입니다. 
-(4.0 버전부터 기존 egovframework.rte에서 변경됨) [1] (https://opdc.or.kr/pdf/compatibility-guideline.pdf), [2] (https://velog.io/@qkrtkdwns3410/%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-3.5-4.0-%EB%A7%88%EC%9D%B4%EA%B7%B8%EB%A0%88%EC%9D%B4%EC%85%98-%EB%B0%8F-%ED%98%B8%ED%99%98%EC%84%B1-%EC%9D%B8%EC%A6%9D)
-• ptl (Presentation Layer): 사용자 화면 처리 및 입력 데이터 검증을 담당하는 계층입니다. [1] (https://www.egovframe.go.kr/home/sub.do?menuNo=25), [2] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rtea3.7/ptl/security.html)
+(4.0 버전부터 기존 egovframework.rte에서 변경됨) 
+
+• ptl (Presentation Layer): 사용자 화면 처리 및 입력 데이터 검증을 담당하는 계층입니다.
 • reactive: 기존 Spring MVC(서블릿 기반)가 아닌 Spring WebFlux 기반의 비동기·논블로킹 웹 환경을 의미합니다.
 • validation.EgovEmailCheck: Jakarta/Javax Bean Validation 규격을 확장하여 이메일 유효성을 검사하는 어노테이션입니다.
 
 2. 주요 특징 및 용도
 
-• 어노테이션 기반 검증: 기존 3.x 버전대에서 주로 쓰던 XML 설정(validator.xml, Commons Validator) 방식 대신, DTO나 VO 객체의 필드에 @EgovEmailCheck를 선언하여 직관적으로 유효성을 검증합니다.
-• 리액티브 환경 지원: WebFlux 컨트롤러에서 @Valid 또는 @Validated와 함께 사용되어 비동기 요청 바인딩 시 이메일 형식이 올바른지 체크합니다.
-• 표준 정규식 적용: 표준프레임워크에서 정의한 이메일 정규표현식 기준을 따르며, 검증 실패 시 지정된 에러 메시지를 반환합니다. [1] (https://m.blog.naver.com/nsy323/221720137099), [2] (https://offbyone.tistory.com/291)
+• 어노테이션 기반 검증: 기존 3.x 버전대에서 주로 쓰던 XML 설정(validator.xml, Commons Validator) 방식 대신, 
+DTO나 VO 객체의 필드에 @EgovEmailCheck를 선언하여 직관적으로 유효성을 검증합니다.
+• 리액티브 환경 지원: WebFlux 컨트롤러에서 @Valid 또는 @Validated와 함께 사용되어 비동기 요청 바인딩 시 
+이메일 형식이 올바른지 체크합니다.
+• 표준 정규식 적용: 표준프레임워크에서 정의한 이메일 정규표현식 기준을 따르며, 검증 실패 시 지정된 에러 메시지를 반환합니다.
 
 3. 사용 예시
 
