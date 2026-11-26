@@ -1,3 +1,5 @@
+@EgovEmailCheck 이메일 형식의 유효성을 검증하기 위해 제공하는 커스텀 어노테이션(Annotation)입니다.
+
 org.egovframe.rte.ptl.reactive.validation.EgovEmailCheck는 전자정부 
 표준프레임워크(eGovFrame) 4.x 이상에서 WebFlux 기반의 리액티브(Reactive) 
 환경에서 이메일 형식의 유효성을 검증하기 위해 제공하는 커스텀 어노테이션(Annotation)입니다.
