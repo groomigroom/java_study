@@ -14,8 +14,9 @@ JSTL Core 라이브러리의 TLD(Tag Library Descriptor) 정의를 찾기 위한
 • 조건문: <c:if test="...">, <c:choose> / <c:when> / <c:otherwise>
 • 반복문: <c:forEach items="..." var="...">
 • 변수 선언·출력·삭제: <c:set>, <c:out>, <c:remove>
-• URL/페이지 처리: <c:url>, <c:redirect>, <c:import> [1] (https://yjdawn.tistory.com/99), [2] (https://devlogofchris.tistory.com/47), [3] (https://brilliantdevelop.tistory.com/50)
-참고로 Jakarta EE(Spring Boot 3.x 이상 등) 환경에서는 URI가 jakarta.tags.core 형태로 달라질 수 있고, 관련 설정 문제는 JSTL 설정 오류 같은 사례를 참고해 의존성이나 URI 버전을 점검해 볼 수 있습니다. [1] (https://jeenukchung.tistory.com/15)
+• URL/페이지 처리: <c:url>, <c:redirect>, <c:import> 
+참고로 Jakarta EE(Spring Boot 3.x 이상 등) 환경에서는 URI가 jakarta.tags.core 형태로 달라질 수 있고, 
+관련 설정 문제는 JSTL 설정 오류 같은 사례를 참고해 의존성이나 URI 버전을 점검해 볼 수 있습니다.
 특정 에러 메시지가 발생했거나 특정 태그 사용법이 궁금하다면 알려주세요:
 • 사용 중인 Spring / Servlet / Jakarta 버전
 • 겪고 있는 에러 내용 또는 구현하려는 기능
