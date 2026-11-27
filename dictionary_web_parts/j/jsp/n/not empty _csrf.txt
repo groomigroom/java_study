@@ -1,9 +1,12 @@
-<c:if test="${not empty _csrf}">는 전자정부표준프레임워크(Spring Security 기반)의 JSP에서 CSRF(사이트 간 요청 위조) 방어 기능이 활성화되어 있는지 확인하는 조건문입니다.
+<c:if test="${not empty _csrf}">는 전자정부표준프레임워크(Spring Security 기반)의 
+JSP에서 CSRF(사이트 간 요청 위조) 방어 기능이 활성화되어 있는지 확인하는 조건문입니다.
 
 코드 상세 의미
 
-• <c:if test="...">: JSTL(JSP Standard Tag Library)의 조건문 태그로, test 속성 안의 조건이 참(true)일 때만 내부 HTML이나 스크립트를 렌더링합니다.
-• ${not empty _csrf}: EL(Expression Language) 표현식으로, 서버에서 전달된 _csrf 객체가 null이 아니고 비어 있지 않은지(존재하는지) 검사합니다.
+• <c:if test="...">: JSTL(JSP Standard Tag Library)의 조건문 태그로, test 속성 안의 
+조건이 참(true)일 때만 내부 HTML이나 스크립트를 렌더링합니다.
+• ${not empty _csrf}: EL(Expression Language) 표현식으로, 서버에서 전달된 _csrf 객체가 
+null이 아니고 비어 있지 않은지(존재하는지) 검사합니다.
 
 실무에서 주로 쓰이는 패턴
 
@@ -28,6 +31,9 @@ jsp
 
 이 구문을 사용하는 이유
 
-• 유연한 환경 대응: 개발 환경에서는 테스트 편의를 위해 Spring Security의 CSRF 설정을 끄고(csrf().disable()), 운영 환경에서만 켜는 경우가 많습니다.
-• 에러 방지: 조건문 없이 ${_csrf.token}을 바로 호출하면, CSRF가 비활성화된 환경에서 NullPointerException이나 EL 파싱 에러가 발생할 수 있으므로 이를 안전하게 방어합니다.
-혹시 현재 403 Forbidden 에러가 발생하거나 AJAX 통신 시 토큰 처리 방법 때문에 확인 중이신가요? 사용 중인 프레임워크 버전이나 겪고 계신 문제를 알려주시면 해결 코드를 안내해 드리겠습니다.
+• 유연한 환경 대응: 개발 환경에서는 테스트 편의를 위해 Spring Security의 CSRF 설정을 
+끄고(csrf().disable()), 운영 환경에서만 켜는 경우가 많습니다.
+• 에러 방지: 조건문 없이 ${_csrf.token}을 바로 호출하면, CSRF가 비활성화된 환경에서 
+NullPointerException이나 EL 파싱 에러가 발생할 수 있으므로 이를 안전하게 방어합니다.
+혹시 현재 403 Forbidden 에러가 발생하거나 AJAX 통신 시 토큰 처리 방법 때문에 확인 중이신가요? 
+사용 중인 프레임워크 버전이나 겪고 계신 문제를 알려주시면 해결 코드를 안내해 드리겠습니다.
