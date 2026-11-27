@@ -1,10 +1,13 @@
-JSP 상단에 선언된 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>는 전자정부 표준프레임워크(eGovFrame)에서 제공하는 UI 커스텀 태그 라이브러리(특히 페이징 처리 태그)를 해당 JSP 페이지에서 사용하겠다고 선언하는 지시어입니다.
+JSP 상단에 선언된 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>는 전자정부 표준프레임워크(eGovFrame)에서 
+제공하는 UI 커스텀 태그 라이브러리(특히 페이징 처리 태그)를 해당 JSP 페이지에서 사용하겠다고 선언하는 지시어입니다.
 
 구성 요소별 의미
 
 • <%@ taglib ... %>. JSP 페이지에서 외부 태그 라이브러리(커스텀 태그, JSTL 등)를 불러와 사용할 때 쓰는 지시어(Directive)입니다.
 • prefix="ui". 불러온 태그를 본문에서 사용할 때 붙일 접두사(별칭)를 ui로 지정한다는 뜻입니다. (예: <ui:pagination ... />)
-• uri="http://egovframework.gov/ctl/ui". 실제 태그가 정의된 설정 파일(.tld)을 찾기 위한 고유 식별자(URI)입니다. 인터넷 주소처럼 보이지만 웹에 접속하는 것이 아니라, 프로젝트 내 라이브러리에 포함된 egovframework.rte.ptl.mvc 모듈의 TLD(Tag Library Descriptor) 파일을 매핑하는 역할을 합니다.
+• uri="http://egovframework.gov/ctl/ui". 실제 태그가 정의된 설정 파일(.tld)을 찾기 위한 고유 식별자(URI)입니다. 
+인터넷 주소처럼 보이지만 웹에 접속하는 것이 아니라, 프로젝트 내 라이브러리에 포함된 
+egovframework.rte.ptl.mvc 모듈의 TLD(Tag Library Descriptor) 파일을 매핑하는 역할을 합니다.
 
 주요 사용 목적 (실무 활용)
 
