@@ -1,13 +1,15 @@
 전자정부표준프레임워크(Spring Security 기반)의 JSP에서 ${_csrf.parameterName}은 서버로 전송할 CSRF(사이트 간 요청 위조) 
 방어용 토큰의 파라미터 이름(Key)을 동적으로 출력하는 EL(Expression Language) 표현식입니다.
-Spring Security의 기본 설정을 따를 경우, 이 값은 기본적으로 _csrf라는 문자열로 렌더링됩니다. [1] (https://tlatmsrud.tistory.com/77)
+Spring Security의 기본 설정을 따를 경우, 이 값은 기본적으로 _csrf라는 문자열로 렌더링됩니다. 
 
 동작 원리 및 구성 요소
 
-Spring Security가 활성화되어 있으면, 서버는 상태를 변경하는 요청(POST, PUT, DELETE 등)이 들어올 때 정상적인 경로로 보낸 요청인지 검증하기 위해 CSRF 토큰을 요구합니다. [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://tlatmsrud.tistory.com/77)
+Spring Security가 활성화되어 있으면, 서버는 상태를 변경하는 요청(POST, PUT, DELETE 등)이 들어올 때 
+정상적인 경로로 보낸 요청인지 검증하기 위해 CSRF 토큰을 요구합니다.
 • ${_csrf.parameterName}. 서버가 토큰 값을 식별하기 위해 기대하는 파라미터의 이름(Key)입니다 (기본값: _csrf).
 • ${_csrf.token}. 서버가 현재 세션에 발급한 실제 난수 토큰 값(Value)입니다.
-• ${_csrf.headerName}. AJAX 통신 시 HTTP 헤더에 토큰을 실어 보낼 때 사용하는 헤더 이름입니다 (기본값: X-CSRF-TOKEN). [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://m.blog.naver.com/jskimmail/221616372513), [3] (https://tlatmsrud.tistory.com/77)
+• ${_csrf.headerName}. AJAX 통신 시 HTTP 헤더에 토큰을 실어 보낼 때 사용하는 헤더 이름입니다 (기본값: X-CSRF-TOKEN). 
+
 
 JSP에서의 주요 사용 예시
 
