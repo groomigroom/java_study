@@ -1,0 +1,20 @@
+JSP에서 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>는 JSTL(JSP 표준 태그 라이브러리)의 Core 기능을 c라는 접두사로 이 JSP 페이지에서 사용하겠다고 선언하는 지시어입니다. [1] (https://brilliantdevelop.tistory.com/50), [2] (https://devlogofchris.tistory.com/47), [3] (https://twinklegreenworld.tistory.com/57)
+자바 코드(<% ... %> 스크립트릿)를 직접 쓰지 않고도 HTML 태그처럼 조건문, 반복문, 변수 처리 등을 깔끔하게 작성할 수 있게 해줍니다. [1] (https://m.blog.naver.com/agapeuni/223130142585), [2] (https://cbw1030.tistory.com/80), [3] (https://brilliantdevelop.tistory.com/50)
+
+구성 요소별 의미
+
+• <%@ taglib ... %>: 외부 태그 라이브러리를 JSP에서 사용할 수 있도록 불러오는 taglib 지시어입니다.
+• prefix="c": 태그 앞에 붙일 접두사를 지정합니다. 관례적으로 c를 쓰며, 이 선언 덕분에 <c:if>, <c:forEach> 형태로 태그를 호출할 수 있습니다.
+• uri="http://java.sun.com/jsp/jstl/core": 사용할 태그 라이브러리를 식별하는 고유 식별자(URI)입니다. 실제 인터넷 접속 주소가 아니라, JSTL Core 라이브러리의 TLD(Tag Library Descriptor) 정의를 찾기 위한 식별 값입니다. [1] (https://jaehoney.tistory.com/63), [2] (https://twinklegreenworld.tistory.com/57), [3] (https://brilliantdevelop.tistory.com/50)
+
+주로 쓰는 Core 태그 예시
+
+• 조건문: <c:if test="...">, <c:choose> / <c:when> / <c:otherwise>
+• 반복문: <c:forEach items="..." var="...">
+• 변수 선언·출력·삭제: <c:set>, <c:out>, <c:remove>
+• URL/페이지 처리: <c:url>, <c:redirect>, <c:import> [1] (https://yjdawn.tistory.com/99), [2] (https://devlogofchris.tistory.com/47), [3] (https://brilliantdevelop.tistory.com/50)
+참고로 Jakarta EE(Spring Boot 3.x 이상 등) 환경에서는 URI가 jakarta.tags.core 형태로 달라질 수 있고, 관련 설정 문제는 JSTL 설정 오류 같은 사례를 참고해 의존성이나 URI 버전을 점검해 볼 수 있습니다. [1] (https://jeenukchung.tistory.com/15)
+특정 에러 메시지가 발생했거나 특정 태그 사용법이 궁금하다면 알려주세요:
+• 사용 중인 Spring / Servlet / Jakarta 버전
+• 겪고 있는 에러 내용 또는 구현하려는 기능
+상황에 맞춰 정확한 설정이나 태그 예제를 안내해 드릴 수 있습니다.
