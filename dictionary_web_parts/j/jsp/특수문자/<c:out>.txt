@@ -1,19 +1,15 @@
 ####################################################################################################################################
 
 전자정부표준프레임워크(JSP 환경)에서 <c:out> 태그는 JSTL(JSP Standard Tag Library)의 코어(Core) 라이브러리 태그로, 
-화면에 데이터를 안전하게 출력하기 위해 사용합니다. [1] (https://www.devkuma.com/docs/jsp-servlet/%EC%B6%9C%EB%A0%A5
--%EB%B0%8F-%EB%B3%80%EC%88%98-c-out-c-set-c-remove/), [2] (https://jay-cheol.tistory.com/entry/JSP-%EC%BD%94%EC%9
-6%B4%ED%83%9C%EA%B7%B8-cout%EC%99%80-cset)
+화면에 데이터를 안전하게 출력하기 위해 사용합니다. 
 구체적인 의미와 특징은 다음과 같습니다.
 
 1. 주요 의미와 기능
 
-• 데이터 출력: 표현 언어(EL, 예: ${name})를 사용해 변수나 값을 화면에 출력합니다. [1] (https://jay-cheol.tistory.com/
-entry/JSP-%EC%BD%94%EC%96%B4%ED%83%9C%EA%B7%B8-cout%EC%99%80-cset)
+• 데이터 출력: 표현 언어(EL, 예: ${name})를 사용해 변수나 값을 화면에 출력합니다.
 • HTML/스크립트 이스케이프(Escape): 기본적으로 <c:out>은 출력값에 포함된 HTML 태그나 특수문자(예: <, >, &, ", ')를 문자 
-그대로(Plain Text) 출력하도록 변환합니다. [1] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7
-%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0), [2] (https://jay-cheol.tistory.com/entry/JSP-%EC%BD%94%EC%96%B4%ED%83%9C%E
-A%B7%B8-cout%EC%99%80-cset)
+그대로(Plain Text) 출력하도록 변환합니다.
+
 • XSS(크로스사이트스크립팅) 보안 방지: 악의적인 사용자가 입력폼 등에 <script>alert('HACK')</script> 같은 자바스크립트를 삽입했을 때, 
 그냥 ${}로 출력하면 스크립트가 실행될 수 있으나, <c:out>을 사용하면 문자열로 처리되어 실행을 막아줍니다. [1] (https://jju240
 .tistory.com/266), [2] (https://lifejusik1004.tistory.com/entry/JSP-JSTL-cout-%ED%83%9C%EA%B7%B8-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
