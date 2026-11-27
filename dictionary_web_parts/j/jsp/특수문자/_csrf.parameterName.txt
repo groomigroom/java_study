@@ -1,0 +1,35 @@
+전자정부표준프레임워크(Spring Security 기반)의 JSP에서 ${_csrf.parameterName}은 서버로 전송할 CSRF(사이트 간 요청 위조) 방어용 토큰의 파라미터 이름(Key)을 동적으로 출력하는 EL(Expression Language) 표현식입니다. [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://m.blog.naver.com/jskimmail/221616372513)
+Spring Security의 기본 설정을 따를 경우, 이 값은 기본적으로 _csrf라는 문자열로 렌더링됩니다. [1] (https://tlatmsrud.tistory.com/77)
+
+동작 원리 및 구성 요소
+
+Spring Security가 활성화되어 있으면, 서버는 상태를 변경하는 요청(POST, PUT, DELETE 등)이 들어올 때 정상적인 경로로 보낸 요청인지 검증하기 위해 CSRF 토큰을 요구합니다. [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://tlatmsrud.tistory.com/77)
+• ${_csrf.parameterName}. 서버가 토큰 값을 식별하기 위해 기대하는 파라미터의 이름(Key)입니다 (기본값: _csrf).
+• ${_csrf.token}. 서버가 현재 세션에 발급한 실제 난수 토큰 값(Value)입니다.
+• ${_csrf.headerName}. AJAX 통신 시 HTTP 헤더에 토큰을 실어 보낼 때 사용하는 헤더 이름입니다 (기본값: X-CSRF-TOKEN). [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://m.blog.naver.com/jskimmail/221616372513), [3] (https://tlatmsrud.tistory.com/77)
+
+JSP에서의 주요 사용 예시
+
+1. HTML <form> 전송 시
+일반 HTML <form> 태그를 사용할 때는 아래처럼 hidden 입력 필드를 추가해야 403 Forbidden 오류 없이 정상 전송됩니다. [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://minah-workmemory.tistory.com/28)
+jsp
+<form action="/update.do" method="post">
+    <!-- 실제 렌더링 결과: <input type="hidden" name="_csrf" value="임의의-난수-토큰값" /> -->
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <input type="text" name="userName" />
+    <button type="submit">저장</button>
+</form>
+코드를 사용할 때는 주의가 필요합니다.
+2. AJAX 통신을 위한 <meta> 태그 선언 시
+자바스크립트(jQuery 등)에서 토큰을 쉽게 꺼내 쓰기 위해 JSP 상단 <head> 영역에 메타 태그로 선언해 두고 활용합니다. [1] (https://m.blog.naver.com/jskimmail/221616372513)
+jsp
+<meta name="_csrf_parameter" content="${_csrf.parameterName}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+<meta name="_csrf" content="${_csrf.token}" />
+코드를 사용할 때는 주의가 필요합니다.
+
+하드코딩(name="_csrf") 대신 ${_csrf.parameterName}을 쓰는 이유
+
+• 유지보수성. 향후 보안 정책 변경으로 Spring Security 설정에서 파라미터 이름을 _csrf가 아닌 다른 이름(예: custom_csrf)으로 변경하더라도, JSP 파일을 일일이 수정할 필요 없이 설정값이 자동으로 반영됩니다.
+• 참고 (Spring Form 태그). 전자정부표준프레임워크에서 일반 <form> 대신 Spring 전용 태그인 <form:form>을 사용하면 프레임워크가 알아서 이 hidden 필드를 자동으로 생성해 주므로 직접 작성하지 않아도 됩니다. [1] (https://offbyone.tistory.com/309)
+혹시 현재 403 CSRF 에러를 해결 중이시거나 AJAX 요청에 토큰을 적용하는 방법이 필요하시면 알려주세요. 사용 중인 통신 방식(일반 Form, jQuery AJAX, Fetch 등)을 말씀해 주시면 바로 적용 가능한 코드로 안내해 드리겠습니다.
