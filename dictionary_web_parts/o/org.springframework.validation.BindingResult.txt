@@ -1,14 +1,21 @@
-전자정부표준프레임워크(Spring MVC 기반)에서 org.springframework.validation.BindingResult.loginRequestVO는 loginRequestVO 객체의 데이터 바인딩 및 유효성 검증(Validation) 결과를 담아 Model(또는 Request/Session)에 자동으로 저장할 때 사용하는 키(Key) 이름입니다.
+전자정부표준프레임워크(Spring MVC 기반)에서 org.springframework.validation.BindingResult.loginRequestVO는 
+loginRequestVO 객체의 데이터 바인딩 및 유효성 검증(Validation) 결과를 담아 Model(또는 Request/Session)에 
+자동으로 저장할 때 사용하는 키(Key) 이름입니다.
 
 구성 요소별 의미
 
 • org.springframework.validation.BindingResult: 스프링 프레임워크가 제공하는 검증 오류 보관 객체의 클래스명입니다.
-• .loginRequestVO: 검증 대상이 되는 커맨드 객체(VO/DTO)의 이름(기본값은 클래스명의 첫 글자를 소문자로 바꾼 형태, 또는 @ModelAttribute("loginRequestVO")로 지정한 이름)입니다. [1] (https://bebetter-forme.tistory.com/15), [2] (https://tech-monster.tistory.com/129)
+• .loginRequestVO: 검증 대상이 되는 커맨드 객체(VO/DTO)의 이름(기본값은 클래스명의 첫 글자를 소문자로 바꾼 형태, 
+또는 @ModelAttribute("loginRequestVO")로 지정한 이름)입니다. 
 
 전자정부프레임워크에서의 동작 원리
 
-1. 데이터 바인딩 및 검증: 컨트롤러에서 로그인 요청 파라미터를 LoginRequestVO로 받으면서 @Valid, @Validated 또는 커스텀 Validator로 유효성을 검사합니다. [1] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rte4.2/ptl/validation.html), [2] (https://itlab0816.tistory.com/96)
-2. 자동 모델 등록: 검증 결과(BindingResult)가 생성되면, 뷰(JSP, Thymeleaf 등)에서 에러 메시지를 출력할 수 있도록 스프링이 내부적으로 Model에 org.springframework.validation.BindingResult.loginRequestVO라는 키값으로 해당 객체를 자동 등록합니다.
-3. 뷰(View)에서의 활용: JSP의 <form:errors path="userId" /> 같은 스프링 폼 태그나 타임리프의 th:errors가 화면에 에러 메시지를 띄울 때, 바로 이 키 이름을 찾아가 검증 오류 내역을 꺼내옵니다.
+1. 데이터 바인딩 및 검증: 컨트롤러에서 로그인 요청 파라미터를 LoginRequestVO로 받으면서 @Valid, @Validated 또는 커스텀 
+Validator로 유효성을 검사합니다. 
+2. 자동 모델 등록: 검증 결과(BindingResult)가 생성되면, 뷰(JSP, Thymeleaf 등)에서 에러 메시지를 출력할 수 있도록 
+스프링이 내부적으로 Model에 org.springframework.validation.BindingResult.loginRequestVO라는 키값으로 해당 객체를 자동 등록합니다.
+3. 뷰(View)에서의 활용: JSP의 <form:errors path="userId" /> 같은 스프링 폼 태그나 타임리프의 th:errors가 화면에 
+에러 메시지를 띄울 때, 바로 이 키 이름을 찾아가 검증 오류 내역을 꺼내옵니다.
 (참고: 로그나 세션/모델 덤프에서 이 문자열이 보인다면, 로그인 폼 검증을 수행한 뒤 뷰로 넘어가는 정상적인 스프링 MVC의 동작 과정입니다.)
-이 키값이 로그에 에러와 함께 출력되어 원인을 찾고 계신가요, 아니면 커스텀 검증기(Validator)나 JSP 에러 메시지 출력을 구현 중이신가요? 상황을 알려주시면 관련 코드나 해결 방법을 안내해 드리겠습니다.
+이 키값이 로그에 에러와 함께 출력되어 원인을 찾고 계신가요, 아니면 커스텀 검증기(Validator)나 JSP 에러 메시지 출력을 구현 중이신가요? 
+상황을 알려주시면 관련 코드나 해결 방법을 안내해 드리겠습니다.
