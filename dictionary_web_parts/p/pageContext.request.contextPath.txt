@@ -1,9 +1,11 @@
-${pageContext.request.contextPath}는 현재 웹 애플리케이션의 기본 경로(Root Path, 즉 Context Path)를 동적으로 가져오는 JSP EL(Expression Language) 표현식입니다.
+${pageContext.request.contextPath}는 현재 웹 애플리케이션의 기본 경로(Root Path, 
+즉 Context Path)를 동적으로 가져오는 JSP EL(Expression Language) 표현식입니다.
 구체적인 의미와 값이 설정되는 위치는 다음과 같습니다.
 
 1. 의미와 역할
 
-• 동적 경로 생성: 서버 환경이나 배포 설정에 따라 프로젝트의 시작 URL이 바뀔 수 있습니다. 이때 경로를 하드코딩하지 않고 현재 프로젝트의 최상위 경로를 자동으로 붙여주기 위해 사용합니다.
+• 동적 경로 생성: 서버 환경이나 배포 설정에 따라 프로젝트의 시작 URL이 바뀔 수 있습니다. 
+이때 경로를 하드코딩하지 않고 현재 프로젝트의 최상위 경로를 자동으로 붙여주기 위해 사용합니다.
 • 작동 예시:
 	• 프로젝트의 Context Path가 /egov로 설정되어 있다면:
 action="/egov/uat/uia/actionLogin.do" 로 변환됩니다.
