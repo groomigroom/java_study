@@ -1,0 +1,24 @@
+전자정부표준프레임워크(Spring Security 기반)의 JSP에서 _csrf.token은 CSRF(Cross-Site Request Forgery, 사이트 간 요청 위조) 공격을 막기 위해 서버가 발급한 난수(토큰 값)를 의미합니다. [1] (https://codevang.tistory.com/282), [2] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80)
+정상적인 화면에서 보낸 요청인지 확인하기 위한 일회용 보안 키 역할을 하며, 보통 ${_csrf.token} 형태로 꺼내 씁니다. [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://codevang.tistory.com/282)
+
+주요 역할과 동작 방식
+
+• 위조 요청 차단: 외부 사이트나 악성 스크립트가 로그인된 사용자의 권한을 도용해 POST, PUT, DELETE 같은 상태 변경 요청을 보내도, 유효한 토큰 값이 없으면 서버가 요청을 거부합니다.
+• 서버·세션 대조: 서버가 세션 등에 저장한 토큰 값과 클라이언트가 전송한 ${_csrf.token} 값이 일치하는지 검증합니다. [1] (https://codingdog.tistory.com/entry/spring-security-%EC%97%90%EC%84%9C-csrf-token-%EC%9D%B4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%99%94%EB%8B%A4-%EA%B0%94%EB%8B%A4-%ED%95%98%EB%8A%94%EC%A7%80-%EA%B0%84%EB%8B%A8%ED%9E%88-%EC%95%8C%EC%95%84%EB%B4%85%EC%8B%9C%EB%8B%A4), [2] (https://codevang.tistory.com/282), [3] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80)
+
+JSP에서 주로 쓰는 형태와 사용 예시
+
+• Hidden 필드 전송 (일반 HTML <form>): [1] (https://codevang.tistory.com/282), [2] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80)
+jsp
+<form action="/save.do" method="post">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  <button type="submit">저장</button>
+</form>
+코드를 사용할 때는 주의가 필요합니다.
+• Ajax 요청 헤더 전송: <meta> 태그에 ${_csrf.token}을 담아 둔 뒤 JavaScript/jQuery Ajax 요청 시 헤더에 함께 실어 보냅니다.
+• 유사·관련 표현:
+	• ${_csrf.parameterName}: 토큰 값을 담을 파라미터 이름(예: _csrf).
+	• ${_csrf.headerName}: HTTP 헤더로 토큰을 보낼 때 쓰는 헤더 이름(예: X-CSRF-TOKEN).
+	• <sec:csrfInput /> / <form:form>: Spring Security 또는 Spring Form 태그를 쓸 때 hidden 토큰 필드를 자동으로 넣어주는 대안 표현. [1] (https://codevang.tistory.com/282), [2] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [3] (https://offbyone.tistory.com/309)
+관련 설명은 Spring security - csrf란? 및 spring security 에서 csrf token 이 어떻게 왔다 갔다 하는지에서도 확인할 수 있습니다. [1] (https://velog.io/@woohobi/Spring-security-csrf%EB%9E%80), [2] (https://codingdog.tistory.com/entry/spring-security-%EC%97%90%EC%84%9C-csrf-token-%EC%9D%B4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%99%94%EB%8B%A4-%EA%B0%94%EB%8B%A4-%ED%95%98%EB%8A%94%EC%A7%80-%EA%B0%84%EB%8B%A8%ED%9E%88-%EC%95%8C%EC%95%84%EB%B4%85%EC%8B%9C%EB%8B%A4)
+원하시는 적용 방식이나 겪고 계신 오류 상황(예: 일반 폼 전송, Ajax 요청, 403 에러 등)을 알려주시면 그에 맞는 JSP 코드를 보여드릴 수 있습니다.
