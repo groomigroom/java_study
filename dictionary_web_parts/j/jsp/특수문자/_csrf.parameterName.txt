@@ -33,6 +33,9 @@ jsp
 
 하드코딩(name="_csrf") 대신 ${_csrf.parameterName}을 쓰는 이유
 
-• 유지보수성. 향후 보안 정책 변경으로 Spring Security 설정에서 파라미터 이름을 _csrf가 아닌 다른 이름(예: custom_csrf)으로 변경하더라도, JSP 파일을 일일이 수정할 필요 없이 설정값이 자동으로 반영됩니다.
-• 참고 (Spring Form 태그). 전자정부표준프레임워크에서 일반 <form> 대신 Spring 전용 태그인 <form:form>을 사용하면 프레임워크가 알아서 이 hidden 필드를 자동으로 생성해 주므로 직접 작성하지 않아도 됩니다. [1] (https://offbyone.tistory.com/309)
-혹시 현재 403 CSRF 에러를 해결 중이시거나 AJAX 요청에 토큰을 적용하는 방법이 필요하시면 알려주세요. 사용 중인 통신 방식(일반 Form, jQuery AJAX, Fetch 등)을 말씀해 주시면 바로 적용 가능한 코드로 안내해 드리겠습니다.
+• 유지보수성. 향후 보안 정책 변경으로 Spring Security 설정에서 파라미터 이름을 _csrf가 아닌 다른 이름(예: custom_csrf)으로 
+변경하더라도, JSP 파일을 일일이 수정할 필요 없이 설정값이 자동으로 반영됩니다.
+• 참고 (Spring Form 태그). 전자정부표준프레임워크에서 일반 <form> 대신 Spring 전용 태그인 <form:form>을 사용하면 
+프레임워크가 알아서 이 hidden 필드를 자동으로 생성해 주므로 직접 작성하지 않아도 됩니다.
+혹시 현재 403 CSRF 에러를 해결 중이시거나 AJAX 요청에 토큰을 적용하는 방법이 필요하시면 알려주세요. 
+사용 중인 통신 방식(일반 Form, jQuery AJAX, Fetch 등)을 말씀해 주시면 바로 적용 가능한 코드로 안내해 드리겠습니다.
