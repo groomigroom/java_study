@@ -1,16 +1,21 @@
-JSP에서 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>는 스프링(Spring)이 제공하는 폼 태그 라이브러리(Form Tag Library)를 해당 JSP 페이지에서 사용하겠다고 선언하는 지시자입니다. [1] (https://offbyone.tistory.com/325), [2] (https://carrotweb.tistory.com/256), [3] (https://www.joshi.co.kr/index.php?mid=board_waiJ30&document_srl=306089)
+JSP에서 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>는 스프링(Spring)이 제공하는 
+폼 태그 라이브러리(Form Tag Library)를 해당 JSP 페이지에서 사용하겠다고 선언하는 지시자입니다.
 
 구성 요소별 의미
 
-• <%@ taglib ... %>: JSP에서 커스텀 태그 라이브러리를 불러오는 지시자입니다. [1] (https://subinto.tistory.com/227)
-• prefix="form": 태그를 사용할 때 붙일 접두사를 지정합니다. JSP 안에서 <form:form>, <form:input>, <form:errors>처럼 사용합니다. (다른 이름으로도 바꿀 수 있지만 관례상 form을 씁니다.) [1] (https://offbyone.tistory.com/325), [2] (https://www.joshi.co.kr/index.php?mid=board_waiJ30&document_srl=306089)
-• uri="http://www.springframework.org/tags/form": 스프링 폼 태그 라이브러리를 식별하는 고유 URI입니다. 실제 인터넷 접속 주소가 아니라 TLD(Tag Library Descriptor) 설정과 매핑되는 식별자입니다. [1] (https://offbyone.tistory.com/325), [2] (https://carrotweb.tistory.com/256)
+• <%@ taglib ... %>: JSP에서 커스텀 태그 라이브러리를 불러오는 지시자입니다.
+• prefix="form": 태그를 사용할 때 붙일 접두사를 지정합니다. JSP 안에서 <form:form>, 
+<form:input>, <form:errors>처럼 사용합니다. (다른 이름으로도 바꿀 수 있지만 관례상 form을 씁니다.) 
+• uri="http://www.springframework.org/tags/form": 스프링 폼 태그 라이브러리를 식별하는 고유 URI입니다. 
+실제 인터넷 접속 주소가 아니라 TLD(Tag Library Descriptor) 설정과 매핑되는 식별자입니다.
 
 주요 기능과 장점
 
-• 모델 객체 자동 바인딩: 컨트롤러에서 전달한 객체(modelAttribute 등)의 값을 입력 폼에 자동으로 채워주고, 제출 시 다시 객체 필드에 매핑합니다.
+• 모델 객체 자동 바인딩: 컨트롤러에서 전달한 객체(modelAttribute 등)의 값을 입력 폼에 자동으로 채워주고, 
+제출 시 다시 객체 필드에 매핑합니다.
 • 유효성 검증 및 에러 메시지 출력: <form:errors> 태그로 검증 실패 시 발생한 에러 메시지를 쉽게 보여줄 수 있습니다.
-• 다양한 폼 요소 지원: <form:select>, <form:radiobutton>, <form:checkbox>, <form:password> 등 HTML 폼 태그를 스프링에 맞춰 편리하게 쓸 수 있게 해줍니다. [1] (https://offbyone.tistory.com/325), [2] (https://www.joshi.co.kr/index.php?mid=board_waiJ30&document_srl=306089), [3] (https://hong42.tistory.com/5)
+• 다양한 폼 요소 지원: <form:select>, <form:radiobutton>, <form:checkbox>, <form:password> 등 HTML 폼 태그를 
+스프링에 맞춰 편리하게 쓸 수 있게 해줍니다. 
 
 간단한 사용 예시
 
