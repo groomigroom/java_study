@@ -1,0 +1,23 @@
+JSP 상단에 선언된 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>는 전자정부 표준프레임워크(eGovFrame)에서 제공하는 UI 커스텀 태그 라이브러리(특히 페이징 처리 태그)를 해당 JSP 페이지에서 사용하겠다고 선언하는 지시어입니다.
+
+구성 요소별 의미
+
+• <%@ taglib ... %>. JSP 페이지에서 외부 태그 라이브러리(커스텀 태그, JSTL 등)를 불러와 사용할 때 쓰는 지시어(Directive)입니다.
+• prefix="ui". 불러온 태그를 본문에서 사용할 때 붙일 접두사(별칭)를 ui로 지정한다는 뜻입니다. (예: <ui:pagination ... />)
+• uri="http://egovframework.gov/ctl/ui". 실제 태그가 정의된 설정 파일(.tld)을 찾기 위한 고유 식별자(URI)입니다. 인터넷 주소처럼 보이지만 웹에 접속하는 것이 아니라, 프로젝트 내 라이브러리에 포함된 egovframework.rte.ptl.mvc 모듈의 TLD(Tag Library Descriptor) 파일을 매핑하는 역할을 합니다.
+
+주요 사용 목적 (실무 활용)
+
+이 태그 라이브러리를 선언하면 주로 게시판 목록 하단의 페이지 번호(Pagination) UI를 자동으로 생성할 때 사용합니다.
+jsp
+<!-- JSP 본문 사용 예시 -->
+<div id="paging">
+    <ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="fn_egov_select_linkPage" />
+</div>
+코드를 사용할 때는 주의가 필요합니다.
+• paginationInfo. 컨트롤러에서 넘겨준 페이징 계산 객체(PaginationInfo)를 연결합니다.
+• type. 페이징 UI의 디자인 스타일(렌더러)을 지정합니다. (기본값 text, image 등 스프링 설정 파일에 등록된 렌더러 이름)
+• jsFunction. 페이지 번호를 클릭했을 때 실행할 자바스크립트 함수명을 지정합니다.
+혹시 이와 관련해서 더 알아보고 싶은 부분이 있으신가요?
+페이징 UI 디자인(HTML 구조) 커스텀 방법ui:pagination 태그 사용 시 발생하는 오류 해결컨트롤러단(PaginationInfo)과의 전체 연동 구조
+원하시는 주제를 알려주시면 자세히 안내해 드리겠습니다.
