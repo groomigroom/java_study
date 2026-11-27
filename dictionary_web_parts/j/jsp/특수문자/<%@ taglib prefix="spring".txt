@@ -1,15 +1,18 @@
-JSP에서 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>는 스프링 프레임워크가 제공하는 JSP 태그 라이브러리를 해당 페이지에서 <spring:...> 접두사로 사용할 수 있게 선언하는 지시어입니다. [1] (https://blog.naver.com/aservmz/222225560205), [2] (https://subinto.tistory.com/227)
+JSP에서 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>는 스프링 프레임워크가 
+제공하는 JSP 태그 라이브러리를 해당 페이지에서 <spring:...> 접두사로 사용할 수 있게 선언하는 지시어입니다.
 
 각 요소의 의미
 
 • <%@ taglib ... %>: JSP 페이지에서 커스텀 태그 라이브러리를 불러올 때 쓰는 지시어입니다.
-• prefix="spring": 태그를 사용할 때 붙일 접두사입니다. 이를 선언하면 JSP 안에서 <spring:message>, <spring:url> 같은 형태로 태그를 쓸 수 있습니다.
-• uri="http://www.springframework.org/tags": 사용할 태그 라이브러리의 고유 식별자(TLD) 경로입니다. 실제 인터넷 주소로 접속해 파일을 내려받는 것이 아니라, 클래스패스(JAR) 안의 스프링 태그 라이브러리 정의를 찾아 연결합니다. [1] (https://blog.naver.com/aservmz/222225560205), [2] (https://subinto.tistory.com/227)
+• prefix="spring": 태그를 사용할 때 붙일 접두사입니다. 이를 선언하면 JSP 안에서 <spring:message>, 
+<spring:url> 같은 형태로 태그를 쓸 수 있습니다.
+• uri="http://www.springframework.org/tags": 사용할 태그 라이브러리의 고유 식별자(TLD) 경로입니다. 
+실제 인터넷 주소로 접속해 파일을 내려받는 것이 아니라, 클래스패스(JAR) 안의 스프링 태그 라이브러리 정의를 찾아 연결합니다. 
 
 주요 태그 예시
 
 • <spring:message>: 다국어(Locale)나 .properties 파일에 정의된 메시지를 출력합니다.
 • <spring:url>: 컨텍스트 경로(context path)를 반영한 URL을 안전하게 생성합니다.
 • <spring:eval>: SpEL(Spring Expression Language)로 빈 속성이나 값을 평가해 출력합니다.
-• <spring:bind> / <spring:hasBindErrors>: 모델 객체의 바인딩 상태나 검증 오류를 다룹니다. [1] (https://blog.naver.com/aservmz/222225560205)
+• <spring:bind> / <spring:hasBindErrors>: 모델 객체의 바인딩 상태나 검증 오류를 다룹니다.
 현재 JSP에서 특정 <spring:...> 태그를 쓰려다 에러가 발생했는지, 아니면 다국어 메시지나 URL 생성 같은 기능을 구현하려는 중인지 알려주세요.
