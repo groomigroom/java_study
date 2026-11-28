@@ -1,15 +1,19 @@
 org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
-BearerTokenAuthenticationFilter는 Spring Security의 OAuth2 리소스 서버(Resource Server)에서 HTTP 요청에 담긴 Bearer 토큰(주로 액세스 토큰, JWT 등)을 추출하고 인증을 처리하는 필터입니다. [1] (https://junhyunny.github.io/information/java/spring-boot/spring-security/spring-security-oauth2-resource-server/), [2] (https://develop123.tistory.com/658)
+BearerTokenAuthenticationFilter는 Spring Security의 OAuth2 리소스 서버(Resource Server)에서 
+HTTP 요청에 담긴 Bearer 토큰(주로 액세스 토큰, JWT 등)을 추출하고 인증을 처리하는 필터입니다. 
 
 주요 역할
 
 • 토큰 추출: 요청 헤더(Authorization: Bearer <토큰>)나 설정된 위치에서 Bearer 토큰을 꺼냅니다.
 • 인증 요청 생성: 추출한 토큰을 BearerTokenAuthenticationToken 객체로 감쌉니다.
 • 인증 위임: AuthenticationManager에 인증을 넘겨 토큰의 유효성, 만료 여부, 서명 등을 검증합니다.
-• 보안 컨텍스트 저장: 인증에 성공하면 생성된 Authentication 객체를 SecurityContextHolder에 저장해 이후 컨트롤러나 인가(Authorization) 단계에서 사용할 수 있게 합니다.
-• 실패 처리: 토큰이 유효하지 않거나 인증에 실패하면 AuthenticationEntryPoint를 통해 인증 실패 응답(예: 401 Unauthorized)을 처리합니다.
+• 보안 컨텍스트 저장: 인증에 성공하면 생성된 Authentication 객체를 SecurityContextHolder에 
+저장해 이후 컨트롤러나 인가(Authorization) 단계에서 사용할 수 있게 합니다.
+• 실패 처리: 토큰이 유효하지 않거나 인증에 실패하면 AuthenticationEntryPoint를 통해 인증 
+실패 응답(예: 401 Unauthorized)을 처리합니다.
 
 언제 동작하나요?
 
-• 스프링 부트 프로젝트에 spring-boot-starter-oauth2-resource-server 의존성을 추가하고, SecurityFilterChain에서 oauth2ResourceServer(...) 설정을 활성화했을 때 필터 체인에 등록되어 동작합니다. [1] (https://junhyunny.github.io/information/java/spring-boot/spring-security/spring-security-oauth2-resource-server/)
-동작 방식에 대한 자세한 흐름은 OAuth2 Resource Server: 동작 방식에서 확인할 수 있습니다. [1] (https://develop123.tistory.com/658)
+• 스프링 부트 프로젝트에 spring-boot-starter-oauth2-resource-server 의존성을 추가하고, 
+SecurityFilterChain에서 oauth2ResourceServer(...) 설정을 활성화했을 때 필터 체인에 등록되어 동작합니다. 
+동작 방식에 대한 자세한 흐름은 OAuth2 Resource Server: 동작 방식에서 확인할 수 있습니다. 
