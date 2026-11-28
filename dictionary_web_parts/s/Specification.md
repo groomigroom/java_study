@@ -52,6 +52,7 @@ Specification을 제대로 사용하려면 리포지토리 인터페이스가 Jp
 
 
 ------------------------------------------
+# toPredicate()
 
 ```
 네, Spring Data JPA의 Specification 인터페이스에 기본으로 내장된 추상 메서드입니다.
