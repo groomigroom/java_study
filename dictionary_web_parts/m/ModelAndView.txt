@@ -1,0 +1,24 @@
+전자정부표준프레임워크에서 org.springframework.web.servlet.ModelAndView는 컨트롤러(Controller)가 화면에 전달할 데이터(Model)와 이동할 화면 정보(View)를 하나로 묶어 DispatcherServlet에 반환하는 스프링 웹 MVC 클래스를 의미합니다. [1] (https://egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rte4.1/ptl/web_servlet.html), [2] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rtea2/ptl/view.html), [3] (https://ittrue.tistory.com/234)
+전자정부표준프레임워크는 스프링 프레임워크를 기반으로 구축되어 있으므로, 웹 계층(MVC)에서도 ModelAndView의 역할과 동작 방식이 스프링 MVC와 동일하게 적용됩니다. [1] (https://velog.io/@chxghee/Spring-%EC%A0%84%EC%9E%90%EC%A0%95%EB%B6%80%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EC%84%B8%ED%8C%85-%EB%B0%8F-%EA%B0%84%EB%8B%A8%EC%98%88%EC%A0%9C-%EC%B6%9C%EB%A0%A5), [2] (https://ittrue.tistory.com/234), [3] (https://egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rte4.1/ptl/web_servlet.html)
+
+핵심 역할
+
+• Model(데이터 저장): addObject("이름", 객체) 메서드로 JSP 등 뷰에 넘길 데이터를 담습니다.
+• View(화면 지정): setViewName("뷰이름") 또는 setView(View객체) 메서드로 렌더링할 화면(예: JSP)을 지정합니다. 보통 논리적인 뷰 이름을 넣으면 ViewResolver가 실제 뷰 객체로 변환합니다. [1] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rtea2/ptl/view.html)
+
+사용 예시
+
+java
+ModelAndView mav = new ModelAndView();
+mav.addObject("employeelist", employeelist); // 모델 데이터 추가
+mav.setViewName("employeelist");           // 뷰 이름 지정
+return mav;
+코드를 사용할 때는 주의가 필요합니다.
+
+유사한 반환 방식(대체/유사 표현)
+
+실무나 전자정부표준프레임워크 컨트롤러에서는 ModelAndView 대신 다음 방식도 자주 함께 쓰입니다.
+• String 반환 + Model / ModelMap 파라미터: 뷰 이름만 문자열로 반환하고 데이터는 Model이나 ModelMap에 담아 전달하는 방식입니다.
+• @ResponseBody / MappingJackson2JsonView: JSP 화면 이동 대신 JSON 등 데이터를 직접 응답할 때 사용합니다.
+자세한 공식 구조는 전자정부 표준프레임워크 가이드에서 확인할 수 있습니다. [1] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rtea2/ptl/view.html)
+현재 작성 중인 컨트롤러 코드나 뷰 반환 방식(JSP, JSON 등)을 알려주시면, 상황에 맞는 코드 예시와 대체 방식을 비교해 드릴 수 있습니다.
