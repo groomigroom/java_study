@@ -1,5 +1,11 @@
-전자정부표준프레임워크에서 org.springframework.web.bind.annotation.RequestMethod는 스프링 MVC 기반 컨트롤러가 처리할 HTTP 요청 방식(GET, POST, PUT, DELETE 등)을 지정하는 열거형(Enum)입니다. [1] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rte2/ptl/annotation-based_controller.html), [2] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.3:ptl:web_reactive_annotated_controllers)
-전자정부표준프레임워크는 스프링(Spring)을 기반으로 구축되어 있으므로, RequestMethod의 정의와 역할은 일반 스프링 프레임워크와 동일합니다. 주로 @RequestMapping 어노테이션의 method 속성에 사용되어 특정 URL 요청이 어떤 HTTP 메서드로 들어올 때 해당 컨트롤러 메서드를 실행할지 결정합니다. [1] (https://isaac-christian.tistory.com/entry/Spring-%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95-STS-3-Maven), [2] (https://www.egovframe.go.kr/docs/archive/egovframework/%EC%8B%A4%ED%96%89%ED%99%98%EA%B2%BD/rte2/ptl/annotation-based_controller.html)
+전자정부표준프레임워크에서 org.springframework.web.bind.annotation.RequestMethod는 스프링 MVC 기반 컨트롤러가 
+처리할 HTTP 요청 방식(GET, POST, PUT, DELETE 등)을 지정하는 열거형(Enum)입니다. 
+
+전자정부표준프레임워크는 스프링(Spring)을 기반으로 구축되어 있으므로, 
+RequestMethod의 정의와 역할은 일반 스프링 프레임워크와 동일합니다. 
+주로 @RequestMapping 어노테이션의 method 속성에 사용되어 특정 URL 
+요청이 어떤 HTTP 메서드로 들어올 때 해당 컨트롤러 메서드를 실행할지 결정합니다. 
+
 
 주요 역할 및 의미
 
@@ -31,7 +37,9 @@ public class BoardController {
 
 유사·대체 표현
 
-• 단축 어노테이션(축약형): RequestMethod.GET 대신 @GetMapping, RequestMethod.POST 대신 @PostMapping처럼 HTTP 메서드별 전용 어노테이션을 사용할 수 있습니다(@PutMapping, @DeleteMapping, @PatchMapping 등).
-• 다중 메서드 지정: {RequestMethod.GET, RequestMethod.POST}처럼 배열 형태로 여러 HTTP 방식을 동시에 허용할 수 있습니다. [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.3:ptl:web_reactive_annotated_controllers)
-자세한 컨트롤러 매핑 구조는 전자정부 표준프레임워크 문서에서 확인할 수 있습니다. [1] (https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte4.3:ptl:web_reactive_annotated_controllers)
+• 단축 어노테이션(축약형): RequestMethod.GET 대신 @GetMapping, RequestMethod.POST 대신 
+@PostMapping처럼 HTTP 메서드별 전용 어노테이션을 사용할 수 있습니다(@PutMapping, @DeleteMapping, @PatchMapping 등).
+• 다중 메서드 지정: {RequestMethod.GET, RequestMethod.POST}처럼 배열 형태로 여러 HTTP 방식을 동시에 허용할 수 있습니다. 
+
+자세한 컨트롤러 매핑 구조는 전자정부 표준프레임워크 문서에서 확인할 수 있습니다. 
 현재 사용 중인 전자정부표준프레임워크 버전이나 특정 컨트롤러 코드 상황을 알려주시면, 그에 맞는 매핑 방식이나 대체 어노테이션 적용법을 안내해 드릴 수 있습니다.
