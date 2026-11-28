@@ -1,3 +1,5 @@
+RedirectAttributes는 리다이렉트(Redirect)할 때 데이터를 안전하게 전달하기 위해 사용합니다.
+
 전자정부프레임워크(eGovFrame)는 내부적으로 Spring Framework를 기반으로 만들어졌습니다. 
 따라서 org.springframework.web.servlet.mvc.support.RedirectAttributes는 전자정부프레임워크만의 
 독자적인 기능이 아니라, 스프링 MVC(Spring MVC)에서 제공하는 인터페이스이며, 리다이렉트(Redirect)할 
